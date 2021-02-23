@@ -64,8 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Grid\Grid.cs" />
-    <Compile Include="Assets\Scripts\Grid\Node.cs" />
+    <Compile Include="Assets\Scripts\MouseControl\MoveObject.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -676,7 +675,16 @@
       <HintPath>C:/UnityProjects/FarmSim/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Grid.csproj">
+      <Project>{52F45092-1270-AD02-C824-85BD9C892A6A}</Project>
+      <Name>Grid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Placeables.csproj">
+      <Project>{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}</Project>
+      <Name>Placeables</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

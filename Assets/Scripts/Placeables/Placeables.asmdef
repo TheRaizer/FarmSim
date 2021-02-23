@@ -1,0 +1,15 @@
+{
+    "name": "Placeables",
+    "references": [
+        "GUID:3926798bbc9965742b0dc016696b6d2e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

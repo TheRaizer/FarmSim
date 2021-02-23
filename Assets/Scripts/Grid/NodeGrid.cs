@@ -28,21 +28,6 @@ namespace FarmSim.Grid
             InitGrid();
         }
 
-        /// <summary>
-        /// Initialize's nodes into the <see cref="grid"/> and assigns a 
-        /// world position to each.
-        /// </summary>
-        private void InitGrid()
-        {
-            for (int y = 0; y < gridMaxY; y++)
-            {
-                for (int x = 0; x < gridMaxX; x++)
-                {
-                    Vector2 pos = GetNodePosition(x, y);
-                    grid[x, y] = new Node(pos, x, y);
-                }
-            }
-        }
 
         /// <summary>
         ///     Obtains a <see cref="Node"/> from the <see cref="grid"/> given a <see cref="Vector2"/>.
@@ -68,6 +53,32 @@ namespace FarmSim.Grid
         }
 
         /// <summary>
+        ///     Checks every node in a certain space around a given node and returns if something can be placed.
+        /// </summary>
+        /// <param name="node">The node whose at the center of the dimensions.</param>
+        /// <param name="xDim">The x-dimensions to check.</param>
+        /// <param name="yDim">The y-dimensions to check.</param>
+        /// <returns>true if there are no occupied Nodes in the space, otherwise false.</returns>
+        public bool IsValidPlacement(Node node, int xDim, int yDim)
+        {
+            int yStart = node.y - yDim / 2;
+            int xStart = node.x - xDim / 2; 
+
+            for(int y = yStart; y < yDim; y++)
+            {
+                for(int x = xStart; x < xDim; x++)
+                {
+                    if(IsInGrid(x, y) && grid[x, y].IsOccupied)
+                    {
+                        return false;
+                    }
+                    
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
         ///     Finds if a given x and y indices are in the grid.
         /// </summary>
         /// <param name="x">x-index</param>
@@ -75,12 +86,28 @@ namespace FarmSim.Grid
         /// <returns>true if it is in the grid, otherwise false</returns>
         private bool IsInGrid(int x, int y)
         {
-            if (x < gridWorldX && y < gridWorldY && x >= 0 && y >= 0)
+            if (x < gridMaxX && y < gridMaxY && x >= 0 && y >= 0)
             {
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Initialize's nodes into the <see cref="grid"/> and assigns a 
+        /// world position to each.
+        /// </summary>
+        private void InitGrid()
+        {
+            for (int y = 0; y < gridMaxY; y++)
+            {
+                for (int x = 0; x < gridMaxX; x++)
+                {
+                    Vector2 pos = GetNodePosition(x, y);
+                    grid[x, y] = new Node(pos, x, y);
+                }
+            }
         }
 
         /// <summary>
