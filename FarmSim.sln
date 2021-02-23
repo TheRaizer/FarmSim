@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grid", "Grid.csproj", "{52F45092-1270-AD02-C824-85BD9C892A6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayMode", "PlayMode.csproj", "{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{52F45092-1270-AD02-C824-85BD9C892A6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F45092-1270-AD02-C824-85BD9C892A6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F45092-1270-AD02-C824-85BD9C892A6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F45092-1270-AD02-C824-85BD9C892A6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
