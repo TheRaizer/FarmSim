@@ -64,9 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Placeables\IPlaceable.cs" />
     <Compile Include="Assets\Scripts\Placeables\MouseControl\MoveObject.cs" />
-    <Compile Include="Assets\Scripts\Placeables\TestSquarePlaceable.cs" />
+    <Compile Include="Assets\Scripts\Placeables\Placeable.cs" />
     <None Include="Assets\Scripts\Placeables\Placeables.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

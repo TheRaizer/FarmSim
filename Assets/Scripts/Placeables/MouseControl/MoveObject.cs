@@ -9,7 +9,7 @@ using FarmSim.Grid;
 public class MoveObject : MonoBehaviour
 {
     private NodeGrid grid;
-    public IPlaceable AttachedObject { private get; set; }
+    public Placeable AttachedObject { private get; set; }
     private Node currentNode = null;
 
     private void Awake()
@@ -33,18 +33,12 @@ public class MoveObject : MonoBehaviour
         Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Node node = grid.GetNodeFromVector2(worldPosition);
 
-        if (node != null && AttachedObject.Pos != node.Position)
+        if (node != null && (Vector2)AttachedObject.transform.position != node.Position)
         {
-            if(currentNode != null)
-            {
-                currentNode.IsOccupied = false;
-            }
-
             currentNode = node;
-            currentNode.IsOccupied = true;
 
             AttachedObject.Node = currentNode;
-            AttachedObject.Pos = currentNode.Position;
+            AttachedObject.ChangePosition(currentNode.Position);
         }
     }
 }

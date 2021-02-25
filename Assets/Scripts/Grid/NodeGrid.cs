@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace FarmSim.Grid
 {
@@ -56,26 +57,53 @@ namespace FarmSim.Grid
         ///     Checks every node in a certain space around a given node and returns if something can be placed.
         /// </summary>
         /// <param name="node">The node whose at the center of the dimensions.</param>
-        /// <param name="xDim">The x-dimensions to check.</param>
-        /// <param name="yDim">The y-dimensions to check.</param>
+        /// <param name="xDim">The x-dimension to check.</param>
+        /// <param name="yDim">The y-dimension to check.</param>
         /// <returns>true if there are no occupied Nodes in the space, otherwise false.</returns>
         public bool IsValidPlacement(Node node, int xDim, int yDim)
         {
             int yStart = node.y - yDim / 2;
-            int xStart = node.x - xDim / 2; 
+            int xStart = node.x - xDim / 2;
 
-            for(int y = yStart; y < yDim; y++)
+            for (int y = 0; y < yDim; y++)
             {
-                for(int x = xStart; x < xDim; x++)
+                for (int x = 0; x < xDim; x++)
                 {
-                    if(IsInGrid(x, y) && grid[x, y].IsOccupied)
+                    int nodeX = x + xStart;
+                    int nodeY = y + yStart;
+                    if (IsInGrid(nodeX, nodeY) && grid[nodeX, nodeY].IsOccupied)
                     {
                         return false;
                     }
-                    
                 }
             }
             return true;
+        }
+
+        /// <summary>
+        ///     Occupies every node within certain dimensions around a given node.
+        /// </summary>
+        /// <param name="node">The node the dimensions surround.</param>
+        /// <param name="xDim">The x-dimension.</param>
+        /// <param name="yDim">The y-dimension.</param>
+        public void MakeDimensionsOccupied(Node node, int xDim, int yDim)
+        {
+            int yStart = node.y - yDim / 2;
+            int xStart = node.x - xDim / 2;
+
+            for (int y = 0; y < yDim; y++)
+            {
+                for (int x = 0; x < xDim; x++)
+                {
+                    int nodeX = x + xStart;
+                    int nodeY = y + yStart;
+                    if (IsInGrid(nodeX, nodeY))
+                    {
+                        grid[nodeX, nodeY].IsOccupied = true;
+                    }
+
+                }
+            }
         }
 
         /// <summary>
