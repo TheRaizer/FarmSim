@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grid", "Grid.csproj", "{52F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlayMode", "PlayMode.csproj", "{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Planteables", "Planteables.csproj", "{62657A79-AE7D-DE27-EF05-DDACB730674B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E56B347-C5E9-C5BC-B6E4-5666DFE5A5D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62657A79-AE7D-DE27-EF05-DDACB730674B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62657A79-AE7D-DE27-EF05-DDACB730674B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62657A79-AE7D-DE27-EF05-DDACB730674B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62657A79-AE7D-DE27-EF05-DDACB730674B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

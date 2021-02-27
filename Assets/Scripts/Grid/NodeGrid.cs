@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using UnityEngine;
 
 namespace FarmSim.Grid
@@ -12,8 +13,8 @@ namespace FarmSim.Grid
 
     public class NodeGrid : MonoBehaviour
     {
-        [SerializeField] private float gridWorldX = 50;
-        [SerializeField] private float gridWorldY = 50;
+        /*[SerializeField] private float gridWorldX = 50;
+        [SerializeField] private float gridWorldY = 50;*/
 
         private int gridMaxX = 0;
         private int gridMaxY = 0;
@@ -22,9 +23,9 @@ namespace FarmSim.Grid
 
         private void Awake()
         {
-            gridMaxX = Mathf.FloorToInt(gridWorldX / Node.NODE_DIAMETER);
-            gridMaxY = Mathf.FloorToInt(gridWorldY / Node.NODE_DIAMETER);
-
+            /*gridMaxX = Mathf.FloorToInt(gridWorldX / Node.NODE_DIAMETER);
+            gridMaxY = Mathf.FloorToInt(gridWorldY / Node.NODE_DIAMETER);*/
+            ExtractWorldFromTxt();
             grid = new Node[gridMaxX, gridMaxY];
             InitGrid();
         }
@@ -153,7 +154,26 @@ namespace FarmSim.Grid
             return pos;
         }
 
-        private void OnDrawGizmos()
+        /// <summary>
+        ///     Extracts a text file into a string array for each line.
+        ///     It will use this text file to create the world.
+        /// </summary>
+        private void ExtractWorldFromTxt()
+        {
+            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
+            try
+            {
+                gridMaxX = int.Parse(worldLines[0]);
+                gridMaxY = int.Parse(worldLines[1]);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Unable to parse maxX or maxY");
+                return;
+            }
+        }
+
+        /*private void OnDrawGizmos()
         {
             if (Application.isPlaying)
             {
@@ -166,6 +186,6 @@ namespace FarmSim.Grid
                     }
                 }
             }
-        }
+        }*/
     }
 }

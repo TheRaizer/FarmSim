@@ -26,7 +26,7 @@ public class MoveObject : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves some IPlaceable to its closest node.
+    ///     Moves some IPlaceable to its closest node.
     /// </summary>
     private void MovePlaceableToNode()
     {

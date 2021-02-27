@@ -21,7 +21,7 @@ public class Placeable : MonoBehaviour
     private Color invalidColor;
     private Color validColor;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         if(xDim % 2 == 0 || yDim % 2 == 0)
         {
@@ -35,11 +35,15 @@ public class Placeable : MonoBehaviour
     }
 
 
-    private void Update()
+    protected virtual void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            OnPlace();
+            if (grid.IsValidPlacement(Node, xDim, yDim))
+            {
+                grid.MakeDimensionsOccupied(Node, xDim, yDim);
+                OnPlace();
+            }
         }
     }
 
@@ -48,7 +52,7 @@ public class Placeable : MonoBehaviour
     /// </summary>
     private void InitColors()
     {
-        invalidColor = new Color(sprite.color.r, sprite.color.g / 2, sprite.color.b / 2);
+        invalidColor = new Color(sprite.color.r, sprite.color.g / 2, sprite.color.b / 2, sprite.color.a / 2);
         validColor = sprite.color;
     }
 
@@ -82,14 +86,9 @@ public class Placeable : MonoBehaviour
     /// <summary>
     ///     Places <see cref="objectToPlace"/> at the current node.
     /// </summary>
-    protected void OnPlace()
+    protected virtual void OnPlace()
     {
-        if (grid.IsValidPlacement(Node, xDim, yDim))
-        {
-            grid.MakeDimensionsOccupied(Node, xDim, yDim);
-            // when creating the gameObject make sure that the game objects also keeps the node and dimensions for when its removed.
-            var gameObject = Instantiate(objectToPlace);
-            gameObject.transform.position = Node.Position;
-        }
+        var obj = Instantiate(objectToPlace);
+        obj.transform.position = Node.Position;
     }
 }
