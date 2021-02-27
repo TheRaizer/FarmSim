@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Planteables\Dirt.cs" />
-    <Compile Include="Assets\Scripts\Planteables\Planteable.cs" />
-    <None Include="Assets\Scripts\Planteables\Planteables.asmdef" />
+    <Compile Include="Assets\Scripts\TimeBased\Planteables\Dirt.cs" />
+    <Compile Include="Assets\Scripts\TimeBased\Planteables\Planteable.cs" />
+    <None Include="Assets\Scripts\TimeBased\Planteables\Planteables.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -620,7 +620,12 @@
       <HintPath>C:/UnityProjects/FarmSim/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
-  <ItemGroup></ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="TimeBased.csproj">
+      <Project>{4EE736BA-02E6-B8D8-77F0-80B5809304F8}</Project>
+      <Name>TimeBased</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

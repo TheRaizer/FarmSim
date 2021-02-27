@@ -64,8 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Planteables\Dirt.cs" />
-    <Compile Include="Assets\Scripts\Planteables\Planteable.cs" />
+    <Compile Include="Assets\Scripts\TimeReliant\ITimeBased.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -684,6 +683,10 @@
     <ProjectReference Include="Placeables.csproj">
       <Project>{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}</Project>
       <Name>Placeables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Planteables.csproj">
+      <Project>{62657A79-AE7D-DE27-EF05-DDACB730674B}</Project>
+      <Name>Planteables</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
