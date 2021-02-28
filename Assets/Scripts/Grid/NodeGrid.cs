@@ -1,5 +1,9 @@
-﻿using System;
+﻿using FarmSim.Utility;
+using System;
+using System.Collections;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace FarmSim.Grid
@@ -16,18 +20,46 @@ namespace FarmSim.Grid
         /*[SerializeField] private float gridWorldX = 50;
         [SerializeField] private float gridWorldY = 50;*/
 
-        private int gridMaxX = 0;
-        private int gridMaxY = 0;
+        [SerializeField]
+        private int sectionNumber = 0;
+
+        private int worldMaxX = 150;
+        private int worldMaxY = 150;
+
+        private int sectionXStart = 0;
+        private int sectionYStart = 0;
+        private int sectionXEnd = 0;
+        private int sectionYEnd = 0;
+
+        private const int SECTION_SIZE_X = 30;
+        private const int SECTION_SIZE_Y = 30;
 
         private Node[,] grid;
+        private bool loading = false;
+
+        private ObjectPooler pooler = null;
 
         private void Awake()
         {
             /*gridMaxX = Mathf.FloorToInt(gridWorldX / Node.NODE_DIAMETER);
             gridMaxY = Mathf.FloorToInt(gridWorldY / Node.NODE_DIAMETER);*/
-            ExtractWorldFromTxt();
-            grid = new Node[gridMaxX, gridMaxY];
-            InitGrid();
+
+            ExtractGridDimensionsFromTxt();
+            CreateSection();
+            if (worldMaxX % SECTION_SIZE_X != 0 || worldMaxY % SECTION_SIZE_Y != 0)
+            {
+                Debug.LogError("Section size does is not valid for grid dimensions");
+            }
+
+            grid = new Node[SECTION_SIZE_X, SECTION_SIZE_Y];
+            InitSection();
+
+            pooler = FindObjectOfType<ObjectPooler>();
+        }
+
+        private void Start()
+        {
+            StartCoroutine(LoadSection());
         }
 
 
@@ -44,7 +76,7 @@ namespace FarmSim.Grid
             int x = Mathf.FloorToInt((vector.x - transform.position.x) / Node.NODE_DIAMETER);
             int y = Mathf.FloorToInt((vector.y - transform.position.y) / Node.NODE_DIAMETER);
 
-            if (IsInGrid(x, y))
+            if (IsInSection(x, y))
             {
                 return grid[x, y];
             }
@@ -72,7 +104,7 @@ namespace FarmSim.Grid
                 {
                     int nodeX = x + xStart;
                     int nodeY = y + yStart;
-                    if (IsInGrid(nodeX, nodeY) && grid[nodeX, nodeY].IsOccupied)
+                    if (IsInSection(nodeX, nodeY) && grid[nodeX, nodeY].IsOccupied)
                     {
                         return false;
                     }
@@ -98,13 +130,29 @@ namespace FarmSim.Grid
                 {
                     int nodeX = x + xStart;
                     int nodeY = y + yStart;
-                    if (IsInGrid(nodeX, nodeY))
+                    if (IsInSection(nodeX, nodeY))
                     {
                         grid[nodeX, nodeY].IsOccupied = true;
                     }
 
                 }
             }
+        }
+
+        /// <summary>
+        ///     Finds if a given x and y indices are in the section.
+        /// </summary>
+        /// <param name="x">x-index</param>
+        /// <param name="y">y-index</param>
+        /// <returns>true if it is in the section, otherwise false</returns>
+        private bool IsInSection(int x, int y)
+        {
+            if (x < SECTION_SIZE_X && y < SECTION_SIZE_Y && x >= 0 && y >= 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -115,7 +163,7 @@ namespace FarmSim.Grid
         /// <returns>true if it is in the grid, otherwise false</returns>
         private bool IsInGrid(int x, int y)
         {
-            if (x < gridMaxX && y < gridMaxY && x >= 0 && y >= 0)
+            if (x < worldMaxX && y < worldMaxY && x >= 0 && y >= 0)
             {
                 return true;
             }
@@ -127,11 +175,11 @@ namespace FarmSim.Grid
         /// Initialize's nodes into the <see cref="grid"/> and assigns a 
         /// world position to each.
         /// </summary>
-        private void InitGrid()
+        private void InitSection()
         {
-            for (int y = 0; y < gridMaxY; y++)
+            for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
-                for (int x = 0; x < gridMaxX; x++)
+                for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
                     Vector2 pos = GetNodePosition(x, y);
                     grid[x, y] = new Node(pos, x, y);
@@ -156,15 +204,17 @@ namespace FarmSim.Grid
 
         /// <summary>
         ///     Extracts a text file into a string array for each line.
-        ///     It will use this text file to create the world.
+        ///     It will use the first two lines to get the grids dimensions.
         /// </summary>
-        private void ExtractWorldFromTxt()
+        private void ExtractGridDimensionsFromTxt()
         {
             string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
             try
             {
-                gridMaxX = int.Parse(worldLines[0]);
-                gridMaxY = int.Parse(worldLines[1]);
+                worldMaxX = int.Parse(worldLines[0]);
+                worldMaxY = int.Parse(worldLines[1]);
+
+
             }
             catch (FormatException)
             {
@@ -173,19 +223,86 @@ namespace FarmSim.Grid
             }
         }
 
-        /*private void OnDrawGizmos()
+        private void CreateSection()
+        {
+            sectionXStart = sectionNumber * SECTION_SIZE_X;
+            sectionXEnd = sectionXStart + SECTION_SIZE_X;
+
+            sectionYStart = sectionNumber * SECTION_SIZE_Y;
+            sectionYEnd = sectionYStart + SECTION_SIZE_Y;
+        }
+
+        private IEnumerator LoadSection()
+        {
+            loading = true;
+            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
+
+            // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
+
+            for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
+            {
+                string[] line = worldLines[y].Split(' ');
+
+                for (int x = sectionXStart; x < sectionXEnd; x++)
+                {
+                    DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2);
+                    yield return null;
+                }
+            }
+            loading = false;
+        }
+
+        private void DetermineTileType(string val, int x, int y)
+        {
+            switch (val)
+            {
+                case "0":
+                    pooler.SpawnGameObject("Dirt", grid[x, y].Position, Quaternion.identity);
+                    break;
+                default:
+                    throw new ArgumentException($"No such tile for given code {val}");
+            }
+        }
+
+
+        private void WriteToWorldFile()
+        {
+            using (StreamWriter file =
+            new StreamWriter("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt"))
+            {
+                file.WriteLine(worldMaxX);
+                file.WriteLine(worldMaxY);
+                for (int y = 0; y < worldMaxY; y++)
+                {
+                    for (int x = 0; x < worldMaxX; x++)
+                    {
+                        if (x != worldMaxX - 1)
+                        {
+                            file.Write("0 ");
+                        }
+                        else
+                        {
+                            file.Write("0\n");
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void OnDrawGizmos()
         {
             if (Application.isPlaying)
             {
-                for (int y = 0; y < gridMaxY; y++)
+                for (int y = 0; y < SECTION_SIZE_Y; y++)
                 {
-                    for (int x = 0; x < gridMaxX; x++)
+                    for (int x = 0; x < SECTION_SIZE_X; x++)
                     {
                         Gizmos.DrawSphere(grid[x, y].Position, 0.1f);
                         Gizmos.DrawWireCube(grid[x, y].Position, new Vector3(Node.NODE_DIAMETER, Node.NODE_DIAMETER, 0));
                     }
                 }
             }
-        }*/
+        }
     }
 }

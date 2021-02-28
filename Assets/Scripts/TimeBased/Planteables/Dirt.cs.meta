@@ -3,7 +3,13 @@ guid: 18bc245920ce37c4a92d9179576dfa17
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - dryDirt: {fileID: 7426149088188341062, guid: 95927c3069fde5c4088c900149762ac6,
+      type: 3}
+  - hoedDirt: {fileID: 8709760007443054705, guid: 95927c3069fde5c4088c900149762ac6,
+      type: 3}
+  - wetHoedDirt: {fileID: 6143305274752093504, guid: 95927c3069fde5c4088c900149762ac6,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

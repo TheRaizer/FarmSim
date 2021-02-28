@@ -41,7 +41,7 @@ namespace FarmSim.Planteables
             {
                 if (watered)
                 {
-                    // grow plant by one day
+                    Plant.OnDayPass();
                 }
             }
         }

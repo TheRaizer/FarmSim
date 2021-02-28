@@ -42,20 +42,20 @@ namespace Tests
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 40));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
-            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 41));
-            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 41));
-            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 41));
+            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 6));
+            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 6));
+            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));
 
-            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 40));
-            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 40));
+            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 5));
+            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 5));
 
-            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 39));
-            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 39));
-            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 39));
+            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 4));
+            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 4));
+            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 4));
 
             Assert.IsFalse(grid.IsValidPlacement(nodeTopLeft, 1, 1));
             Assert.IsFalse(grid.IsValidPlacement(nodeTopMid, 1, 1));
@@ -78,20 +78,20 @@ namespace Tests
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 40));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
-            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 41));
-            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 41));
-            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 41));
+            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 6));
+            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 6));
+            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));
 
-            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 40));
-            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 40));
+            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 5));
+            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 5));
 
-            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 39, Node.NODE_DIAMETER * 39));
-            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 40, Node.NODE_DIAMETER * 39));
-            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 41, Node.NODE_DIAMETER * 39));
+            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 4));
+            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 4));
+            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 4));
 
             Assert.IsTrue(nodeTopLeft.IsOccupied);
             Assert.IsTrue(nodeTopMid.IsOccupied);

@@ -64,7 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\TimeReliant\ITimeBased.cs" />
+    <Compile Include="Assets\Scripts\Utility\ObjectPooler.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -676,6 +676,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="TimeBased.csproj">
+      <Project>{4EE736BA-02E6-B8D8-77F0-80B5809304F8}</Project>
+      <Name>TimeBased</Name>
+    </ProjectReference>
     <ProjectReference Include="Grid.csproj">
       <Project>{52F45092-1270-AD02-C824-85BD9C892A6A}</Project>
       <Name>Grid</Name>
