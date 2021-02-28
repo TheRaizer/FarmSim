@@ -1,0 +1,6 @@
+.Packages
+.ProjectSettings
+.obj
+.Logs
+.Library
+*.meta
