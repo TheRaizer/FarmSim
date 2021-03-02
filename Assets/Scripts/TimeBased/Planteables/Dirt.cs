@@ -27,6 +27,8 @@ namespace FarmSim.Planteables
         private SpriteRenderer spriteRenderer = null;
         public Planteable Plant { get; set; } = null;
 
+        public TileTypes TileType { get; } = TileTypes.DIRT;
+
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
