@@ -1,4 +1,6 @@
-﻿using FarmSim.TimeBased;
+﻿using FarmSim.Enums;
+using FarmSim.Grid;
+using FarmSim.TimeBased;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -8,7 +10,7 @@ namespace FarmSim.Planteables
     ///         Manages the state of the dirt and the plant it contains if there is any.
     ///     </summary>
     /// </class>
-    public class Dirt : MonoBehaviour, ITimeBased
+    public class Dirt : MonoBehaviour, ITimeBased, IInteractable
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
@@ -50,10 +52,12 @@ namespace FarmSim.Planteables
         ///     Hoes the dirt changing it from dried dirt to hoed dirt.
         ///     Reinitializes the number of days before it returns back to dried dirt.
         /// </summary>
-        public void Hoe()
+        private void Hoe()
         {
+            Debug.Log("attempt hoe");
             if (!hoed)
             {
+                Debug.Log("hoed");
                 hoed = true;
                 daysTillRevert = Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
                 spriteRenderer.sprite = hoedDirt;
@@ -83,6 +87,19 @@ namespace FarmSim.Planteables
                 hoed = false;
                 watered = false;
                 spriteRenderer.sprite = dryDirt;
+            }
+        }
+
+        public void OnInteract(ToolTypes toolType)
+        {
+            switch (toolType)
+            {
+                case ToolTypes.HOE:
+                    Hoe();
+                    break;
+                default:
+                    throw new System.Exception($"Not valid tooltype {toolType}");
+
             }
         }
     }

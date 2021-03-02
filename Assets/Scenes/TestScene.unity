@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 374232164}
   - component: {fileID: 374232166}
   - component: {fileID: 374232167}
+  - component: {fileID: 374232168}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -195,6 +196,18 @@ MonoBehaviour:
   - id: Dirt
     numOfGameObjects: 900
     prefab: {fileID: 656009546809215653, guid: 200eb7ff15685534e929feba342bd171, type: 3}
+--- !u!114 &374232168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374232163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d26d4c22e60446408cf961491ee9354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1310852972
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1729264792
 SpriteRenderer:
   m_ObjectHideFlags: 0

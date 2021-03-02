@@ -1,44 +1,47 @@
 ﻿using UnityEngine;
 using FarmSim.Grid;
 
-/// <class name="MoveObject">
-///     <summary>
-///         Manages the movement of a single IPlaceable object at a time.
-///     </summary>
-/// </class>
-public class MoveObject : MonoBehaviour
+
+namespace FarmSim.Placeable
 {
-    private NodeGrid grid;
-    public Placeable AttachedObject { private get; set; }
-    private Node currentNode = null;
-
-    private void Awake()
+    /// <class name="MoveObject">
+    ///     <summary>
+    ///         Manages the movement of a single IPlaceable object at a time.
+    ///     </summary>
+    /// </class>
+    public class MoveObject : MonoBehaviour
     {
-        grid = FindObjectOfType<NodeGrid>();
-    }
+        private NodeGrid grid;
+        public Placeable AttachedObject { private get; set; } = null;
+        private Node currentNode = null;
 
-    private void Update()
-    {
-        if(AttachedObject != null)
+        private void Awake()
         {
-            MovePlaceableToNode();
+            grid = FindObjectOfType<NodeGrid>();
         }
-    }
 
-    /// <summary>
-    ///     Moves some IPlaceable to its closest node.
-    /// </summary>
-    private void MovePlaceableToNode()
-    {
-        Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Node node = grid.GetNodeFromVector2(worldPosition);
-
-        if (node != null && (Vector2)AttachedObject.transform.position != node.Position)
+        private void Update()
         {
-            currentNode = node;
+            if (AttachedObject != null)
+            {
+                MovePlaceableToNode();
+            }
+        }
 
-            AttachedObject.Node = currentNode;
-            AttachedObject.ChangePosition(currentNode.Position);
+        /// <summary>
+        ///     Moves some IPlaceable to its closest node.
+        /// </summary>
+        private void MovePlaceableToNode()
+        {
+            Node node = grid.GetNodeFromMousePosition();
+
+            if (node != null && (Vector2)AttachedObject.transform.position != node.Position)
+            {
+                currentNode = node;
+
+                AttachedObject.Node = currentNode;
+                AttachedObject.ChangePosition(currentNode.Position);
+            }
         }
     }
 }

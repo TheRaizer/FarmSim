@@ -1,7 +1,8 @@
 {
     "name": "Grid",
     "references": [
-        "GUID:eaaa8f1176726214f9205db5c7175a7e"
+        "GUID:eaaa8f1176726214f9205db5c7175a7e",
+        "GUID:25f9caa9a82b19247af2725d2be14639"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

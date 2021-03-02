@@ -64,6 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Grid\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Grid\Node.cs" />
     <Compile Include="Assets\Scripts\Grid\NodeGrid.cs" />
     <None Include="Assets\Scripts\Grid\Grid.asmdef" />
@@ -625,6 +626,10 @@
     <ProjectReference Include="Utility.csproj">
       <Project>{813E9892-C0C8-D57D-6487-5582D295B456}</Project>
       <Name>Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="Enums.csproj">
+      <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
+      <Name>Enums</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

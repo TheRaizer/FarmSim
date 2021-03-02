@@ -223,6 +223,14 @@ namespace FarmSim.Grid
             }
         }
 
+        public Node GetNodeFromMousePosition()
+        {
+            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Node node = GetNodeFromVector2(worldPosition);
+
+            return node;
+        }
+
         private void CreateSection()
         {
             sectionXStart = sectionNumber * SECTION_SIZE_X;
@@ -254,13 +262,19 @@ namespace FarmSim.Grid
 
         private void DetermineTileType(string val, int x, int y)
         {
+            GameObject spawnedObject = null;
             switch (val)
             {
                 case "0":
-                    pooler.SpawnGameObject("Dirt", grid[x, y].Position, Quaternion.identity);
+                    spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Position, Quaternion.identity);
                     break;
                 default:
                     throw new ArgumentException($"No such tile for given code {val}");
+            }
+
+            if(spawnedObject.TryGetComponent(out IInteractable interactable))
+            {
+                grid[x, y].Interactable = interactable;
             }
         }
 

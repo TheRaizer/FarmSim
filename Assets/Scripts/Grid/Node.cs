@@ -20,6 +20,8 @@ namespace FarmSim.Grid
         public readonly int x = 0;
         public readonly int y = 0;
 
+
+        public IInteractable Interactable { get; set; }
         /// <param name="position">The world position of the node</param>
         /// <param name="x">The x-indices of the node</param>
         /// <param name="y">The y-indices of the node</param>

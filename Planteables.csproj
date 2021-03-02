@@ -625,6 +625,14 @@
       <Project>{4EE736BA-02E6-B8D8-77F0-80B5809304F8}</Project>
       <Name>TimeBased</Name>
     </ProjectReference>
+    <ProjectReference Include="Grid.csproj">
+      <Project>{52F45092-1270-AD02-C824-85BD9C892A6A}</Project>
+      <Name>Grid</Name>
+    </ProjectReference>
+    <ProjectReference Include="Enums.csproj">
+      <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
+      <Name>Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
