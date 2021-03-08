@@ -64,9 +64,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\TimeBased\Planteables\Dirt.cs" />
-    <Compile Include="Assets\Scripts\TimeBased\Planteables\Planteable.cs" />
-    <None Include="Assets\Scripts\TimeBased\Planteables\Planteables.asmdef" />
+    <Compile Include="Assets\Scripts\Planteables\Dirt.cs" />
+    <Compile Include="Assets\Scripts\Planteables\Planteable.cs" />
+    <None Include="Assets\Scripts\Planteables\Planteables.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

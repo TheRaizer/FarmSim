@@ -7,11 +7,14 @@ namespace FarmSim.Player
     public class Player : MonoBehaviour
     {
         private ITool tool;
+        private Hoe hoe;
+        private WateringCan wateringCan;
 
         private void Awake()
         {
-            //TEST LINE
-            tool = new Hoe(GetComponent<NodeGrid>());
+            NodeGrid grid = GetComponent<NodeGrid>();
+            hoe = new Hoe(grid);
+            wateringCan = new WateringCan(grid);
         }
 
         private void LateUpdate()
@@ -27,6 +30,14 @@ namespace FarmSim.Player
                 {
                     tool.OnUse();
                 }
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                tool = hoe;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                tool = wateringCan;
             }
         }
     }

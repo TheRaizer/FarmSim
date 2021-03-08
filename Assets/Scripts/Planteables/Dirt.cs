@@ -21,11 +21,11 @@ namespace FarmSim.Planteables
 
         private int daysTillRevert = 0;
 
-        private const int MAX_HOED_DAYS = 6;
-        private const int MIN_HOED_DAYS = 2;
+        private const int MAX_HOED_DAYS = 8;
+        private const int MIN_HOED_DAYS = 3;
 
         private SpriteRenderer spriteRenderer = null;
-        public Planteable Plant { get; set; } = null;
+        public Planteable Plant { private get; set; } = null;
 
         public TileTypes TileType { get; } = TileTypes.DIRT;
 
@@ -36,7 +36,7 @@ namespace FarmSim.Planteables
 
         public void OnDayPass()
         {
-            if (Plant != null)
+            if (Plant == null)
             {
                 daysTillRevert--;
                 CheckIfDried();
@@ -45,7 +45,7 @@ namespace FarmSim.Planteables
             {
                 if (watered)
                 {
-                    Plant.OnDayPass();
+                    Plant.Grow();
                 }
             }
         }
@@ -56,10 +56,8 @@ namespace FarmSim.Planteables
         /// </summary>
         private void Hoe()
         {
-            Debug.Log("attempt hoe");
             if (!hoed)
             {
-                Debug.Log("hoed");
                 hoed = true;
                 daysTillRevert = Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
                 spriteRenderer.sprite = hoedDirt;
@@ -92,12 +90,21 @@ namespace FarmSim.Planteables
             }
         }
 
-        public void OnInteract(ToolTypes toolType)
+        public void OnInteract(ToolTypes toolType, GameObject gameObject)
         {
             switch (toolType)
             {
                 case ToolTypes.HOE:
                     Hoe();
+                    break;
+                case ToolTypes.WATERING_CAN:
+                    Water();
+                    break;
+                case ToolTypes.OTHER:
+                    if(gameObject != null && gameObject.TryGetComponent(out Planteable plant))
+                    {
+                        Plant = plant;
+                    }
                     break;
                 default:
                     throw new System.Exception($"Not valid tooltype {toolType}");

@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace FarmSim.Grid
@@ -20,8 +18,7 @@ namespace FarmSim.Grid
         /*[SerializeField] private float gridWorldX = 50;
         [SerializeField] private float gridWorldY = 50;*/
 
-        [SerializeField]
-        private int sectionNumber = 0;
+        [SerializeField] private int sectionNumber = 0;
 
         private int worldMaxX = 150;
         private int worldMaxY = 150;
@@ -36,6 +33,7 @@ namespace FarmSim.Grid
 
         private Node[,] grid;
         private bool loading = false;
+        public bool LoadedSection { get; private set; } = false;
 
         private ObjectPooler pooler = null;
 
@@ -242,22 +240,26 @@ namespace FarmSim.Grid
 
         private IEnumerator LoadSection()
         {
-            loading = true;
-            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
-
-            // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
-
-            for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
+            if (!loading)
             {
-                string[] line = worldLines[y].Split(' ');
+                loading = true;
+                string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
 
-                for (int x = sectionXStart; x < sectionXEnd; x++)
+                // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
+
+                for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
                 {
-                    DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2);
-                    yield return null;
+                    string[] line = worldLines[y].Split(' ');
+
+                    for (int x = sectionXStart; x < sectionXEnd; x++)
+                    {
+                        DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2);
+                        yield return null;
+                    }
                 }
+                loading = false;
+                LoadedSection = true;
             }
-            loading = false;
         }
 
         private void DetermineTileType(string val, int x, int y)

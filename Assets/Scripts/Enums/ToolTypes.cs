@@ -7,5 +7,6 @@ namespace FarmSim.Enums
         WATERING_CAN,
         AXE,
         PICKAXE,
+        OTHER,
     }
 }
