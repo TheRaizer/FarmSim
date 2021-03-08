@@ -18,30 +18,37 @@ namespace FarmSim.Planteables
         private SpriteRenderer spriteRenderer;
 
         private int spriteChangeInterval = 0;
-        private int currentGrowthDay = 0;
-        private int spriteIdx = 0;
+        private int currentGrowthDay = 1;
+        private int spriteIdx = 1;
 
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = spriteLifeCycle[spriteIdx];
-            spriteChangeInterval = Mathf.CeilToInt(daysToGrow / spriteLifeCycle.Count);
+            spriteRenderer.sprite = spriteLifeCycle[0];
+            spriteChangeInterval = Mathf.CeilToInt((float)daysToGrow / spriteLifeCycle.Count);
+            Debug.Log(spriteChangeInterval);
         }
 
         public void Grow()
         {
-            if (currentGrowthDay >= daysToGrow)
+            if (currentGrowthDay > daysToGrow)
                 return;
-            currentGrowthDay++;
             CheckSpriteChange();
+            currentGrowthDay++;
         }
 
         private void CheckSpriteChange()
         {
-            if (currentGrowthDay == spriteChangeInterval * spriteIdx)
+            // if its on the interval to change and the sprite index isnt the last sprite
+            if (currentGrowthDay == spriteChangeInterval * spriteIdx && spriteIdx != spriteLifeCycle.Count - 1)
             {
-                spriteIdx++;
                 spriteRenderer.sprite = spriteLifeCycle[spriteIdx];
+                spriteIdx++;
+            }
+            // if the current growth day is the last day thats when we can assign the last sprite
+            else if (currentGrowthDay == daysToGrow)
+            {
+                spriteRenderer.sprite = spriteLifeCycle[spriteLifeCycle.Count - 1];
             }
         }
     }

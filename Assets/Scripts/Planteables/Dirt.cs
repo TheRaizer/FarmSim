@@ -1,6 +1,7 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.TimeBased;
+using System;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -59,7 +60,7 @@ namespace FarmSim.Planteables
             if (!hoed)
             {
                 hoed = true;
-                daysTillRevert = Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
+                daysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
                 spriteRenderer.sprite = hoedDirt;
             }
         }
@@ -90,24 +91,31 @@ namespace FarmSim.Planteables
             }
         }
 
-        public void OnInteract(ToolTypes toolType, GameObject gameObject)
+        public void OnInteract(ToolTypes toolType, GameObject gameObject, Action onSuccessful)
         {
             switch (toolType)
             {
                 case ToolTypes.HOE:
                     Hoe();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.WATERING_CAN:
                     Water();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.OTHER:
-                    if(gameObject != null && gameObject.TryGetComponent(out Planteable plant))
+                    // check if this gameObject contains a planteable
+                    if(gameObject != null && gameObject.TryGetComponent<Planteable>(out _) && hoed)
                     {
-                        Plant = plant;
+                        Debug.Log("Plant");
+                        var obj = Instantiate(gameObject);
+                        obj.transform.position = transform.position;
+                        Plant = obj.GetComponent<Planteable>();
+                        onSuccessful?.Invoke();
                     }
                     break;
                 default:
-                    throw new System.Exception($"Not valid tooltype {toolType}");
+                    throw new Exception($"Not valid tooltype {toolType}");
 
             }
         }

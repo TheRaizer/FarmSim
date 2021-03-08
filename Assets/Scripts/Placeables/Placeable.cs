@@ -16,10 +16,10 @@ namespace FarmSim.Placeable
         [SerializeField] protected int yDim = 0;
         [SerializeField] protected GameObject objectToPlace;
 
+        protected NodeGrid grid = null;
         public Node Node { get; set; }
 
         private SpriteRenderer sprite = null;
-        private NodeGrid grid = null;
         private Color invalidColor;
         private Color validColor;
 
