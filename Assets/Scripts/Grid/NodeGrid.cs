@@ -15,49 +15,27 @@ namespace FarmSim.Grid
 
     public class NodeGrid : MonoBehaviour
     {
-        /*[SerializeField] private float gridWorldX = 50;
-        [SerializeField] private float gridWorldY = 50;*/
+        [SerializeField] private int sectionNum = 0;
 
-        [SerializeField] private int sectionNumber = 0;
-
-        private int worldMaxX = 150;
-        private int worldMaxY = 150;
-
-        private int sectionXStart = 0;
-        private int sectionYStart = 0;
-        private int sectionXEnd = 0;
-        private int sectionYEnd = 0;
+        private readonly int worldMaxX = 150;
+        private readonly int worldMaxY = 150;
 
         private const int SECTION_SIZE_X = 30;
         private const int SECTION_SIZE_Y = 30;
 
         private Node[,] grid;
-        private bool loading = false;
+        private WorldLoader worldLoader = null;
         public bool LoadedSection { get; private set; } = false;
-
-        private ObjectPooler pooler = null;
 
         private void Awake()
         {
-            /*gridMaxX = Mathf.FloorToInt(gridWorldX / Node.NODE_DIAMETER);
-            gridMaxY = Mathf.FloorToInt(gridWorldY / Node.NODE_DIAMETER);*/
-
-            ExtractGridDimensionsFromTxt();
-            CreateSection();
-            if (worldMaxX % SECTION_SIZE_X != 0 || worldMaxY % SECTION_SIZE_Y != 0)
-            {
-                Debug.LogError("Section size does is not valid for grid dimensions");
-            }
-
-            grid = new Node[SECTION_SIZE_X, SECTION_SIZE_Y];
-            InitSection();
-
-            pooler = FindObjectOfType<ObjectPooler>();
+            worldLoader = new WorldLoader(transform.position, sectionNum, FindObjectOfType<ObjectPooler>());
+            grid = worldLoader.InitGrid();
         }
 
         private void Start()
         {
-            StartCoroutine(LoadSection());
+            StartCoroutine(worldLoader.LoadSection(grid, () => LoadedSection = true));
         }
 
 
@@ -169,58 +147,6 @@ namespace FarmSim.Grid
             return false;
         }
 
-        /// <summary>
-        /// Initialize's nodes into the <see cref="grid"/> and assigns a 
-        /// world position to each.
-        /// </summary>
-        private void InitSection()
-        {
-            for (int y = 0; y < SECTION_SIZE_Y; y++)
-            {
-                for (int x = 0; x < SECTION_SIZE_X; x++)
-                {
-                    Vector2 pos = GetNodePosition(x, y);
-                    grid[x, y] = new Node(pos, x, y);
-                }
-            }
-        }
-
-        /// <summary>
-        ///     Gets the nodes position given x and y indices.
-        /// </summary>
-        /// <param name="x">x-index</param>
-        /// <param name="y">y-index</param>
-        /// <returns><see cref="Vector2"/> position of a node at indices x and y</returns>
-        private Vector2 GetNodePosition(int x, int y)
-        {
-            float xPos = x * Node.NODE_DIAMETER + Node.NODE_RADIUS;
-            float yPos = y * Node.NODE_DIAMETER + Node.NODE_RADIUS;
-
-            Vector2 pos = new Vector2(xPos + transform.position.x, yPos + transform.position.y);
-            return pos;
-        }
-
-        /// <summary>
-        ///     Extracts a text file into a string array for each line.
-        ///     It will use the first two lines to get the grids dimensions.
-        /// </summary>
-        private void ExtractGridDimensionsFromTxt()
-        {
-            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
-            try
-            {
-                worldMaxX = int.Parse(worldLines[0]);
-                worldMaxY = int.Parse(worldLines[1]);
-
-
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Unable to parse maxX or maxY");
-                return;
-            }
-        }
-
         public Node GetNodeFromMousePosition()
         {
             Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -233,85 +159,6 @@ namespace FarmSim.Grid
         {
             return grid[x, y];
         }
-
-        private void CreateSection()
-        {
-            sectionXStart = sectionNumber * SECTION_SIZE_X;
-            sectionXEnd = sectionXStart + SECTION_SIZE_X;
-
-            sectionYStart = sectionNumber * SECTION_SIZE_Y;
-            sectionYEnd = sectionYStart + SECTION_SIZE_Y;
-        }
-
-        private IEnumerator LoadSection()
-        {
-            if (!loading)
-            {
-                loading = true;
-                string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
-
-                // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
-
-                for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
-                {
-                    string[] line = worldLines[y].Split(' ');
-
-                    for (int x = sectionXStart; x < sectionXEnd; x++)
-                    {
-                        DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2);
-                        yield return null;
-                    }
-                }
-                loading = false;
-                LoadedSection = true;
-            }
-        }
-
-        private void DetermineTileType(string val, int x, int y)
-        {
-            GameObject spawnedObject = null;
-            switch (val)
-            {
-                case "0":
-                    spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Position, Quaternion.identity);
-                    break;
-                default:
-                    throw new ArgumentException($"No such tile for given code {val}");
-            }
-
-            if(spawnedObject.TryGetComponent(out IInteractable interactable))
-            {
-                grid[x, y].Interactable = interactable;
-                interactable.X = x;
-                interactable.Y = y;
-            }
-        }
-
-
-        private void WriteToWorldFile()
-        {
-            using (StreamWriter file =
-            new StreamWriter("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt"))
-            {
-                file.WriteLine(worldMaxX);
-                file.WriteLine(worldMaxY);
-                for (int y = 0; y < worldMaxY; y++)
-                {
-                    for (int x = 0; x < worldMaxX; x++)
-                    {
-                        if (x != worldMaxX - 1)
-                        {
-                            file.Write("0 ");
-                        }
-                        else
-                        {
-                            file.Write("0\n");
-                        }
-                    }
-                }
-            }
-        }
-
 
       /*  private void OnDrawGizmos()
         {

@@ -2,15 +2,18 @@
 using UnityEngine;
 
 
-[System.Serializable]
-public class PlantItem
+namespace FarmSim.Player
 {
-    [field: SerializeField] public PlantTypes PlantType { get; private set; }
-    [field: SerializeField] public int Price { get; private set; }
-    [field: SerializeField] public int Amt { get; private set; } = 0;
-
-    public void AddToAmt(int amt)
+    [System.Serializable]
+    public class PlantItem
     {
-        Amt += amt;
+        [field: SerializeField] public PlantTypes PlantType { get; private set; }
+        [field: SerializeField] public int Price { get; private set; }
+        [field: SerializeField] public int Amt { get; private set; } = 0;
+
+        public void AddToAmt(int amt)
+        {
+            Amt += amt;
+        }
     }
 }
