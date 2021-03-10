@@ -1,5 +1,7 @@
-﻿
-public enum TileTypes
+﻿namespace FarmSim.Enums
 {
-    DIRT,
+    public enum TileTypes
+    {
+        Dirt,
+    }
 }

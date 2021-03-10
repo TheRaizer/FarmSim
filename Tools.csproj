@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Player\Tools\Hoe.cs" />
     <Compile Include="Assets\Scripts\Player\Tools\ITool.cs" />
+    <Compile Include="Assets\Scripts\Player\Tools\Sickle.cs" />
     <Compile Include="Assets\Scripts\Player\Tools\WateringCan.cs" />
     <None Include="Assets\Scripts\Player\Tools\Tools.asmdef" />
     <Reference Include="UnityEngine">

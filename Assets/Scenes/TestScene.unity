@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 374232167}
   - component: {fileID: 374232168}
   - component: {fileID: 374232169}
+  - component: {fileID: 374232170}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -221,6 +222,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eca29fdedd6f124fa6394189c4cde85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &374232170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 374232163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e37b0bc95bae5234ab70f9abd9ec9b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantItems:
+  - <PlantType>k__BackingField: 0
+    <Price>k__BackingField: 0
+    <Amt>k__BackingField: 0
+  - <PlantType>k__BackingField: 1
+    <Price>k__BackingField: 0
+    <Amt>k__BackingField: 0
 --- !u!1 &1310852972
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,7 +294,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.3558106
+  orthographic size: 6.7847743
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -413,6 +433,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlantPlaceable
+      objectReference: {fileID: 0}
+    - target: {fileID: 7301315993295839137, guid: 16ba59f1180778244808608de007aa2d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7301315993295839139, guid: 16ba59f1180778244808608de007aa2d,
         type: 3}

@@ -3,10 +3,11 @@ namespace FarmSim.Enums
 {
     public enum ToolTypes
     {
-        HOE,
-        WATERING_CAN,
-        AXE,
-        PICKAXE,
-        OTHER,
+        Hoe,
+        WateringCan,
+        Sickle,
+        Axe,
+        Pickaxe,
+        Other,
     }
 }

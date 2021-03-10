@@ -20,7 +20,7 @@ namespace FarmSim.Placeable
 
         protected override void OnPlace()
         {
-            Node.Interactable.OnInteract(ToolTypes.OTHER, objectToPlace, () => grid.MakeDimensionsOccupied(Node, xDim, yDim));
+            Node.Interactable.OnInteract(ToolTypes.Other, objectToPlace, () => grid.MakeDimensionsOccupied(Node, xDim, yDim));
         }
     }
 }

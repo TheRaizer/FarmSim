@@ -26,13 +26,18 @@ namespace FarmSim.Planteables
         private const int MIN_HOED_DAYS = 3;
 
         private SpriteRenderer spriteRenderer = null;
+        private NodeGrid grid = null;
+
         public Planteable Plant { private get; set; } = null;
 
-        public TileTypes TileType { get; } = TileTypes.DIRT;
+        public TileTypes TileType { get; } = TileTypes.Dirt;
+        public int X { get; set; }
+        public int Y { get; set; }
 
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            grid = FindObjectOfType<NodeGrid>();
         }
 
         public void OnDayPass()
@@ -68,13 +73,23 @@ namespace FarmSim.Planteables
         /// <summary>
         ///     Waters the dirt and if the dirt is hoed it will make the sprite change.
         /// </summary>
-        public void Water()
+        private void Water()
         {
             watered = true;
 
             if (hoed)
             {
                 spriteRenderer.sprite = wetHoedDirt;
+            }
+        }
+
+        private void Sickle()
+        {
+            if (Plant != null && Plant.CanHarvest)
+            {
+                Plant.OnHarvest();
+                Node node = grid.GetNodeFromXY(X, Y);
+                node.IsOccupied = false;
             }
         }
 
@@ -95,19 +110,22 @@ namespace FarmSim.Planteables
         {
             switch (toolType)
             {
-                case ToolTypes.HOE:
+                case ToolTypes.Hoe:
                     Hoe();
                     onSuccessful?.Invoke();
                     break;
-                case ToolTypes.WATERING_CAN:
+                case ToolTypes.WateringCan:
                     Water();
                     onSuccessful?.Invoke();
                     break;
-                case ToolTypes.OTHER:
+                case ToolTypes.Sickle:
+                    Sickle();
+                    onSuccessful?.Invoke();
+                    break;
+                case ToolTypes.Other:
                     // check if this gameObject contains a planteable
                     if(gameObject != null && gameObject.TryGetComponent<Planteable>(out _) && hoed)
                     {
-                        Debug.Log("Plant");
                         var obj = Instantiate(gameObject);
                         obj.transform.position = transform.position;
                         Plant = obj.GetComponent<Planteable>();
@@ -115,8 +133,8 @@ namespace FarmSim.Planteables
                     }
                     break;
                 default:
-                    throw new Exception($"Not valid tooltype {toolType}");
-
+                    Debug.Log($"Do nothing with tooltype {toolType}");
+                    break;
             }
         }
     }

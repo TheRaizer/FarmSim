@@ -8,6 +8,8 @@ namespace FarmSim.Utility
         [SerializeField]
         private List<Pool> pools;
 
+        private readonly Dictionary<string, Pool> poolDict = new Dictionary<string, Pool>();
+
         [System.Serializable]
         public class Pool
         {
@@ -33,12 +35,13 @@ namespace FarmSim.Utility
                     gameObject.transform.position = Vector3.zero;
                     p.objects.Enqueue(gameObject);
                 }
+                poolDict.Add(p.id, p);
             }
         }
 
         public GameObject SpawnGameObject(string id, Vector2 position, Quaternion rotation)
         {
-            Pool pool = pools.Find(p => p.id == id);
+            Pool pool = poolDict[id];
 
             var gameObject = pool.objects.Dequeue();
             gameObject.transform.position = position;

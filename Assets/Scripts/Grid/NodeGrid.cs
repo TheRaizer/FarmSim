@@ -229,6 +229,11 @@ namespace FarmSim.Grid
             return node;
         }
 
+        public Node GetNodeFromXY(int x, int y)
+        {
+            return grid[x, y];
+        }
+
         private void CreateSection()
         {
             sectionXStart = sectionNumber * SECTION_SIZE_X;
@@ -277,6 +282,8 @@ namespace FarmSim.Grid
             if(spawnedObject.TryGetComponent(out IInteractable interactable))
             {
                 grid[x, y].Interactable = interactable;
+                interactable.X = x;
+                interactable.Y = y;
             }
         }
 
@@ -306,7 +313,7 @@ namespace FarmSim.Grid
         }
 
 
-        private void OnDrawGizmos()
+      /*  private void OnDrawGizmos()
         {
             if (Application.isPlaying)
             {
@@ -319,6 +326,6 @@ namespace FarmSim.Grid
                     }
                 }
             }
-        }
+        }*/
     }
 }

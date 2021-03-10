@@ -1,5 +1,6 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Tools;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Player
@@ -9,12 +10,14 @@ namespace FarmSim.Player
         private ITool tool;
         private Hoe hoe;
         private WateringCan wateringCan;
+        private Sickle sickle;
 
         private void Awake()
         {
             NodeGrid grid = GetComponent<NodeGrid>();
             hoe = new Hoe(grid);
             wateringCan = new WateringCan(grid);
+            sickle = new Sickle(grid);
         }
 
         private void LateUpdate()
@@ -38,6 +41,10 @@ namespace FarmSim.Player
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
                 tool = wateringCan;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                tool = sickle;
             }
         }
     }

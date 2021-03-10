@@ -16,7 +16,7 @@ namespace FarmSim.Tools
         public void OnUse()
         {
             Node node = grid.GetNodeFromMousePosition();
-            node.Interactable.OnInteract(ToolTypes.WATERING_CAN);
+            node.Interactable.OnInteract(ToolTypes.WateringCan);
         }
     }
 }

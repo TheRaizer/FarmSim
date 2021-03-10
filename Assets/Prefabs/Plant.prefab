@@ -50,6 +50,9 @@ MonoBehaviour:
   - {fileID: -7844721157514641405, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   - {fileID: -7229993772515318892, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   - {fileID: -585230308400216287, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
+  plantType: 0
+  maxAmtToDrop: 5
+  minAmtToDrop: 2
 --- !u!212 &800048636282084858
 SpriteRenderer:
   m_ObjectHideFlags: 0

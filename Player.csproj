@@ -64,6 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Player\Inventory\PlantItem.cs" />
+    <Compile Include="Assets\Scripts\Player\Inventory\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <None Include="Assets\Scripts\Player\Player.asmdef" />
     <Reference Include="UnityEngine">
@@ -627,6 +629,10 @@
     <ProjectReference Include="Tools.csproj">
       <Project>{0E8E496E-4EAE-9F06-851B-45597D206F31}</Project>
       <Name>Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="Enums.csproj">
+      <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
+      <Name>Enums</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
