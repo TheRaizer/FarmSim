@@ -1,6 +1,7 @@
 ﻿using FarmSim.Utility;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -158,6 +159,28 @@ namespace FarmSim.Grid
         public Node GetNodeFromXY(int x, int y)
         {
             return grid[x, y];
+        }
+
+        public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)
+        {
+            List<Node> nodes = new List<Node>();
+            int yStart = middleNode.y - yDim / 2;
+            int xStart = middleNode.x - xDim / 2;
+
+            for (int y = 0; y < yDim; y++)
+            {
+                for (int x = 0; x < xDim; x++)
+                {
+                    int nodeX = x + xStart;
+                    int nodeY = y + yStart;
+                    if (IsInSection(nodeX, nodeY))
+                    {
+                        nodes.Add(grid[nodeX, nodeY]);
+                    }
+                }
+            }
+
+            return nodes;
         }
 
       /*  private void OnDrawGizmos()

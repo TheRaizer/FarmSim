@@ -64,11 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player\Tools\Hoe.cs" />
-    <Compile Include="Assets\Scripts\Player\Tools\ITool.cs" />
-    <Compile Include="Assets\Scripts\Player\Tools\Sickle.cs" />
     <Compile Include="Assets\Scripts\Player\Tools\Tool.cs" />
-    <Compile Include="Assets\Scripts\Player\Tools\WateringCan.cs" />
     <None Include="Assets\Scripts\Player\Tools\Tools.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>

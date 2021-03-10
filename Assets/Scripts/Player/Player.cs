@@ -1,5 +1,7 @@
-﻿using FarmSim.Grid;
+﻿using FarmSim.Enums;
+using FarmSim.Grid;
 using FarmSim.Tools;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +9,17 @@ namespace FarmSim.Player
 {
     public class Player : MonoBehaviour
     {
-        private ITool tool;
-        private Hoe hoe;
-        private WateringCan wateringCan;
-        private Sickle sickle;
+        private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
+        private Tool equippedTool;
 
         private void Awake()
         {
             NodeGrid grid = GetComponent<NodeGrid>();
-            hoe = new Hoe(grid);
-            wateringCan = new WateringCan(grid);
-            sickle = new Sickle(grid);
+
+            foreach(ToolTypes tool in Enum.GetValues(typeof(ToolTypes)))
+            {
+                tools.Add(tool, new Tool(grid, tool));
+            }
         }
 
         private void LateUpdate()
@@ -29,22 +31,22 @@ namespace FarmSim.Player
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (tool != null)
+                if (equippedTool != null)
                 {
-                    tool.OnUse();
+                    equippedTool.OnUse();
                 }
             }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                tool = hoe;
+                equippedTool = tools[ToolTypes.Hoe];
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                tool = wateringCan;
+                equippedTool = tools[ToolTypes.WateringCan];
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3))
             {
-                tool = sickle;
+                equippedTool = tools[ToolTypes.Sickle];
             }
         }
     }
