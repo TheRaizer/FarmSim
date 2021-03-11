@@ -64,7 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player\Inventory\PlantItem.cs" />
+    <Compile Include="Assets\Scripts\Player\Inventory\Item.cs" />
+    <Compile Include="Assets\Scripts\Player\Inventory\ItemType.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <None Include="Assets\Scripts\Player\Player.asmdef" />

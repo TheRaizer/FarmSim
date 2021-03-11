@@ -2,7 +2,8 @@
     "name": "Placeables",
     "references": [
         "GUID:3926798bbc9965742b0dc016696b6d2e",
-        "GUID:25f9caa9a82b19247af2725d2be14639"
+        "GUID:25f9caa9a82b19247af2725d2be14639",
+        "GUID:eaaa8f1176726214f9205db5c7175a7e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

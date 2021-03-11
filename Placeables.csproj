@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Placeables\MouseControl\MoveObject.cs" />
+    <Compile Include="Assets\Scripts\Placeables\MouseControl\SpawnPlaceableOnClick.cs" />
     <Compile Include="Assets\Scripts\Placeables\PlacePlant.cs" />
     <Compile Include="Assets\Scripts\Placeables\Placeable.cs" />
     <None Include="Assets\Scripts\Placeables\Placeables.asmdef" />
@@ -629,6 +630,10 @@
     <ProjectReference Include="Enums.csproj">
       <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
       <Name>Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="Utility.csproj">
+      <Project>{813E9892-C0C8-D57D-6487-5582D295B456}</Project>
+      <Name>Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

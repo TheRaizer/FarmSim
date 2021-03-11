@@ -1,23 +1,35 @@
-﻿using FarmSim.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Player
 {
     public class PlayerInventory : MonoBehaviour
     {
-        [SerializeField] private List<PlantItem> plantItems;
+        private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
 
-        private readonly Dictionary<PlantTypes, PlantItem> plantDict = new Dictionary<PlantTypes, PlantItem>();
-
-        private void Awake()
+        public void AddToInventory(ItemType itemType, int amt)
         {
-            plantItems.ForEach(plant => plantDict.Add(plant.PlantType, plant));
+            if (inventory.ContainsKey(itemType))
+            {
+                inventory[itemType].AddToAmt(amt);
+            }
+            else
+            {
+                inventory.Add(itemType, new Item(amt, itemType));
+            }
+            Debug.Log("item amount: " + inventory[itemType].Amt);
         }
 
-        public void AddToInventory(PlantTypes type, int amt)
+        public void TakeFromInventory(ItemType itemType, int amt)
         {
-            plantDict[type].AddToAmt(amt);
+            if (inventory.ContainsKey(itemType))
+            {
+                inventory[itemType].SubtractFromAmt(amt);
+            }
+            else
+            {
+                Debug.Log($"Inventory does not yet have item of type {itemType}");
+            }
         }
     }
 }

@@ -14,10 +14,10 @@ namespace FarmSim.Planteables
     public class Planteable : MonoBehaviour
     {
         [SerializeField] private int daysToGrow = 0;
-        [SerializeField] private List<Sprite> spriteLifeCycle;
-        [SerializeField] private PlantTypes plantType;
         [SerializeField] private int maxAmtToDrop = 0;
         [SerializeField] private int minAmtToDrop = 0;
+        [SerializeField] private List<Sprite> spriteLifeCycle;
+        [SerializeField] private ItemType itemType;
 
         private SpriteRenderer spriteRenderer;
 
@@ -46,7 +46,7 @@ namespace FarmSim.Planteables
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
             PlayerInventory inventory = FindObjectOfType<PlayerInventory>();
-            inventory.AddToInventory(plantType, amtToDrop);
+            inventory.AddToInventory(itemType, amtToDrop);
             Destroy(gameObject);
         }
 
