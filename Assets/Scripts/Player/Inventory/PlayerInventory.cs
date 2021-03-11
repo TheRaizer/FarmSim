@@ -12,6 +12,8 @@ namespace FarmSim.Player
     {
         //TEST CODE
         [SerializeField] private ItemType tomSeed;
+        //TEST CODE
+        [SerializeField] private ItemType potSeed;
 
         private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
 
@@ -19,6 +21,8 @@ namespace FarmSim.Player
         {
             //TEST CODE
             inventory.Add(tomSeed, new Item(5, tomSeed));
+            //TEST CODE
+            inventory.Add(potSeed, new Item(5, potSeed));
         }
 
         /// <summary>
@@ -48,11 +52,21 @@ namespace FarmSim.Player
         {
             if (inventory.ContainsKey(itemType))
             {
-                inventory[itemType].SubtractFromAmt(amt);
+                if (inventory[itemType].Amt <= 0)
+                {
+                    Debug.Log($"Not enough of {itemType.ItemName}");
+                }
+                else
+                {
+                    if (inventory[itemType].CanSubtract)
+                    {
+                        inventory[itemType].SubtractFromAmt(amt);
+                    }
+                }
             }
             else
             {
-                Debug.Log($"Inventory does not yet have item of type {itemType}");
+                Debug.Log($"Inventory does not yet have item of type {itemType.ItemName}");
             }
         }
 

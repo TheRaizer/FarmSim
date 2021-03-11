@@ -54,7 +54,8 @@ namespace FarmSim.Planteables
                     Plant.Grow();
                 }
             }
-            watered = false;
+            /*watered = false;
+            CheckSpriteType();*/
         }
 
         /// <summary>
@@ -78,10 +79,7 @@ namespace FarmSim.Planteables
         {
             watered = true;
 
-            if (hoed)
-            {
-                spriteRenderer.sprite = wetHoedDirt;
-            }
+            CheckSpriteType();
         }
 
         private void Sickle()
@@ -103,6 +101,25 @@ namespace FarmSim.Planteables
             {
                 hoed = false;
                 watered = false;
+                CheckSpriteType();
+            }
+        }
+
+        private void CheckSpriteType()
+        {
+            if (hoed)
+            {
+                if (watered)
+                {
+                    spriteRenderer.sprite = wetHoedDirt;
+                }
+                else
+                {
+                    spriteRenderer.sprite = hoedDirt;
+                }
+            }
+            else
+            {
                 spriteRenderer.sprite = dryDirt;
             }
         }

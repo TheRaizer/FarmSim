@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using FarmSim.Grid;
-
+using FarmSim.Player;
 
 namespace FarmSim.Placeable
 {
@@ -12,12 +12,11 @@ namespace FarmSim.Placeable
     /// </class>
     public class Placeable : MonoBehaviour
     {
-        public int AmtPlaceable { get; set; }
-
         [SerializeField] protected int xDim = 0;
         [SerializeField] protected int yDim = 0;
         [SerializeField] protected GameObject objectToPlace;
 
+        public Item Item { protected get; set; }
         protected NodeGrid grid = null;
         public Node Node { get; set; }
 
@@ -87,12 +86,18 @@ namespace FarmSim.Placeable
         {
             var obj = Instantiate(objectToPlace);
             obj.transform.position = Node.Position;
-            AmtPlaceable--;
+        }
 
-            if(AmtPlaceable <= 0)
+        protected void ReduceAmtPlaceable()
+        {
+            if (Item.CanSubtract)
             {
-                moveObject.AttachedObject = null;
-                gameObject.SetActive(false);
+                Item.SubtractFromAmt(1);
+                if (Item.Amt <= 0)
+                {
+                    moveObject.AttachedObject = null;
+                    gameObject.SetActive(false);
+                }
             }
         }
     }

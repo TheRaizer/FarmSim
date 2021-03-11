@@ -10,6 +10,8 @@ namespace FarmSim.Player
     public class Item
     {
         public readonly ItemType itemType;
+        public bool CanSubtract => Amt > 0;
+
         public int Amt { get; private set; }
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
@@ -30,7 +32,7 @@ namespace FarmSim.Player
             Amt -= amt;
             if(Amt < 0)
             {
-                Amt = 0;
+                Debug.LogError("Amt has dipped below zero that should not occur. Use the CanSubtract bool to make sure this doesn't occur");
             }
         }
     }

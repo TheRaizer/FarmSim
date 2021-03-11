@@ -11,13 +11,10 @@ namespace FarmSim.Placeable
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
-        private SpriteRenderer spriteRenderer;
         private PlayerInventory inventory;
 
         private void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-
             moveObject = FindObjectOfType<MoveObject>();
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
@@ -36,7 +33,7 @@ namespace FarmSim.Placeable
         {
             Item item = inventory.GetItem(itemType);
 
-            if (item == null || item.Amt <= 0)
+            if (item == null || !item.CanSubtract)
             {
                 return;
             }
@@ -46,21 +43,21 @@ namespace FarmSim.Placeable
 
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
+                placeable.Item = item;
                 if (moveObject.AttachedObject != null)
                 {
                     // if there is currently an attached object then because attached objects are spawned from object pooler set it unactive
                     moveObject.AttachedObject.gameObject.SetActive(false);
+
+                    // if we click on the same object then dont set the new attached object.
+                    if(moveObject.AttachedObject.gameObject == objToAttach)
+                    {
+                        moveObject.AttachedObject = null;
+                        return;
+                    }
                 }
                 // assign a new attached object
                 moveObject.AttachedObject = placeable;
-            }
-
-            // subtract from the items amount
-            item.SubtractFromAmt(1);
-
-            if (item.Amt == 0)
-            {
-                // make sprite dark or smthn
             }
         }
     }
