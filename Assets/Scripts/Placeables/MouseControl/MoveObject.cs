@@ -12,7 +12,7 @@ namespace FarmSim.Placeable
     public class MoveObject : MonoBehaviour
     {
         private NodeGrid grid;
-        public Placeable AttachedObject { private get; set; } = null;
+        public Placeable AttachedObject { get; set; } = null;
         private Node currentNode = null;
 
         private void Awake()

@@ -12,6 +12,8 @@ namespace FarmSim.Placeable
     /// </class>
     public class Placeable : MonoBehaviour
     {
+        public int AmtPlaceable { get; set; }
+
         [SerializeField] protected int xDim = 0;
         [SerializeField] protected int yDim = 0;
         [SerializeField] protected GameObject objectToPlace;
@@ -20,6 +22,8 @@ namespace FarmSim.Placeable
         public Node Node { get; set; }
 
         private SpriteRenderer sprite = null;
+        private MoveObject moveObject = null;
+
         private Color invalidColor;
         private Color validColor;
 
@@ -31,8 +35,8 @@ namespace FarmSim.Placeable
             }
             grid = FindObjectOfType<NodeGrid>();
             sprite = GetComponent<SpriteRenderer>();
+            moveObject = FindObjectOfType<MoveObject>();
 
-            AddToCurrentMovingObject();
             InitColors();
         }
 
@@ -56,15 +60,6 @@ namespace FarmSim.Placeable
         {
             invalidColor = new Color(sprite.color.r, sprite.color.g / 2, sprite.color.b / 2, sprite.color.a / 2);
             validColor = sprite.color;
-        }
-
-        /// <summary>
-        ///     Add this placeable to be the current moving object.
-        /// </summary>
-        private void AddToCurrentMovingObject()
-        {
-            var moveObject = FindObjectOfType<MoveObject>();
-            moveObject.AttachedObject = this;
         }
 
         /// <summary>
@@ -92,6 +87,13 @@ namespace FarmSim.Placeable
         {
             var obj = Instantiate(objectToPlace);
             obj.transform.position = Node.Position;
+            AmtPlaceable--;
+
+            if(AmtPlaceable <= 0)
+            {
+                moveObject.AttachedObject = null;
+                gameObject.SetActive(false);
+            }
         }
     }
 }

@@ -54,6 +54,7 @@ namespace FarmSim.Planteables
                     Plant.Grow();
                 }
             }
+            watered = false;
         }
 
         /// <summary>

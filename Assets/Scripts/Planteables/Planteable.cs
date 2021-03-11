@@ -1,7 +1,7 @@
-﻿using FarmSim.Enums;
-using FarmSim.Player;
+﻿using FarmSim.Player;
 using System.Collections.Generic;
 using UnityEngine;
+using FarmSim.TimeBased;
 
 namespace FarmSim.Planteables
 {
@@ -34,6 +34,9 @@ namespace FarmSim.Planteables
             spriteChangeInterval = Mathf.CeilToInt((float)daysToGrow / spriteLifeCycle.Count);
         }
 
+        /// <summary>
+        ///     Function that grows the given planteable and should be called in some class that has a function <see cref="ITimeBased.OnDayPass"/>.
+        /// </summary>
         public void Grow()
         {
             if (currentGrowthDay > daysToGrow)
@@ -42,14 +45,23 @@ namespace FarmSim.Planteables
             currentGrowthDay++;
         }
 
+        /// <summary>
+        ///     Adds to the players inventory an amount within a 
+        ///     given range and destroys the Planteable gameObject.
+        /// </summary>
         public void OnHarvest()
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
+
             PlayerInventory inventory = FindObjectOfType<PlayerInventory>();
             inventory.AddToInventory(itemType, amtToDrop);
+
             Destroy(gameObject);
         }
 
+        /// <summary>
+        ///     Check to see if the sprite must change on the passage of a day.
+        /// </summary>
         private void CheckSpriteChange()
         {
             // if its on the interval to change and the sprite index isnt the last sprite
