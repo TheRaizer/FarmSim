@@ -67,7 +67,7 @@
     <Compile Include="Assets\Scripts\Grid\IInteractable.cs" />
     <Compile Include="Assets\Scripts\Grid\Node.cs" />
     <Compile Include="Assets\Scripts\Grid\NodeGrid.cs" />
-    <Compile Include="Assets\Scripts\Grid\WorldLoader.cs" />
+    <Compile Include="Assets\Scripts\Grid\SectionLoader.cs" />
     <None Include="Assets\Scripts\Grid\Grid.asmdef" />
     <None Include="Assets\Scripts\Grid\World.txt" />
     <Reference Include="UnityEngine">

@@ -6,9 +6,22 @@ namespace FarmSim.Grid
 {
     public interface IInteractable
     {
+        /// <summary>
+        ///     The X position of the node.
+        /// </summary>
         int X { get; set; }
+
+        /// <summary>
+        ///     The X position of the node.
+        /// </summary>
         int Y { get; set; }
-        TileTypes TileType { get; }
+
+        /// <summary>
+        ///     Interacts with the IInteractable.
+        /// </summary>
+        /// <param name="toolType">The type of tool that is in use.</param>
+        /// <param name="gameObject">(optional) The gameObject that may be used when interacting.</param>
+        /// <param name="onSuccessful">(optional) A void delegate to run if the interation was succesful.</param>
         void OnInteract(ToolTypes toolType, GameObject gameObject = null, Action onSuccessful = null);
     }
 }

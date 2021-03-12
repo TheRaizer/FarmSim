@@ -17,22 +17,25 @@ namespace FarmSim.Planteables
         [SerializeField] private Sprite hoedDirt = null;
         [SerializeField] private Sprite wetHoedDirt = null;
 
+
+        public Planteable Plant { private get; set; } = null;
+        public int X { get; set; }
+        public int Y { get; set; }
+
         private bool hoed = false;
         private bool watered = false;
 
+        /// <summary>
+        ///     The number of days before the dirt reverts back to the dry from hoed.
+        /// </summary>
         private int daysTillRevert = 0;
-
-        private const int MAX_HOED_DAYS = 8;
-        private const int MIN_HOED_DAYS = 3;
 
         private SpriteRenderer spriteRenderer = null;
         private NodeGrid grid = null;
 
-        public Planteable Plant { private get; set; } = null;
+        private const int MAX_HOED_DAYS = 8;
+        private const int MIN_HOED_DAYS = 3;
 
-        public TileTypes TileType { get; } = TileTypes.Dirt;
-        public int X { get; set; }
-        public int Y { get; set; }
 
         private void Awake()
         {

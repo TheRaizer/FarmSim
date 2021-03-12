@@ -1,8 +1,5 @@
 ﻿using FarmSim.Utility;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 namespace FarmSim.Grid
@@ -25,18 +22,18 @@ namespace FarmSim.Grid
         private const int SECTION_SIZE_Y = 30;
 
         private Node[,] grid;
-        private WorldLoader worldLoader = null;
+        private SectionLoader sectionLoader = null;
         public bool LoadedSection { get; private set; } = false;
 
         private void Awake()
         {
-            worldLoader = new WorldLoader(transform.position, sectionNum, FindObjectOfType<ObjectPooler>());
-            grid = worldLoader.InitGrid();
+            sectionLoader = new SectionLoader(transform.position, sectionNum, FindObjectOfType<ObjectPooler>());
+            grid = sectionLoader.InitGrid();
         }
 
         private void Start()
         {
-            StartCoroutine(worldLoader.LoadSection(grid, () => LoadedSection = true));
+            StartCoroutine(sectionLoader.LoadSection(grid, () => LoadedSection = true));
         }
 
 

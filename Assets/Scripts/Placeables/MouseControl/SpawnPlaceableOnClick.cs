@@ -6,6 +6,9 @@ namespace FarmSim.Placeable
 {
     public class SpawnPlaceableOnClick : MonoBehaviour
     {
+        /// <summary>
+        ///     Points to some item in the inventory and will be passed to the placeable.
+        /// </summary>
         [SerializeField] private ItemType itemType;
 
         private MoveObject moveObject = null;

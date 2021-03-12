@@ -14,8 +14,13 @@ namespace FarmSim.Planteables
     public class Planteable : MonoBehaviour
     {
         [SerializeField] private int daysToGrow = 0;
+
         [SerializeField] private int maxAmtToDrop = 0;
         [SerializeField] private int minAmtToDrop = 0;
+
+        /// <summary>
+        ///     List of sprites that show the plants growth.
+        /// </summary>
         [SerializeField] private List<Sprite> spriteLifeCycle;
         [SerializeField] private ItemType itemType;
 

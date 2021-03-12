@@ -16,9 +16,14 @@ namespace FarmSim.Placeable
         [SerializeField] protected int yDim = 0;
         [SerializeField] protected GameObject objectToPlace;
 
+        /// <summary>
+        ///     This item is given when the placeable is spawned.
+        ///     The amount should be reduced whenever a placement was succesful.
+        /// </summary>
         public Item Item { protected get; set; }
-        protected NodeGrid grid = null;
         public Node Node { get; set; }
+
+        protected NodeGrid grid = null;
 
         private SpriteRenderer sprite = null;
         private MoveObject moveObject = null;
