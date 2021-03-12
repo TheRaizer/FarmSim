@@ -14,18 +14,52 @@ namespace FarmSim.Placeable
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
+        private SpriteRenderer spriteRenderer = null;
         private PlayerInventory inventory;
+        private Item item;
+
+        private Color baseColor;
 
         private void Awake()
         {
             moveObject = FindObjectOfType<MoveObject>();
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+
+            baseColor = spriteRenderer.color;
+        }
+
+        private void Start()
+        {
+            item = inventory.GetItem(itemType);
+        }
+
+        private void Update()
+        {
+            // Probably need to optimize this.
+            ChangeSpriteColor(item);
         }
 
         private void OnMouseDown()
         {
             SpawnPlaceable();
+        }
+
+        private void ChangeSpriteColor(Item item)
+        {
+            if (item == null)
+            {
+                spriteRenderer.color = Color.black;
+            }
+            else if (!item.CanSubtract)
+            {
+                spriteRenderer.color = Color.grey;
+            }
+            else
+            {
+                spriteRenderer.color = baseColor;
+            }
         }
 
         /// <summary>
@@ -38,6 +72,7 @@ namespace FarmSim.Placeable
 
             if (item == null || !item.CanSubtract)
             {
+                ChangeSpriteColor(item);
                 return;
             }
 

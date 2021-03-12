@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using FarmSim.Serialization;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Player
@@ -10,19 +11,19 @@ namespace FarmSim.Player
     /// </class>
     public class PlayerInventory : MonoBehaviour
     {
-        //TEST CODE
-        [SerializeField] private ItemType tomSeed;
-        //TEST CODE
-        [SerializeField] private ItemType potSeed;
+        // TEST ATTRIBUTES
+        [SerializeField] private ItemType potatoSeed;
+        [SerializeField] private ItemType tomatoSeed;
 
         private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
 
         private void Awake()
         {
-            //TEST CODE
-            inventory.Add(tomSeed, new Item(5, tomSeed));
-            //TEST CODE
-            inventory.Add(potSeed, new Item(5, potSeed));
+            /*AddToInventory(potatoSeed, 5);
+            AddToInventory(tomatoSeed, 5);*/
+
+            // we can load on awake because data loading should happen in a different scene
+            LoadItems();
         }
 
         /// <summary>
@@ -83,6 +84,58 @@ namespace FarmSim.Player
             }
             Debug.Log($"Inventory does not yet have item of type {itemType}");
             return null;
+        }
+
+        //TEST CODE
+        private void LoadItems()
+        {
+            // obtain list of itemDatas
+            List<ItemData> itemDatas = SaveData.current.playerData.itemDatas;
+
+            // if there is data
+            if (itemDatas != null)
+            {
+                Debug.Log("There are items to load");
+                itemDatas.ForEach(itemData =>
+                {
+                    // Obtain the SO from the data's itemTypeName attribute.
+                    ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
+
+                    Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
+
+                    // adds the item to the inventory
+                    AddToInventory(itemType, itemData.amt);
+                });
+            }
+            else
+            {
+                Debug.Log("No items to load");
+            }
+        }
+
+        public void SaveInventory()
+        {
+            // Creates a list of itemDatas
+            List<ItemData> itemDatas = new List<ItemData>();
+
+            foreach (KeyValuePair<ItemType, Item> kvp in inventory)
+            {
+                // get item and corrosponding item type in dict
+                Item item = kvp.Value;
+                ItemType itemType = kvp.Key;
+
+                // create an itemData object
+                ItemData itemData = new ItemData(item.Amt, itemType.name);
+
+                // assign the object to the itemDatas list
+                itemDatas.Add(itemData);
+            }
+
+            /* assign the itemDatas list to the Serializable SaveData singleton in 
+             * order for it to be saved along side the rest of the games data
+             */
+            SaveData.current.playerData.itemDatas = itemDatas;
+            Debug.Log("Save item data");
         }
     }
 }

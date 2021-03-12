@@ -64,9 +64,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Player\Player.cs" />
-    <Compile Include="Assets\Scripts\Player\Tools\Hoe.cs" />
-    <Compile Include="Assets\Scripts\Player\Tools\ITool.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -682,9 +680,21 @@
       <Project>{813E9892-C0C8-D57D-6487-5582D295B456}</Project>
       <Name>Utility</Name>
     </ProjectReference>
+    <ProjectReference Include="Serialization.csproj">
+      <Project>{98AFEC26-7D54-E9CB-203E-6E5985798232}</Project>
+      <Name>Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="Tools.csproj">
+      <Project>{0E8E496E-4EAE-9F06-851B-45597D206F31}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
     <ProjectReference Include="TimeBased.csproj">
       <Project>{4EE736BA-02E6-B8D8-77F0-80B5809304F8}</Project>
       <Name>TimeBased</Name>
+    </ProjectReference>
+    <ProjectReference Include="Enums.csproj">
+      <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
+      <Name>Enums</Name>
     </ProjectReference>
     <ProjectReference Include="Grid.csproj">
       <Project>{52F45092-1270-AD02-C824-85BD9C892A6A}</Project>
@@ -693,6 +703,10 @@
     <ProjectReference Include="Placeables.csproj">
       <Project>{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}</Project>
       <Name>Placeables</Name>
+    </ProjectReference>
+    <ProjectReference Include="Player.csproj">
+      <Project>{A832F703-25FA-0F15-0B77-C9A423BF1DCA}</Project>
+      <Name>Player</Name>
     </ProjectReference>
     <ProjectReference Include="Planteables.csproj">
       <Project>{62657A79-AE7D-DE27-EF05-DDACB730674B}</Project>

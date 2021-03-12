@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Player\Inventory\ItemType.cs" />
     <Compile Include="Assets\Scripts\Player\Inventory\PlayerInventory.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\Player\TestInventorySaveButton.cs" />
     <None Include="Assets\Scripts\Player\Player.asmdef" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.20f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
@@ -634,6 +635,10 @@
     <ProjectReference Include="Enums.csproj">
       <Project>{16FD4389-B944-1E5B-8F0D-BBB4DDF71DF1}</Project>
       <Name>Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="Serialization.csproj">
+      <Project>{98AFEC26-7D54-E9CB-203E-6E5985798232}</Project>
+      <Name>Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

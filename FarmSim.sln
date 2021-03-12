@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serialization.csproj", "{98AFEC26-7D54-E9CB-203E-6E5985798232}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Placeables", "Placeables.csproj", "{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Player", "Player.csproj", "{A832F703-25FA-0F15-0B77-C9A423BF1DCA}"
@@ -25,6 +27,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98AFEC26-7D54-E9CB-203E-6E5985798232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98AFEC26-7D54-E9CB-203E-6E5985798232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98AFEC26-7D54-E9CB-203E-6E5985798232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98AFEC26-7D54-E9CB-203E-6E5985798232}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA4577D2-5A89-C031-01BD-FC3ACA3940D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
