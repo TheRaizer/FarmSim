@@ -101,7 +101,7 @@ namespace FarmSim.Planteables
             {
                 Plant.OnHarvest();
                 Node node = grid.GetNodeFromXY(X, Y);
-                node.IsOccupied = false;
+                node.Data.IsOccupied = false;
             }
         }
 

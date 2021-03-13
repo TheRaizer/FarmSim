@@ -1,4 +1,5 @@
-﻿using FarmSim.Utility;
+﻿using FarmSim.Serialization;
+using FarmSim.Utility;
 using System;
 using System.Collections;
 using System.IO;
@@ -63,7 +64,7 @@ namespace FarmSim.Grid
                 for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
                     Vector2 pos = GetNodePosition(x, y);
-                    grid[x, y] = new Node(pos, x, y);
+                    grid[x, y] = new Node(new NodeData(false, pos, x, y));
                 }
             }
         }
@@ -142,7 +143,7 @@ namespace FarmSim.Grid
             switch (val)
             {
                 case "0":
-                    spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Position, Quaternion.identity);
+                    spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Data.pos, Quaternion.identity);
                     break;
                 default:
                     throw new ArgumentException($"No such tile for given code {val}");

@@ -10,15 +10,15 @@ namespace FarmSim.Serialization
     [System.Serializable]
     public class NodeData
     {
-        public bool isOccupied;
-        public Vector2 pos;
+        public bool IsOccupied { get; set; }
+        public readonly Vector2 pos;
 
-        public int x;
-        public int y;
+        public readonly int x;
+        public readonly int y;
 
         public NodeData(bool _isOccupied, Vector2 _pos, int _x, int _y)
         {
-            isOccupied = _isOccupied;
+            IsOccupied = _isOccupied;
             pos = _pos;
             x = _x;
             y = _y;

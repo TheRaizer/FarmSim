@@ -69,8 +69,8 @@ namespace FarmSim.Grid
         /// <returns>true if there are no occupied Nodes in the space, otherwise false.</returns>
         public bool IsValidPlacement(Node node, int xDim, int yDim)
         {
-            int yStart = node.y - yDim / 2;
-            int xStart = node.x - xDim / 2;
+            int yStart = node.Data.y - yDim / 2;
+            int xStart = node.Data.x - xDim / 2;
 
             for (int y = 0; y < yDim; y++)
             {
@@ -78,7 +78,7 @@ namespace FarmSim.Grid
                 {
                     int nodeX = x + xStart;
                     int nodeY = y + yStart;
-                    if (IsInSection(nodeX, nodeY) && grid[nodeX, nodeY].IsOccupied)
+                    if (IsInSection(nodeX, nodeY) && grid[nodeX, nodeY].Data.IsOccupied)
                     {
                         return false;
                     }
@@ -95,8 +95,8 @@ namespace FarmSim.Grid
         /// <param name="yDim">The y-dimension.</param>
         public void MakeDimensionsOccupied(Node node, int xDim, int yDim)
         {
-            int yStart = node.y - yDim / 2;
-            int xStart = node.x - xDim / 2;
+            int yStart = node.Data.y - yDim / 2;
+            int xStart = node.Data.x - xDim / 2;
 
             for (int y = 0; y < yDim; y++)
             {
@@ -106,7 +106,7 @@ namespace FarmSim.Grid
                     int nodeY = y + yStart;
                     if (IsInSection(nodeX, nodeY))
                     {
-                        grid[nodeX, nodeY].IsOccupied = true;
+                        grid[nodeX, nodeY].Data.IsOccupied = true;
                     }
 
                 }
@@ -161,8 +161,8 @@ namespace FarmSim.Grid
         public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)
         {
             List<Node> nodes = new List<Node>();
-            int yStart = middleNode.y - yDim / 2;
-            int xStart = middleNode.x - xDim / 2;
+            int yStart = middleNode.Data.y - yDim / 2;
+            int xStart = middleNode.Data.x - xDim / 2;
 
             for (int y = 0; y < yDim; y++)
             {

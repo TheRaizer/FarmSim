@@ -90,7 +90,7 @@ namespace FarmSim.Placeable
         protected virtual void OnPlace()
         {
             var obj = Instantiate(objectToPlace);
-            obj.transform.position = Node.Position;
+            obj.transform.position = Node.Data.pos;
         }
 
         protected void ReduceAmtPlaceable()

@@ -35,12 +35,12 @@ namespace FarmSim.Placeable
         {
             Node node = grid.GetNodeFromMousePosition();
 
-            if (node != null && (Vector2)AttachedObject.transform.position != node.Position)
+            if (node != null && (Vector2)AttachedObject.transform.position != node.Data.pos)
             {
                 currentNode = node;
 
                 AttachedObject.Node = currentNode;
-                AttachedObject.ChangePosition(currentNode.Position);
+                AttachedObject.ChangePosition(currentNode.Data.pos);
             }
         }
     }

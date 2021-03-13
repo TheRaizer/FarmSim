@@ -22,7 +22,7 @@ namespace FarmSim.Serialization
         public PlayerData playerData = new PlayerData();
         public List<DirtData> dirtDatas = new List<DirtData>();
         public List<PlanteableData> plantDatas = new List<PlanteableData>();
-        public List<NodeData> nodeDatas = new List<NodeData>();
+        public NodeData[,] nodeDatas;
 
         public static SaveData Current
         {
