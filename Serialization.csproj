@@ -64,12 +64,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Serialization\DataLoader.cs" />
-    <Compile Include="Assets\Scripts\Serialization\DataSaver.cs" />
+    <Compile Include="Assets\Scripts\Serialization\DataManagers\DataLoader.cs" />
+    <Compile Include="Assets\Scripts\Serialization\DataManagers\DataSaver.cs" />
     <Compile Include="Assets\Scripts\Serialization\ISaveable.cs" />
-    <Compile Include="Assets\Scripts\Serialization\SaveData.cs" />
     <Compile Include="Assets\Scripts\Serialization\SaveableData\ItemData.cs" />
+    <Compile Include="Assets\Scripts\Serialization\SaveableData\NodeData.cs" />
     <Compile Include="Assets\Scripts\Serialization\SaveableData\PlayerData.cs" />
+    <Compile Include="Assets\Scripts\Serialization\SaveableData\SaveData.cs" />
     <Compile Include="Assets\Scripts\Serialization\SerializationManager.cs" />
     <None Include="Assets\Scripts\Serialization\Serialization.asmdef" />
     <Reference Include="UnityEngine">
