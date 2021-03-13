@@ -9,7 +9,7 @@ namespace FarmSim.Player
     ///         Class that contains and manages the player's items.
     ///     </summary>
     /// </class>
-    public class PlayerInventory : MonoBehaviour
+    public class PlayerInventory : MonoBehaviour, ISaveable
     {
         // TEST ATTRIBUTES
         [SerializeField] private ItemType potatoSeed;
@@ -113,7 +113,7 @@ namespace FarmSim.Player
             }
         }
 
-        public void SaveInventory()
+        public void Save()
         {
             // Creates a list of itemDatas
             List<ItemData> itemDatas = new List<ItemData>();
@@ -126,7 +126,7 @@ namespace FarmSim.Player
 
                 // create an itemData object
                 ItemData itemData = new ItemData(item.Amt, itemType.name);
-
+                Debug.Log("item type: " + itemData.itemTypeName + " || amt: " + itemData.amt);
                 // assign the object to the itemDatas list
                 itemDatas.Add(itemData);
             }
@@ -137,5 +137,8 @@ namespace FarmSim.Player
             SaveData.current.playerData.itemDatas = itemDatas;
             Debug.Log("Save item data");
         }
+        /// <summary>
+        ///     Saves the players inventory then saves the SaveData class to a file.
+        /// </summary>
     }
 }

@@ -6,7 +6,7 @@ namespace FarmSim.Serialization
 {
     /// <class name="SerializationManager">
     ///     <summary>
-    ///         Manages the state of the dirt and the plant it contains if there is any.
+    ///         Manages Serialization of Game data using a Binary Formatter.
     ///     </summary>
     /// </class>
     public class SerializationManager

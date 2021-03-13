@@ -7,13 +7,18 @@ namespace FarmSim.TimeBased
 {
     public class TimeManager : MonoBehaviour
     {
+        [SerializeField] private GameObject dayPassBackground;
+
         private List<ITimeBased> timeBasedObjects = null;
         private NodeGrid grid;
+        private DataSaver dataSaver;
+
         public int CurrentDay { get; private set; } = 0;
 
         private void Awake()
         {
             grid = GetComponent<NodeGrid>();
+            dataSaver = GetComponent<DataSaver>();
         }
 
         private void Update()
@@ -21,6 +26,10 @@ namespace FarmSim.TimeBased
             if (grid.LoadedSection && timeBasedObjects == null)
             {
                 timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
+            }
+            if(dataSaver.Saved && dayPassBackground.activeSelf)
+            {
+                dayPassBackground.SetActive(false);
             }
         }
 
@@ -36,6 +45,10 @@ namespace FarmSim.TimeBased
         {
             CurrentDay++;
             timeBasedObjects.ForEach(timeBased => timeBased.OnDayPass());
+
+            dayPassBackground.SetActive(true);
+
+            StartCoroutine(dataSaver.SaveAll());
         }
     }
 }

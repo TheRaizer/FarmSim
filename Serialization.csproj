@@ -65,6 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Serialization\DataLoader.cs" />
+    <Compile Include="Assets\Scripts\Serialization\DataSaver.cs" />
+    <Compile Include="Assets\Scripts\Serialization\ISaveable.cs" />
     <Compile Include="Assets\Scripts\Serialization\SaveData.cs" />
     <Compile Include="Assets\Scripts\Serialization\SaveableData\ItemData.cs" />
     <Compile Include="Assets\Scripts\Serialization\SaveableData\PlayerData.cs" />
