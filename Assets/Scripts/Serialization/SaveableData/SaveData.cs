@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace FarmSim.Serialization
 {
     /// <class name="SaveData">
@@ -18,8 +20,11 @@ namespace FarmSim.Serialization
 
         // Data's to store and be accessed.
         public PlayerData playerData = new PlayerData();
+        public List<DirtData> dirtDatas = new List<DirtData>();
+        public List<PlanteableData> plantDatas = new List<PlanteableData>();
+        public List<NodeData> nodeDatas = new List<NodeData>();
 
-        public static SaveData current
+        public static SaveData Current
         {
             get
             {

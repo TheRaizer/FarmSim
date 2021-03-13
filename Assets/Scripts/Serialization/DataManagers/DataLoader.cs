@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace FarmSim.Serialization
@@ -16,7 +18,7 @@ namespace FarmSim.Serialization
         private void Awake()
         {
             // this can be changed to happen when a button to load is pressed instead.
-            SaveData.current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/Save.save");
+            SaveData.Current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/Save.save");
         }
 
         //TEST CODE

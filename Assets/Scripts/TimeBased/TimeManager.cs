@@ -27,15 +27,19 @@ namespace FarmSim.TimeBased
             {
                 timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
             }
-            if(dataSaver.Saved && dayPassBackground.activeSelf)
+            if (!dataSaver.Saving && dayPassBackground.activeInHierarchy)
             {
                 dayPassBackground.SetActive(false);
+            }
+            else if(dataSaver.Saving && !dayPassBackground.activeInHierarchy)
+            {
+                dayPassBackground.SetActive(true);
             }
         }
 
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && !dataSaver.Saving)
             {
                 MoveToNextDay();
             }
@@ -43,10 +47,9 @@ namespace FarmSim.TimeBased
 
         private void MoveToNextDay()
         {
+            dayPassBackground.SetActive(true);
             CurrentDay++;
             timeBasedObjects.ForEach(timeBased => timeBased.OnDayPass());
-
-            dayPassBackground.SetActive(true);
 
             StartCoroutine(dataSaver.SaveAll());
         }

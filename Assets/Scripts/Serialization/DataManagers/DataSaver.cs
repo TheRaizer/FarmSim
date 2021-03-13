@@ -5,33 +5,30 @@ using UnityEngine;
 
 public class DataSaver : MonoBehaviour
 {
-    public bool Saved { get; private set; } = false;
-
-    private bool saving = false;
+    public bool Saving { get; private set; } = false;
 
     /// <summary>
     ///     Finds all ISaveables in the scene and Saves their data.
     /// </summary>
     public IEnumerator SaveAll()
     {
-        if (!saving)
+        if (!Saving)
         {
-            saving = true;
-            IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISaveable>();
+            Saving = true;
+            IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>();
 
-            foreach (ISaveable s in saveables)
+            foreach (ISavable s in saveables)
             {
                 yield return null;
                 s.Save();
             }
 
-            if (SerializationManager.Save(SaveData.current))
+            if (SerializationManager.Save(SaveData.Current))
             {
                 Debug.Log("Save was succesful");
             }
 
-            saving = false;
+            Saving = false;
         }
-        Saved = true;
     }
 }

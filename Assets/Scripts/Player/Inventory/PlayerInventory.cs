@@ -9,7 +9,7 @@ namespace FarmSim.Player
     ///         Class that contains and manages the player's items.
     ///     </summary>
     /// </class>
-    public class PlayerInventory : MonoBehaviour, ISaveable
+    public class PlayerInventory : MonoBehaviour, ISavable, ILoadable
     {
         // TEST ATTRIBUTES
         [SerializeField] private ItemType potatoSeed;
@@ -17,13 +17,10 @@ namespace FarmSim.Player
 
         private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
 
-        private void Awake()
+        private void Start()
         {
             /*AddToInventory(potatoSeed, 5);
             AddToInventory(tomatoSeed, 5);*/
-
-            // we can load on awake because data loading should happen in a different scene
-            LoadItems();
         }
 
         /// <summary>
@@ -86,11 +83,10 @@ namespace FarmSim.Player
             return null;
         }
 
-        //TEST CODE
-        private void LoadItems()
+        public void Load()
         {
             // obtain list of itemDatas
-            List<ItemData> itemDatas = SaveData.current.playerData.itemDatas;
+            List<ItemData> itemDatas = SaveData.Current.playerData.itemDatas;
 
             // if there is data
             if (itemDatas != null)
@@ -134,11 +130,8 @@ namespace FarmSim.Player
             /* assign the itemDatas list to the Serializable SaveData singleton in 
              * order for it to be saved along side the rest of the games data
              */
-            SaveData.current.playerData.itemDatas = itemDatas;
+            SaveData.Current.playerData.itemDatas = itemDatas;
             Debug.Log("Save item data");
         }
-        /// <summary>
-        ///     Saves the players inventory then saves the SaveData class to a file.
-        /// </summary>
     }
 }

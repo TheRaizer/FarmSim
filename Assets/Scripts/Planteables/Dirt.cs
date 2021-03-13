@@ -1,8 +1,11 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.TimeBased;
+using FarmSim.Serialization;
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+using FarmSim.Utility;
 
 namespace FarmSim.Planteables
 {
@@ -11,23 +14,22 @@ namespace FarmSim.Planteables
     ///         Manages the state of the dirt and the plant it contains if there is any.
     ///     </summary>
     /// </class>
-    public class Dirt : MonoBehaviour, ITimeBased, IInteractable
+    public class Dirt : MonoBehaviour, ITimeBased, IInteractable, ISavable
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
         [SerializeField] private Sprite wetHoedDirt = null;
 
-
         public Planteable Plant { private get; set; } = null;
+
+        /// <summary>
+        ///     Should be set from a ILoadable that loads the nodes.
+        /// </summary>
+        public DirtData Data { private get; set; }
+
         public int X { get; set; }
         public int Y { get; set; }
 
-        private bool hoed = false;
-        private bool watered = false;
-
-        /// <summary>
-        ///     The number of days before the dirt reverts back to the dry from hoed.
-        /// </summary>
         private int daysTillRevert = 0;
 
         private SpriteRenderer spriteRenderer = null;
@@ -43,6 +45,14 @@ namespace FarmSim.Planteables
             grid = FindObjectOfType<NodeGrid>();
         }
 
+        private void Start()
+        {
+            if (Data == null)
+            {
+                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
+            }
+        }
+
         public void OnDayPass()
         {
             if (Plant == null)
@@ -52,7 +62,7 @@ namespace FarmSim.Planteables
             }
             else
             {
-                if (watered)
+                if (Data.Watered)
                 {
                     Plant.Grow();
                 }
@@ -67,9 +77,9 @@ namespace FarmSim.Planteables
         /// </summary>
         private void Hoe()
         {
-            if (!hoed)
+            if (!Data.Hoed)
             {
-                hoed = true;
+                Data.Hoed = true;
                 daysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
                 spriteRenderer.sprite = hoedDirt;
             }
@@ -80,7 +90,7 @@ namespace FarmSim.Planteables
         /// </summary>
         private void Water()
         {
-            watered = true;
+            Data.Watered = true;
 
             CheckSpriteType();
         }
@@ -102,17 +112,17 @@ namespace FarmSim.Planteables
         {
             if (daysTillRevert <= 0)
             {
-                hoed = false;
-                watered = false;
+                Data.Hoed = false;
+                Data.Watered = false;
                 CheckSpriteType();
             }
         }
 
         private void CheckSpriteType()
         {
-            if (hoed)
+            if (Data.Hoed)
             {
-                if (watered)
+                if (Data.Watered)
                 {
                     spriteRenderer.sprite = wetHoedDirt;
                 }
@@ -145,11 +155,14 @@ namespace FarmSim.Planteables
                     break;
                 case ToolTypes.Other:
                     // check if this gameObject contains a planteable
-                    if(gameObject != null && gameObject.TryGetComponent<Planteable>(out _) && hoed)
+                    if(gameObject != null && gameObject.TryGetComponent<Planteable>(out _) && Data.Hoed)
                     {
                         var obj = Instantiate(gameObject);
                         obj.transform.position = transform.position;
                         Plant = obj.GetComponent<Planteable>();
+
+                        Plant.SetDataId(Data.Id);
+
                         onSuccessful?.Invoke();
                     }
                     break;
@@ -157,6 +170,15 @@ namespace FarmSim.Planteables
                     Debug.Log($"Do nothing with tooltype {toolType}");
                     break;
             }
+        }
+
+        public void Save()
+        {
+            if(SaveData.Current.dirtDatas == null)
+            {
+                SaveData.Current.dirtDatas = new List<DirtData>();
+            }
+            SaveData.Current.dirtDatas.Add(Data);
         }
     }
 }

@@ -5,7 +5,7 @@
     ///         Interface that anything needing to save data must implement.
     ///     </summary>
     /// </class>
-    public interface ISaveable
+    public interface ISavable
     {
         void Save();
     }
