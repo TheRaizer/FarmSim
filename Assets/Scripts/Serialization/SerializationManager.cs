@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
@@ -71,6 +72,14 @@ namespace FarmSim.Serialization
         public static BinaryFormatter GetBinaryFormatter()
         {
             BinaryFormatter formatter = new BinaryFormatter();
+            SurrogateSelector selector = new SurrogateSelector();
+
+            Vector2SerializationSurrogate vector2Surrogate = new Vector2SerializationSurrogate();
+
+            selector.AddSurrogate(typeof(Vector2), new StreamingContext(StreamingContextStates.All), vector2Surrogate);
+
+            formatter.SurrogateSelector = selector;
+
             return formatter;
         }
     }
