@@ -7,12 +7,12 @@ namespace FarmSim.Grid
     public interface IInteractable
     {
         /// <summary>
-        ///     The X position of the node.
+        ///     The X position of the node in the grid.
         /// </summary>
         int X { get; set; }
 
         /// <summary>
-        ///     The X position of the node.
+        ///     The X position of the node in the grid.
         /// </summary>
         int Y { get; set; }
 
