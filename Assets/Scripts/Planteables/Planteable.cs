@@ -16,6 +16,9 @@ namespace FarmSim.Planteables
     public class Planteable : OccurPostLoad, ISavable
     {
         [SerializeField] private string originalPrefabName = null;
+        /// <summary>
+        ///     Includes the day it was planted.
+        /// </summary>
         [SerializeField] private int daysToGrow = 0;
 
         [SerializeField] private int maxAmtToDrop = 0;
@@ -29,7 +32,7 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 1, false);
+        [field: SerializeField] public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
         private SpriteRenderer spriteRenderer;
 
         private int spriteChangeInterval = 0;
@@ -48,10 +51,16 @@ namespace FarmSim.Planteables
         /// </summary>
         public void Grow()
         {
-            if (Data.CurrentGrowthDay > daysToGrow)
+            if (Data.CurrentGrowthDay >= daysToGrow)
                 return;
             CheckSpriteChange();
             Data.CurrentGrowthDay++;
+
+            // if the current growth day is the last day thats when we can assign the last sprite
+            if (Data.CurrentGrowthDay == daysToGrow)
+            {
+                Data.CanHarvest = true;
+            }
         }
 
         /// <summary>
@@ -74,17 +83,12 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckSpriteChange()
         {
+            Debug.Log("CheckSprite");
             // if its on the interval to change and the sprite index isnt the last sprite
-            if (Data.CurrentGrowthDay == spriteChangeInterval * Data.SpriteIdx && Data.SpriteIdx != spriteLifeCycle.Count - 1)
+            if (Data.CurrentGrowthDay == spriteChangeInterval * (Data.SpriteIdx + 1) && Data.SpriteIdx != spriteLifeCycle.Count - 1)
             {
-                spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
                 Data.SpriteIdx++;
-            }
-            // if the current growth day is the last day thats when we can assign the last sprite
-            else if (Data.CurrentGrowthDay == daysToGrow)
-            {
-                spriteRenderer.sprite = spriteLifeCycle[spriteLifeCycle.Count - 1];
-                Data.CanHarvest = true;
+                spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
             }
         }
 
@@ -98,10 +102,7 @@ namespace FarmSim.Planteables
 
         protected override void PostLoad()
         {
-            if (Data.SpriteIdx > 1)
-            {
-                spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
-            }
+            spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
         }
     }
 }

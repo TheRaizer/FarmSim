@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 namespace FarmSim.Serialization
 {
     /// <class name="PlanteableData">
@@ -12,11 +13,11 @@ namespace FarmSim.Serialization
         /// <summary>
         ///     Unique id that should be assigned to a <see cref="DirtData"/> object as well as this object as to act as a reference.
         /// </summary>
-        public string Id { get; set; }
-        public int CurrentGrowthDay { get; set; }
-        public int SpriteIdx { get; set; }
-        public bool CanHarvest { get; set; }
-        public string PrefabName { get; set; }
+        [field: SerializeField] public string Id { get; set; }
+        [field: SerializeField] public int CurrentGrowthDay { get; set; }
+        [field: SerializeField] public int SpriteIdx { get; set; }
+        [field: SerializeField] public bool CanHarvest { get; set; }
+        [field: SerializeField] public string PrefabName { get; set; }
 
         public PlanteableData(string _id, int _currentGrowthDay, int _spriteIdx, bool _canHarvest)
         {

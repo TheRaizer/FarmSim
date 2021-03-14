@@ -11,17 +11,7 @@ namespace FarmSim.Player
     /// </class>
     public class PlayerInventory : MonoBehaviour, ISavable, ILoadable
     {
-        // TEST ATTRIBUTES
-        [SerializeField] private ItemType potatoSeed;
-        [SerializeField] private ItemType tomatoSeed;
-
         private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
-
-        private void Start()
-        {
-            AddToInventory(potatoSeed, 50);
-            AddToInventory(tomatoSeed, 50);
-        }
 
         /// <summary>
         ///     Add an amount of an item or add an entirely new item to the player's inventory.
@@ -79,7 +69,6 @@ namespace FarmSim.Player
             {
                 return inventory[itemType];
             }
-            Debug.Log($"Inventory does not yet have item of type {itemType}");
             return null;
         }
 

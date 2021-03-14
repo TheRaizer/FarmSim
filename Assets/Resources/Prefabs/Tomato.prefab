@@ -54,6 +54,12 @@ MonoBehaviour:
   - {fileID: -7229993772515318892, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   - {fileID: -585230308400216287, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   itemType: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
+  <Data>k__BackingField:
+    <Id>k__BackingField: 
+    <CurrentGrowthDay>k__BackingField: 1
+    <SpriteIdx>k__BackingField: 0
+    <CanHarvest>k__BackingField: 0
+    <PrefabName>k__BackingField: 
 --- !u!212 &800048636282084858
 SpriteRenderer:
   m_ObjectHideFlags: 0
