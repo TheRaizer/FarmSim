@@ -19,8 +19,8 @@ namespace FarmSim.Player
 
         private void Start()
         {
-            /*AddToInventory(potatoSeed, 5);
-            AddToInventory(tomatoSeed, 5);*/
+            AddToInventory(potatoSeed, 50);
+            AddToInventory(tomatoSeed, 50);
         }
 
         /// <summary>

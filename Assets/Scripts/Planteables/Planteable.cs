@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using FarmSim.TimeBased;
 using FarmSim.Serialization;
+using FarmSim.Loading;
 
 namespace FarmSim.Planteables
 {
@@ -12,8 +13,9 @@ namespace FarmSim.Planteables
     ///         Base class for any planteable gameObject.
     ///     </summary>
     /// </class>
-    public class Planteable : MonoBehaviour, ISavable
+    public class Planteable : OccurPostLoad, ISavable
     {
+        [SerializeField] private string originalPrefabName = null;
         [SerializeField] private int daysToGrow = 0;
 
         [SerializeField] private int maxAmtToDrop = 0;
@@ -32,10 +34,12 @@ namespace FarmSim.Planteables
 
         private int spriteChangeInterval = 0;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
+            Data.PrefabName = originalPrefabName;
             spriteRenderer = GetComponent<SpriteRenderer>();
-            spriteRenderer.sprite = spriteLifeCycle[0];
             spriteChangeInterval = Mathf.CeilToInt((float)daysToGrow / spriteLifeCycle.Count);
         }
 
@@ -48,9 +52,6 @@ namespace FarmSim.Planteables
                 return;
             CheckSpriteChange();
             Data.CurrentGrowthDay++;
-            Debug.Log("grow");
-            Debug.Log("CurrentGrowthDay: " + Data.CurrentGrowthDay);
-            Debug.Log("sprite idx: " + Data.SpriteIdx);
         }
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace FarmSim.Planteables
             PlayerInventory inventory = FindObjectOfType<PlayerInventory>();
             inventory.AddToInventory(itemType, amtToDrop);
 
+            SaveData.Current.plantDatas.Remove(Data);
             Destroy(gameObject);
         }
 
@@ -88,11 +90,18 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (SaveData.Current.plantDatas == null)
+            if (!SaveData.Current.plantDatas.Contains(Data))
             {
-                SaveData.Current.plantDatas = new List<PlanteableData>();
+                SaveData.Current.plantDatas.Add(Data);
             }
-            SaveData.Current.plantDatas.Add(Data);
+        }
+
+        protected override void PostLoad()
+        {
+            if (Data.SpriteIdx > 1)
+            {
+                spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
+            }
         }
     }
 }

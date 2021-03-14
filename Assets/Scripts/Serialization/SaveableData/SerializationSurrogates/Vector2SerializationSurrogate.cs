@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace FarmSim.Serialization
 {
+    /// <class name="Vector2SerializationSurrogate">
+    ///     <summary>
+    ///         A surrogate of a <see cref="Vector2"/> that serializes it into 'x' and 'y' <see cref="float"/> values.
+    ///     </summary>
+    /// </class>
     public class Vector2SerializationSurrogate : ISerializationSurrogate
     {
         public void GetObjectData(object obj, SerializationInfo info, StreamingContext context)

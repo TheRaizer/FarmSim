@@ -15,8 +15,8 @@ namespace FarmSim.Serialization
         public string Id { get; set; }
         public int CurrentGrowthDay { get; set; }
         public int SpriteIdx { get; set; }
-
         public bool CanHarvest { get; set; }
+        public string PrefabName { get; set; }
 
         public PlanteableData(string _id, int _currentGrowthDay, int _spriteIdx, bool _canHarvest)
         {

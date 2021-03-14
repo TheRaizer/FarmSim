@@ -1,4 +1,5 @@
-﻿using FarmSim.Utility;
+﻿using FarmSim.Serialization;
+using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,18 +12,16 @@ namespace FarmSim.Grid
     ///     </summary>
     /// </class>
 
-    public class NodeGrid : MonoBehaviour
+    public class NodeGrid : MonoBehaviour, ISavable
     {
         [SerializeField] private int sectionNum = 0;
-
-        private readonly int worldMaxX = 150;
-        private readonly int worldMaxY = 150;
 
         private const int SECTION_SIZE_X = 30;
         private const int SECTION_SIZE_Y = 30;
 
         private Node[,] grid;
         private SectionLoader sectionLoader = null;
+
         public bool LoadedSection { get; private set; } = false;
 
         private void Awake()
@@ -129,22 +128,6 @@ namespace FarmSim.Grid
             return false;
         }
 
-        /// <summary>
-        ///     Finds if a given x and y indices are in the grid.
-        /// </summary>
-        /// <param name="x">x-index</param>
-        /// <param name="y">y-index</param>
-        /// <returns>true if it is in the grid, otherwise false</returns>
-        private bool IsInGrid(int x, int y)
-        {
-            if (x < worldMaxX && y < worldMaxY && x >= 0 && y >= 0)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         public Node GetNodeFromMousePosition()
         {
             Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -180,19 +163,31 @@ namespace FarmSim.Grid
             return nodes;
         }
 
-      /*  private void OnDrawGizmos()
+        public void Save()
         {
-            if (Application.isPlaying)
+            SaveData.Current.nodeDatas = new NodeData[grid.GetLength(0), grid.GetLength(1)];
+            for (int x = 0; x < grid.GetLength(0); x++)
             {
-                for (int y = 0; y < SECTION_SIZE_Y; y++)
+                for (int y = 0; y < grid.GetLength(1); y++)
                 {
-                    for (int x = 0; x < SECTION_SIZE_X; x++)
-                    {
-                        Gizmos.DrawSphere(grid[x, y].Position, 0.1f);
-                        Gizmos.DrawWireCube(grid[x, y].Position, new Vector3(Node.NODE_DIAMETER, Node.NODE_DIAMETER, 0));
-                    }
+                    SaveData.Current.nodeDatas[x, y] = grid[x, y].Data;
                 }
             }
-        }*/
+        }
+
+        /*  private void OnDrawGizmos()
+          {
+              if (Application.isPlaying)
+              {
+                  for (int y = 0; y < SECTION_SIZE_Y; y++)
+                  {
+                      for (int x = 0; x < SECTION_SIZE_X; x++)
+                      {
+                          Gizmos.DrawSphere(grid[x, y].Position, 0.1f);
+                          Gizmos.DrawWireCube(grid[x, y].Position, new Vector3(Node.NODE_DIAMETER, Node.NODE_DIAMETER, 0));
+                      }
+                  }
+              }
+          }*/
     }
 }

@@ -1,10 +1,11 @@
-﻿using FarmSim.Player;
+﻿using FarmSim.Loading;
+using FarmSim.Player;
 using FarmSim.Utility;
 using UnityEngine;
 
 namespace FarmSim.Placeable 
 {
-    public class SpawnPlaceableOnClick : MonoBehaviour
+    public class SpawnPlaceableOnClick : OccurPostLoad
     {
         /// <summary>
         ///     Points to some item in the inventory and will be passed to the placeable.
@@ -20,8 +21,10 @@ namespace FarmSim.Placeable
 
         private Color baseColor;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             moveObject = FindObjectOfType<MoveObject>();
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
@@ -30,13 +33,10 @@ namespace FarmSim.Placeable
             baseColor = spriteRenderer.color;
         }
 
-        private void Start()
+        protected override void Update()
         {
-            item = inventory.GetItem(itemType);
-        }
+            base.Update();
 
-        private void Update()
-        {
             // Probably need to optimize this.
             ChangeSpriteColor(item);
         }
@@ -97,6 +97,11 @@ namespace FarmSim.Placeable
                 // assign a new attached object
                 moveObject.AttachedObject = placeable;
             }
+        }
+
+        protected override void PostLoad()
+        {
+            item = inventory.GetItem(itemType);
         }
     }
 }

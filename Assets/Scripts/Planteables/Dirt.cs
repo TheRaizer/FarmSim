@@ -2,10 +2,12 @@
 using FarmSim.Grid;
 using FarmSim.TimeBased;
 using FarmSim.Serialization;
+using FarmSim.Utility;
+using System.Linq;
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using FarmSim.Utility;
+using FarmSim.Loading;
 
 namespace FarmSim.Planteables
 {
@@ -14,7 +16,7 @@ namespace FarmSim.Planteables
     ///         Manages the state of the dirt and the plant it contains if there is any.
     ///     </summary>
     /// </class>
-    public class Dirt : MonoBehaviour, ITimeBased, IInteractable, ISavable
+    public class Dirt : OccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
@@ -22,9 +24,6 @@ namespace FarmSim.Planteables
 
         public Planteable Plant { private get; set; } = null;
 
-        /// <summary>
-        ///     Should be set from a ILoadable that loads the nodes.
-        /// </summary>
         public DirtData Data { private get; set; }
 
         public int X { get; set; }
@@ -39,18 +38,12 @@ namespace FarmSim.Planteables
         private const int MIN_HOED_DAYS = 3;
 
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             spriteRenderer = GetComponent<SpriteRenderer>();
             grid = FindObjectOfType<NodeGrid>();
-        }
-
-        private void Start()
-        {
-            if (Data == null)
-            {
-                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
-            }
         }
 
         public void OnDayPass()
@@ -174,11 +167,44 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if(SaveData.Current.dirtDatas == null)
+            if (!SaveData.Current.dirtDatas.Contains(Data))
             {
-                SaveData.Current.dirtDatas = new List<DirtData>();
+                SaveData.Current.dirtDatas.Add(Data);
             }
-            SaveData.Current.dirtDatas.Add(Data);
+        }
+
+        public void Load()
+        {
+            if (SaveData.Current.dirtDatas == null || SaveData.Current.dirtDatas.Count <= 0)
+            {
+                // if there is no dirt data that was loaded then create a new one.
+                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
+            }
+            else
+            {
+                // find the dirts data that matches its x and y.
+                Data = SaveData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
+                PlanteableData plantData = SaveData.Current.plantDatas.FirstOrDefault(plant => plant.Id == Data.Id);
+
+                // if there is any plant data
+                if(plantData != null)
+                {
+                    // we must create a plant game object
+                    Debug.Log("Prefabs/" + plantData.PrefabName);
+                    var gameObject = Resources.Load("Prefabs/" + plantData.PrefabName) as GameObject;
+                    var objInstance = Instantiate(gameObject);
+                    objInstance.transform.position = transform.position;
+
+                    // assign the plant data
+                    Plant = objInstance.GetComponent<Planteable>();
+                    Plant.Data = plantData;
+                }
+            }
+        }
+
+        protected override void PostLoad()
+        {
+            CheckSpriteType();
         }
     }
 }

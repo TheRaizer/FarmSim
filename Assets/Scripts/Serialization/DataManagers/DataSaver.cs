@@ -1,34 +1,50 @@
 ﻿using FarmSim.Serialization;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DataSaver : MonoBehaviour
+namespace FarmSim.Serialization
 {
-    public bool Saving { get; private set; } = false;
-
-    /// <summary>
-    ///     Finds all ISaveables in the scene and Saves their data.
-    /// </summary>
-    public IEnumerator SaveAll()
+    /// <class name="DataSaver">
+    ///     <summary>
+    ///         Saves all data from any object that implements <see cref="ISavable"/> by running their <see cref="ISavable.Save"/>
+    ///     </summary>
+    /// </class>
+    public class DataSaver : MonoBehaviour
     {
-        if (!Saving)
+        public bool Saving { get; private set; } = false;
+
+        /// <summary>
+        ///     Finds all ISaveables in the scene and Saves their data.
+        /// </summary>
+        public IEnumerator SaveAll()
         {
-            Saving = true;
-            IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>();
-
-            foreach (ISavable s in saveables)
+            if (!Saving)
             {
-                yield return null;
-                s.Save();
-            }
+                Saving = true;
 
-            if (SerializationManager.Save(SaveData.Current))
-            {
-                Debug.Log("Save was succesful");
-            }
+                IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>();
 
-            Saving = false;
+                // save every item
+                foreach (ISavable s in saveables)
+                {
+                    yield return null;
+                    s.Save();
+                }
+
+                Debug.Log("plant num: " + SaveData.Current.plantDatas.Count);
+                Debug.Log("dirt num: " + SaveData.Current.dirtDatas.Count);
+                Debug.Log("item num: " + SaveData.Current.playerData.itemDatas.Count);
+
+                // translate it through binary formatter
+                if (SerializationManager.Save(SaveData.Current))
+                {
+                    Debug.Log("Save was succesful");
+                }
+
+                Saving = false;
+            }
         }
     }
 }

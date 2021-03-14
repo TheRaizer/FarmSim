@@ -13,8 +13,8 @@ namespace FarmSim.Grid
     {
         public const float NODE_RADIUS = 0.7f;
         public const float NODE_DIAMETER = NODE_RADIUS * 2;
-        public NodeData Data { get; private set; }
 
+        public NodeData Data { get; private set; }
         public IInteractable Interactable { get; set; }
 
         /// <param name="position">The world position of the node</param>

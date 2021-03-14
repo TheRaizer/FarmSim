@@ -17,6 +17,7 @@ namespace FarmSim.Serialization
     {
         private void Awake()
         {
+            Debug.Log(Application.persistentDataPath);
             // this can be changed to happen when a button to load is pressed instead.
             SaveData.Current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/Save.save");
         }
