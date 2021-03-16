@@ -16,8 +16,8 @@ namespace FarmSim.Grid
     {
         [SerializeField] private int sectionNum = 0;
 
-        private const int SECTION_SIZE_X = 30;
-        private const int SECTION_SIZE_Y = 30;
+        public const int SECTION_SIZE_X = 30;
+        public const int SECTION_SIZE_Y = 30;
 
         private Node[,] grid;
         private SectionLoader sectionLoader = null;
@@ -161,6 +161,38 @@ namespace FarmSim.Grid
             }
 
             return nodes;
+        }
+        public List<Node> GetMooreNeighbours(Node middleNode)
+        {
+            List<Node> nodes = new List<Node>();
+
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int x = -1; x <= 1; x++)
+                {
+                    int nodeX = x + middleNode.Data.x;
+                    int nodeY = y + middleNode.Data.y;
+                    if (IsInSection(nodeX, nodeY))
+                    {
+                        nodes.Add(grid[nodeX, nodeY]);
+                    }
+                }
+            }
+
+            return nodes;
+        }
+
+        public int GetDistance(Node node_1, Node node_2)
+        {
+            var dstX = Mathf.Abs(node_1.Data.x - node_2.Data.x);
+            var dstY = Mathf.Abs(node_1.Data.y - node_2.Data.y);
+
+            if (dstX > dstY)
+            {
+                return 14 * dstY + 10 * (dstX - dstY);
+            }
+
+            return 14 * dstX + 10 * (dstY - dstX);
         }
 
         public void Save()
