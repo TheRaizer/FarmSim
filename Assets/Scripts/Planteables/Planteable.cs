@@ -4,6 +4,7 @@ using UnityEngine;
 using FarmSim.TimeBased;
 using FarmSim.Serialization;
 using FarmSim.Loading;
+using FarmSim.Enums;
 
 namespace FarmSim.Planteables
 {
@@ -20,6 +21,7 @@ namespace FarmSim.Planteables
         ///     Includes the day it was planted.
         /// </summary>
         [SerializeField] private int daysToGrow = 0;
+        [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
 
         [SerializeField] private int maxAmtToDrop = 0;
         [SerializeField] private int minAmtToDrop = 0;
@@ -32,7 +34,7 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        [field: SerializeField] public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
+        public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
         private SpriteRenderer spriteRenderer;
 
         private int spriteChangeInterval = 0;

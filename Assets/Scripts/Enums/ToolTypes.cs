@@ -8,6 +8,7 @@ namespace FarmSim.Enums
         Sickle,
         Axe,
         Pickaxe,
+        Hand,
         Other,
     }
 }

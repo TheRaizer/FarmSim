@@ -1,6 +1,6 @@
-﻿using FarmSim.Loading;
-using FarmSim.Player;
+﻿using FarmSim.Player;
 using FarmSim.Utility;
+using FarmSim.Enums;
 using UnityEngine;
 
 namespace FarmSim.Placeable 
@@ -17,6 +17,7 @@ namespace FarmSim.Placeable
 
         private SpriteRenderer spriteRenderer = null;
         private PlayerInventory inventory;
+        private ToolHandler toolHander;
         private Item item;
 
         private Color baseColor;
@@ -26,6 +27,7 @@ namespace FarmSim.Placeable
             moveObject = FindObjectOfType<MoveObject>();
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
+            toolHander = FindObjectOfType<ToolHandler>();
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             baseColor = spriteRenderer.color;
@@ -43,7 +45,11 @@ namespace FarmSim.Placeable
 
         private void OnMouseDown()
         {
-            SpawnPlaceable();
+            // only if the current tool equipped is the hand should we spawn a placeable
+            if (toolHander.EquippedTool.ToolType == ToolTypes.Hand)
+            {
+                SpawnPlaceable();
+            }
         }
 
         private void ChangeSpriteColor(Item item)

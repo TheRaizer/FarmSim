@@ -88,7 +88,7 @@ namespace FarmSim.Planteables
             CheckSpriteType();
         }
 
-        private void Sickle()
+        private void Harvest()
         {
             if (Plant != null && Plant.CanHarvest)
             {
@@ -143,7 +143,15 @@ namespace FarmSim.Planteables
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Sickle:
-                    Sickle();
+                    if (Plant == null || Plant.ToolToHarvestWith != ToolTypes.Sickle)
+                        return;
+                    Harvest();
+                    onSuccessful?.Invoke();
+                    break;
+                case ToolTypes.Axe:
+                    if (Plant == null || Plant.ToolToHarvestWith != ToolTypes.Axe)
+                        return;
+                    Harvest();
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Other:
