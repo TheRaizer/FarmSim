@@ -31,6 +31,7 @@ namespace FarmSim.Planteables
         private int daysTillRevert = 0;
 
         private SpriteRenderer spriteRenderer = null;
+        private ObjectPooler objectPooler = null;
         private NodeGrid grid = null;
 
         private const int MAX_HOED_DAYS = 8;
@@ -43,6 +44,7 @@ namespace FarmSim.Planteables
 
             spriteRenderer = GetComponent<SpriteRenderer>();
             grid = FindObjectOfType<NodeGrid>();
+            objectPooler = FindObjectOfType<ObjectPooler>();
         }
 
         public void OnDayPass()
@@ -71,6 +73,7 @@ namespace FarmSim.Planteables
         {
             if (!Data.Hoed)
             {
+                objectPooler.SpawnGameObject("HoedDirtParticles", transform.position, Quaternion.identity);
                 Data.Hoed = true;
                 daysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
                 spriteRenderer.sprite = hoedDirt;

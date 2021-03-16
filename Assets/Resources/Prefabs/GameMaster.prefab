@@ -89,6 +89,10 @@ MonoBehaviour:
     numOfGameObjects: 1
     prefab: {fileID: 7301315993295839137, guid: 934988dfcd5228d4597d54b72f902dcc,
       type: 3}
+  - id: HoedDirtParticles
+    numOfGameObjects: 10
+    prefab: {fileID: 9161111012254602840, guid: fc1e6d40795bf4a45b8a324578650e0f,
+      type: 3}
 --- !u!114 &1090752706648671776
 MonoBehaviour:
   m_ObjectHideFlags: 0
