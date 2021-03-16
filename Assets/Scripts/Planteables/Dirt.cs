@@ -6,7 +6,6 @@ using FarmSim.Utility;
 using System.Linq;
 using System;
 using UnityEngine;
-using System.Collections.Generic;
 using FarmSim.Loading;
 
 namespace FarmSim.Planteables
@@ -168,7 +167,7 @@ namespace FarmSim.Planteables
                     }
                     break;
                 default:
-                    Debug.Log($"Do nothing with tooltype {toolType}");
+                    /*Debug.Log($"Do nothing with tooltype {toolType}");*/
                     break;
             }
         }
@@ -198,7 +197,6 @@ namespace FarmSim.Planteables
                 if(plantData != null)
                 {
                     // we must create a plant game object
-                    Debug.Log("Prefabs/" + plantData.PrefabName);
                     var gameObject = Resources.Load("Prefabs/" + plantData.PrefabName) as GameObject;
                     var objInstance = Instantiate(gameObject);
                     objInstance.transform.position = transform.position;
