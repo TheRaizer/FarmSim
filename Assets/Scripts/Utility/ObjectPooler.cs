@@ -48,6 +48,12 @@ namespace FarmSim.Utility
 
         public GameObject SpawnGameObject(string id, Vector2 position, Quaternion rotation)
         {
+            if (!poolDict.ContainsKey(id))
+            {
+                Debug.LogError($"There is no pool with id {id}");
+                return null;
+            }
+
             Pool pool = poolDict[id];
 
             var gameObject = pool.objects.Dequeue();

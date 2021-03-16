@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4204272520017814276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4204272520017814282}
+  - component: {fileID: 4204272520017814277}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4204272520017814282
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204272520017814276}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3450539, y: 0.7854537, z: -295.36932}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4204272520017814277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4204272520017814276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ddee76e0e6b354d9bececd67acae76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - <Name>k__BackingField: HoeingDirt_0
+    <Loop>k__BackingField: 0
+    clip: {fileID: 8300000, guid: 9a688da10d479ff439b14faeacbfe8c0, type: 3}
+    volume: 1
+    pitch: 1
+  - <Name>k__BackingField: HoeingDirt_1
+    <Loop>k__BackingField: 0
+    clip: {fileID: 8300000, guid: ddc1c8e76dc8a584e8c6e3cdefec1545, type: 3}
+    volume: 1
+    pitch: 1
+  - <Name>k__BackingField: HoeingDirt_2
+    <Loop>k__BackingField: 0
+    clip: {fileID: 8300000, guid: faaad80643308f04da545b03f9fe890a, type: 3}
+    volume: 1
+    pitch: 1
+  - <Name>k__BackingField: HoeingDirt_3
+    <Loop>k__BackingField: 0
+    clip: {fileID: 8300000, guid: 663ce481c34de8c43a793d1434c04ca3, type: 3}
+    volume: 1
+    pitch: 1
