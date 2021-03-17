@@ -92,7 +92,7 @@ namespace FarmSim.Grid
         /// <param name="node">The node the dimensions surround.</param>
         /// <param name="xDim">The x-dimension.</param>
         /// <param name="yDim">The y-dimension.</param>
-        public void MakeDimensionsOccupied(Node node, int xDim, int yDim)
+        public void MakeDimensionsOccupied(Node node, int xDim, int yDim, bool isWalkable = true)
         {
             int yStart = node.Data.y - yDim / 2;
             int xStart = node.Data.x - xDim / 2;
@@ -106,6 +106,7 @@ namespace FarmSim.Grid
                     if (IsInSection(nodeX, nodeY))
                     {
                         grid[nodeX, nodeY].Data.IsOccupied = true;
+                        grid[nodeX, nodeY].Data.IsWalkable = isWalkable;
                     }
 
                 }
@@ -170,8 +171,11 @@ namespace FarmSim.Grid
             {
                 for (int x = -1; x <= 1; x++)
                 {
-                    int nodeX = x + middleNode.Data.x;
-                    int nodeY = y + middleNode.Data.y;
+                    if (x == 0 && y == 0)
+                        continue;
+
+                    int nodeX = middleNode.Data.x + x;
+                    int nodeY = middleNode.Data.y + y;
                     if (IsInSection(nodeX, nodeY))
                     {
                         nodes.Add(grid[nodeX, nodeY]);

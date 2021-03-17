@@ -14,6 +14,7 @@ namespace FarmSim.Placeable
     {
         [SerializeField] protected int xDim = 0;
         [SerializeField] protected int yDim = 0;
+        [SerializeField] protected bool isWalkable = true;
         [SerializeField] protected GameObject objectToPlace;
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace FarmSim.Placeable
             {
                 if (grid.IsValidPlacement(Node, xDim, yDim))
                 {
-                    grid.MakeDimensionsOccupied(Node, xDim, yDim);
+                    grid.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
                     OnPlace();
                 }
             }

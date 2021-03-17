@@ -153,6 +153,8 @@ namespace FarmSim.Grid
             switch (val)
             {
                 case "0":
+                    grid[x, y].Data.IsWalkable = true;
+                    grid[x, y].Data.IsOccupied = false;
                     spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Data.pos, Quaternion.identity);
                     break;
                 default:

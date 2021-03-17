@@ -18,10 +18,10 @@ namespace FarmSim.Grid
             aStar = new AStar(grid);
         }
 
-        public void RequestPath(string guid, Node start, Node end, Action<Vector2[], bool> callBack)
+        public void RequestPath(PathRequest pathRequest)
         {
-            PathRequest pathRequest = new PathRequest(guid, start, end, callBack);
             requests.Enqueue(pathRequest);
+            TryProcessingNextPath();
         }
 
         private void TryProcessingNextPath()
@@ -30,7 +30,7 @@ namespace FarmSim.Grid
             {
                 isProcessing = true;
                 currentPathProcess = requests.Dequeue();
-                aStar.PathFind(currentPathProcess.start, currentPathProcess.end, currentPathProcess.id);
+                StartCoroutine(aStar.PathFindCo(currentPathProcess.start, currentPathProcess.end, currentPathProcess.id));
             }
         }
 

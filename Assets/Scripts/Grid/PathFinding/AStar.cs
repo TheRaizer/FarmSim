@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,66 +26,32 @@ namespace FarmSim.Grid
         private Vector2[] RetracePath(Node start, Node end)
         {
             // holds vector2 list from end node to start node
-            List<Node> backwardPath = new List<Node>();
+            List<Vector2> backwardPath = new List<Vector2>();
             Node curr = end;
 
             while (curr != start)
             {
-                backwardPath.Add(curr);
+                backwardPath.Add(curr.Data.pos);
                 curr = curr.parentNode;
             }
 
             // flip the backward path to be the proper path
             backwardPath.Reverse();
 
+            Debug.Log("unprocessed path: " + backwardPath.Count);
             // simplify the path
-            Vector2[] path = SimplifyPath(backwardPath);
+            Vector2[] path = backwardPath.ToArray();
 
             return path;
         }
 
-        /// <summary>
-        ///     Simplifies the path to only contain Vector2's where a direction change is to be made.
-        ///     <remarks>
-        ///         <para>
-        ///             The way we check if the direction is different utilizes the fact that 
-        ///             each node is always only up to 1X and 1Y distance away from each other.
-        ///         </para>
-        ///         <para>
-        ///             This would mean that a Node cannot be in the same direction with a greater magnitude.
-        ///         </para>
-        ///     </remarks>
-        /// </summary>
-        /// <param name="path">Path from the start to end nodes.</param>
-        /// <returns>A simplified path containing only nodes where direction has changed.</returns>
-        Vector2[] SimplifyPath(List<Node> path)
-        {
-            List<Vector2> simplePath = new List<Vector2>();
-            Vector2 directionOld = Vector2.zero;
 
-            for (int i = 1; i < path.Count; i++)
-            {
-                Node curr = path[i];
-                Node prev = path[i - 1];
 
-                // get the new direction from the prev node to the current
-                Vector2 directionNew = new Vector2(prev.Data.x - curr.Data.x, prev.Data.y - curr.Data.y);
-
-                // check if the direction has changed
-                if (directionNew != directionOld)
-                {
-                    // add to the path if direction has changed
-                    simplePath.Add(path[i].Data.pos);
-                }
-                directionOld = directionNew;
-            }
-            return simplePath.ToArray();
-        }
-
-        public IEnumerator PathFind(Node start, Node end, string id)
+        public IEnumerator PathFindCo(Node start, Node end, string id)
         {
             if (!start.Data.IsWalkable && !end.Data.IsWalkable)
             {
+                PathRequestManager.Instance.OnFinishProcess(null, false);
                 yield break;
             }
             Heap<Node> openHeap = new Heap<Node>(NodeGrid.SECTION_SIZE_X * NodeGrid.SECTION_SIZE_Y);
@@ -99,6 +66,7 @@ namespace FarmSim.Grid
             while(openHeap.Count > 0)
             {
                 Node currentNode = openHeap.RemoveFirst();
+                closedSet.Add(currentNode);
 
                 if (currentNode == end)
                 {
@@ -141,11 +109,10 @@ namespace FarmSim.Grid
                         }
                     }
                 }
-
-                closedSet.Add(currentNode);
-                yield return null;
             }
 
+
+            yield return null;
             Vector2[] path = null;
             if (foundPath)
             {

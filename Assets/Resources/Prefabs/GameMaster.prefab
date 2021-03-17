@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 1090752706648671788}
   - component: {fileID: 1090752706648671790}
   - component: {fileID: 1090752706648671791}
-  - component: {fileID: 1090752706648671776}
   - component: {fileID: 1090752706648671777}
   - component: {fileID: 1090752706648671778}
   - component: {fileID: 1090752706648671779}
   - component: {fileID: 1090752706648671780}
   - component: {fileID: 1090752706648671781}
   - component: {fileID: 374232164}
+  - component: {fileID: 1090752707022115402}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -93,18 +93,6 @@ MonoBehaviour:
     numOfGameObjects: 10
     prefab: {fileID: 9161111012254602840, guid: fc1e6d40795bf4a45b8a324578650e0f,
       type: 3}
---- !u!114 &1090752706648671776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090752706648671787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d26d4c22e60446408cf961491ee9354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1090752706648671777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,3 +184,15 @@ MonoBehaviour:
       type: 3}
     <ToolType>k__BackingField: 5
   toolPointer: {fileID: 0}
+--- !u!114 &1090752707022115402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090752706648671787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c51c31852c60e84998b55b26084ebad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
