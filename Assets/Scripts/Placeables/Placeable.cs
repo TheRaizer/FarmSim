@@ -48,7 +48,7 @@ namespace FarmSim.Placeable
 
         protected virtual void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
                 if (grid.IsValidPlacement(Node, xDim, yDim))
                 {

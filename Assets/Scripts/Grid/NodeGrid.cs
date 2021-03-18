@@ -77,7 +77,9 @@ namespace FarmSim.Grid
                 {
                     int nodeX = x + xStart;
                     int nodeY = y + yStart;
-                    if (IsInSection(nodeX, nodeY) && grid[nodeX, nodeY].Data.IsOccupied)
+                    
+                    // not valid placement if a node is outside the section or it is occupied
+                    if (!IsInSection(nodeX, nodeY) || grid[nodeX, nodeY].Data.IsOccupied)
                     {
                         return false;
                     }

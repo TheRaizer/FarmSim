@@ -43,13 +43,15 @@ namespace FarmSim.Placeable
             // Probably need to optimize this.
             ChangeSpriteColor(item);
         }
-
-        private void OnMouseDown()
+        private void OnMouseOver()
         {
-            // only if the current tool equipped is the hand should we spawn a placeable
-            if (toolHander.EquippedTool.ToolType == ToolTypes.Hand)
+            if (Input.GetMouseButtonDown(1))
             {
-                SpawnPlaceable();
+                // only if the current tool equipped is the hand should we spawn a placeable
+                if (toolHander.EquippedTool.ToolType == ToolTypes.Hand)
+                {
+                    SpawnPlaceable();
+                }
             }
         }
 

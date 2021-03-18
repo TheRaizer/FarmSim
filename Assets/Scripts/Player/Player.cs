@@ -57,8 +57,10 @@ namespace FarmSim.Player
         private void PathFindCallBack(Vector2[] path, bool isSuccesful)
         {
             Debug.Log("Path ran " + isSuccesful);
-
-            Debug.Log("Path length: " + path.Length);
+            if (path != null)
+                Debug.Log("Path length: " + path.Length);
+            else
+                Debug.Log("no path");
             pathIdx = 0;
             if (isSuccesful)
             {

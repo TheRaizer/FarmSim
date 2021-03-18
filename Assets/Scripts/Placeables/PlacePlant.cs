@@ -17,7 +17,7 @@ namespace FarmSim.Placeable
     {
         protected override void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(1))
             {
                 // unlike in the Placeable parent class we do not want to occupy the space unless the interaction was succesful.
                 if (grid.IsValidPlacement(Node, xDim, yDim))
@@ -32,7 +32,7 @@ namespace FarmSim.Placeable
             Node.Interactable.OnInteract(ToolTypes.Other, objectToPlace, 
                 () => 
                 { 
-                    grid.MakeDimensionsOccupied(Node, xDim, yDim);
+                    grid.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
                     ReduceAmtPlaceable();
                 });
         }
