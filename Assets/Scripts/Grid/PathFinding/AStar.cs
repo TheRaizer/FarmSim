@@ -79,7 +79,7 @@ namespace FarmSim.Grid
                     break;
                 }
 
-                List<Node> neighbours = grid.GetMooreNeighbours(currentNode);
+                List<Node> neighbours = grid.GetCardinalNeighbours(currentNode);
 
                 foreach (Node neighbour in neighbours)
                 {
@@ -88,7 +88,7 @@ namespace FarmSim.Grid
                         continue;
                     }
 
-                    int distCurrToNeighbour = grid.GetDistance(currentNode, neighbour);
+                    int distCurrToNeighbour = grid.GetManhattanDistance(currentNode, neighbour);
 
                     // the new gcost of the neighbour to the start through the current node
                     int newNeighbourGCost = currentNode.gCost + distCurrToNeighbour;
@@ -100,7 +100,7 @@ namespace FarmSim.Grid
 
                         if (!openHeap.Contains(neighbour))
                         {
-                            neighbour.hCost = grid.GetDistance(neighbour, end);
+                            neighbour.hCost = grid.GetManhattanDistance(neighbour, end);
                             openHeap.Add(neighbour);
                         }
                         else

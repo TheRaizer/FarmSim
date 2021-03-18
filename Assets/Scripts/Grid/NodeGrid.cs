@@ -165,40 +165,33 @@ namespace FarmSim.Grid
 
             return nodes;
         }
-        public List<Node> GetMooreNeighbours(Node middleNode)
+        public List<Node> GetCardinalNeighbours(Node middleNode)
         {
-            List<Node> nodes = new List<Node>();
+            List<Node> neighbours = new List<Node>();
 
-            for (int y = -1; y <= 1; y++)
+            if (IsInSection(middleNode.Data.x - 1, middleNode.Data.y))
             {
-                for (int x = -1; x <= 1; x++)
-                {
-                    if (x == 0 && y == 0)
-                        continue;
-
-                    int nodeX = middleNode.Data.x + x;
-                    int nodeY = middleNode.Data.y + y;
-                    if (IsInSection(nodeX, nodeY))
-                    {
-                        nodes.Add(grid[nodeX, nodeY]);
-                    }
-                }
+                neighbours.Add(grid[middleNode.Data.x - 1, middleNode.Data.y]);
+            }
+            if (IsInSection(middleNode.Data.x + 1, middleNode.Data.y))
+            {
+                neighbours.Add(grid[middleNode.Data.x + 1, middleNode.Data.y]);
+            }
+            if (IsInSection(middleNode.Data.x, middleNode.Data.y - 1))
+            {
+                neighbours.Add(grid[middleNode.Data.x, middleNode.Data.y - 1]);
+            }
+            if (IsInSection(middleNode.Data.x, middleNode.Data.y + 1))
+            {
+                neighbours.Add(grid[middleNode.Data.x, middleNode.Data.y + 1]);
             }
 
-            return nodes;
+            return neighbours;
         }
 
-        public int GetDistance(Node node_1, Node node_2)
+        public int GetManhattanDistance(Node node_1, Node node_2)
         {
-            var dstX = Mathf.Abs(node_1.Data.x - node_2.Data.x);
-            var dstY = Mathf.Abs(node_1.Data.y - node_2.Data.y);
-
-            if (dstX > dstY)
-            {
-                return 14 * dstY + 10 * (dstX - dstY);
-            }
-
-            return 14 * dstX + 10 * (dstY - dstX);
+            return Mathf.Abs(node_1.Data.x - node_2.Data.x) + Mathf.Abs(node_1.Data.y - node_2.Data.y);
         }
 
         public void Save()
