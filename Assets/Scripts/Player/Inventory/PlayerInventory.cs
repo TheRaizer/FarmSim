@@ -85,6 +85,11 @@ namespace FarmSim.Player
                 {
                     // Obtain the SO from the data's itemTypeName attribute.
                     ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
+                    if (itemType == null)
+                    {
+                        Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
+                    }
+
 
                     Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 

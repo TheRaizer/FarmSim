@@ -200,7 +200,13 @@ namespace FarmSim.Planteables
                 if(plantData != null)
                 {
                     // we must create a plant game object
-                    var gameObject = Resources.Load("Prefabs/" + plantData.PrefabName) as GameObject;
+                    var gameObject = Resources.Load("Prefabs/Planteables/" + plantData.PrefabName) as GameObject;
+
+                    if(gameObject == null)
+                    {
+                        Debug.LogError("There is no planteable prefab at path: " + "Prefabs/Planteables/" + plantData.PrefabName);
+                    }
+
                     var objInstance = Instantiate(gameObject);
                     objInstance.transform.position = transform.position;
 

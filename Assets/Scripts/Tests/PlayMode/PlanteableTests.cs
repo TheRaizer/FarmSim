@@ -14,6 +14,10 @@ namespace Tests
         public void GrowthTest()
         {
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+            if(prefab == null)
+            {
+                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
+            }
             var planteableObj = Object.Instantiate(prefab);
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
@@ -35,6 +39,12 @@ namespace Tests
         public void PlantSaveTest()
         {
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+
+            if (prefab == null)
+            {
+                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
+            }
+
             var planteableObj = Object.Instantiate(prefab);
             var planteableObj_2 = Object.Instantiate(prefab);
 
@@ -69,6 +79,12 @@ namespace Tests
         public IEnumerator HarvestTest()
         {
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+
+            if (prefab == null)
+            {
+                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
+            }
+
             var planteableObj = Object.Instantiate(prefab);
 
             GameObject obj = new GameObject();
@@ -76,6 +92,11 @@ namespace Tests
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
+
+            if (itemType == null)
+            {
+                Debug.LogError("There is no ItemType scriptable object at path: SO/Potato");
+            }
 
             // Harvest the plant
             plant.OnHarvest();
