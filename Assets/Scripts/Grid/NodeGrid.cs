@@ -165,6 +165,33 @@ namespace FarmSim.Grid
 
             return nodes;
         }
+
+        public List<Node> GetMooreNeighbours(Node middleNode)
+        {
+            List<Node> neighbours = new List<Node>();
+
+            for (int y = -1; y <= 1; y++)
+            {
+                for (int x = -1; x <= 1; x++)
+                {
+                    if(x == 0 && y == 0)
+                    {
+                        continue;
+                    }
+
+                    int nodeX = middleNode.Data.x + x;
+                    int nodeY = middleNode.Data.y + y;
+
+                    if (IsInSection(nodeX, nodeY))
+                    {
+                        neighbours.Add(grid[nodeX, nodeY]);
+                    }
+                }
+            }
+
+            return neighbours;
+        }
+
         public List<Node> GetCardinalNeighbours(Node middleNode)
         {
             List<Node> neighbours = new List<Node>();
