@@ -149,6 +149,8 @@ namespace FarmSim.Grid
 
         private void DetermineTileType(string val, int x, int y, Node[,] grid)
         {
+            if (pooler == null)
+                return;
             GameObject spawnedObject = null;
             switch (val)
             {

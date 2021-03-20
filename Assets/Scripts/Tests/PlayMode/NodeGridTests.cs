@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 using FarmSim.Grid;
+using System.Collections.Generic;
 
 namespace Tests
 {
@@ -46,27 +47,9 @@ namespace Tests
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
-            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 6));
-            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 6));
-            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));
+            List<Node> neighbours = grid.GetMooreNeighbours(node);
 
-            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 5));
-            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 5));
-
-            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 4));
-            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 4));
-            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 4));
-
-            Assert.IsFalse(grid.IsValidPlacement(nodeTopLeft, 1, 1));
-            Assert.IsFalse(grid.IsValidPlacement(nodeTopMid, 1, 1));
-            Assert.IsFalse(grid.IsValidPlacement(nodeTopRight, 1, 1));
-
-            Assert.IsFalse(grid.IsValidPlacement(nodeLeft, 1, 1));
-            Assert.IsFalse(grid.IsValidPlacement(nodeRight, 1, 1));
-
-            Assert.IsFalse(grid.IsValidPlacement(nodeBottomLeft, 1, 1));
-            Assert.IsFalse(grid.IsValidPlacement(nodeBottomMid, 1, 1));
-            Assert.IsFalse(grid.IsValidPlacement(nodeBottomRight, 1, 1));
+            neighbours.ForEach(x => Assert.IsFalse(grid.IsValidPlacement(x, 1, 1)));
 
             Assert.IsFalse(grid.IsValidPlacement(node, 1, 1));
         }
@@ -82,27 +65,9 @@ namespace Tests
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
-            Node nodeTopLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 6));
-            Node nodeTopMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 6));
-            Node nodeTopRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));
+            List<Node> neighbours = grid.GetMooreNeighbours(node);
 
-            Node nodeLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 5));
-            Node nodeRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 5));
-
-            Node nodeBottomLeft = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 4, Node.NODE_DIAMETER * 4));
-            Node nodeBottomMid = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 4));
-            Node nodeBottomRight = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 4));
-
-            Assert.IsTrue(nodeTopLeft.Data.IsOccupied);
-            Assert.IsTrue(nodeTopMid.Data.IsOccupied);
-            Assert.IsTrue(nodeTopRight.Data.IsOccupied);
-
-            Assert.IsTrue(nodeLeft.Data.IsOccupied);
-            Assert.IsTrue(nodeRight.Data.IsOccupied);
-
-            Assert.IsTrue(nodeBottomLeft.Data.IsOccupied);
-            Assert.IsTrue(nodeBottomMid.Data.IsOccupied);
-            Assert.IsTrue(nodeBottomRight.Data.IsOccupied);
+            neighbours.ForEach(x => Assert.IsTrue(x.Data.IsOccupied));
 
             Assert.IsTrue(node.Data.IsOccupied);
         }
