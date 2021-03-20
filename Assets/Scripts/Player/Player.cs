@@ -1,4 +1,5 @@
-﻿using FarmSim.Grid;
+﻿using FarmSim.Enums;
+using FarmSim.Grid;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,11 @@ namespace FarmSim.Player
     public class Player : MonoBehaviour
     {
         [SerializeField] private float speed;
+
+        private Animator animator;
+
+        private CardinalDirections dir = CardinalDirections.South;
+
         private NodeGrid grid;
         private Vector2[] path;
         private PathRequest currentRequest;
@@ -20,6 +26,7 @@ namespace FarmSim.Player
             //to hide the curser
             Cursor.visible = false;
             grid = FindObjectOfType<NodeGrid>();
+            animator = GetComponent<Animator>();
         }
 
         private void Update()
@@ -27,6 +34,7 @@ namespace FarmSim.Player
             if(processingPath && Input.GetKeyDown(KeyCode.S))
             {
                 PathRequestManager.Instance.StopSearch(currentRequest.id);
+                path = null;
             }
             MoveOnPath();
 
@@ -36,14 +44,43 @@ namespace FarmSim.Player
             }
         }
 
+        private void ChangeDir(Vector2 next)
+        {
+            Vector2 travelDir = next - (Vector2)transform.position;
+
+            Debug.Log(travelDir);
+
+            if (travelDir.x > 0)
+            {
+                dir = CardinalDirections.East;
+            }
+            else if (travelDir.x < 0)
+            {
+                dir = CardinalDirections.West;
+            }
+            else if(travelDir.y > 0)
+            {
+                dir = CardinalDirections.North;
+            }
+            else if(travelDir.y < 0)
+            {
+                dir = CardinalDirections.South;
+            }
+
+            animator.SetInteger("Direction", (int)dir);
+        }
+
         private void MoveOnPath()
         {
             if (path != null)
             {
+                animator.SetBool("Walking", true);
                 if (pathIdx < path.Length)
                 {
                     Vector2 curr = gameObject.transform.position;
                     Vector2 target = path[pathIdx];
+
+                    ChangeDir(target);
 
                     if (Mathf.Abs(curr.x - target.x) < 0.01f && Mathf.Abs(curr.y - target.y) < 0.01f)
                     {
@@ -51,6 +88,14 @@ namespace FarmSim.Player
                     }
                     gameObject.transform.position = Vector2.MoveTowards(curr, target, speed * Time.deltaTime);
                 }
+                else
+                {
+                    path = null;
+                }
+            }
+            else
+            {
+                animator.SetBool("Walking", false);
             }
         }
 
