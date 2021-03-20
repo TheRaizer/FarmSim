@@ -3,7 +3,8 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Grid"
+        "Grid",
+        "Utility"
     ],
     "includePlatforms": [
         "Editor"

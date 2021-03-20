@@ -38,12 +38,18 @@ namespace FarmSim.Grid
             Data = _data;
         }
 
-        public int CompareTo(Node nodeToCompare)
+        /// <summary>
+        ///     Compares two nodes to determine their priority in a heap.
+        ///     <remarks><see cref="int.CompareTo(int)"/> will return 1 if FCost/HCost is greater which is why we return (-compare).</remarks>
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>Negative compare as we are prioritizing when FCost or HCost is lower.</returns>
+        public int CompareTo(Node other)
         {
-            int compare = FCost.CompareTo(nodeToCompare.FCost);
+            int compare = FCost.CompareTo(other.FCost);
             if (compare == 0)
             {
-                compare = hCost.CompareTo(nodeToCompare.hCost);
+                compare = hCost.CompareTo(other.hCost);
             }
             return -compare;
         }
