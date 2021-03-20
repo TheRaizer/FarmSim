@@ -5,7 +5,10 @@
         "UnityEditor.TestRunner",
         "Grid",
         "Placeables",
-        "Serialization"
+        "Serialization",
+        "Planteables",
+        "Loading",
+        "Player"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

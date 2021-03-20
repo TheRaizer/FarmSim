@@ -18,12 +18,19 @@ namespace FarmSim.Loading
         }
         protected virtual void Update()
         {
-            // if we've loaded everything and we haven't run PostLoad()
-            if (loadingOrder.LoadedAll && !initialized)
+            if (loadingOrder == null)
             {
-                // execute something after loading
-                PostLoad();
-                initialized = true;
+                Debug.LogWarning("No LoadingOrder component located in the scene");
+            }
+            else
+            {
+                // if we've loaded everything and we haven't run PostLoad()
+                if (loadingOrder.LoadedAll && !initialized)
+                {
+                    // execute something after loading
+                    PostLoad();
+                    initialized = true;
+                }
             }
         }
 

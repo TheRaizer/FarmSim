@@ -85,7 +85,6 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckSpriteChange()
         {
-            Debug.Log("CheckSprite");
             // if its on the interval to change and the sprite index isnt the last sprite
             if (Data.CurrentGrowthDay == spriteChangeInterval * (Data.SpriteIdx + 1) && Data.SpriteIdx != spriteLifeCycle.Count - 1)
             {
