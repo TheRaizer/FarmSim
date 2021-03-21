@@ -1,10 +1,11 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Loading;
+using FarmSim.Tools;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Tools
+namespace FarmSim.Player
 {
     public class ToolHandler : OccurPostLoad
     {
@@ -12,17 +13,19 @@ namespace FarmSim.Tools
         [SerializeField] private GameObject toolPointer;
 
         private SpriteRenderer pointerSpriteRenderer;
-
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
-        public Tool EquippedTool { get; private set; }
 
+        public Node NodeToTool { private get; set; }
+
+        public Tool EquippedTool { get; private set; }
         private bool detectKeys = false;
 
         protected override void Awake()
         {
             base.Awake();
 
-            NodeGrid grid = GetComponent<NodeGrid>();
+            NodeGrid grid = FindObjectOfType<NodeGrid>();
+
             InitTools(grid);
             pointerSpriteRenderer = toolPointer.GetComponent<SpriteRenderer>();
             EquippedTool = tools[ToolTypes.Hand];
@@ -64,10 +67,6 @@ namespace FarmSim.Tools
 
         private void KeyHandler()
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                EquippedTool.OnUse();
-            }
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 EquippedTool = tools[ToolTypes.Hoe];
@@ -85,6 +84,12 @@ namespace FarmSim.Tools
                 EquippedTool = tools[ToolTypes.Hand];
             }
             pointerSpriteRenderer.sprite = EquippedTool.Sprite;
+        }
+
+        // animation event to use during tool animations
+        private void UseTool()
+        {
+            EquippedTool.OnUse(NodeToTool);
         }
 
         protected override void PostLoad()

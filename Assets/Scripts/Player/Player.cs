@@ -1,6 +1,6 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace FarmSim.Player
@@ -10,6 +10,7 @@ namespace FarmSim.Player
         [SerializeField] private float speed;
 
         private Animator animator;
+        private ToolHandler toolHandler;
 
         private CardinalDirections dir = CardinalDirections.South;
 
@@ -25,6 +26,8 @@ namespace FarmSim.Player
         {
             //to hide the curser
             Cursor.visible = false;
+
+            toolHandler = GetComponent<ToolHandler>();
             grid = FindObjectOfType<NodeGrid>();
             animator = GetComponent<Animator>();
         }
@@ -40,6 +43,7 @@ namespace FarmSim.Player
 
             if (Input.GetMouseButtonDown(0))
             {
+                toolHandler.NodeToTool = grid.GetNodeFromMousePosition();
                 RequestPath();
             }
         }
@@ -47,8 +51,6 @@ namespace FarmSim.Player
         private void ChangeDir(Vector2 next)
         {
             Vector2 travelDir = next - (Vector2)transform.position;
-
-            Debug.Log(travelDir);
 
             if (travelDir.x > 0)
             {
@@ -90,22 +92,34 @@ namespace FarmSim.Player
                 }
                 else
                 {
+                    // it has completed the path
+                    animator.SetBool("Walking", false);
+                    TriggerToolAnimation();
                     path = null;
                 }
             }
-            else
+        }
+
+        public void TriggerToolAnimation()
+        {
+            switch (toolHandler.EquippedTool.ToolType)
             {
-                animator.SetBool("Walking", false);
+                case ToolTypes.Hoe:
+                    animator.SetTrigger("Hoe");
+                    Debug.Log("Set t");
+                    break;
+                case ToolTypes.WateringCan:
+                    // set trigger to water. In that animation run the ToolHandler.UsTool() as event.
+                    break;
+                case ToolTypes.Sickle:
+                    // set trigger to sickle. In that animation run the ToolHandler.UsTool() as event.
+                default:
+                    break;
             }
         }
 
         private void PathFindCallBack(Vector2[] path, bool isSuccesful)
         {
-            Debug.Log("Path ran " + isSuccesful);
-            if (path != null)
-                Debug.Log("Path length: " + path.Length);
-            else
-                Debug.Log("no path");
             pathIdx = 0;
             if (isSuccesful)
             {
@@ -125,7 +139,7 @@ namespace FarmSim.Player
             Node start = grid.GetNodeFromVector2(gameObject.transform.position);
             Node end = grid.GetNodeFromMousePosition();
 
-            currentRequest = new PathRequest(System.Guid.NewGuid().ToString(), start, end, PathFindCallBack);
+            currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 
             PathRequestManager.Instance.RequestPath(currentRequest);
             processingPath = true;

@@ -891,10 +891,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 374232164, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
-      propertyPath: toolPointer
-      value: 
-      objectReference: {fileID: 266879200}
     - target: {fileID: 1090752706648671777, guid: b03efc30d11194340bdfeb1425a4ec06,
         type: 3}
       propertyPath: dayPassBackground
@@ -964,27 +960,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
-        type: 3}
-      propertyPath: pools.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
-        type: 3}
-      propertyPath: pools.Array.data[4].id
-      value: House
-      objectReference: {fileID: 0}
-    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
-        type: 3}
-      propertyPath: pools.Array.data[4].prefab
-      value: 
-      objectReference: {fileID: 7301315993295839137, guid: 6b67db1f0279bba4e924b29bc10ee9d6,
-        type: 3}
-    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
-        type: 3}
-      propertyPath: pools.Array.data[4].numOfGameObjects
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
@@ -1064,6 +1039,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3742074760872906717, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
+        type: 3}
+      propertyPath: toolPointer
+      value: 
+      objectReference: {fileID: 266879200}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_RootOrder

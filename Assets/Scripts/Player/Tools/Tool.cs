@@ -17,9 +17,8 @@ namespace FarmSim.Tools
         private int DimsToAffect => (Level * DIMS_AFFECTED_INCR) - 1;
         public int Level { get; set; } = 1;
 
-        public void OnUse()
+        public void OnUse(Node middleNode)
         {
-            Node middleNode = Grid.GetNodeFromMousePosition();
             List<Node> nodes = Grid.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
             InteractWithNodes(nodes);
         }

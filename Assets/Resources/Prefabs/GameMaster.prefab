@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 1090752706648671779}
   - component: {fileID: 1090752706648671780}
   - component: {fileID: 1090752706648671781}
-  - component: {fileID: 374232164}
   - component: {fileID: 1090752707022115402}
   m_Layer: 0
   m_Name: GameMaster
@@ -93,6 +92,10 @@ MonoBehaviour:
     numOfGameObjects: 10
     prefab: {fileID: 9161111012254602840, guid: fc1e6d40795bf4a45b8a324578650e0f,
       type: 3}
+  - id: House
+    numOfGameObjects: 1
+    prefab: {fileID: 7301315993295839137, guid: 6b67db1f0279bba4e924b29bc10ee9d6,
+      type: 3}
 --- !u!114 &1090752706648671777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,35 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introScreenCover: {fileID: 0}
---- !u!114 &374232164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090752706648671787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6a02d6bb393627459cada50b45ca7bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  toolList:
-  - <Sprite>k__BackingField: {fileID: -40358673524596140, guid: a37294920e43028468781b46d52b7c9e,
-      type: 3}
-    <ToolType>k__BackingField: 0
-  - <Sprite>k__BackingField: {fileID: -4656839199027896080, guid: a37294920e43028468781b46d52b7c9e,
-      type: 3}
-    <ToolType>k__BackingField: 1
-  - <Sprite>k__BackingField: {fileID: -2375035684461431469, guid: a37294920e43028468781b46d52b7c9e,
-      type: 3}
-    <ToolType>k__BackingField: 2
-  - <Sprite>k__BackingField: {fileID: 7985419639835855387, guid: a37294920e43028468781b46d52b7c9e,
-      type: 3}
-    <ToolType>k__BackingField: 3
-  - <Sprite>k__BackingField: {fileID: 6963921044372166798, guid: a37294920e43028468781b46d52b7c9e,
-      type: 3}
-    <ToolType>k__BackingField: 5
-  toolPointer: {fileID: 0}
 --- !u!114 &1090752707022115402
 MonoBehaviour:
   m_ObjectHideFlags: 0
