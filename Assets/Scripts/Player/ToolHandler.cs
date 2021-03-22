@@ -21,6 +21,7 @@ namespace FarmSim.Player
 
         private PlayerController player;
         private NodeGrid grid;
+
         private bool detectKeys = false;
 
         protected override void Awake()

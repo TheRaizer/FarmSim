@@ -4,7 +4,7 @@ using FarmSim.Enums;
 using UnityEngine;
 using FarmSim.Tools;
 
-namespace FarmSim.Placeable 
+namespace FarmSim.Placeables 
 {
     public class SpawnPlaceableOnClick : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace FarmSim.Placeable
 
         private SpriteRenderer spriteRenderer = null;
         private PlayerInventory inventory;
-        private ToolHandler toolHander;
+        private ToolHandler toolHandler;
         private Item item;
 
         private Color baseColor;
@@ -28,7 +28,7 @@ namespace FarmSim.Placeable
             moveObject = FindObjectOfType<MoveObject>();
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
-            toolHander = FindObjectOfType<ToolHandler>();
+            toolHandler = FindObjectOfType<ToolHandler>();
             spriteRenderer = GetComponent<SpriteRenderer>();
 
             baseColor = spriteRenderer.color;
@@ -42,13 +42,18 @@ namespace FarmSim.Placeable
             }
             // Probably need to optimize this.
             ChangeSpriteColor(item);
+
+            if(toolHandler.EquippedTool.ToolType != ToolTypes.Hand)
+            {
+                RemoveCurrentPlaceable(null);
+            }
         }
         private void OnMouseOver()
         {
             if (Input.GetMouseButtonDown(1))
             {
                 // only if the current tool equipped is the hand should we spawn a placeable
-                if (toolHander.EquippedTool.ToolType == ToolTypes.Hand)
+                if (toolHandler.EquippedTool.ToolType == ToolTypes.Hand)
                 {
                     SpawnPlaceable();
                 }
@@ -91,21 +96,32 @@ namespace FarmSim.Placeable
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
                 placeable.Item = item;
-                if (moveObject.AttachedObject != null)
+                if (RemoveCurrentPlaceable(objToAttach))
                 {
-                    // if there is currently an attached object then because attached objects are spawned from object pooler set it unactive
-                    moveObject.AttachedObject.gameObject.SetActive(false);
-
-                    // if we click on the same object then dont set the new attached object.
-                    if(moveObject.AttachedObject.gameObject == objToAttach)
-                    {
-                        moveObject.AttachedObject = null;
-                        return;
-                    }
+                    return;
                 }
                 // assign a new attached object
                 moveObject.AttachedObject = placeable;
             }
+        }
+
+        private bool RemoveCurrentPlaceable(GameObject objToAttach)
+        {
+            bool setNewPlaceable = false;
+            if (moveObject.AttachedObject != null)
+            {
+                // if there is currently an attached object then because attached objects are spawned from object pooler set it unactive
+                moveObject.AttachedObject.gameObject.SetActive(false);
+
+                // if we click on the same object then dont set the new attached object.
+                if (moveObject.AttachedObject.gameObject == objToAttach)
+                {
+                    setNewPlaceable = true;
+                }
+
+                moveObject.AttachedObject = null;
+            }
+            return setNewPlaceable;
         }
     }
 }

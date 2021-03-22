@@ -1,8 +1,7 @@
-﻿using FarmSim.Player;
-using FarmSim.Enums;
+﻿using FarmSim.Enums;
 using UnityEngine;
 
-namespace FarmSim.Placeable
+namespace FarmSim.Placeables
 {
     /// <class name="PlacePlant">
     ///     <summary>

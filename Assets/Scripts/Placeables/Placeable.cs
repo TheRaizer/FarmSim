@@ -2,7 +2,7 @@
 using FarmSim.Grid;
 using FarmSim.Player;
 
-namespace FarmSim.Placeable
+namespace FarmSim.Placeables
 {
     /// <class name="Placeable">
     ///     <summary>

@@ -2,7 +2,7 @@
 using FarmSim.Grid;
 
 
-namespace FarmSim.Placeable
+namespace FarmSim.Placeables
 {
     /// <class name="MoveObject">
     ///     <summary>
