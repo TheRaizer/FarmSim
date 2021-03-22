@@ -22,9 +22,12 @@ namespace FarmSim.Placeable
         ///     The amount should be reduced whenever a placement was succesful.
         /// </summary>
         public Item Item { protected get; set; }
+
+        // REPLACE THIS COMPLETELY WITH PLAYER DESTINATION NODE
         public Node Node { get; set; }
 
         protected NodeGrid grid = null;
+        protected PlayerController player;
 
         private SpriteRenderer sprite = null;
         private MoveObject moveObject = null;
@@ -41,6 +44,7 @@ namespace FarmSim.Placeable
             grid = FindObjectOfType<NodeGrid>();
             sprite = GetComponent<SpriteRenderer>();
             moveObject = FindObjectOfType<MoveObject>();
+            player = FindObjectOfType<PlayerController>();
 
             InitColors();
         }

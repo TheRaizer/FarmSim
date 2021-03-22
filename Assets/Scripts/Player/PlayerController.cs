@@ -5,12 +5,15 @@ using UnityEngine;
 
 namespace FarmSim.Player
 {
-    public class Player : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float speed;
 
+        public Action OnPlant { private get; set; }
+        public ToolTypes ToolToUse { get; set; }
+        public Node destination { get; private set; }
+
         private Animator animator;
-        private ToolHandler toolHandler;
 
         private CardinalDirections dir = CardinalDirections.South;
 
@@ -19,6 +22,7 @@ namespace FarmSim.Player
         private PathRequest currentRequest;
 
         private bool processingPath = false;
+        private bool stop = false;
 
         private int pathIdx = 0;
 
@@ -27,23 +31,22 @@ namespace FarmSim.Player
             //to hide the curser
             Cursor.visible = false;
 
-            toolHandler = GetComponent<ToolHandler>();
             grid = FindObjectOfType<NodeGrid>();
             animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            if(processingPath && Input.GetKeyDown(KeyCode.S))
+            if(path != null && Input.GetKeyDown(KeyCode.S))
             {
-                PathRequestManager.Instance.StopSearch(currentRequest.id);
-                path = null;
+                stop = true;
+                if (processingPath)
+                    PathRequestManager.Instance.StopSearch(currentRequest.id);
             }
             MoveOnPath();
 
             if (Input.GetMouseButtonDown(0))
             {
-                toolHandler.NodeToTool = grid.GetNodeFromMousePosition();
                 RequestPath();
             }
         }
@@ -86,6 +89,13 @@ namespace FarmSim.Player
 
                     if (Mathf.Abs(curr.x - target.x) < 0.01f && Mathf.Abs(curr.y - target.y) < 0.01f)
                     {
+                        if (stop)
+                        {
+                            // stop early
+                            animator.SetBool("Walking", false);
+                            path = null;
+                            stop = false;
+                        }
                         pathIdx++;
                     }
                     gameObject.transform.position = Vector2.MoveTowards(curr, target, speed * Time.deltaTime);
@@ -94,19 +104,41 @@ namespace FarmSim.Player
                 {
                     // it has completed the path
                     animator.SetBool("Walking", false);
-                    TriggerToolAnimation();
+                    TriggerAnimation();
                     path = null;
                 }
             }
         }
 
-        public void TriggerToolAnimation()
+        private bool CheckForPlanting()
         {
-            switch (toolHandler.EquippedTool.ToolType)
+            // if there is an action for on plant that means we must plant something
+            if (OnPlant != null)
+            {
+                // invoke the action
+                OnPlant.Invoke();
+
+                // empty the action
+                OnPlant = null;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void TriggerAnimation()
+        {
+            // if we have planted return
+            if (CheckForPlanting())
+                return;
+
+
+            // otherwise check if a tool was used
+            switch (ToolToUse)
             {
                 case ToolTypes.Hoe:
                     animator.SetTrigger("Hoe");
-                    Debug.Log("Set t");
                     break;
                 case ToolTypes.WateringCan:
                     // set trigger to water. In that animation run the ToolHandler.UsTool() as event.
@@ -135,9 +167,10 @@ namespace FarmSim.Player
 
         private void RequestPath()
         {
-            Debug.Log("request path");
             Node start = grid.GetNodeFromVector2(gameObject.transform.position);
             Node end = grid.GetNodeFromMousePosition();
+
+            destination = end;
 
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 

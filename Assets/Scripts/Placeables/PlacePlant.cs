@@ -1,4 +1,4 @@
-﻿
+﻿using FarmSim.Player;
 using FarmSim.Enums;
 using UnityEngine;
 
@@ -17,22 +17,22 @@ namespace FarmSim.Placeable
     {
         protected override void Update()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(0))
             {
                 // unlike in the Placeable parent class we do not want to occupy the space unless the interaction was succesful.
-                if (grid.IsValidPlacement(Node, xDim, yDim))
+                if (grid.IsValidPlacement(player.destination, xDim, yDim))
                 {
-                    OnPlace();
+                    player.OnPlant = OnPlace;
                 }
             }
         }
 
         protected override void OnPlace()
         {
-            Node.Interactable.OnInteract(ToolTypes.Other, objectToPlace, 
-                () => 
-                { 
-                    grid.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
+            player.destination.Interactable.OnInteract(ToolTypes.Other, objectToPlace,
+                () =>
+                {
+                    grid.MakeDimensionsOccupied(player.destination, xDim, yDim, isWalkable);
                     ReduceAmtPlaceable();
                 });
         }

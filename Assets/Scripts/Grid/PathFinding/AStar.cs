@@ -38,7 +38,6 @@ namespace FarmSim.Grid
             // flip the backward path to be the proper path
             backwardPath.Reverse();
 
-            Debug.Log("unprocessed path: " + backwardPath.Count);
             // simplify the path
             Vector2[] path = backwardPath.ToArray();
 
@@ -116,7 +115,6 @@ namespace FarmSim.Grid
             Vector2[] path = null;
             if (foundPath)
             {
-                Debug.Log("path found");
                 path = RetracePath(start, end);
             }
             else

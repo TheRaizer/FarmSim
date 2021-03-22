@@ -15,17 +15,20 @@ namespace FarmSim.Player
         private SpriteRenderer pointerSpriteRenderer;
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
 
-        public Node NodeToTool { private get; set; }
+        public Node NodeToToolOn;
 
         public Tool EquippedTool { get; private set; }
+
+        private PlayerController player;
+        private NodeGrid grid;
         private bool detectKeys = false;
 
         protected override void Awake()
         {
             base.Awake();
 
-            NodeGrid grid = FindObjectOfType<NodeGrid>();
-
+            grid = FindObjectOfType<NodeGrid>();
+            player = GetComponent<PlayerController>();
             InitTools(grid);
             pointerSpriteRenderer = toolPointer.GetComponent<SpriteRenderer>();
             EquippedTool = tools[ToolTypes.Hand];
@@ -36,6 +39,12 @@ namespace FarmSim.Player
             base.Update();
 
             MoveToolToMouse();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                NodeToToolOn = grid.GetNodeFromMousePosition();
+                player.ToolToUse = EquippedTool.ToolType;
+            }
         }
 
         private void LateUpdate()
@@ -89,7 +98,7 @@ namespace FarmSim.Player
         // animation event to use during tool animations
         private void UseTool()
         {
-            EquippedTool.OnUse(NodeToTool);
+            tools[player.ToolToUse].OnUse(NodeToToolOn);
         }
 
         protected override void PostLoad()
