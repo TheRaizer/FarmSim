@@ -2,7 +2,6 @@
 using FarmSim.Utility;
 using FarmSim.Enums;
 using UnityEngine;
-using FarmSim.Tools;
 
 namespace FarmSim.Placeables 
 {
@@ -103,6 +102,7 @@ namespace FarmSim.Placeables
                 }
                 // assign a new attached object
                 moveObject.AttachedObject = placeable;
+                placeable.FirstClick = false;
             }
         }
 

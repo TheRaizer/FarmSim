@@ -35,6 +35,8 @@ namespace FarmSim.Placeables
         private Color invalidColor;
         private Color validColor;
 
+        public bool FirstClick { protected get; set; } = false;
+
         protected virtual void Awake()
         {
             if (xDim % 2 == 0 || yDim % 2 == 0)
@@ -54,11 +56,12 @@ namespace FarmSim.Placeables
         {
             if (Input.GetMouseButtonDown(1))
             {
-                if (grid.IsValidPlacement(Node, xDim, yDim))
+                if (FirstClick && grid.IsValidPlacement(Node, xDim, yDim))
                 {
                     grid.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
                     OnPlace();
                 }
+                FirstClick = true;
             }
         }
 
