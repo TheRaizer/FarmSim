@@ -61,8 +61,8 @@ namespace FarmSim.Planteables
                     Plant.Grow();
                 }
             }
-            /*watered = false;
-            CheckSpriteType();*/
+            Data.Watered = false;
+            CheckSpriteType();
         }
 
         /// <summary>

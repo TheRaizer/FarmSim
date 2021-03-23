@@ -24,8 +24,8 @@ namespace FarmSim.Grid
         private int sectionXEnd = 0;
         private int sectionYEnd = 0;
 
-        private const int SECTION_SIZE_X = 30;
-        private const int SECTION_SIZE_Y = 30;
+        public const int SECTION_SIZE_X = 30;
+        public const int SECTION_SIZE_Y = 30;
 
         private readonly ObjectPooler pooler;
         private readonly Vector2 gridBottomLeft;
@@ -45,6 +45,10 @@ namespace FarmSim.Grid
             if (worldMaxX % SECTION_SIZE_X != 0 || worldMaxY % SECTION_SIZE_Y != 0)
             {
                 Debug.LogError("Section size does is not valid for grid dimensions");
+            }
+            if(sectionNum < 0 || sectionNum * SECTION_SIZE_X >= worldMaxX || sectionNum * SECTION_SIZE_Y >= worldMaxY)
+            {
+                Debug.LogError($"Section number {sectionNum} is not valid");
             }
 
             Node[,] grid = new Node[SECTION_SIZE_X, SECTION_SIZE_Y];

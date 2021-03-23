@@ -11,7 +11,7 @@ namespace FarmSim.Player
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
-        public Node destination { get; private set; }
+        public Node Destination { get; private set; }
 
         private Animator animator;
 
@@ -170,7 +170,7 @@ namespace FarmSim.Player
             Node start = grid.GetNodeFromVector2(gameObject.transform.position);
             Node end = grid.GetNodeFromMousePosition();
 
-            destination = end;
+            Destination = end;
 
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 

@@ -8,7 +8,8 @@
         "Serialization",
         "Planteables",
         "Loading",
-        "Player"
+        "Player",
+        "Enums"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
