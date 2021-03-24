@@ -4,15 +4,14 @@ using FarmSim.Loading;
 using FarmSim.Tools;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FarmSim.Player
 {
     public class ToolHandler : OccurPostLoad
     {
         [SerializeField] private List<Tool> toolList;
-        [SerializeField] private GameObject toolPointer;
-
-        private SpriteRenderer pointerSpriteRenderer;
+        [SerializeField] private Image toolPointer;
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
 
         public Node NodeToToolOn;
@@ -21,6 +20,7 @@ namespace FarmSim.Player
 
         private PlayerController player;
         private NodeGrid grid;
+        private Canvas canvas;
 
         private bool detectKeys = false;
 
@@ -30,8 +30,9 @@ namespace FarmSim.Player
 
             grid = FindObjectOfType<NodeGrid>();
             player = GetComponent<PlayerController>();
+            canvas = FindObjectOfType<Canvas>();
+
             InitTools(grid);
-            pointerSpriteRenderer = toolPointer.GetComponent<SpriteRenderer>();
             EquippedTool = tools[ToolTypes.Hand];
         }
 
@@ -71,8 +72,8 @@ namespace FarmSim.Player
 
         private void MoveToolToMouse()
         {
-            Vector2 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            toolPointer.transform.position = worldPosition;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 pos);
+            toolPointer.transform.position = canvas.transform.TransformPoint(pos);
         }
 
         private void KeyHandler()
@@ -93,7 +94,7 @@ namespace FarmSim.Player
             {
                 EquippedTool = tools[ToolTypes.Hand];
             }
-            pointerSpriteRenderer.sprite = EquippedTool.Sprite;
+            toolPointer.sprite = EquippedTool.Sprite;
         }
 
         // animation event to use during tool animations

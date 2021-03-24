@@ -7,41 +7,17 @@ namespace FarmSim.Utility
         [SerializeField] private float cameraSpeed;
         [SerializeField] private float targetMoveSpeed;
 
-        private Transform target;
+        [SerializeField] private Transform target;
 
         private void Awake()
         {
-            target.position = transform.position;
-        }
-
-        private void FixedUpdate()
-        {
-            Vector2.Lerp(transform.position, target.position, cameraSpeed);
+            target.position = new Vector3(target.position.x, target.position.y, transform.position.z);
         }
 
         private void LateUpdate()
         {
-            KeyHandler();
-        }
-
-        private void KeyHandler()
-        {
-            if (Input.GetKeyDown(KeyCode.W))
-            {
-                target.position += Vector3.left * 5 * Time.deltaTime;
-            }
-            else if (Input.GetKeyDown(KeyCode.S))
-            {
-                target.position += Vector3.left * 5 * Time.deltaTime;
-            }
-            else if (Input.GetKeyDown(KeyCode.D))
-            {
-                target.position += Vector3.left * 5 * Time.deltaTime;
-            }
-            else if (Input.GetKeyDown(KeyCode.A))
-            {
-                target.position += Vector3.left * 5 * Time.deltaTime;
-            }
+            Vector3 newPos = Vector3.Lerp(transform.position, target.position, cameraSpeed);
+            transform.position = newPos;
         }
     }
 }

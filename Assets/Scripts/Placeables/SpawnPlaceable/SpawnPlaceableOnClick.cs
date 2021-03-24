@@ -2,10 +2,12 @@
 using FarmSim.Utility;
 using FarmSim.Enums;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace FarmSim.Placeables 
 {
-    public class SpawnPlaceableOnClick : MonoBehaviour
+    public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler
     {
         /// <summary>
         ///     Points to some item in the inventory and will be passed to the placeable.
@@ -15,7 +17,7 @@ namespace FarmSim.Placeables
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
-        private SpriteRenderer spriteRenderer = null;
+        private Image image = null;
         private PlayerInventory inventory;
         private ToolHandler toolHandler;
         private Item item;
@@ -28,9 +30,9 @@ namespace FarmSim.Placeables
             inventory = FindObjectOfType<PlayerInventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
             toolHandler = FindObjectOfType<ToolHandler>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            image = GetComponent<Image>();
 
-            baseColor = spriteRenderer.color;
+            baseColor = image.color;
         }
 
         private void Update()
@@ -47,9 +49,9 @@ namespace FarmSim.Placeables
                 RemoveCurrentPlaceable(null);
             }
         }
-        private void OnMouseOver()
+        public void OnPointerClick(PointerEventData eventData)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (eventData.button == PointerEventData.InputButton.Right)
             {
                 // only if the current tool equipped is the hand should we spawn a placeable
                 if (toolHandler.EquippedTool.ToolType == ToolTypes.Hand)
@@ -63,15 +65,15 @@ namespace FarmSim.Placeables
         {
             if (item == null)
             {
-                spriteRenderer.color = Color.black;
+                image.color = Color.black;
             }
             else if (!item.CanSubtract)
             {
-                spriteRenderer.color = Color.grey;
+                image.color = Color.grey;
             }
             else
             {
-                spriteRenderer.color = baseColor;
+                image.color = baseColor;
             }
         }
 
@@ -102,7 +104,6 @@ namespace FarmSim.Placeables
                 }
                 // assign a new attached object
                 moveObject.AttachedObject = placeable;
-                placeable.FirstClick = false;
             }
         }
 
