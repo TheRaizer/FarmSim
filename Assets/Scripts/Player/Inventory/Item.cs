@@ -24,11 +24,22 @@ namespace FarmSim.Player
 
         public void AddToAmt(int amt)
         {
+            if (amt <= 0)
+            {
+                Debug.LogWarning($"Attempted to add by {amt} from {itemType.ItemName}");
+                return;
+            }
             Amt += amt;
+            Amt = Mathf.Clamp(Amt, 0, itemType.MaxCarryAmt);
         }
 
         public void SubtractFromAmt(int amt)
         {
+            if (amt <= 0)
+            {
+                Debug.LogWarning($"Attempted to subtract by {amt} from {itemType.ItemName}");
+                return;
+            }
             Amt -= amt;
             if(Amt < 0)
             {

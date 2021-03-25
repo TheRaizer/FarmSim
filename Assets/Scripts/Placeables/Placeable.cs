@@ -18,16 +18,17 @@ namespace FarmSim.Placeables
         [SerializeField] protected GameObject objectToPlace;
 
         /// <summary>
-        ///     This item is given when the placeable is spawned.
-        ///     The amount should be reduced whenever a placement was succesful.
+        ///     This itemType is given when the placeable is spawned.
+        ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
-        public Item Item { protected get; set; }
+        public ItemType ItemType { protected get; set; }
 
         // REPLACE THIS COMPLETELY WITH PLAYER DESTINATION NODE
         public Node Node { get; set; }
 
         protected NodeGrid grid = null;
         protected PlayerController player;
+        private PlayerInventory inventory;
 
         private SpriteRenderer sprite = null;
         private MoveObject moveObject = null;
@@ -45,6 +46,7 @@ namespace FarmSim.Placeables
             sprite = GetComponent<SpriteRenderer>();
             moveObject = FindObjectOfType<MoveObject>();
             player = FindObjectOfType<PlayerController>();
+            inventory = FindObjectOfType<PlayerInventory>();
 
             InitColors();
         }
@@ -100,14 +102,11 @@ namespace FarmSim.Placeables
 
         protected void ReduceAmtPlaceable()
         {
-            if (Item.CanSubtract)
+            Item item = inventory.TakeFromInventory(ItemType, 1);
+            if (item != null && item.Amt <= 0)
             {
-                Item.SubtractFromAmt(1);
-                if (Item.Amt <= 0)
-                {
-                    moveObject.AttachedObject = null;
-                    gameObject.SetActive(false);
-                }
+                moveObject.AttachedObject = null;
+                gameObject.SetActive(false);
             }
         }
     }

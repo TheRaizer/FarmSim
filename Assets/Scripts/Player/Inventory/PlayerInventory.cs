@@ -36,7 +36,7 @@ namespace FarmSim.Player
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
         /// <param name="amt">The amount to subtract from an item.</param>
-        public void TakeFromInventory(ItemType itemType, int amt)
+        public Item TakeFromInventory(ItemType itemType, int amt)
         {
             if (inventory.ContainsKey(itemType))
             {
@@ -51,10 +51,12 @@ namespace FarmSim.Player
                         inventory[itemType].SubtractFromAmt(amt);
                     }
                 }
+                return inventory[itemType];
             }
             else
             {
                 Debug.Log($"Inventory does not yet have item of type {itemType.ItemName}");
+                return null;
             }
         }
 

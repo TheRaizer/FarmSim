@@ -96,7 +96,7 @@ namespace FarmSim.Placeables
 
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
-                placeable.Item = item;
+                placeable.ItemType = item.itemType;
                 bool setNewPlaceable = RemoveCurrentPlaceable(objToAttach);
                 if (!setNewPlaceable)
                 {

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: House
   <Price>k__BackingField: 500
+  <MaxCarryAmt>k__BackingField: 100
