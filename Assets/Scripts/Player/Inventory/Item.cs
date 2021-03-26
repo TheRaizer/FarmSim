@@ -43,7 +43,8 @@ namespace FarmSim.Player
             Amt -= amt;
             if(Amt < 0)
             {
-                Debug.LogError("Amt has dipped below zero that should not occur. Use the CanSubtract bool to make sure this doesn't occur");
+                Amt = 0;
+                Debug.LogWarning($"Subtracted {amt} from {itemType.ItemName} which resulted in an amt < 0");
             }
         }
     }

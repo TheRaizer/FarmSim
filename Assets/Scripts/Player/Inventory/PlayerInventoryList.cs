@@ -10,7 +10,7 @@ namespace FarmSim.Player
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
         public int MaxStorage { private get; set; } = 6;
-        public readonly List<Item> inventory = new List<Item>();
+        private readonly List<Item> inventory = new List<Item>();
 
         /// <summary>
         ///     Add an amount of an item or add an entirely new item to the player's inventory.
@@ -19,7 +19,6 @@ namespace FarmSim.Player
         /// <param name="amt">The amount to add to an item.</param>
         public void AddToInventory(ItemType itemType, int amt)
         {
-            Debug.Log(itemType.ItemName);
             // find items that matche and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
 
@@ -99,13 +98,15 @@ namespace FarmSim.Player
         ///     Subtract an amount of an item from the player's inventory.
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
-        /// <param name="amt">The amount to subtract from an item.</param>
-        public Item TakeFromInventory(ItemType itemType, int amt)
+        /// <param name="amtToTake">The amount to subtract from an item.</param>
+        public Item TakeFromInventory(ItemType itemType, int amtToTake)
         {
-            Item item = inventory.FirstOrDefault(x => (x.itemType == itemType) && x.Amt >= amt);
-            if (item != null)
+            Item item = inventory.FirstOrDefault(x => (x.itemType == itemType) && x.Amt >= amtToTake);
+
+            // only subtract and return an item if it exists and taking from it will not result in a negative amount
+            if (item != null && item.Amt - amtToTake >= 0)
             {
-                item.SubtractFromAmt(amt);
+                item.SubtractFromAmt(amtToTake);
 
                 if (!item.CanSubtract)
                 {
@@ -117,6 +118,11 @@ namespace FarmSim.Player
             Debug.Log($"Not enough of {itemType.ItemName}");
 
             return null;
+        }
+
+        public List<Item> FindInstances(ItemType instanceType)
+        {
+            return inventory.FindAll(x => x.itemType == instanceType);
         }
 
         public void Load()
