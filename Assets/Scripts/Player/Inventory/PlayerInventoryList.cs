@@ -1,5 +1,4 @@
 ﻿using FarmSim.Serialization;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,8 +8,15 @@ namespace FarmSim.Player
 {
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
-        public int MaxStorage { private get; set; } = 6;
+        private readonly int maxStorage = 6;
+
+        private InventoryUI inventoryUI;
         private readonly List<Item> inventory = new List<Item>();
+
+        private void Awake()
+        {
+            inventoryUI = GetComponent<InventoryUI>();
+        }
 
         /// <summary>
         ///     Add an amount of an item or add an entirely new item to the player's inventory.
@@ -22,9 +28,9 @@ namespace FarmSim.Player
             // find items that matche and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
 
-            Assert.IsTrue(inventory.Count <= MaxStorage);
+            Assert.IsTrue(inventory.Count <= maxStorage);
 
-            if(inventory.Count == MaxStorage)
+            if(inventory.Count == maxStorage)
             {
                 // Create popup screen for remaining item.
                 return;
@@ -72,7 +78,7 @@ namespace FarmSim.Player
             for (int i = 0; i < numItemsToGenerate; i++)
             {
                 // if we can add to the inventory
-                if (inventory.Count + 1 <= MaxStorage)
+                if (inventory.Count + 1 <= maxStorage)
                 {
                     // add item with max carry amt to the inventory
                     inventory.Add(new Item(itemType.MaxCarryAmt, itemType));
@@ -85,7 +91,7 @@ namespace FarmSim.Player
                 }
             }
             // add one more item with the remaining amt if we can
-            if (inventory.Count + 1 <= MaxStorage)
+            if (inventory.Count + 1 <= maxStorage)
                 inventory.Add(new Item(amt, itemType));
             else
             {
@@ -110,6 +116,7 @@ namespace FarmSim.Player
 
                 if (!item.CanSubtract)
                 {
+                    // destroy the gameobject in the inventory
                     inventory.Remove(item);
                 }
 
@@ -138,12 +145,12 @@ namespace FarmSim.Player
                 {
                 // Obtain the SO from the data's itemTypeName attribute.
                 ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
-                    if (itemType == null)
-                    {
-                        Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
-                    }
+                if (itemType == null)
+                {
+                    Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
+                }
 
-                    Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
+                Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 
                 // adds the item to the inventory
                 AddToInventory(itemType, itemData.amt);
@@ -153,6 +160,8 @@ namespace FarmSim.Player
             {
                 Debug.Log("No items to load");
             }
+
+            inventoryUI.InitializeSlots(maxStorage, inventory);
         }
 
         public void Save()
