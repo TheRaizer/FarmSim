@@ -40,7 +40,7 @@ namespace FarmSim.Player
 
         public void SubtractFromAmt(int amt)
         {
-            if (amt <= 0)
+            if (amt < 0)
             {
                 Debug.LogWarning($"Attempted to subtract by {amt} from {itemType.ItemName}");
                 return;

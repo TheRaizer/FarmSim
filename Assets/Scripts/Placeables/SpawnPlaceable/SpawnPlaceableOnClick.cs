@@ -17,33 +17,19 @@ namespace FarmSim.Placeables
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
-        private Image image = null;
-        private PlayerInventory inventory;
+        private PlayerInventoryList inventory;
         private ToolHandler toolHandler;
-        private Item item;
-
-        private Color baseColor;
 
         private void Awake()
         {
             moveObject = FindObjectOfType<MoveObject>();
-            inventory = FindObjectOfType<PlayerInventory>();
+            inventory = FindObjectOfType<PlayerInventoryList>();
             objectPooler = FindObjectOfType<ObjectPooler>();
             toolHandler = FindObjectOfType<ToolHandler>();
-            image = GetComponent<Image>();
-
-            baseColor = image.color;
         }
 
         private void Update()
         {
-            if(item == null)
-            {
-                item = inventory.GetItem(itemType);
-            }
-            // Probably need to optimize this.
-            ChangeSpriteColor(item);
-
             if(toolHandler.EquippedTool.ToolType != ToolTypes.Hand)
             {
                 RemoveCurrentPlaceable(null);
@@ -61,35 +47,13 @@ namespace FarmSim.Placeables
             }
         }
 
-        private void ChangeSpriteColor(Item item)
-        {
-            if (item == null)
-            {
-                image.color = Color.black;
-            }
-            else if (!item.CanSubtract)
-            {
-                image.color = Color.grey;
-            }
-            else
-            {
-                image.color = baseColor;
-            }
-        }
-
         /// <summary>
         ///     Spawns some placeable object given the itemType and attaches it to the mouse.
         ///     If there is already and existing placeable attached to the mouse, set it unactive.
         /// </summary>
         private void SpawnPlaceable()
         {
-            Item item = inventory.GetItem(itemType);
-
-            if (item == null || !item.CanSubtract)
-            {
-                ChangeSpriteColor(item);
-                return;
-            }
+            Item item = inventory.TakeFromInventory(itemType, 0);
 
             // Spawn the items corrosponding placeable object
             GameObject objToAttach = objectPooler.SpawnGameObject(itemType.ItemName, Vector2.zero, Quaternion.identity);

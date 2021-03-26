@@ -28,7 +28,7 @@ namespace FarmSim.Placeables
 
         protected NodeGrid grid = null;
         protected PlayerController player;
-        private PlayerInventory inventory;
+        private PlayerInventoryList inventory;
 
         private SpriteRenderer sprite = null;
         private MoveObject moveObject = null;
@@ -46,7 +46,7 @@ namespace FarmSim.Placeables
             sprite = GetComponent<SpriteRenderer>();
             moveObject = FindObjectOfType<MoveObject>();
             player = FindObjectOfType<PlayerController>();
-            inventory = FindObjectOfType<PlayerInventory>();
+            inventory = FindObjectOfType<PlayerInventoryList>();
 
             InitColors();
         }

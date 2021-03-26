@@ -21,8 +21,11 @@ namespace FarmSim.Player
 
         public void AddImageToSlot(Item item, int slotIndex)
         {
-            Image slotImg = Slots[slotIndex];
-            SpawnImage(item, slotImg);
+            if (slotPrefab != null && contentParent != null)
+            {
+                Image slotImg = Slots[slotIndex];
+                SpawnImage(item, slotImg);
+            }
         }
 
         public void InitializeSlots(int numOfSlots, List<Item> inventory)

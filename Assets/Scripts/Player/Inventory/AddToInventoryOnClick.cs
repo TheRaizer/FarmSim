@@ -6,11 +6,11 @@ namespace FarmSim.Player {
         [SerializeField] private ItemType itemType;
         [SerializeField] private int amt;
 
-        private PlayerInventory inventory;
+        private PlayerInventoryList inventory;
 
         private void Awake()
         {
-            inventory = FindObjectOfType<PlayerInventory>();
+            inventory = FindObjectOfType<PlayerInventoryList>();
         }
 
         private void OnMouseDown()

@@ -88,7 +88,7 @@ namespace Tests
             var planteableObj = Object.Instantiate(prefab);
 
             GameObject obj = new GameObject();
-            var inventory = obj.AddComponent<PlayerInventory>();
+            var inventory = obj.AddComponent<PlayerInventoryList>();
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
@@ -102,7 +102,7 @@ namespace Tests
             plant.OnHarvest();
 
             // make sure that the players inventory has obtained the harvested plant
-            Assert.NotNull(inventory.GetItem(itemType));
+            Assert.NotNull(inventory.TakeFromInventory(itemType, 0));
 
             yield return null;
 

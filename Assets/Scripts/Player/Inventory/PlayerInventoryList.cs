@@ -98,11 +98,17 @@ namespace FarmSim.Player
             if (inventory.Count + 1 <= maxStorage)
             {
                 Item item = new Item(amt, itemType);
+                inventory.Add(item);
+
                 if (!hadValidItems && !firstLoad)
                 {
-                    inventoryUI.AddImageToSlot(item, inventory.Count);
+                    if (inventoryUI == null)
+                    {
+                        Debug.LogWarning("inventoryUI is null");
+                        return;
+                    }
+                    inventoryUI.AddImageToSlot(item, inventory.Count - 1);
                 }
-                inventory.Add(item);
             }
             else
             {
@@ -127,8 +133,10 @@ namespace FarmSim.Player
 
                 if (!item.CanSubtract)
                 {
-                    // destroy the item image
-                    Destroy(item.Icon.gameObject);
+                    if(item.Icon == null)
+                        Debug.LogWarning($"Icon on {item} is null");
+                    else
+                        Destroy(item.Icon.gameObject);
                     inventory.Remove(item);
                 }
 
