@@ -116,7 +116,8 @@ namespace FarmSim.Player
 
                 if (!item.CanSubtract)
                 {
-                    // destroy the gameobject in the inventory
+                    // set the items image not active
+                    item.PlaceableSpawner.gameObject.SetActive(false);
                     inventory.Remove(item);
                 }
 

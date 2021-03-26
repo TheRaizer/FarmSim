@@ -1950,7 +1950,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1750656493}
   m_HandleRect: {fileID: 1750656492}
   m_Direction: 2
-  m_Value: 0.9999862
+  m_Value: 0.999986
   m_Size: 0.5977682
   m_NumberOfSteps: 1
   m_OnValueChanged:
@@ -2069,6 +2069,59 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[5].id
+      value: TomatoSeedSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[6].id
+      value: PotatoSeedSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[7].id
+      value: HouseSpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[5].prefab
+      value: 
+      objectReference: {fileID: 4754809498158102758, guid: d46fefcd49fc65e4d9b40ff022ed1611,
+        type: 3}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[6].prefab
+      value: 
+      objectReference: {fileID: 5854145312898668465, guid: 49aac5a8d302c444eb481e6bb9980b70,
+        type: 3}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[7].prefab
+      value: 
+      objectReference: {fileID: 2857818832975432284, guid: e02c87eab6e416f4db45a51714146bcb,
+        type: 3}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[5].numOfGameObjects
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[6].numOfGameObjects
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1090752706648671791, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: pools.Array.data[7].numOfGameObjects
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}

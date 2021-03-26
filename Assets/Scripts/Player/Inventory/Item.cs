@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace FarmSim.Player 
 {
@@ -11,8 +12,12 @@ namespace FarmSim.Player
     {
         public readonly ItemType itemType;
         public bool CanSubtract => Amt > 0;
-
         public int Amt { get; private set; }
+
+        /// <summary>
+        ///     The placeable spawner that is in the inventory UI
+        /// </summary>
+        public Image PlaceableSpawner { get; set; }
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
