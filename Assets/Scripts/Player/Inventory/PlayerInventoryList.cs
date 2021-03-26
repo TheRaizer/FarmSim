@@ -6,10 +6,14 @@ using UnityEngine.Assertions;
 
 namespace FarmSim.Player
 {
+    /// <class name="PlayerInventoryList">
+    ///     <summary>
+    ///         Class that contains and manages the player's items.
+    ///     </summary>
+    /// </class>
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
         private readonly int maxStorage = 6;
-
         private InventoryUI inventoryUI;
         private readonly List<Item> inventory = new List<Item>();
 
@@ -23,7 +27,7 @@ namespace FarmSim.Player
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
         /// <param name="amt">The amount to add to an item.</param>
-        public void AddToInventory(ItemType itemType, int amt)
+        public void AddToInventory(ItemType itemType, int amt, bool firstLoad = false)
         {
             // find items that matche and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
@@ -38,7 +42,7 @@ namespace FarmSim.Player
             // if there arent any matching items to the given item type
             if (validItems.Count <= 0)
             {
-                CreateItemsForPossibleOverflow(amt, itemType);
+                CreateItemsForPossibleOverflow(amt, itemType, false, firstLoad);
             }
             else
             {
@@ -65,11 +69,11 @@ namespace FarmSim.Player
                     }
                 }
                 // try to add new items
-                CreateItemsForPossibleOverflow(remaining, itemType);
+                CreateItemsForPossibleOverflow(remaining, itemType, true, firstLoad);
             }
         }
 
-        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType)
+        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool hadValidItems, bool firstLoad)
         {
             // get the number of items to generate - 1
             int numItemsToGenerate = Mathf.FloorToInt(amt / itemType.MaxCarryAmt);
@@ -92,7 +96,14 @@ namespace FarmSim.Player
             }
             // add one more item with the remaining amt if we can
             if (inventory.Count + 1 <= maxStorage)
-                inventory.Add(new Item(amt, itemType));
+            {
+                Item item = new Item(amt, itemType);
+                if (!hadValidItems && !firstLoad)
+                {
+                    inventoryUI.AddImageToSlot(item, inventory.Count);
+                }
+                inventory.Add(item);
+            }
             else
             {
                 Debug.LogWarning($"Remainder is {amt}");
@@ -116,8 +127,8 @@ namespace FarmSim.Player
 
                 if (!item.CanSubtract)
                 {
-                    // set the items image not active
-                    item.PlaceableSpawner.gameObject.SetActive(false);
+                    // destroy the item image
+                    Destroy(item.Icon.gameObject);
                     inventory.Remove(item);
                 }
 
@@ -154,14 +165,14 @@ namespace FarmSim.Player
                 Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 
                 // adds the item to the inventory
-                AddToInventory(itemType, itemData.amt);
+                AddToInventory(itemType, itemData.amt, true);
                 });
             }
             else
             {
                 Debug.Log("No items to load");
             }
-
+            Debug.Log("list loading");
             inventoryUI.InitializeSlots(maxStorage, inventory);
         }
 

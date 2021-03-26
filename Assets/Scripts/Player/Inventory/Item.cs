@@ -15,9 +15,9 @@ namespace FarmSim.Player
         public int Amt { get; private set; }
 
         /// <summary>
-        ///     The placeable spawner that is in the inventory UI
+        ///     The Icon of the item in the inventory
         /// </summary>
-        public Image PlaceableSpawner { get; set; }
+        public Image Icon { get; set; }
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>

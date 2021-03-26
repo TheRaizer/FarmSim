@@ -12,12 +12,6 @@ namespace FarmSim.Player
     public class PlayerInventory : MonoBehaviour, ISavable, ILoadable
     {
         private readonly Dictionary<ItemType, Item> inventory = new Dictionary<ItemType, Item>();
-        private InventoryUI ui;
-
-        private void Awake()
-        {
-            ui = GetComponent<InventoryUI>();
-        }
 
         /// <summary>
         ///     Add an amount of an item or add an entirely new item to the player's inventory.

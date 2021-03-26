@@ -11,8 +11,6 @@ namespace FarmSim.Player
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] private GameObject contentParent;
 
-        private ObjectPooler objectPooler;
-
         public List<Image> Slots { get; private set; } = new List<Image>();
 
         // first slot is the top left slot
@@ -21,9 +19,10 @@ namespace FarmSim.Player
 
         private const int OFFSET = 60;
 
-        private void Awake()
+        public void AddImageToSlot(Item item, int slotIndex)
         {
-            objectPooler = GetComponent<ObjectPooler>();
+            Image slotImg = Slots[slotIndex];
+            SpawnImage(item, slotImg);
         }
 
         public void InitializeSlots(int numOfSlots, List<Item> inventory)
@@ -35,7 +34,6 @@ namespace FarmSim.Player
             {
                 for (int x = 0; x < 4; x++)
                 {
-
                     GameObject slot = Instantiate(slotPrefab);
                     Image slotImg = slot.GetComponent<Image>();
 
@@ -49,13 +47,7 @@ namespace FarmSim.Player
                     {
                         // get the item and spawn a placeableSpawner at the slot
                         Item item = inventory[slotIndex];
-                        GameObject placeableSpawner = objectPooler.SpawnGameObject(item.itemType.ItemName + "Spawner", Vector2.zero, Quaternion.identity);
-                        Image placeableSpawnerImg = placeableSpawner.GetComponent<Image>();
-
-                        // assign the placeable spawner to the item
-                        item.PlaceableSpawner = placeableSpawnerImg;
-                        placeableSpawner.transform.SetParent(slotImg.transform);
-                        placeableSpawnerImg.rectTransform.anchoredPosition = Vector3.zero;
+                        SpawnImage(item, slotImg);
                     }
 
                     Slots.Add(slotImg);
@@ -67,6 +59,20 @@ namespace FarmSim.Player
                 }
                 y++;
             }
+        }
+
+        private void SpawnImage(Item item, Image slotImg)
+        {
+            GameObject obj = Instantiate(item.itemType.IconPrefab);
+            Image image = obj.GetComponent<Image>();
+
+            // assign the placeable spawner to the item
+            item.Icon = image;
+            obj.transform.SetParent(slotImg.transform);
+
+            // REMOVE THIS LATER. CREATE INVENTORY SPECIFIC SPRITES
+            image.rectTransform.localScale = new Vector3(0.2425136f, 0.2425136f, 0.2425136f);
+            image.rectTransform.anchoredPosition = Vector3.zero;
         }
     }
 }

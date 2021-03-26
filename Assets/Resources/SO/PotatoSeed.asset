@@ -15,3 +15,5 @@ MonoBehaviour:
   <ItemName>k__BackingField: PotatoSeed
   <Price>k__BackingField: 3
   <MaxCarryAmt>k__BackingField: 100
+  <IconPrefab>k__BackingField: {fileID: 5854145312898668465, guid: 49aac5a8d302c444eb481e6bb9980b70,
+    type: 3}
