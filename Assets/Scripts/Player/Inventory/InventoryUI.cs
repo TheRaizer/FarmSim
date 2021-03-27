@@ -57,7 +57,7 @@ namespace FarmSim.Player
 
                     slotIndex++;
 
-                    if (slotIndex > numOfSlots)
+                    if (slotIndex >= numOfSlots)
                         return;
                 }
                 y++;

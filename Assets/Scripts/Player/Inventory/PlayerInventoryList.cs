@@ -31,11 +31,11 @@ namespace FarmSim.Player
         {
             // find items that matche and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
+            Debug.Log($"Add {amt} of {itemType.ItemName}");
 
-            Assert.IsTrue(inventory.Count <= maxStorage);
-
-            if(inventory.Count == maxStorage)
+            if(inventory.Count >= maxStorage)
             {
+                Debug.Log("Inventory is full");
                 // Create popup screen for remaining item.
                 return;
             }

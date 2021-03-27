@@ -48,7 +48,7 @@ namespace Tests
             Assert.AreEqual(POTATO_AMT * 2, potato.Amt);
 
             // overflow the tomato item
-            inventory.AddToInventory(tomatoType, 100);
+            inventory.AddToInventory(tomatoType, 200);
 
             // make sure that the tomato we first added had maxed out
             Assert.AreEqual(tomato.itemType.MaxCarryAmt, tomato.Amt);
@@ -59,7 +59,7 @@ namespace Tests
             // due to overflow there should be exactly 2 tomato objects in the inventory.
             int instancesOfTomato = tomatoes.Count;
 
-            Assert.AreEqual(2, instancesOfTomato);
+            Assert.AreEqual(3, instancesOfTomato);
 
             // due to overflow the second tomato object should have amount of 10.
             bool foundTomatoAmt10 = false;
@@ -73,6 +73,42 @@ namespace Tests
             });
 
             Assert.IsTrue(foundTomatoAmt10);
+        }
+
+        [Test]
+        public void IterationAddInventoryTest()
+        {
+            GameObject gameObject = new GameObject();
+            PlayerInventoryList inventory = gameObject.AddComponent<PlayerInventoryList>();
+
+            ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
+
+
+            // add to the inventory
+            inventory.AddToInventory(tomatoType, TOMATO_AMT);
+
+            // take the item but not any of the amounts
+            Item tomato = inventory.TakeFromInventory(tomatoType, 0);
+
+            for (int j = 1; j <= 2; j++)
+            {
+
+                for (int i = 0; i < 10; i++)
+                {
+                    inventory.AddToInventory(tomatoType, TOMATO_AMT);
+                }
+
+                // make sure that the tomato we first added had maxed out
+                Assert.AreEqual(tomato.itemType.MaxCarryAmt, tomato.Amt);
+
+                // obtain all the tomato items in the inventory
+                List<Item> tomatoes = inventory.FindInstances(tomatoType);
+
+                // due to overflow there should be exactly 1 + j tomato objects in the inventory.
+                int instancesOfTomato = tomatoes.Count;
+
+                Assert.AreEqual(1 + j, instancesOfTomato);
+            }
         }
 
         [Test]
