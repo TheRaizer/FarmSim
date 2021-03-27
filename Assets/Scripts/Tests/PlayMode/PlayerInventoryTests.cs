@@ -7,7 +7,7 @@ using FarmSim.Player;
 
 namespace Tests
 {
-    public class PlayerInventoryTest
+    public class PlayerInventoryTests
     {
 
         private const int POTATO_AMT = 5;
@@ -32,9 +32,9 @@ namespace Tests
             inventory.AddToInventory(houseType, HOUSE_AMT);
 
             // take the item but not any of the amounts
-            Item tomato = inventory.TakeFromInventory(tomatoType, 0);
-            Item potato = inventory.TakeFromInventory(potatoType, 0);
-            Item house = inventory.TakeFromInventory(houseType, 0);
+            Item tomato = inventory.GetFirstInstance(tomatoType);
+            Item potato = inventory.GetFirstInstance(potatoType);
+            Item house = inventory.GetFirstInstance(houseType);
 
             // make sure that the items have the correct amount added
             Assert.AreEqual(TOMATO_AMT, tomato.Amt);
@@ -88,7 +88,7 @@ namespace Tests
             inventory.AddToInventory(tomatoType, TOMATO_AMT);
 
             // take the item but not any of the amounts
-            Item tomato = inventory.TakeFromInventory(tomatoType, 0);
+            Item tomato = inventory.GetFirstInstance(tomatoType);
 
             for (int j = 1; j <= 2; j++)
             {
@@ -127,10 +127,14 @@ namespace Tests
             inventory.AddToInventory(potatoType, POTATO_AMT);
             inventory.AddToInventory(houseType, HOUSE_AMT);
 
+            Item tomato = inventory.GetFirstInstance(tomatoType);
+            Item potato = inventory.GetFirstInstance(potatoType);
+            Item house = inventory.GetFirstInstance(houseType);
+
             // take an arbitruary amount from the inventory.
-            Item tomato = inventory.TakeFromInventory(tomatoType, 1);
-            Item potato = inventory.TakeFromInventory(potatoType, 2);
-            Item house = inventory.TakeFromInventory(houseType, 3);
+            inventory.TakeFromInventory(tomato.guid, 1);
+            inventory.TakeFromInventory(potato.guid, 2);
+            inventory.TakeFromInventory(house.guid, 3);
 
             // make sure that the items have the correct amount added
             Assert.AreEqual(TOMATO_AMT - 1, tomato.Amt);
@@ -138,14 +142,14 @@ namespace Tests
             Assert.AreEqual(HOUSE_AMT - 3, house.Amt);
 
             // take more of the tomato item then there is available.
-            Item item = inventory.TakeFromInventory(tomatoType, TOMATO_AMT);
+            Item item = inventory.TakeFromInventory(tomato.guid, TOMATO_AMT);
 
             // the item returned should still be the tomato item.
             Assert.IsNull(item);
             // item amount should be untouched
             Assert.AreEqual(TOMATO_AMT - 1, tomato.Amt);
 
-            inventory.TakeFromInventory(tomatoType, tomato.Amt);
+            inventory.TakeFromInventory(tomato.guid, tomato.Amt);
 
             Assert.AreEqual(0, tomato.Amt);
 

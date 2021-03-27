@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace FarmSim.Player 
@@ -10,6 +11,10 @@ namespace FarmSim.Player
     /// </class>
     public class Item
     {
+        /// <summary>
+        ///     Given to other objects through the <see cref="InventoryUI.SpawnImage(Item, Image)"/> method.
+        /// </summary>
+        public readonly string guid;
         public readonly ItemType itemType;
         public bool CanSubtract => Amt > 0;
         public int Amt { get; private set; }
@@ -25,6 +30,7 @@ namespace FarmSim.Player
         {
             Amt = startAmt;
             itemType = _itemType;
+            guid = Guid.NewGuid().ToString();
         }
 
         public void AddToAmt(int amt)

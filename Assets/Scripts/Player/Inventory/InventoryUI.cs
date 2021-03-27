@@ -48,7 +48,7 @@ namespace FarmSim.Player
                     // if the inventory has an item that can be slotted
                     if (slotIndex < inventory.Count)
                     {
-                        // get the item and spawn a placeableSpawner at the slot
+                        // get the item and spawn an image at the slot
                         Item item = inventory[slotIndex];
                         SpawnImage(item, slotImg);
                     }
@@ -67,6 +67,12 @@ namespace FarmSim.Player
         private void SpawnImage(Item item, Image slotImg)
         {
             GameObject obj = Instantiate(item.itemType.IconPrefab);
+
+            if(obj.TryGetComponent(out IReferenceGUID guid))
+            {
+                guid.Guid = item.guid;
+            }
+
             Image image = obj.GetComponent<Image>();
 
             // assign the placeable spawner to the item

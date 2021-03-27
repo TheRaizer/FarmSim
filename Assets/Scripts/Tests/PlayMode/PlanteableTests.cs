@@ -102,7 +102,7 @@ namespace Tests
             plant.OnHarvest();
 
             // make sure that the players inventory has obtained the harvested plant
-            Assert.NotNull(inventory.TakeFromInventory(itemType, 0));
+            Assert.IsTrue(inventory.Contains(itemType));
 
             yield return null;
 

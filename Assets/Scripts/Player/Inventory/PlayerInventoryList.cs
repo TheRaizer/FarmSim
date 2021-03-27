@@ -29,7 +29,7 @@ namespace FarmSim.Player
         /// <param name="amt">The amount to add to an item.</param>
         public void AddToInventory(ItemType itemType, int amt, bool firstLoad = false)
         {
-            // find items that matche and have enough room
+            // find items that match and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
             Debug.Log($"Add {amt} of {itemType.ItemName}");
 
@@ -84,8 +84,10 @@ namespace FarmSim.Player
                 // if we can add to the inventory
                 if (inventory.Count + 1 <= maxStorage)
                 {
+                    Item item = new Item(itemType.MaxCarryAmt, itemType);
                     // add item with max carry amt to the inventory
-                    inventory.Add(new Item(itemType.MaxCarryAmt, itemType));
+                    inventory.Add(item);
+                    AddImage(item, hadValidItems, firstLoad);
                     // reduce the amt
                     amt -= itemType.MaxCarryAmt;
                 }
@@ -95,25 +97,36 @@ namespace FarmSim.Player
                 }
             }
             // add one more item with the remaining amt if we can
-            if (inventory.Count + 1 <= maxStorage)
+            if (inventory.Count + 1 <= maxStorage && amt > 0)
             {
                 Item item = new Item(amt, itemType);
                 inventory.Add(item);
 
-                if (!hadValidItems && !firstLoad)
-                {
-                    if (inventoryUI == null)
-                    {
-                        Debug.LogWarning("inventoryUI is null");
-                        return;
-                    }
-                    inventoryUI.AddImageToSlot(item, inventory.Count - 1);
-                }
+                AddImage(item, hadValidItems, firstLoad);
             }
-            else
+            else if (amt > 0)
             {
                 Debug.LogWarning($"Remainder is {amt}");
                 // pop up for remainder amount of 'amt'
+            }
+        }
+
+        /// <summary>
+        ///     Run this after adding to inventory in order to spawn the correct Image at a slot.
+        /// </summary>
+        /// <param name="item">The item whose image we will be creating.</param>
+        /// <param name="hadValidItems">Whether this item had any valid items.</param>
+        /// <param name="firstLoad">Whether this is run when the inventory is loading.</param>
+        private void AddImage(Item item, bool hadValidItems, bool firstLoad)
+        {
+            if (!hadValidItems && !firstLoad)
+            {
+                if (inventoryUI == null)
+                {
+                    Debug.LogWarning("inventoryUI is null");
+                    return;
+                }
+                inventoryUI.AddImageToSlot(item, inventory.Count - 1);
             }
         }
 
@@ -122,9 +135,9 @@ namespace FarmSim.Player
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
         /// <param name="amtToTake">The amount to subtract from an item.</param>
-        public Item TakeFromInventory(ItemType itemType, int amtToTake)
+        public Item TakeFromInventory(string guid, int amtToTake)
         {
-            Item item = inventory.FirstOrDefault(x => (x.itemType == itemType) && x.Amt >= amtToTake);
+            Item item = inventory.Find(x => (x.guid == guid) && x.Amt >= amtToTake);
 
             // only subtract and return an item if it exists and taking from it will not result in a negative amount
             if (item != null && item.Amt - amtToTake >= 0)
@@ -142,9 +155,24 @@ namespace FarmSim.Player
 
                 return item;
             }
-            Debug.Log($"Not enough of {itemType.ItemName}");
+            Debug.Log($"Not enough of item with id {guid}");
 
             return null;
+        }
+
+        public bool Contains(ItemType itemType)
+        {
+            return inventory.Find(x => x.itemType == itemType) != null;
+        }
+
+        public Item GetFirstInstance(ItemType itemType)
+        {
+            return inventory.Find(x => x.itemType == itemType);
+        }
+
+        public Item GetExactItem(string guid)
+        {
+            return inventory.Find(x => x.guid == guid);
         }
 
         public List<Item> FindInstances(ItemType instanceType)

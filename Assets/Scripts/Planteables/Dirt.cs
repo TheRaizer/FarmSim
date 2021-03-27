@@ -194,7 +194,7 @@ namespace FarmSim.Planteables
             {
                 // find the dirts data that matches its x and y.
                 Data = SaveData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
-                PlanteableData plantData = SaveData.Current.plantDatas.FirstOrDefault(plant => plant.Id == Data.Id);
+                PlanteableData plantData = SaveData.Current.plantDatas.Find(plant => plant.Id == Data.Id);
 
                 // if there is any plant data
                 if(plantData != null)

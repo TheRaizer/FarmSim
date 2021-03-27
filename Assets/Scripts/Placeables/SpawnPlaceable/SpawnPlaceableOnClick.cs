@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 
 namespace FarmSim.Placeables 
 {
-    public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler
+    public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler, IReferenceGUID
     {
-        /// <summary>
-        ///     Points to some item in the inventory and will be passed to the placeable.
-        /// </summary>
-        [SerializeField] private ItemType itemType;
-
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
         private PlayerInventoryList inventory;
         private ToolHandler toolHandler;
+
+        /// <summary>
+        ///     Points to some item in the inventory and will be passed to the placeable.
+        /// </summary>
+        public string Guid { get; set; }
 
         private void Awake()
         {
@@ -52,14 +52,14 @@ namespace FarmSim.Placeables
         /// </summary>
         private void SpawnPlaceable()
         {
-            Item item = inventory.TakeFromInventory(itemType, 0);
+            Item item = inventory.TakeFromInventory(Guid, 0);
 
             // Spawn the items corrosponding placeable object
-            GameObject objToAttach = objectPooler.SpawnGameObject(itemType.ItemName, Vector2.zero, Quaternion.identity);
+            GameObject objToAttach = objectPooler.SpawnGameObject(item.itemType.ItemName, Vector2.zero, Quaternion.identity);
 
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
-                placeable.ItemType = item.itemType;
+                placeable.Guid = Guid;
                 bool setNewPlaceable = RemoveCurrentPlaceable(objToAttach);
                 if (!setNewPlaceable)
                 {
