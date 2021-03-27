@@ -8,13 +8,13 @@ namespace FarmSim.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float speed;
+        [SerializeField] private GameObject tileRing; 
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
         public Node Destination { get; private set; }
 
         private Animator animator;
-
         private CardinalDirections dir = CardinalDirections.South;
 
         private NodeGrid grid;
@@ -37,12 +37,22 @@ namespace FarmSim.Player
 
         private void Update()
         {
-            if(path != null && Input.GetKeyDown(KeyCode.S))
+            if(path != null)
             {
-                stop = true;
-                if (processingPath)
-                    PathRequestManager.Instance.StopSearch(currentRequest.id);
+                if (Input.GetKeyDown(KeyCode.S))
+                {
+                    stop = true;
+                    if (processingPath)
+                        PathRequestManager.Instance.StopSearch(currentRequest.id);
+                }
             }
+            else
+            {
+                Vector2 pos = grid.GetNodeFromMousePosition().Data.pos;
+                tileRing.transform.position = pos;
+            }
+
+            
             MoveOnPath();
 
             if (Input.GetMouseButtonDown(0))
