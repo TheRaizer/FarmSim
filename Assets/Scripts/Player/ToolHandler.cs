@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace FarmSim.Player
 {
-    public class ToolHandler : OccurPostLoad
+    public class ToolHandler : MonoBehaviour, IOccurPostLoad
     {
         [SerializeField] private List<Tool> toolList;
         [SerializeField] private Image toolPointer;
@@ -25,10 +25,8 @@ namespace FarmSim.Player
 
         private bool detectKeys = false;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             grid = FindObjectOfType<NodeGrid>();
             player = GetComponent<PlayerController>();
             canvas = FindObjectOfType<Canvas>();
@@ -37,10 +35,8 @@ namespace FarmSim.Player
             EquippedTool = tools[ToolTypes.Hand];
         }
 
-        protected override void Update()
+        private void Update()
         {
-            base.Update();
-
             MoveToolToMouse();
 
             if (Input.GetMouseButtonDown(0))
@@ -107,7 +103,7 @@ namespace FarmSim.Player
             tools[player.ToolToUse].OnUse(NodeToToolOn);
         }
 
-        protected override void PostLoad()
+        public void PostLoad()
         {
             detectKeys = true;
         }

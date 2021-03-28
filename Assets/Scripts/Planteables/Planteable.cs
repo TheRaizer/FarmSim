@@ -14,7 +14,7 @@ namespace FarmSim.Planteables
     ///         Base class for any planteable gameObject.
     ///     </summary>
     /// </class>
-    public class Planteable : OccurPostLoad, ISavable
+    public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
         [SerializeField] private string originalPrefabName = null;
         /// <summary>
@@ -39,10 +39,8 @@ namespace FarmSim.Planteables
 
         private int spriteChangeInterval = 0;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             Data.PrefabName = originalPrefabName;
             spriteRenderer = GetComponent<SpriteRenderer>();
             spriteChangeInterval = Mathf.CeilToInt((float)daysToGrow / spriteLifeCycle.Count);
@@ -101,7 +99,7 @@ namespace FarmSim.Planteables
             }
         }
 
-        protected override void PostLoad()
+        public void PostLoad()
         {
             spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
         }

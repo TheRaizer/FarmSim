@@ -1,5 +1,8 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Serialization;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace FarmSim.Loading
@@ -29,6 +32,8 @@ namespace FarmSim.Loading
             {
                 // once we've loaded the grid load the rest of the data
                 dataInjector.LoadAllVoid();
+                PostLoadAll();
+
                 LoadedAll = true;
             }
 
@@ -36,6 +41,15 @@ namespace FarmSim.Loading
             {
                 // once finished loading close the screen cover
                 introScreenCover.SetActive(false);
+            }
+        }
+
+        private void PostLoadAll()
+        {
+            IEnumerable postLoads = FindObjectsOfType<MonoBehaviour>().OfType<IOccurPostLoad>();
+            foreach (IOccurPostLoad p in postLoads)
+            {
+                p.PostLoad();
             }
         }
     }

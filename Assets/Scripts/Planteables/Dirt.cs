@@ -15,7 +15,7 @@ namespace FarmSim.Planteables
     ///         Manages the state of the dirt and the plant it contains if there is any.
     ///     </summary>
     /// </class>
-    public class Dirt : OccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable
+    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
@@ -38,10 +38,8 @@ namespace FarmSim.Planteables
         private const int MIN_HOED_DAYS = 3;
 
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
-
             spriteRenderer = GetComponent<SpriteRenderer>();
             grid = FindObjectOfType<NodeGrid>();
             objectPooler = FindObjectOfType<ObjectPooler>();
@@ -217,7 +215,7 @@ namespace FarmSim.Planteables
             }
         }
 
-        protected override void PostLoad()
+        public void PostLoad()
         {
             CheckSpriteType();
         }

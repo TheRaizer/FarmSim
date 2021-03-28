@@ -31,7 +31,6 @@ namespace FarmSim.Player
         {
             // find items that match and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
-            Debug.Log($"Add {amt} of {itemType.ItemName}");
 
             if(inventory.Count >= maxStorage && validItems.Count <= 0)
             {
@@ -69,7 +68,6 @@ namespace FarmSim.Player
                     }
                 }
 
-                Debug.Log("ADd remaining");
                 // try to add new items
                 CreateItemsForPossibleOverflow(remaining, itemType, firstLoad);
             }
