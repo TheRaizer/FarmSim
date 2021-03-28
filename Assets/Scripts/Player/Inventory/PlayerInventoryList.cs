@@ -30,7 +30,7 @@ namespace FarmSim.Player
         public void AddToInventory(ItemType itemType, int amt, bool firstLoad = false)
         {
             // find items that match and have enough room
-            List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
+            List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
             Debug.Log($"Add {amt} of {itemType.ItemName}");
 
             if(inventory.Count >= maxStorage && validItems.Count <= 0)
@@ -42,7 +42,7 @@ namespace FarmSim.Player
             // if there arent any matching items to the given item type
             if (validItems.Count <= 0)
             {
-                CreateItemsForPossibleOverflow(amt, itemType, false, firstLoad);
+                CreateItemsForPossibleOverflow(amt, itemType, firstLoad);
             }
             else
             {
@@ -68,12 +68,14 @@ namespace FarmSim.Player
                         }
                     }
                 }
+
+                Debug.Log("ADd remaining");
                 // try to add new items
-                CreateItemsForPossibleOverflow(remaining, itemType, true, firstLoad);
+                CreateItemsForPossibleOverflow(remaining, itemType, firstLoad);
             }
         }
 
-        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool hadValidItems, bool firstLoad)
+        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool firstLoad)
         {
             // get the number of items to generate - 1
             int numItemsToGenerate = Mathf.FloorToInt(amt / itemType.MaxCarryAmt);
@@ -87,7 +89,7 @@ namespace FarmSim.Player
                     Item item = new Item(itemType.MaxCarryAmt, itemType);
                     // add item with max carry amt to the inventory
                     inventory.Add(item);
-                    AddImage(item, hadValidItems, firstLoad);
+                    AddImage(item, firstLoad);
                     // reduce the amt
                     amt -= itemType.MaxCarryAmt;
                 }
@@ -102,7 +104,7 @@ namespace FarmSim.Player
                 Item item = new Item(amt, itemType);
                 inventory.Add(item);
 
-                AddImage(item, hadValidItems, firstLoad);
+                AddImage(item, firstLoad);
             }
             else if (amt > 0)
             {
@@ -139,16 +141,16 @@ namespace FarmSim.Player
         /// <param name="item">The item whose image we will be creating.</param>
         /// <param name="hadValidItems">Whether this item had any valid items.</param>
         /// <param name="firstLoad">Whether this is run when the inventory is loading.</param>
-        private void AddImage(Item item, bool hadValidItems, bool firstLoad)
+        private void AddImage(Item item, bool firstLoad)
         {
-            if (!hadValidItems && !firstLoad)
+            if (!firstLoad)
             {
                 if (inventoryUI == null)
                 {
                     Debug.LogWarning("inventoryUI is null");
                     return;
                 }
-                inventoryUI.AddImageToSlot(item, inventory.Count - 1);
+                inventoryUI.AddImageToSlot(item);
             }
         }
 

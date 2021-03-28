@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using FarmSim.Utility;
 
 namespace FarmSim.Player 
 {
@@ -25,12 +24,19 @@ namespace FarmSim.Player
 
         private const int OFFSET = 60;
 
-        public void AddImageToSlot(Item item, int slotIndex)
+        public void AddImageToSlot(Item item)
         {
             if (slotPrefab != null && contentParent != null)
             {
-                Image slotImg = slots[slotIndex];
-                SpawnImage(item, slotImg, slotIndex);
+                for(int i = 0; i < slots.Count; i++)
+                {
+                    if(slots[i].transform.childCount <= 0)
+                    {
+                        Image slotImg = slots[i];
+                        SpawnImage(item, slotImg, i);
+                        return;
+                    }
+                }
             }
         }
 
