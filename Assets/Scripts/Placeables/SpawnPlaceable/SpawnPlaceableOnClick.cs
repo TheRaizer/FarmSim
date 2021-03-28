@@ -6,6 +6,11 @@ using UnityEngine.EventSystems;
 
 namespace FarmSim.Placeables 
 {
+    /// <class name="SpawnPlaceableOnClick">
+    ///     <summary>
+    ///         Spawns a Placeable object and references a <see cref="Item"/> through its GUUID.
+    ///     </summary>
+    /// </class>
     public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler, IReferenceGUID
     {
         private MoveObject moveObject = null;

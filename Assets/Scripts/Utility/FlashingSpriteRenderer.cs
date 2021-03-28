@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlashingSpriteRenderer : MonoBehaviour
+namespace FarmSim.Utility
 {
-    [SerializeField] private float flashInterval;
-    private float timer;
-
-    private SpriteRenderer spriteRenderer;
-
-    private void Awake()
+    public class FlashingSpriteRenderer : MonoBehaviour
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        [SerializeField] private float flashInterval;
+        private float timer;
 
-    private void Update()
-    {
-        timer += Time.deltaTime;
+        private SpriteRenderer spriteRenderer;
 
-        if (timer >= flashInterval)
+        private void Awake()
         {
-            timer = 0;
-            spriteRenderer.enabled = !spriteRenderer.enabled;
+            spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+
+        private void Update()
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= flashInterval)
+            {
+                timer = 0;
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+            }
         }
     }
 }

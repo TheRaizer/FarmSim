@@ -2,6 +2,7 @@
 using FarmSim.Grid;
 using FarmSim.Loading;
 using FarmSim.Tools;
+using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,7 +45,11 @@ namespace FarmSim.Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                NodeToToolOn = grid.GetNodeFromMousePosition();
+                Node node = grid.GetNodeFromMousePosition();
+                if(node != null)
+                {
+                    NodeToToolOn = node;
+                }
                 player.ToolToUse = EquippedTool.ToolType;
             }
         }
@@ -72,8 +77,7 @@ namespace FarmSim.Player
 
         private void MoveToolToMouse()
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 pos);
-            toolPointer.transform.position = canvas.transform.TransformPoint(pos);
+            toolPointer.rectTransform.SetToMouse(canvas);
         }
 
         private void KeyHandler()

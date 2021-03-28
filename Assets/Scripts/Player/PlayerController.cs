@@ -48,8 +48,7 @@ namespace FarmSim.Player
             }
             else
             {
-                Vector2 pos = grid.GetNodeFromMousePosition().Data.pos;
-                tileRing.transform.position = pos;
+                ChangeRingPosition();
             }
 
             
@@ -58,6 +57,16 @@ namespace FarmSim.Player
             if (Input.GetMouseButtonDown(0))
             {
                 RequestPath();
+            }
+        }
+
+        private void ChangeRingPosition()
+        {
+            Node node = grid.GetNodeFromMousePosition();
+            if (node != null)
+            {
+                Vector2 pos = node.Data.pos;
+                tileRing.transform.position = pos;
             }
         }
 
@@ -166,6 +175,7 @@ namespace FarmSim.Player
             if (isSuccesful)
             {
                 this.path = path;
+                ChangeRingPosition();
             }
             else
             {
@@ -179,7 +189,8 @@ namespace FarmSim.Player
         {
             Node start = grid.GetNodeFromVector2(gameObject.transform.position);
             Node end = grid.GetNodeFromMousePosition();
-
+            if (start == null || end == null)
+                return;
             Destination = end;
 
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);

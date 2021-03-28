@@ -1,5 +1,8 @@
 ﻿
-public interface IReferenceGUID
+namespace FarmSim.Utility
 {
-    string Guid { set; }
+    public interface IReferenceGUID
+    {
+        string Guid { set; }
+    }
 }

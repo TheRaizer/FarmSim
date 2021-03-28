@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2857818832975432272}
   - component: {fileID: 2857818832975432273}
   - component: {fileID: 2857818832975432274}
+  - component: {fileID: -3708363456939523496}
   m_Layer: 5
   m_Name: HousePlaceSpawner
   m_TagString: Untagged
@@ -87,4 +88,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09cfd1dd12571b94098f752ec04aca44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: bae4d08a3678c0448bbd43276813828d, type: 2}
+--- !u!114 &-3708363456939523496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2857818832975432284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f78404ca14e7dd4d81d55ebb912b449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

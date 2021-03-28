@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5854145312898668465
+--- !u!1 &4754809498158102758
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,25 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5854145312898668464}
-  - component: {fileID: 5854145312898668469}
-  - component: {fileID: 5854145312898668470}
-  - component: {fileID: 5854145312898668471}
+  - component: {fileID: 4754809498158102757}
+  - component: {fileID: 4754809498158102763}
+  - component: {fileID: 4754809498158102756}
+  - component: {fileID: 4754809498158102762}
+  - component: {fileID: -1127833591999598454}
   m_Layer: 5
-  m_Name: PotatoPlaceSpawner
+  m_Name: TomatoSeedPlaceSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &5854145312898668464
+--- !u!224 &4754809498158102757
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854145312898668465}
+  m_GameObject: {fileID: 4754809498158102758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.53848857, y: 0.53848857, z: 0.53848857}
@@ -35,31 +36,31 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -28.5, y: 177.4}
+  m_AnchoredPosition: {x: -90.400024, y: 177.4}
   m_SizeDelta: {x: 100, y: 118.17163}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5854145312898668469
+--- !u!222 &4754809498158102763
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854145312898668465}
+  m_GameObject: {fileID: 4754809498158102758}
   m_CullTransparentMesh: 0
---- !u!114 &5854145312898668470
+--- !u!114 &4754809498158102756
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854145312898668465}
+  m_GameObject: {fileID: 4754809498158102758}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.4009434, b: 0.46994674, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -76,16 +77,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5854145312898668471
+--- !u!114 &4754809498158102762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5854145312898668465}
+  m_GameObject: {fileID: 4754809498158102758}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09cfd1dd12571b94098f752ec04aca44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
+--- !u!114 &-1127833591999598454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4754809498158102758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f78404ca14e7dd4d81d55ebb912b449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
