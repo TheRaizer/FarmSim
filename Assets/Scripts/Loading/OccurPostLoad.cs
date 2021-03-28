@@ -25,7 +25,7 @@ namespace FarmSim.Loading
             else
             {
                 // if we've loaded everything and we haven't run PostLoad()
-                if (loadingOrder.LoadedAll && !initialized)
+                if (!initialized && loadingOrder.LoadedAll)
                 {
                     // execute something after loading
                     PostLoad();

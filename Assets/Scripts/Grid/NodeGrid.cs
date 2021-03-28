@@ -28,13 +28,8 @@ namespace FarmSim.Grid
         {
             sectionLoader = new SectionLoader(transform.position, sectionNum, FindObjectOfType<ObjectPooler>());
             grid = sectionLoader.InitGrid();
-        }
-
-        private void Start()
-        {
             StartCoroutine(sectionLoader.LoadSection(grid, () => LoadedSection = true));
         }
-
 
         /// <summary>
         ///     Obtains a <see cref="Node"/> from the <see cref="grid"/> given a <see cref="Vector2"/>.
