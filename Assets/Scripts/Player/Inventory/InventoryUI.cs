@@ -86,25 +86,12 @@ namespace FarmSim.Player
 
         private void SpawnImage(Item item, Image slotImg, int slotIndex)
         {
-            GameObject itemObj = Instantiate(item.itemType.IconPrefab);
-
-            if(itemObj.TryGetComponent(out IReferenceGUID guid))
-            {
-                guid.Guid = item.guid;
-            }
-
-            // assign the slot index to the position manager for movement of items
-            itemObj.GetComponent<ItemPositionManager>().SlotIndex = slotIndex;
-
-            Image image = itemObj.GetComponent<Image>();
-
-            // assign the placeable spawner to the item
-            item.Icon = image;
+            GameObject itemObj = item.SpawnImageObject(slotIndex);
             itemObj.transform.SetParent(slotImg.transform);
 
             // REMOVE THIS LATER. CREATE INVENTORY SPECIFIC SPRITES
-            image.rectTransform.localScale = new Vector3(0.2425136f, 0.2425136f, 0.2425136f);
-            image.rectTransform.anchoredPosition = Vector3.zero;
+            item.Icon.rectTransform.localScale = new Vector3(0.2425136f, 0.2425136f, 0.2425136f);
+            item.Icon.rectTransform.anchoredPosition = Vector3.zero;
         }
     }
 }

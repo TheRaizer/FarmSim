@@ -33,7 +33,7 @@ namespace FarmSim.Player
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < x.itemType.MaxCarryAmt));
             Debug.Log($"Add {amt} of {itemType.ItemName}");
 
-            if(inventory.Count >= maxStorage)
+            if(inventory.Count >= maxStorage && validItems.Count <= 0)
             {
                 Debug.Log("Inventory is full");
                 // Create popup screen for remaining item.
@@ -109,6 +109,28 @@ namespace FarmSim.Player
                 Debug.LogWarning($"Remainder is {amt}");
                 // pop up for remainder amount of 'amt'
             }
+        }
+
+        /// <summary>
+        ///     Stacks two items returning the remainder.
+        /// </summary>
+        /// <param name="item1">The item you will be adding to the stack.</param>
+        /// <param name="item2">The item that acts as the stack.</param>
+        /// <returns></returns>
+        public int StackItems(Item item1, Item item2)
+        {
+            // if adding item1 to item2 does not create an overflow
+            if(item1.Amt + item2.Amt <= item2.itemType.MaxCarryAmt)
+            {
+                // add item1 amt to item2
+                item2.AddToAmt(item1.Amt);
+                return 0;
+            }
+
+            int remainder = item1.Amt + item2.Amt - item2.itemType.MaxCarryAmt;
+            item2.AddToAmt(item2.itemType.MaxCarryAmt - item2.Amt);
+
+            return remainder;
         }
 
         /// <summary>

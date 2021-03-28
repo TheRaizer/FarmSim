@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using FarmSim.Utility;
 
 namespace FarmSim.Player 
 {
@@ -11,18 +13,19 @@ namespace FarmSim.Player
     /// </class>
     public class Item
     {
-        /// <summary>
-        ///     Given to other objects through the <see cref="InventoryUI.SpawnImage(Item, Image)"/> method.
-        /// </summary>
-        public readonly string guid;
-        public readonly ItemType itemType;
-        public bool CanSubtract => Amt > 0;
-        public int Amt { get; private set; }
 
         /// <summary>
         ///     The Icon of the item in the inventory
         /// </summary>
-        public Image Icon { get; set; }
+        public Image Icon { get; private set; }
+        /// <summary>
+        ///     Given to other objects through the <see cref="InventoryUI.SpawnImage(Item, Image)"/> method.
+        /// </summary>
+        public readonly string guid;
+        public int Amt { get; private set; }
+        public readonly ItemType itemType;
+        public bool CanSubtract => Amt > 0;
+        private TextMeshProUGUI TextAmt;
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
@@ -35,13 +38,14 @@ namespace FarmSim.Player
 
         public void AddToAmt(int amt)
         {
-            if (amt <= 0)
+            if (amt < 0)
             {
                 Debug.LogWarning($"Attempted to add by {amt} from {itemType.ItemName}");
                 return;
             }
             Amt += amt;
             Amt = Mathf.Clamp(Amt, 0, itemType.MaxCarryAmt);
+            SetTextAmt();
         }
 
         public void SubtractFromAmt(int amt)
@@ -53,10 +57,40 @@ namespace FarmSim.Player
             }
             Amt -= amt;
             if(Amt < 0)
-            {
                 Amt = 0;
-                Debug.LogWarning($"Subtracted {amt} from {itemType.ItemName} which resulted in an amt < 0");
+            SetTextAmt();
+        }
+
+        private void SetTextAmt()
+        {
+            if(TextAmt != null)
+            {
+                TextAmt.SetText(Amt.ToString());
             }
+        }
+
+        public GameObject SpawnImageObject(int slotIndex)
+        {
+            GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
+            GameObject textAmt = itemObj.transform.GetChild(0).gameObject;
+
+            if (itemObj.TryGetComponent(out IReferenceGUID guid))
+            {
+                guid.Guid = this.guid;
+            }
+
+            // assign the slot index to the position manager for movement of items
+            var positionManager = itemObj.GetComponent<ItemPositionManager>();
+            positionManager.SlotIndex = slotIndex;
+            positionManager.Item = this;
+
+            Icon = itemObj.GetComponent<Image>();
+
+            TextAmt = textAmt.GetComponent<TextMeshProUGUI>();
+
+            SetTextAmt();
+
+            return itemObj;
         }
     }
 }

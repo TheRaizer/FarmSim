@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FarmSim.Utility;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
@@ -12,6 +13,8 @@ namespace FarmSim.Player
     public class ItemPositionManager : MonoBehaviour, IPointerClickHandler
     {
         public int SlotIndex { private get; set; }
+        public Item Item { get; set; }
+
         private ItemMovementManager movementManager;
 
         private void Awake()

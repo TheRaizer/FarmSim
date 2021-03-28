@@ -15,6 +15,7 @@ namespace FarmSim.Player
         public int AttachedItemSlotIndex { private get; set; }
 
         private InventoryUI inventoryUI;
+        private PlayerInventoryList inventory;
         private Canvas canvas;
 
         private ItemPositionManager attachedItem;
@@ -24,6 +25,7 @@ namespace FarmSim.Player
         {
             canvas = FindObjectOfType<Canvas>();
             inventoryUI = GetComponent<InventoryUI>();
+            inventory = GetComponent<PlayerInventoryList>();
         }
 
         private void Update()
@@ -38,15 +40,17 @@ namespace FarmSim.Player
         /// <param name="otherItem">The other item that will be swapped with the <see cref="attachedItem"/></param>
         public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem)
         {
-            // swap places
-            attachedItem.SlotIndex = otherSlotIndex;
-            inventoryUI.MoveImageToSlot(attachedItem.gameObject, otherSlotIndex);
-
             if (otherItem != null)
             {
+                if (StackItems(otherItem))
+                    return;
                 otherItem.SlotIndex = AttachedItemSlotIndex;
                 inventoryUI.MoveImageToSlot(otherItem.gameObject, AttachedItemSlotIndex);
             }
+
+            // swap places
+            attachedItem.SlotIndex = otherSlotIndex;
+            inventoryUI.MoveImageToSlot(attachedItem.gameObject, otherSlotIndex);
 
             // make it clickable again
             attachedItemImg.raycastTarget = true;
@@ -72,6 +76,31 @@ namespace FarmSim.Player
         public bool HasAttachedItem()
         {
             return attachedItem != null;
+        }
+
+        /// <summary>
+        ///     Stacks the attached item onto the other item and returns true if it was stacked.
+        /// </summary>
+        /// <param name="otherItem">The item that will act as the stack.</param>
+        /// <returns>True if attached item was stacked onto other item, otherwise false.</returns>
+        private bool StackItems(ItemPositionManager otherItem)
+        {
+            if (otherItem.Item.itemType == attachedItem.Item.itemType)
+            {
+                int remainder = inventory.StackItems(attachedItem.Item, otherItem.Item);
+                if (remainder == 0)
+                {
+                    Destroy(attachedItem.gameObject);
+                    return true;
+                }
+                else
+                {
+                    attachedItem.Item.SubtractFromAmt(int.MaxValue);
+                    attachedItem.Item.AddToAmt(remainder);
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void MoveAttachedImgToMouse()
