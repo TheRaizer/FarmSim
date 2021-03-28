@@ -18,14 +18,13 @@ namespace FarmSim.Placeables
         [SerializeField] protected bool isWalkable = true;
         [SerializeField] protected GameObject objectToPlace;
 
+        // REPLACE THIS COMPLETELY WITH PLAYER DESTINATION NODE
+        public Node Node { get; set; }
+
         /// <summary>
         ///     This guid is given when the placeable is spawned.
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
-        public ItemType ItemType { protected get; set; }
-
-        // REPLACE THIS COMPLETELY WITH PLAYER DESTINATION NODE
-        public Node Node { get; set; }
         public string Guid { protected get; set; }
 
         protected NodeGrid grid = null;
@@ -98,6 +97,7 @@ namespace FarmSim.Placeables
         /// </summary>
         protected virtual void OnPlace()
         {
+            ReduceAmtPlaceable();
             var obj = Instantiate(objectToPlace);
             obj.transform.position = Node.Data.pos;
         }

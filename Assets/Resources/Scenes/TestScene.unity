@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: bae4d08a3678c0448bbd43276813828d, type: 2}
-  amt: 10
+  amt: 1
 --- !u!61 &842441633
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -758,7 +758,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &920170883
 GameObject:
@@ -1594,7 +1594,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1750656493}
   m_HandleRect: {fileID: 1750656492}
   m_Direction: 2
-  m_Value: 0.999986
+  m_Value: 0.9999862
   m_Size: 0.5977682
   m_NumberOfSteps: 1
   m_OnValueChanged:
@@ -1784,7 +1784,7 @@ PrefabInstance:
     - target: {fileID: 4204272520017814282, guid: d5fb27c928f5c014386adb86926dc23a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4204272520017814282, guid: d5fb27c928f5c014386adb86926dc23a,
         type: 3}
@@ -1937,7 +1937,7 @@ PrefabInstance:
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
