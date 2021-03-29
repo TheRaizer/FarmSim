@@ -1,8 +1,6 @@
 ﻿using FarmSim.Serialization;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 namespace FarmSim.Player
 {
@@ -14,8 +12,8 @@ namespace FarmSim.Player
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
         private readonly int maxStorage = 6;
-        private InventoryUI inventoryUI;
         private readonly List<Item> inventory = new List<Item>();
+        private InventoryUI inventoryUI;
 
         private void Awake()
         {
@@ -27,7 +25,7 @@ namespace FarmSim.Player
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
         /// <param name="amt">The amount to add to an item.</param>
-        public void AddToInventory(ItemType itemType, int amt, bool firstLoad = false)
+        public void AddToInventory(ItemType itemType, int amt)
         {
             // find items that match and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
@@ -41,7 +39,7 @@ namespace FarmSim.Player
             // if there arent any matching items to the given item type
             if (validItems.Count <= 0)
             {
-                CreateItemsForPossibleOverflow(amt, itemType, firstLoad);
+                CreateItemsForPossibleOverflow(amt, itemType);
             }
             else
             {
@@ -69,11 +67,11 @@ namespace FarmSim.Player
                 }
 
                 // try to add new items
-                CreateItemsForPossibleOverflow(remaining, itemType, firstLoad);
+                CreateItemsForPossibleOverflow(remaining, itemType);
             }
         }
 
-        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool firstLoad)
+        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType)
         {
             // get the number of items to generate - 1
             int numItemsToGenerate = Mathf.FloorToInt(amt / itemType.MaxCarryAmt);
@@ -87,7 +85,7 @@ namespace FarmSim.Player
                     Item item = new Item(itemType.MaxCarryAmt, itemType);
                     // add item with max carry amt to the inventory
                     inventory.Add(item);
-                    AddImage(item, firstLoad);
+                    AddImage(item);
                     // reduce the amt
                     amt -= itemType.MaxCarryAmt;
                 }
@@ -102,7 +100,7 @@ namespace FarmSim.Player
                 Item item = new Item(amt, itemType);
                 inventory.Add(item);
 
-                AddImage(item, firstLoad);
+                AddImage(item);
             }
             else if (amt > 0)
             {
@@ -139,17 +137,14 @@ namespace FarmSim.Player
         /// <param name="item">The item whose image we will be creating.</param>
         /// <param name="hadValidItems">Whether this item had any valid items.</param>
         /// <param name="firstLoad">Whether this is run when the inventory is loading.</param>
-        private void AddImage(Item item, bool firstLoad)
+        private void AddImage(Item item)
         {
-            if (!firstLoad)
+            if (inventoryUI == null)
             {
-                if (inventoryUI == null)
-                {
-                    Debug.LogWarning("inventoryUI is null");
-                    return;
-                }
-                inventoryUI.AddImageToSlot(item);
+                Debug.LogWarning("inventoryUI is null");
+                return;
             }
+            inventoryUI.AddImageToSlot(item);
         }
 
         /// <summary>
@@ -213,17 +208,19 @@ namespace FarmSim.Player
                 Debug.Log("There are items to load");
                 itemDatas.ForEach(itemData =>
                 {
-                // Obtain the SO from the data's itemTypeName attribute.
-                ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
-                if (itemType == null)
-                {
-                    Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
-                }
+                    // Obtain the SO from the data's itemTypeName attribute.
+                    ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
+                    if (itemType == null)
+                    {
+                        Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
+                    }
 
-                Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
+                    Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 
-                // adds the item to the inventory
-                AddToInventory(itemType, itemData.amt, true);
+                    // Loads the item into the inventory
+                    Item item = new Item(itemData.amt, itemType);
+                    inventory.Add(item);
+                    item.SlotIndex = itemData.slotIndex;
                 });
             }
             else
@@ -231,7 +228,7 @@ namespace FarmSim.Player
                 Debug.Log("No items to load");
             }
             Debug.Log("list loading");
-            inventoryUI.InitializeSlots(maxStorage, inventory);
+            inventoryUI.LoadSlots(maxStorage, inventory);
         }
 
         public void Save()
@@ -245,7 +242,7 @@ namespace FarmSim.Player
                 ItemType itemType = item.itemType;
 
                 // create an itemData object
-                ItemData itemData = new ItemData(item.Amt, itemType.name);
+                ItemData itemData = new ItemData(item.Amt, itemType.name, item.SlotIndex);
                 Debug.Log("item type: " + itemData.itemTypeName + " || amt: " + itemData.amt);
                 // assign the object to the itemDatas list
                 itemDatas.Add(itemData);

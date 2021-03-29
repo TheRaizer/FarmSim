@@ -12,7 +12,6 @@ namespace FarmSim.Player
     /// </class>
     public class ItemPositionManager : MonoBehaviour, IPointerClickHandler
     {
-        public int SlotIndex { private get; set; }
         public Item Item { get; set; }
 
         private ItemMovementManager movementManager;
@@ -28,12 +27,12 @@ namespace FarmSim.Player
             {
                 if (movementManager.HasAttachedItem())
                 {
-                    movementManager.SwapPositions(SlotIndex, this);
+                    movementManager.SwapPositions(Item.SlotIndex, this);
                 }
                 else
                 {
                     // set this item as the attached item
-                    movementManager.AttachedItemSlotIndex = SlotIndex;
+                    movementManager.AttachedItemSlotIndex = Item.SlotIndex;
                     movementManager.SetAttachedItem(this);
                 }
             }

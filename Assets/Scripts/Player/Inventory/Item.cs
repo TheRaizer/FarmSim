@@ -18,11 +18,13 @@ namespace FarmSim.Player
         ///     The Icon of the item in the inventory
         /// </summary>
         public Image Icon { get; private set; }
+        public int Amt { get; private set; }
+        public int SlotIndex { get; set; }
+
         /// <summary>
         ///     Given to other objects through the <see cref="InventoryUI.SpawnImage(Item, Image)"/> method.
         /// </summary>
         public readonly string guid;
-        public int Amt { get; private set; }
         public readonly ItemType itemType;
         public bool CanSubtract => Amt > 0;
         private TextMeshProUGUI TextAmt;
@@ -71,6 +73,7 @@ namespace FarmSim.Player
 
         public GameObject SpawnImageObject(int slotIndex)
         {
+            SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
             GameObject textAmt = itemObj.transform.GetChild(0).gameObject;
 
@@ -81,7 +84,6 @@ namespace FarmSim.Player
 
             // assign the slot index to the position manager for movement of items
             var positionManager = itemObj.GetComponent<ItemPositionManager>();
-            positionManager.SlotIndex = slotIndex;
             positionManager.Item = this;
 
             Icon = itemObj.GetComponent<Image>();

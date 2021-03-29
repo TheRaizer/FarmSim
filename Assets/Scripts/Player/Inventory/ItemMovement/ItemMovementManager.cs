@@ -44,12 +44,12 @@ namespace FarmSim.Player
             {
                 if (StackItems(otherItem))
                     return;
-                otherItem.SlotIndex = AttachedItemSlotIndex;
+                otherItem.Item.SlotIndex = AttachedItemSlotIndex;
                 inventoryUI.MoveImageToSlot(otherItem.gameObject, AttachedItemSlotIndex);
             }
 
             // swap places
-            attachedItem.SlotIndex = otherSlotIndex;
+            attachedItem.Item.SlotIndex = otherSlotIndex;
             inventoryUI.MoveImageToSlot(attachedItem.gameObject, otherSlotIndex);
 
             // make it clickable again

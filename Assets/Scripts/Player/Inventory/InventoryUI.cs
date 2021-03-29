@@ -26,16 +26,18 @@ namespace FarmSim.Player
 
         public void AddImageToSlot(Item item)
         {
-            if (slotPrefab != null && contentParent != null)
+            if (slotPrefab == null && contentParent == null)
             {
-                for(int i = 0; i < slots.Count; i++)
+                return;
+            }
+            for(int i = 0; i < slots.Count; i++)
+            {
+                if(slots[i].transform.childCount <= 0)
                 {
-                    if(slots[i].transform.childCount <= 0)
-                    {
-                        Image slotImg = slots[i];
-                        SpawnImage(item, slotImg, i);
-                        return;
-                    }
+                    Image slotImg = slots[i];
+
+                    SpawnImage(item, slotImg, i);
+                    return;
                 }
             }
         }
@@ -50,7 +52,7 @@ namespace FarmSim.Player
             image.rectTransform.anchoredPosition = Vector3.zero;
         }
 
-        public void InitializeSlots(int numOfSlots, List<Item> inventory)
+        public void LoadSlots(int numOfSlots, List<Item> inventory)
         {
             int y = 0;
             int slotIndex = 0;
@@ -71,23 +73,28 @@ namespace FarmSim.Player
                     slotImg.rectTransform.localScale = new Vector3(2.0197f, 2.0197f, 2.0197f);
                     slotImg.rectTransform.anchoredPosition = new Vector2(x * OFFSET + FIRST_SLOT_X, y * -OFFSET + FIRST_SLOT_Y);
 
-                    // if the inventory has an item that can be slotted
-                    if (slotIndex < inventory.Count)
-                    {
-                        // get the item and spawn an image at the slot
-                        Item item = inventory[slotIndex];
-                        SpawnImage(item, slotImg, slotIndex);
-                    }
 
                     slots.Add(slotImg);
 
                     slotIndex++;
 
                     if (slotIndex >= numOfSlots)
+                    {
+                        LoadItemImagesIntoSlots(inventory);
                         return;
+                    }
                 }
                 y++;
             }
+        }
+
+        private void LoadItemImagesIntoSlots(List<Item> inventory)
+        {
+            inventory.ForEach(item =>
+            {
+                Image slotImg = slots[item.SlotIndex].GetComponent<Image>();
+                SpawnImage(item, slotImg, item.SlotIndex);
+            });
         }
 
         private void SpawnImage(Item item, Image slotImg, int slotIndex)
