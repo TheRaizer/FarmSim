@@ -15,6 +15,7 @@ namespace FarmSim.Player
         public Node Destination { get; private set; }
 
         private Animator animator;
+        private InventoryUI inventoryUI;
         private CardinalDirections dir = CardinalDirections.South;
 
         private NodeGrid grid;
@@ -32,12 +33,27 @@ namespace FarmSim.Player
             Cursor.visible = false;
 
             grid = FindObjectOfType<NodeGrid>();
+            inventoryUI = FindObjectOfType<InventoryUI>();
             animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            if(path != null)
+            if (inventoryUI.IsActive)
+            {
+                Time.timeScale = 0f;
+                return;
+            }
+            else if(Time.time != 1f)
+            {
+                Time.timeScale = 1f;
+            }
+            KeyHandler();
+        }
+
+        private void KeyHandler()
+        {
+            if (path != null)
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {
@@ -51,7 +67,7 @@ namespace FarmSim.Player
                 ChangeRingPosition();
             }
 
-            
+
             MoveOnPath();
 
             if (Input.GetMouseButtonDown(0))

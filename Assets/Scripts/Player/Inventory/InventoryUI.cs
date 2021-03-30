@@ -13,6 +13,9 @@ namespace FarmSim.Player
     {
         [SerializeField] private GameObject slotPrefab;
         [SerializeField] private GameObject contentParent;
+        [SerializeField] private GameObject inventoryUI;
+
+        public bool IsActive { get; private set; } = false;
 
         public const int SLOTS_IN_ROW = 4;
 
@@ -23,6 +26,17 @@ namespace FarmSim.Player
         private const int FIRST_SLOT_Y = 331;
 
         private const int OFFSET = 60;
+
+        private void Awake() => inventoryUI.SetActive(false);
+
+        private void LateUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                IsActive = !IsActive;
+                inventoryUI.SetActive(IsActive);
+            }
+        }
 
         public void AddImageToSlot(Item item)
         {

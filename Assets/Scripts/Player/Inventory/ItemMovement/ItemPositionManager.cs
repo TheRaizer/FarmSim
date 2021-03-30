@@ -33,7 +33,7 @@ namespace FarmSim.Player
                 {
                     // set this item as the attached item
                     movementManager.AttachedItemSlotIndex = Item.SlotIndex;
-                    movementManager.SetAttachedItem(this);
+                    movementManager.SetAttachedItem(Item);
                 }
             }
         }

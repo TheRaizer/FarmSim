@@ -18,8 +18,7 @@ namespace FarmSim.Player
         private PlayerInventoryList inventory;
         private Canvas canvas;
 
-        private ItemPositionManager attachedItem;
-        private Image attachedItemImg;
+        private Item attachedItem;
 
         private void Awake()
         {
@@ -49,16 +48,15 @@ namespace FarmSim.Player
             }
 
             // swap places
-            attachedItem.Item.SlotIndex = otherSlotIndex;
-            inventoryUI.MoveImageToSlot(attachedItem.gameObject, otherSlotIndex);
+            attachedItem.SlotIndex = otherSlotIndex;
+            inventoryUI.MoveImageToSlot(attachedItem.Icon.gameObject, otherSlotIndex);
 
             // make it clickable again
-            attachedItemImg.raycastTarget = true;
+            attachedItem.Icon.raycastTarget = true;
             attachedItem = null;
-            attachedItemImg = null;
         }
 
-        public void SetAttachedItem(ItemPositionManager _attachedItem)
+        public void SetAttachedItem(Item _attachedItem)
         {
             if (_attachedItem == null)
                 return;
@@ -66,11 +64,19 @@ namespace FarmSim.Player
             attachedItem = _attachedItem;
 
             // set a new parent so it appears over all slots
-            attachedItem.transform.SetParent(itemMovementParent);
-            attachedItemImg = attachedItem.GetComponent<Image>();
+            attachedItem.Icon.transform.SetParent(itemMovementParent);
 
             // make sure it isn't clickable
-            attachedItemImg.raycastTarget = false;
+            attachedItem.Icon.raycastTarget = false;
+        }
+
+        public void DestroyAttachedItem()
+        {
+            if (attachedItem != null)
+            {
+                inventory.DeleteItem(attachedItem.guid);
+                attachedItem = null;
+            }
         }
 
         public bool HasAttachedItem()
@@ -85,18 +91,18 @@ namespace FarmSim.Player
         /// <returns>True if attached item was stacked onto other item, otherwise false.</returns>
         private bool StackItems(ItemPositionManager otherItem)
         {
-            if (otherItem.Item.itemType == attachedItem.Item.itemType)
+            if (otherItem.Item.itemType == attachedItem.itemType)
             {
-                int remainder = inventory.StackItems(attachedItem.Item, otherItem.Item);
+                int remainder = inventory.StackItems(attachedItem, otherItem.Item);
                 if (remainder == 0)
                 {
-                    Destroy(attachedItem.gameObject);
+                    Destroy(attachedItem.Icon.gameObject);
                     return true;
                 }
                 else
                 {
-                    attachedItem.Item.SubtractFromAmt(int.MaxValue);
-                    attachedItem.Item.AddToAmt(remainder);
+                    attachedItem.SubtractFromAmt(int.MaxValue);
+                    attachedItem.AddToAmt(remainder);
                     return true;
                 }
             }
@@ -105,9 +111,9 @@ namespace FarmSim.Player
 
         private void MoveAttachedImgToMouse()
         {
-            if (attachedItemImg != null)
+            if (attachedItem != null)
             {
-                attachedItemImg.rectTransform.SetToMouse(canvas);
+                attachedItem.Icon.rectTransform.SetToMouse(canvas);
             }
         }
     }

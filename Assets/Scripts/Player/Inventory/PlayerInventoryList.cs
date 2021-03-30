@@ -71,6 +71,36 @@ namespace FarmSim.Player
             }
         }
 
+        /// <summary>
+        ///     Subtract an amount of an item from the player's inventory.
+        /// </summary>
+        /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
+        /// <param name="amtToTake">The amount to subtract from an item.</param>
+        public Item TakeFromInventory(string guid, int amtToTake)
+        {
+            Item item = inventory.Find(x => (x.guid == guid) && x.Amt >= amtToTake);
+
+            // only subtract and return an item if it exists and taking from it will not result in a negative amount
+            if (item != null && item.Amt - amtToTake >= 0)
+            {
+                item.SubtractFromAmt(amtToTake);
+
+                if (!item.CanSubtract)
+                {
+                    if (item.Icon == null)
+                        Debug.LogWarning($"Icon on {item} is null");
+                    else
+                        Destroy(item.Icon.gameObject);
+                    inventory.Remove(item);
+                }
+
+                return item;
+            }
+            Debug.Log($"Not enough of item with id {guid}");
+
+            return null;
+        }
+
         private void CreateItemsForPossibleOverflow(int amt, ItemType itemType)
         {
             // get the number of items to generate - 1
@@ -147,34 +177,11 @@ namespace FarmSim.Player
             inventoryUI.AddImageToSlot(item);
         }
 
-        /// <summary>
-        ///     Subtract an amount of an item from the player's inventory.
-        /// </summary>
-        /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
-        /// <param name="amtToTake">The amount to subtract from an item.</param>
-        public Item TakeFromInventory(string guid, int amtToTake)
+        public void DeleteItem(string guid)
         {
-            Item item = inventory.Find(x => (x.guid == guid) && x.Amt >= amtToTake);
-
-            // only subtract and return an item if it exists and taking from it will not result in a negative amount
-            if (item != null && item.Amt - amtToTake >= 0)
-            {
-                item.SubtractFromAmt(amtToTake);
-
-                if (!item.CanSubtract)
-                {
-                    if(item.Icon == null)
-                        Debug.LogWarning($"Icon on {item} is null");
-                    else
-                        Destroy(item.Icon.gameObject);
-                    inventory.Remove(item);
-                }
-
-                return item;
-            }
-            Debug.Log($"Not enough of item with id {guid}");
-
-            return null;
+            Item item = GetExactItem(guid);
+            Destroy(item.Icon.gameObject);
+            inventory.Remove(item);
         }
 
         public bool Contains(ItemType itemType)
