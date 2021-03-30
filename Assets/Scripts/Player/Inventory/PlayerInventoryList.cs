@@ -235,7 +235,7 @@ namespace FarmSim.Player
                 Debug.Log("No items to load");
             }
             Debug.Log("list loading");
-            inventoryUI.LoadSlots(maxStorage, inventory);
+            inventoryUI.InitializeUI(maxStorage, inventory);
         }
 
         public void Save()
