@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using FarmSim.Utility;
 
-namespace FarmSim.Player 
+namespace FarmSim.Items
 {
     /// <class name="Item">
     ///     <summary>

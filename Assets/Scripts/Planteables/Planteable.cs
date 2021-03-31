@@ -1,10 +1,10 @@
-﻿using FarmSim.Player;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using FarmSim.TimeBased;
 using FarmSim.Serialization;
 using FarmSim.Loading;
 using FarmSim.Enums;
+using FarmSim.Items;
 
 namespace FarmSim.Planteables
 {
@@ -71,7 +71,7 @@ namespace FarmSim.Planteables
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
 
-            PlayerInventoryList inventory = FindObjectOfType<PlayerInventoryList>();
+            Inventory inventory = FindObjectOfType<Inventory>();
             inventory.AddToInventory(itemType, amtToDrop);
 
             SaveData.Current.plantDatas.Remove(Data);

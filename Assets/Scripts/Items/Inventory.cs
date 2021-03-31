@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Player
+namespace FarmSim.Items
 {
     /// <class name="PlayerInventoryList">
     ///     <summary>
     ///         Class that contains and manages the player's items.
     ///     </summary>
     /// </class>
-    public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
+    public class Inventory : MonoBehaviour, ISavable, ILoadable
     {
         private readonly int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();

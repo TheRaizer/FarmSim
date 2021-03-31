@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
-namespace FarmSim.Player
+namespace FarmSim.Items
 {
 
     [CreateAssetMenu]

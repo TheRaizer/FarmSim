@@ -1,6 +1,7 @@
 ﻿using FarmSim.Player;
 using FarmSim.Utility;
 using FarmSim.Enums;
+using FarmSim.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,7 +17,7 @@ namespace FarmSim.Placeables
         private MoveObject moveObject = null;
         private ObjectPooler objectPooler = null;
 
-        private PlayerInventoryList inventory;
+        private Inventory inventory;
         private ToolHandler toolHandler;
 
         /// <summary>
@@ -27,7 +28,7 @@ namespace FarmSim.Placeables
         private void Awake()
         {
             moveObject = FindObjectOfType<MoveObject>();
-            inventory = FindObjectOfType<PlayerInventoryList>();
+            inventory = FindObjectOfType<Inventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
             toolHandler = FindObjectOfType<ToolHandler>();
         }

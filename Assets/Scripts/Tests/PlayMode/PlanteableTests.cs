@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using FarmSim.Planteables;
-using FarmSim.Player;
 using FarmSim.Serialization;
+using FarmSim.Items;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -88,7 +88,7 @@ namespace Tests
             var planteableObj = Object.Instantiate(prefab);
 
             GameObject obj = new GameObject();
-            var inventory = obj.AddComponent<PlayerInventoryList>();
+            var inventory = obj.AddComponent<Inventory>();
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;

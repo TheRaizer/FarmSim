@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using FarmSim.Utility;
 using UnityEngine.Assertions;
 
-namespace FarmSim.Player 
+namespace FarmSim.Items 
 {
     /// <class name="ItemMovementManager">
     ///     <summary>
@@ -15,7 +15,7 @@ namespace FarmSim.Player
         [SerializeField] private Transform itemMovementParent;
 
         public int AttachedItemSlotIndex { private get; set; }
-        private PlayerInventoryList inventory;
+        private Inventory inventory;
         private Canvas canvas;
 
         private Item attachedItem;
@@ -23,7 +23,7 @@ namespace FarmSim.Player
         private void Awake()
         {
             canvas = FindObjectOfType<Canvas>();
-            inventory = GetComponent<PlayerInventoryList>();
+            inventory = GetComponent<Inventory>();
         }
 
         private void Update()

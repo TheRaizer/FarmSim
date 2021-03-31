@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Player
+namespace FarmSim.Items
 {
     /// <class name="ItemSlotsHandler">
     ///     <summary>

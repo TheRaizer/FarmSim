@@ -9,7 +9,8 @@
         "Planteables",
         "Loading",
         "Player",
-        "Enums"
+        "Enums",
+        "Items"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

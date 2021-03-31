@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-namespace FarmSim.Player 
+namespace FarmSim.Items
 {
     /// <class name="InventoryUI">
     ///     <summary>

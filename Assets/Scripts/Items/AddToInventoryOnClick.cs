@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 
-namespace FarmSim.Player {
+namespace FarmSim.Items
+{
     public class AddToInventoryOnClick : MonoBehaviour
     {
         [SerializeField] private ItemType itemType;
         [SerializeField] private int amt;
 
-        private PlayerInventoryList inventory;
+        private Inventory inventory;
 
         private void Awake()
         {
-            inventory = FindObjectOfType<PlayerInventoryList>();
+            inventory = FindObjectOfType<Inventory>();
         }
 
         private void OnMouseDown()

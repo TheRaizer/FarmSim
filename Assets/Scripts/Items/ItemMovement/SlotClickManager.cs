@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FarmSim.Player
+namespace FarmSim.Items
 {
     /// <class name="SlotClickManager">
     ///     <summary>

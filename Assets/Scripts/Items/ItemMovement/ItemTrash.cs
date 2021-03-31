@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FarmSim.Player
+namespace FarmSim.Items
 {
     public class ItemTrash : MonoBehaviour, IPointerClickHandler
     {

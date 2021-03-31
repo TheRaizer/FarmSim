@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
-using FarmSim.Player;
+using FarmSim.Items;
 
 namespace Tests
 {
@@ -19,7 +19,7 @@ namespace Tests
         {
 
             GameObject gameObject = new GameObject();
-            PlayerInventoryList inventory = gameObject.AddComponent<PlayerInventoryList>();
+            Inventory inventory = gameObject.AddComponent<Inventory>();
 
             ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
             ItemType potatoType = Resources.Load("SO/Potato") as ItemType;
@@ -79,7 +79,7 @@ namespace Tests
         public void IterationAddInventoryTest()
         {
             GameObject gameObject = new GameObject();
-            PlayerInventoryList inventory = gameObject.AddComponent<PlayerInventoryList>();
+            Inventory inventory = gameObject.AddComponent<Inventory>();
 
             ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
 
@@ -115,7 +115,7 @@ namespace Tests
         public void TakeFromInventoryTest()
         {
             GameObject gameObject = new GameObject();
-            PlayerInventoryList inventory = gameObject.AddComponent<PlayerInventoryList>();
+            Inventory inventory = gameObject.AddComponent<Inventory>();
 
             ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
             ItemType potatoType = Resources.Load("SO/Potato") as ItemType;
