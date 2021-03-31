@@ -13,7 +13,6 @@ namespace FarmSim.Player
     public class ItemMovementManager : MonoBehaviour
     {
         [SerializeField] private Transform itemMovementParent;
-        [SerializeField] private ItemSlotsHandler remainderSlots;
 
         public int AttachedItemSlotIndex { private get; set; }
         private PlayerInventoryList inventory;

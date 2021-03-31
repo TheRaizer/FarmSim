@@ -11,8 +11,6 @@ namespace FarmSim.Player
     /// </class>
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
-        [SerializeField] private ItemSlotsHandler remainderSlots;
-
         private readonly int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();
         private InventoryUI inventoryUI;
@@ -35,7 +33,6 @@ namespace FarmSim.Player
             if(inventory.Count >= maxStorage && validItems.Count <= 0)
             {
                 Debug.Log("Inventory is full");
-                // Create popup screen for remaining item.
                 return;
             }
             // if there arent any matching items to the given item type
@@ -103,7 +100,7 @@ namespace FarmSim.Player
             return null;
         }
 
-        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool isRemainder=false)
+        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType)
         {
             // get the number of items to generate - 1
             int numItemsToGenerate = Mathf.FloorToInt(amt / itemType.MaxCarryAmt);
@@ -112,20 +109,14 @@ namespace FarmSim.Player
             for (int i = 0; i < numItemsToGenerate; i++)
             {
                 // if we can add to the inventory
-                if (inventory.Count + 1 <= maxStorage || isRemainder)
+                if (inventory.Count + 1 <= maxStorage)
                 {
                     Item item = new Item(itemType.MaxCarryAmt, itemType);
 
-                    if (isRemainder)
-                    {
-                        remainderSlots.AddImageToSlot(item);
-                    }
-                    else
-                    {
-                        // add item with max carry amt to the inventory
-                        inventory.Add(item);
-                        AddImage(item);
-                    }
+                    // add item with max carry amt to the inventory
+                    inventory.Add(item);
+                    AddImage(item);
+
                     // reduce the amt
                     amt -= itemType.MaxCarryAmt;
                 }
@@ -135,30 +126,17 @@ namespace FarmSim.Player
                 }
             }
             // add one more item with the remaining amt if we can
-            if (inventory.Count + 1 <= maxStorage && amt > 0 || isRemainder)
+            if (inventory.Count + 1 <= maxStorage && amt > 0)
             {
                 Item item = new Item(amt, itemType);
 
-                if (isRemainder)
-                {
-                    remainderSlots.AddImageToSlot(item);
-                }
-                else
-                {
-                    inventory.Add(item);
-                    AddImage(item);
-                }
+                inventory.Add(item);
+                AddImage(item);
             }
             else if (amt > 0)
             {
-                if (isRemainder)
-                {
-                    Debug.LogError("There should no longer be a remainder");
-                    return;
-                }
                 Debug.LogWarning($"Remainder is {amt}");
-                // pop up for remainder amount of 'amt'
-                CreateItemsForPossibleOverflow(amt, itemType, true);
+                // drop item with amt
             }
         }
 
