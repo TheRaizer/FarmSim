@@ -13,6 +13,10 @@ namespace FarmSim.Player
     public class ItemPositionManager : MonoBehaviour, IPointerClickHandler
     {
         public Item Item { get; set; }
+        /// <summary>
+        ///     The slots handler that contains the slot this item is in.
+        /// </summary>
+        public ItemSlotsHandler SlotsHandler { get; set; }
 
         private ItemMovementManager movementManager;
 

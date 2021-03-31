@@ -71,7 +71,7 @@ namespace FarmSim.Player
             }
         }
 
-        public GameObject SpawnImageObject(int slotIndex)
+        public GameObject SpawnImageObject(int slotIndex, ItemSlotsHandler slotsHandler)
         {
             SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
@@ -85,6 +85,7 @@ namespace FarmSim.Player
             // assign the slot index to the position manager for movement of items
             var positionManager = itemObj.GetComponent<ItemPositionManager>();
             positionManager.Item = this;
+            positionManager.SlotsHandler = slotsHandler;
 
             Icon = itemObj.GetComponent<Image>();
 

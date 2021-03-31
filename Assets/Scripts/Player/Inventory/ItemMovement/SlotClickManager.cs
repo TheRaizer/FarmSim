@@ -11,7 +11,10 @@ namespace FarmSim.Player
     public class SlotClickManager : MonoBehaviour, IPointerClickHandler
     {
         public int SlotIndex { private get; set; }
-
+        /// <summary>
+        ///     The slots handler that contains this slot
+        /// </summary>
+        public ItemSlotsHandler SlotsHandler { private get; set; }
         private ItemMovementManager movementManager;
 
         private void Awake()
@@ -25,8 +28,8 @@ namespace FarmSim.Player
             {
                 if (movementManager.HasAttachedItem())
                 {
-                    // if there is an attached item then swap it with this slot index
-                    movementManager.SwapPositions(SlotIndex, null);
+                    // move attached item to this slot using the given index for the list of slots in the SlotsHandler
+                    movementManager.SwapPositions(SlotIndex, null, SlotsHandler);
                 }
             }
         }

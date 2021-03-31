@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10abe8bb883587e4aba11fadf5c18cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  remainderSlots: {fileID: 357524580}
 --- !u!114 &357524579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemMovementParent: {fileID: 1645995117}
+  remainderSlots: {fileID: 0}
 --- !u!114 &357524580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1769,7 +1771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2057622467
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2131,12 +2133,12 @@ PrefabInstance:
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.3
+      value: -7.78
       objectReference: {fileID: 0}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.3
+      value: 0.11
       objectReference: {fileID: 0}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}

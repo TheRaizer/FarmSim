@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 namespace FarmSim.Player
 {
+    /// <class name="ItemSlotsHandler">
+    ///     <summary>
+    ///         Manages the slots of a given content panel in the UI.
+    ///     </summary>
+    /// </class>
     public class ItemSlotsHandler : MonoBehaviour
     {
         [SerializeField] private bool loadOnAwake = false;
@@ -11,6 +16,7 @@ namespace FarmSim.Player
         [SerializeField] private int numberOfSlots;
         [SerializeField] protected GameObject slotPrefab;
         [SerializeField] protected GameObject contentParent;
+
         // first slot is the top left slot
         [SerializeField] private float firstSlotX = -87;
         [SerializeField] private float firstSlotY = 331;
@@ -30,9 +36,8 @@ namespace FarmSim.Player
         public void AddImageToSlot(Item item)
         {
             if (slotPrefab == null && contentParent == null)
-            {
                 return;
-            }
+            
             for (int i = 0; i < slots.Count; i++)
             {
                 if (slots[i].transform.childCount <= 0)
@@ -52,6 +57,7 @@ namespace FarmSim.Player
 
             obj.transform.SetParent(slotImg.transform);
 
+            // sets the image center to the slot center
             image.rectTransform.anchoredPosition = Vector3.zero;
         }
 
@@ -66,8 +72,10 @@ namespace FarmSim.Player
                 {
                     GameObject slot = Instantiate(slotPrefab, contentParent.transform);
 
-                    // assign the slot index to the click manager
-                    slot.GetComponent<SlotClickManager>().SlotIndex = slotIndex;
+                    // assign click manager properties
+                    var slotManager = slot.GetComponent<SlotClickManager>();
+                    slotManager.SlotIndex = slotIndex;
+                    slotManager.SlotsHandler = this;
 
                     Image slotImg = slot.GetComponent<Image>();
 
@@ -91,10 +99,10 @@ namespace FarmSim.Player
 
         protected void SpawnImage(Item item, Image slotImg, int slotIndex)
         {
-            GameObject itemObj = item.SpawnImageObject(slotIndex);
+            GameObject itemObj = item.SpawnImageObject(slotIndex, this);
             itemObj.transform.SetParent(slotImg.transform);
 
-            // REMOVE THIS LATER. CREATE INVENTORY SPECIFIC SPRITES
+            // REMOVE THIS LATER AND CREATE INVENTORY SPECIFIC SPRITES
             item.Icon.rectTransform.localScale = new Vector3(0.2425136f, 0.2425136f, 0.2425136f);
             item.Icon.rectTransform.anchoredPosition = Vector3.zero;
         }

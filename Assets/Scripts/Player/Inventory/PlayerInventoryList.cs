@@ -11,6 +11,8 @@ namespace FarmSim.Player
     /// </class>
     public class PlayerInventoryList : MonoBehaviour, ISavable, ILoadable
     {
+        [SerializeField] private ItemSlotsHandler remainderSlots;
+
         private readonly int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();
         private InventoryUI inventoryUI;
@@ -101,7 +103,7 @@ namespace FarmSim.Player
             return null;
         }
 
-        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType)
+        private void CreateItemsForPossibleOverflow(int amt, ItemType itemType, bool isRemainder=false)
         {
             // get the number of items to generate - 1
             int numItemsToGenerate = Mathf.FloorToInt(amt / itemType.MaxCarryAmt);
@@ -110,12 +112,20 @@ namespace FarmSim.Player
             for (int i = 0; i < numItemsToGenerate; i++)
             {
                 // if we can add to the inventory
-                if (inventory.Count + 1 <= maxStorage)
+                if (inventory.Count + 1 <= maxStorage || isRemainder)
                 {
                     Item item = new Item(itemType.MaxCarryAmt, itemType);
-                    // add item with max carry amt to the inventory
-                    inventory.Add(item);
-                    AddImage(item);
+
+                    if (isRemainder)
+                    {
+                        remainderSlots.AddImageToSlot(item);
+                    }
+                    else
+                    {
+                        // add item with max carry amt to the inventory
+                        inventory.Add(item);
+                        AddImage(item);
+                    }
                     // reduce the amt
                     amt -= itemType.MaxCarryAmt;
                 }
@@ -125,17 +135,30 @@ namespace FarmSim.Player
                 }
             }
             // add one more item with the remaining amt if we can
-            if (inventory.Count + 1 <= maxStorage && amt > 0)
+            if (inventory.Count + 1 <= maxStorage && amt > 0 || isRemainder)
             {
                 Item item = new Item(amt, itemType);
-                inventory.Add(item);
 
-                AddImage(item);
+                if (isRemainder)
+                {
+                    remainderSlots.AddImageToSlot(item);
+                }
+                else
+                {
+                    inventory.Add(item);
+                    AddImage(item);
+                }
             }
             else if (amt > 0)
             {
+                if (isRemainder)
+                {
+                    Debug.LogError("There should no longer be a remainder");
+                    return;
+                }
                 Debug.LogWarning($"Remainder is {amt}");
                 // pop up for remainder amount of 'amt'
+                CreateItemsForPossibleOverflow(amt, itemType, true);
             }
         }
 

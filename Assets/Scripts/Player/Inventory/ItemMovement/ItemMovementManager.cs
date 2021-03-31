@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using FarmSim.Utility;
+using UnityEngine.Assertions;
 
 namespace FarmSim.Player 
 {
@@ -12,9 +13,9 @@ namespace FarmSim.Player
     public class ItemMovementManager : MonoBehaviour
     {
         [SerializeField] private Transform itemMovementParent;
-        public int AttachedItemSlotIndex { private get; set; }
+        [SerializeField] private ItemSlotsHandler remainderSlots;
 
-        private InventoryUI inventoryUI;
+        public int AttachedItemSlotIndex { private get; set; }
         private PlayerInventoryList inventory;
         private Canvas canvas;
 
@@ -23,7 +24,6 @@ namespace FarmSim.Player
         private void Awake()
         {
             canvas = FindObjectOfType<Canvas>();
-            inventoryUI = GetComponent<InventoryUI>();
             inventory = GetComponent<PlayerInventoryList>();
         }
 
@@ -34,22 +34,46 @@ namespace FarmSim.Player
 
         /// <summary>
         ///     Swaps the positions of 1-2 item <see cref="Image"/>'s in the inventory UI.
+        ///     <remarks>
+        ///         If otherItem is null a slotHandler must be given.
+        ///     </remarks>
         /// </summary>
         /// <param name="otherSlotIndex">The slot index of the other item</param>
         /// <param name="otherItem">The other item that will be swapped with the <see cref="attachedItem"/></param>
-        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem)
+        /// <param name="slotHandler">Used to move the attached item to the correct empty slot</param>
+        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem, ItemSlotsHandler slotHandler=null)
         {
+            ItemPositionManager attachedItemPosManager = attachedItem.Icon.GetComponent<ItemPositionManager>();
+
             if (otherItem != null)
             {
                 if (StackItems(otherItem))
                     return;
+                // move other item to the attached items slot
                 otherItem.Item.SlotIndex = AttachedItemSlotIndex;
-                inventoryUI.MoveImageToSlot(otherItem.gameObject, AttachedItemSlotIndex);
+                attachedItemPosManager.SlotsHandler.MoveImageToSlot(otherItem.gameObject, AttachedItemSlotIndex);
+
+                // move attached item to the other items slot
+                attachedItem.SlotIndex = otherSlotIndex;
+                otherItem.SlotsHandler.MoveImageToSlot(attachedItem.Icon.gameObject, otherSlotIndex);
+
+                // swap which slot handler they will reference
+                ItemSlotsHandler temp = attachedItemPosManager.SlotsHandler;
+                attachedItemPosManager.SlotsHandler = otherItem.SlotsHandler;
+                otherItem.SlotsHandler = temp;
+            }
+            else
+            {
+                Assert.IsNotNull(slotHandler);
+                // move attached item to the empty slot
+                attachedItem.SlotIndex = otherSlotIndex;
+                slotHandler.MoveImageToSlot(attachedItem.Icon.gameObject, otherSlotIndex);
+
+
+                // assign the slot handler of the empty slot to the attached item.
+                attachedItemPosManager.SlotsHandler = slotHandler;
             }
 
-            // swap places
-            attachedItem.SlotIndex = otherSlotIndex;
-            inventoryUI.MoveImageToSlot(attachedItem.Icon.gameObject, otherSlotIndex);
 
             // make it clickable again
             attachedItem.Icon.raycastTarget = true;
