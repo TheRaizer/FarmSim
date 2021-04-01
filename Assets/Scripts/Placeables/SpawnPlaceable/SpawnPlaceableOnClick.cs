@@ -33,13 +33,6 @@ namespace FarmSim.Placeables
             toolHandler = FindObjectOfType<ToolHandler>();
         }
 
-        private void Update()
-        {
-            if(toolHandler.EquippedTool.ToolType != ToolTypes.Hand)
-            {
-                RemoveCurrentPlaceable(null);
-            }
-        }
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Right)

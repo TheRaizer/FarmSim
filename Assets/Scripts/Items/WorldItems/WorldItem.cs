@@ -43,7 +43,6 @@ namespace FarmSim.Items
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                Debug.Log("Collide player");
                 if (!moveToPlayer)
                 {
                     StartCoroutine(AddToInventoryCo());

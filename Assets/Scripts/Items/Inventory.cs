@@ -33,7 +33,6 @@ namespace FarmSim.Items
 
             if(inventory.Count >= maxStorage && validItems.Count <= 0)
             {
-                Debug.Log("Inventory is full");
                 onFailure?.Invoke();
                 return;
             }

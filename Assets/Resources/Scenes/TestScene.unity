@@ -351,6 +351,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemMovementParent: {fileID: 1645995117}
+--- !u!114 &357524580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357524576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b2d5adced2eb5e45b5d1fe4779b11af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &428979337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 428979337, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
