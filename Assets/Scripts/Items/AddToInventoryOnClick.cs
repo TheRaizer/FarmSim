@@ -4,19 +4,25 @@ namespace FarmSim.Items
 {
     public class AddToInventoryOnClick : MonoBehaviour
     {
-        [SerializeField] private ItemType itemType;
+        [SerializeField] private GameObject worldItem;
         [SerializeField] private int amt;
 
-        private Inventory inventory;
-
-        private void Awake()
+        private void OnMouseOver()
         {
-            inventory = FindObjectOfType<Inventory>();
-        }
+            if (Input.GetMouseButtonDown(1))
+            {
+                var gameObject = Instantiate(worldItem);
 
-        private void OnMouseDown()
-        {
-            inventory.AddToInventory(itemType, amt);
+                gameObject.transform.position = transform.position;
+
+                var rb = gameObject.GetComponent<Rigidbody2D>();
+
+                WorldItem item = gameObject.GetComponent<WorldItem>();
+                item.Amt = amt;
+
+                Vector2 direction = Random.insideUnitCircle.normalized;
+                rb.AddForce(direction * 2, ForceMode2D.Impulse);
+            }
         }
     }
 }

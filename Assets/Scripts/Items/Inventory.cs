@@ -1,4 +1,5 @@
 ﻿using FarmSim.Serialization;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +26,7 @@ namespace FarmSim.Items
         /// </summary>
         /// <param name="itemType">The singular instance of a SO that points to an item in the inventory.</param>
         /// <param name="amt">The amount to add to an item.</param>
-        public void AddToInventory(ItemType itemType, int amt)
+        public void AddToInventory(ItemType itemType, int amt, Action onSuccesful = null, Action onFailure = null)
         {
             // find items that match and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
@@ -33,12 +34,15 @@ namespace FarmSim.Items
             if(inventory.Count >= maxStorage && validItems.Count <= 0)
             {
                 Debug.Log("Inventory is full");
+                onFailure?.Invoke();
                 return;
             }
             // if there arent any matching items to the given item type
             if (validItems.Count <= 0)
             {
                 CreateItemsForPossibleOverflow(amt, itemType);
+
+                onSuccesful?.Invoke();
             }
             else
             {
@@ -60,6 +64,7 @@ namespace FarmSim.Items
 
                         if (remaining <= 0)
                         {
+                            onSuccesful?.Invoke();
                             return;
                         }
                     }
@@ -68,6 +73,7 @@ namespace FarmSim.Items
                 // try to add new items
                 CreateItemsForPossibleOverflow(remaining, itemType);
             }
+            onSuccesful?.Invoke();
         }
 
         /// <summary>
@@ -183,6 +189,13 @@ namespace FarmSim.Items
             Item item = GetExactItem(guid);
             Destroy(item.Icon.gameObject);
             inventory.Remove(item);
+        }
+
+        public bool CanAdd(ItemType itemType)
+        {
+            List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
+
+            return inventory.Count < maxStorage || validItems.Count > 0;
         }
 
         public bool Contains(ItemType itemType)
