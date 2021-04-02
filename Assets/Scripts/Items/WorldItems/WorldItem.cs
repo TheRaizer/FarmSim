@@ -15,6 +15,7 @@ namespace FarmSim.Items
         private bool moveToPlayer = false;
 
         private readonly WaitForSeconds followTime = new WaitForSeconds(2);
+        private readonly WaitForSeconds waitTime = new WaitForSeconds(0.5f);
         private const float speed = 3;
 
         private void Awake()
@@ -45,11 +46,17 @@ namespace FarmSim.Items
             {
                 if (!moveToPlayer)
                 {
-                    StartCoroutine(AddToInventoryCo());
+                    StartCoroutine(WaitCo());
                 }
             }
         }
         
+        private IEnumerator WaitCo()
+        {
+            yield return waitTime;
+            StartCoroutine(AddToInventoryCo());
+        }
+
         private IEnumerator AddToInventoryCo()
         {
             moveToPlayer = true;

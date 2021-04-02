@@ -17,3 +17,5 @@ MonoBehaviour:
   <MaxCarryAmt>k__BackingField: 10
   <IconPrefab>k__BackingField: {fileID: 5854145312898668465, guid: 49aac5a8d302c444eb481e6bb9980b70,
     type: 3}
+  <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: ec91dc239ef2ec8448835def2a1e9a02,
+    type: 3}

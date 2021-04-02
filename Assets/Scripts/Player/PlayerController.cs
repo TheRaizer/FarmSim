@@ -177,10 +177,11 @@ namespace FarmSim.Player
                     animator.SetTrigger("Hoe");
                     break;
                 case ToolTypes.WateringCan:
-                    // set trigger to water. In that animation run the ToolHandler.UsTool() as event.
+                    animator.SetTrigger("Water");
                     break;
                 case ToolTypes.Sickle:
-                    // set trigger to sickle. In that animation run the ToolHandler.UsTool() as event.
+                    animator.SetTrigger("Sickle");
+                    break;
                 default:
                     break;
             }

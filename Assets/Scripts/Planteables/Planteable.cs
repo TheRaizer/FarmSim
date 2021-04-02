@@ -71,8 +71,7 @@ namespace FarmSim.Planteables
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
 
-            Inventory inventory = FindObjectOfType<Inventory>();
-            inventory.AddToInventory(itemType, amtToDrop);
+            itemType.SpawnWorldItem(transform.position, amtToDrop);
 
             SaveData.Current.plantDatas.Remove(Data);
             Destroy(gameObject);
