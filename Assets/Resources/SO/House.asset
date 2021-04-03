@@ -15,7 +15,7 @@ MonoBehaviour:
   <ItemName>k__BackingField: House
   <Price>k__BackingField: 500
   <MaxCarryAmt>k__BackingField: 100
-  <IconPrefab>k__BackingField: {fileID: 2857818832975432284, guid: e02c87eab6e416f4db45a51714146bcb,
+  <IconPrefab>k__BackingField: {fileID: 650068336292026346, guid: ebf349aed9fc129429f8969b564c7195,
     type: 3}
   <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: 042d7c2f27bae544e90f5ca94cce664c,
     type: 3}

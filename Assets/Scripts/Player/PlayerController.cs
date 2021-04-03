@@ -1,12 +1,13 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
+using FarmSim.Serialization;
 using System;
 using UnityEngine;
 
 namespace FarmSim.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ISavable, ILoadable
     {
         [SerializeField] private float speed;
         [SerializeField] private GameObject tileRing; 
@@ -215,6 +216,16 @@ namespace FarmSim.Player
 
             PathRequestManager.Instance.RequestPath(currentRequest);
             processingPath = true;
+        }
+
+        public void Save()
+        {
+            SaveData.Current.playerData.position = transform.position;
+        }
+
+        public void Load()
+        {
+            transform.position = SaveData.Current.playerData.position;
         }
     }
 }

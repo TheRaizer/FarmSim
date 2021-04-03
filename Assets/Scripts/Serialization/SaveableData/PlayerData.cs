@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace FarmSim.Serialization
 {
@@ -10,6 +11,7 @@ namespace FarmSim.Serialization
     [System.Serializable]
     public class PlayerData
     {
+        public Vector2 position;
         public List<ItemData> itemDatas;
     }
 }

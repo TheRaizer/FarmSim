@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using FarmSim.Utility;
 
 namespace FarmSim.Items
 {
@@ -79,8 +80,6 @@ namespace FarmSim.Items
 
                     Image slotImg = slot.GetComponent<Image>();
 
-                    // initialize slotImg scale and position
-                    slotImg.rectTransform.localScale = new Vector3(2.0197f, 2.0197f, 2.0197f);
                     slotImg.rectTransform.anchoredPosition = new Vector3(x * OFFSET + firstSlotX, y * -OFFSET + firstSlotY);
 
 
@@ -101,9 +100,18 @@ namespace FarmSim.Items
         {
             GameObject itemObj = item.SpawnImageObject(slotIndex, this);
             itemObj.transform.SetParent(slotImg.transform);
+            var rect = itemObj.GetComponent<RectTransform>();
 
-            // REMOVE THIS LATER AND CREATE INVENTORY SPECIFIC SPRITES
-            item.Icon.rectTransform.localScale = new Vector3(0.2425136f, 0.2425136f, 0.2425136f);
+            // reset its position to 0
+            rect.SetLeft(0);
+            rect.SetRight(0);
+            rect.SetTop(0);
+            rect.SetBottom(0);
+
+            // reset its scale to 1
+            rect.localScale = Vector3.one;
+
+            // center the image in the slot
             item.Icon.rectTransform.anchoredPosition = Vector3.zero;
         }
     }

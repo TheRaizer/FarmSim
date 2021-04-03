@@ -27,6 +27,7 @@ namespace FarmSim.Items
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log("click");
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 if (movementManager.HasAttachedItem())

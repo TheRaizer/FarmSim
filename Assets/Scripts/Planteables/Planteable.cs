@@ -71,7 +71,10 @@ namespace FarmSim.Planteables
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
 
-            itemType.SpawnWorldItem(transform.position, amtToDrop);
+            for(int i = 0; i < amtToDrop; i++)
+            {
+                itemType.SpawnWorldItem(transform.position, 1);
+            }
 
             SaveData.Current.plantDatas.Remove(Data);
             Destroy(gameObject);

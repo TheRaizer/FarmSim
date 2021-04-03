@@ -1,5 +1,0 @@
-ObjectPooler id rules:
-The Placeables Prefab's id shoud be the ItemType.itemName it comes from in the inventory.
-
-eg. TomatoPlaceable comes from the TomatoSeed item whose ItemType.itemName is "TomatoSeed". Therefore the 
-id is "TomatoSeed".

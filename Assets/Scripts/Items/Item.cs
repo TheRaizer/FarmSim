@@ -75,6 +75,8 @@ namespace FarmSim.Items
         {
             SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
+
+            // First child of the icon gameObject must be the text amt
             GameObject textAmt = itemObj.transform.GetChild(0).gameObject;
 
             if (itemObj.TryGetComponent(out IReferenceGUID guid))
