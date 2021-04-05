@@ -17,10 +17,9 @@ namespace FarmSim.Player
         public Node Destination { get; private set; }
 
         private Animator animator;
-        private InventoryUI inventoryUI;
+        private InventorySlotsHandler inventoryUI;
         private CardinalDirections dir = CardinalDirections.South;
 
-        private NodeGrid grid;
         private Vector2[] path;
         private PathRequest currentRequest;
 
@@ -34,8 +33,7 @@ namespace FarmSim.Player
             //to hide the curser
             Cursor.visible = false;
 
-            grid = FindObjectOfType<NodeGrid>();
-            inventoryUI = FindObjectOfType<InventoryUI>();
+            inventoryUI = FindObjectOfType<InventorySlotsHandler>();
             animator = GetComponent<Animator>();
         }
 
@@ -80,7 +78,7 @@ namespace FarmSim.Player
 
         private void ChangeRingPosition()
         {
-            Node node = grid.GetNodeFromMousePosition();
+            Node node = NodeGrid.Instance.GetNodeFromMousePosition();
             if (node != null)
             {
                 Vector2 pos = node.Data.pos;
@@ -209,14 +207,14 @@ namespace FarmSim.Player
             Node start;
             if (path != null)
             {
-                start = grid.GetNodeFromVector2(path[pathIdx]);
+                start = NodeGrid.Instance.GetNodeFromVector2(path[pathIdx]);
             }
             else
             {
-                start = grid.GetNodeFromVector2(transform.position);
+                start = NodeGrid.Instance.GetNodeFromVector2(transform.position);
             }
 
-            Node end = grid.GetNodeFromMousePosition();
+            Node end = NodeGrid.Instance.GetNodeFromMousePosition();
             if (start == null || end == null || !end.Data.IsWalkable)
                 return;
             Destination = end;

@@ -68,7 +68,7 @@ namespace FarmSim.Grid
                 for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
                     // if there are no nodes that have been saved
-                    if (SaveData.Current.nodeDatas == null || SaveData.Current.nodeDatas.Length <= 0)
+                    if (SaveData.Current.nodeDatas == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0)
                     {
                         // create new ones
                         Vector2 pos = GetNodePosition(x, y);
@@ -77,7 +77,7 @@ namespace FarmSim.Grid
                     else
                     {
                         // load saved ones
-                        grid[x, y] = new Node(SaveData.Current.nodeDatas[x, y]);
+                        grid[x, y] = new Node(SaveData.Current.nodeDatas[sectionNum][x, y]);
                     }
                 }
             }

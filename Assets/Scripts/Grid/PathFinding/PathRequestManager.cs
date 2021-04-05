@@ -14,8 +14,7 @@ namespace FarmSim.Grid
 
         private void Awake()
         {
-            NodeGrid grid = GetComponent<NodeGrid>();
-            aStar = new AStar(grid);
+            aStar = new AStar(NodeGrid.Instance);
         }
 
         public void RequestPath(PathRequest pathRequest)

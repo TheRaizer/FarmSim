@@ -14,11 +14,11 @@ namespace FarmSim.Items
     {
         private readonly int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();
-        private InventoryUI inventoryUI;
+        private InventorySlotsHandler inventoryUI;
 
         private void Awake()
         {
-            inventoryUI = GetComponent<InventoryUI>();
+            inventoryUI = GetComponent<InventorySlotsHandler>();
         }
 
         /// <summary>

@@ -19,18 +19,16 @@ namespace FarmSim.Player
         public Tool EquippedTool { get; private set; }
 
         private PlayerController player;
-        private NodeGrid grid;
         private Canvas canvas;
 
         private bool detectKeys = false;
 
         private void Awake()
         {
-            grid = FindObjectOfType<NodeGrid>();
             player = GetComponent<PlayerController>();
             canvas = FindObjectOfType<Canvas>();
 
-            InitTools(grid);
+            InitTools();
             EquippedTool = tools[ToolTypes.Hand];
         }
 
@@ -40,7 +38,7 @@ namespace FarmSim.Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                Node node = grid.GetNodeFromMousePosition();
+                Node node = NodeGrid.Instance.GetNodeFromMousePosition();
                 if(node != null)
                 {
                     NodeToToolOn = node;
@@ -60,12 +58,10 @@ namespace FarmSim.Player
         /// <summary>
         ///     Initializes each tool from the serialized tool list into the tools dict.
         /// </summary>
-        /// <param name="grid">The grid containg the possibly interactable nodes.</param>
-        private void InitTools(NodeGrid grid)
+        private void InitTools()
         {
             toolList.ForEach(tool =>
             {
-                tool.Grid = grid;
                 tools.Add(tool.ToolType, tool);
             });
         }

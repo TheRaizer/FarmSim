@@ -10,7 +10,8 @@
         "Loading",
         "Player",
         "Enums",
-        "Items"
+        "Items",
+        "Utility"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

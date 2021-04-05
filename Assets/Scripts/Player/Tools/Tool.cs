@@ -13,8 +13,6 @@ namespace FarmSim.Tools
         [SerializeField] private int numOfSounds;
         [SerializeField] private string AudioIdPrefix;
 
-        public NodeGrid Grid { get; set; }
-
         private const int DIMS_AFFECTED_INCR = 2;
 
         private int DimsToAffect => (Level * DIMS_AFFECTED_INCR) - 1;
@@ -28,7 +26,7 @@ namespace FarmSim.Tools
 
         public void OnUse(Node middleNode)
         {
-            List<Node> nodes = Grid.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
+            List<Node> nodes = NodeGrid.Instance.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
             InteractWithNodes(nodes);
         }
 

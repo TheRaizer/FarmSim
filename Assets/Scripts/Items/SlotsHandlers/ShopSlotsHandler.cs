@@ -11,6 +11,8 @@ namespace FarmSim.Items
         protected override void Awake()
         {
             base.Awake();
+            if (buyables.Count > slots.Count)
+                Debug.LogError("Cannot have more buyables than slots");
         }
 
         protected override void ManageSlotOnLoad(GameObject slot, int slotIndex)

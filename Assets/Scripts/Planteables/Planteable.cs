@@ -5,6 +5,7 @@ using FarmSim.Serialization;
 using FarmSim.Loading;
 using FarmSim.Enums;
 using FarmSim.Items;
+using FarmSim.Grid;
 
 namespace FarmSim.Planteables
 {
@@ -16,12 +17,12 @@ namespace FarmSim.Planteables
     /// </class>
     public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
+        [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
         [SerializeField] private string originalPrefabName = null;
         /// <summary>
         ///     Includes the day it was planted.
         /// </summary>
         [SerializeField] private int daysToGrow = 0;
-        [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
 
         [SerializeField] private int maxAmtToDrop = 0;
         [SerializeField] private int minAmtToDrop = 0;
@@ -76,7 +77,8 @@ namespace FarmSim.Planteables
                 itemType.SpawnWorldItem(transform.position, 1);
             }
 
-            SaveData.Current.plantDatas.Remove(Data);
+            // we do not need to check if it contains the plant because for a plant to be harvested the game must have saved/passed a day at least once.
+            SaveData.Current.plantDatas[NodeGrid.Instance.SectionNum].Remove(Data);
             Destroy(gameObject);
         }
 
@@ -95,9 +97,13 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!SaveData.Current.plantDatas.Contains(Data))
+            int sectionNum = NodeGrid.Instance.SectionNum;
+            if (!SaveData.Current.plantDatas.ContainsKey(sectionNum))
+                SaveData.Current.plantDatas[sectionNum] = new List<PlanteableData>();
+
+            if (!SaveData.Current.plantDatas[sectionNum].Contains(Data))
             {
-                SaveData.Current.plantDatas.Add(Data);
+                SaveData.Current.plantDatas[sectionNum].Add(Data);
             }
         }
 

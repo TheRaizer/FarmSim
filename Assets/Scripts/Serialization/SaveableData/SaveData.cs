@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace FarmSim.Serialization
@@ -20,9 +20,11 @@ namespace FarmSim.Serialization
 
         // Data's to store and be accessed.
         public PlayerData playerData = new PlayerData();
-        public List<DirtData> dirtDatas = new List<DirtData>();
-        public List<PlanteableData> plantDatas = new List<PlanteableData>();
-        public NodeData[,] nodeDatas;
+
+        // collections are within lists to represent the possible sections that each collection can be part of.
+        public Dictionary<int, List<DirtData>> dirtDatas = new Dictionary<int, List<DirtData>>();
+        public Dictionary<int, List<PlanteableData>> plantDatas = new Dictionary<int, List<PlanteableData>>();
+        public Dictionary<int, NodeData[,]> nodeDatas = new Dictionary<int, NodeData[,]>();
 
         public static SaveData Current
         {

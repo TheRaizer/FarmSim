@@ -22,7 +22,7 @@ namespace FarmSim.Items
         public int SlotIndex { get; set; }
 
         /// <summary>
-        ///     Given to other objects through the <see cref="InventoryUI.SpawnImage(Item, Image)"/> method.
+        ///     Given to other objects through the <see cref="InventorySlotsHandler.SpawnImage(Item, Image)"/> method.
         /// </summary>
         public readonly string guid;
         public readonly ItemType itemType;

@@ -12,9 +12,9 @@ namespace FarmSim.Grid
     ///     </summary>
     /// </class>
 
-    public class NodeGrid : MonoBehaviour, ISavable
+    public class NodeGrid : Singleton<NodeGrid>, ISavable
     {
-        [SerializeField] private int sectionNum = 0;
+        [field: SerializeField] public int SectionNum { get; set; } = 0;
 
         public const int SECTION_SIZE_X = 30;
         public const int SECTION_SIZE_Y = 30;
@@ -26,7 +26,7 @@ namespace FarmSim.Grid
 
         private void Awake()
         {
-            sectionLoader = new SectionLoader(transform.position, sectionNum, FindObjectOfType<ObjectPooler>());
+            sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
             grid = sectionLoader.InitGrid();
             StartCoroutine(sectionLoader.LoadSection(grid, () => LoadedSection = true));
         }
@@ -218,12 +218,12 @@ namespace FarmSim.Grid
 
         public void Save()
         {
-            SaveData.Current.nodeDatas = new NodeData[grid.GetLength(0), grid.GetLength(1)];
+            SaveData.Current.nodeDatas[SectionNum] = new NodeData[grid.GetLength(0), grid.GetLength(1)];
             for (int x = 0; x < grid.GetLength(0); x++)
             {
                 for (int y = 0; y < grid.GetLength(1); y++)
                 {
-                    SaveData.Current.nodeDatas[x, y] = grid[x, y].Data;
+                    SaveData.Current.nodeDatas[SectionNum][x, y] = grid[x, y].Data;
                 }
             }
         }

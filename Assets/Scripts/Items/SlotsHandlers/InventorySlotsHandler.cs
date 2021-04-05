@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using FarmSim.Utility;
+using System.Collections.Generic;
 
 namespace FarmSim.Items
 {
@@ -11,6 +12,24 @@ namespace FarmSim.Items
     /// </class>
     public class InventorySlotsHandler : SlotsHandler
     {
+        [SerializeField] private GameObject inventoryUI;
+        public bool IsActive { get; private set; } = false;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            inventoryUI.SetActive(false);
+        }
+
+        private void LateUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                IsActive = !IsActive;
+                inventoryUI.SetActive(IsActive);
+            }
+        }
+
         public void AddImageToSlot(Item item)
         {
             if (slotPrefab == null && contentParent == null)
@@ -57,6 +76,21 @@ namespace FarmSim.Items
 
             // reset its scale to 1
             rect.localScale = Vector3.one;
+        }
+
+        public void InitializeUI(int numSlots, List<Item> inventory)
+        {
+            LoadSlots(numSlots);
+            LoadItemImagesIntoSlots(inventory);
+        }
+
+        private void LoadItemImagesIntoSlots(List<Item> inventory)
+        {
+            inventory.ForEach(item =>
+            {
+                Image slotImg = slots[item.SlotIndex].GetComponent<Image>();
+                SpawnImage(item, slotImg, item.SlotIndex);
+            });
         }
     }
 }

@@ -27,8 +27,6 @@ namespace FarmSim.Placeables
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
         public string Guid { protected get; set; }
-
-        protected NodeGrid grid = null;
         protected PlayerController player;
         private Inventory inventory;
 
@@ -44,7 +42,6 @@ namespace FarmSim.Placeables
             {
                 Debug.LogError("Center node cannot be found with even dimensions");
             }
-            grid = FindObjectOfType<NodeGrid>();
             sprite = GetComponent<SpriteRenderer>();
             moveObject = FindObjectOfType<MoveObject>();
             player = FindObjectOfType<PlayerController>();
@@ -58,9 +55,9 @@ namespace FarmSim.Placeables
         {
             if (Input.GetMouseButtonDown(1))
             {
-                if (grid.IsValidPlacement(Node, xDim, yDim))
+                if (NodeGrid.Instance.IsValidPlacement(Node, xDim, yDim))
                 {
-                    grid.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
+                    NodeGrid.Instance.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
                     OnPlace();
                 }
             }
@@ -83,7 +80,7 @@ namespace FarmSim.Placeables
         {
             transform.position = newPos;
 
-            if (!grid.IsValidPlacement(Node, xDim, yDim))
+            if (!NodeGrid.Instance.IsValidPlacement(Node, xDim, yDim))
             {
                 sprite.color = invalidColor;
             }

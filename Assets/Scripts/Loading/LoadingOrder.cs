@@ -1,7 +1,6 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Serialization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -15,20 +14,18 @@ namespace FarmSim.Loading
     public class LoadingOrder : MonoBehaviour
     {
         [SerializeField] private GameObject introScreenCover;
-        private NodeGrid nodeGrid;
         private DataInjector dataInjector;
 
         public bool LoadedAll { get; private set; } = false;
 
         private void Awake()
         {
-            nodeGrid = GetComponent<NodeGrid>();
             dataInjector = GetComponent<DataInjector>();
         }
 
         void Update()
         {
-            if (nodeGrid.LoadedSection && !LoadedAll)
+            if (NodeGrid.Instance.LoadedSection && !LoadedAll)
             {
                 // once we've loaded the grid load the rest of the data
                 dataInjector.LoadAllVoid();

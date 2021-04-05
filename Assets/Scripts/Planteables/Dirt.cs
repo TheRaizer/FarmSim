@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using UnityEngine;
 using FarmSim.Loading;
+using System.Collections.Generic;
 
 namespace FarmSim.Planteables
 {
@@ -32,7 +33,6 @@ namespace FarmSim.Planteables
 
         private SpriteRenderer spriteRenderer = null;
         private ObjectPooler objectPooler = null;
-        private NodeGrid grid = null;
 
         private const int MAX_HOED_DAYS = 8;
         private const int MIN_HOED_DAYS = 3;
@@ -41,7 +41,6 @@ namespace FarmSim.Planteables
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
-            grid = FindObjectOfType<NodeGrid>();
             objectPooler = FindObjectOfType<ObjectPooler>();
         }
 
@@ -93,7 +92,7 @@ namespace FarmSim.Planteables
             if (Plant != null && Plant.CanHarvest)
             {
                 Plant.OnHarvest();
-                Node node = grid.GetNodeFromXY(X, Y);
+                Node node = NodeGrid.Instance.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
             }
         }
@@ -175,15 +174,21 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!SaveData.Current.dirtDatas.Contains(Data))
+            int sectionNum = NodeGrid.Instance.SectionNum;
+            if (!SaveData.Current.dirtDatas.ContainsKey(sectionNum))
+                SaveData.Current.dirtDatas[sectionNum] = new List<DirtData>();
+
+            if (!SaveData.Current.dirtDatas[sectionNum].Contains(Data))
             {
-                SaveData.Current.dirtDatas.Add(Data);
+                SaveData.Current.dirtDatas[sectionNum].Add(Data);
             }
         }
 
         public void Load()
         {
-            if (SaveData.Current.dirtDatas == null || SaveData.Current.dirtDatas.Count <= 0)
+            int sectionNum = NodeGrid.Instance.SectionNum;
+
+            if (SaveData.Current.dirtDatas[sectionNum] == null || SaveData.Current.dirtDatas[sectionNum].Count <= 0)
             {
                 // if there is no dirt data that was loaded then create a new one.
                 Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
@@ -191,8 +196,8 @@ namespace FarmSim.Planteables
             else
             {
                 // find the dirts data that matches its x and y.
-                Data = SaveData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
-                PlanteableData plantData = SaveData.Current.plantDatas.Find(plant => plant.Id == Data.Id);
+                Data = SaveData.Current.dirtDatas[sectionNum].Find(dirt => X == dirt.x && Y == dirt.y);
+                PlanteableData plantData = SaveData.Current.plantDatas[sectionNum].Find(plant => plant.Id == Data.Id);
 
                 // if there is any plant data
                 if(plantData != null)

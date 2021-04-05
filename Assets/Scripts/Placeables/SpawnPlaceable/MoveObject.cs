@@ -11,14 +11,8 @@ namespace FarmSim.Placeables
     /// </class>
     public class MoveObject : MonoBehaviour
     {
-        private NodeGrid grid;
         public Placeable AttachedObject { get; set; } = null;
         private Node currentNode = null;
-
-        private void Awake()
-        {
-            grid = FindObjectOfType<NodeGrid>();
-        }
 
         private void Update()
         {
@@ -33,7 +27,7 @@ namespace FarmSim.Placeables
         /// </summary>
         private void MovePlaceableToNode()
         {
-            Node node = grid.GetNodeFromMousePosition();
+            Node node = NodeGrid.Instance.GetNodeFromMousePosition();
 
             if (node != null && (Vector2)AttachedObject.transform.position != node.Data.pos)
             {
