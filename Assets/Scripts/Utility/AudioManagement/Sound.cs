@@ -2,6 +2,11 @@
 
 namespace FarmSim.Utility
 {
+    /// <class name="Sound">
+    ///     <summary>
+    ///         The attributes of a Sound that will affect the <see cref="AudioSource"/>
+    ///     </summary>
+    /// </class>
     [System.Serializable]
     public class Sound
     {

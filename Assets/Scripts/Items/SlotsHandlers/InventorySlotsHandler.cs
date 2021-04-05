@@ -7,7 +7,7 @@ namespace FarmSim.Items
 {
     /// <class name="InventorySlotsHandler">
     ///     <summary>
-    ///         Manages the slots of a given content panel in the UI.
+    ///         Manages the slots of a given content panel relating to the inventories UI.
     ///     </summary>
     /// </class>
     public class InventorySlotsHandler : SlotsHandler
@@ -68,7 +68,7 @@ namespace FarmSim.Items
 
         protected void SpawnImage(Item item, Image slotImg, int slotIndex)
         {
-            GameObject itemObj = item.SpawnImageObject(slotIndex, this);
+            GameObject itemObj = item.SpawnInventoryIcon(slotIndex, this);
             itemObj.transform.SetParent(slotImg.transform);
             var rect = itemObj.GetComponent<RectTransform>();
 

@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace FarmSim.Utility
 {
+    /// <class name="AudioManager">
+    ///     <summary>
+    ///         Manages the sounds that will be played during the game.
+    ///     </summary>
+    /// </class>
     public class AudioManager : Singleton<AudioManager>
     {
         [SerializeField] private List<Sound> sounds;

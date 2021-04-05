@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace FarmSim.Items
 {
+    /// <class name="SlotsHandler">
+    ///     <summary>
+    ///         Manages a spawned world item. 
+    ///     </summary>
+    /// </class>
     public class WorldItem : MonoBehaviour
     {
         [SerializeField] private ItemType itemType;
@@ -28,27 +33,29 @@ namespace FarmSim.Items
         {
             if (moveToPlayer)
             {
-                Vector2 newPos = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
-                Vector2 distance = (Vector2)player.position - newPos;
-
-                if(Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
-                {
-                    inventory.AddToInventory(itemType, Amt, () => Destroy(gameObject), () => moveToPlayer = false);
-                    return;
-                }
-                transform.position = newPos;
+                MoveToPlayer();
             }
         }
 
-        public void OnTriggerEnter2D(Collider2D collision)
+        private void MoveToPlayer()
         {
-            if (collision.gameObject.CompareTag("Player"))
+            Vector2 newPos = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            Vector2 distance = (Vector2)player.position - newPos;
+
+            if (AddToInventoryInRange(distance))
+                return;
+
+            transform.position = newPos;
+        }
+        
+        private bool AddToInventoryInRange(Vector2 distance)
+        {
+            if (Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
             {
-                if (!moveToPlayer)
-                {
-                    StartCoroutine(WaitCo());
-                }
+                inventory.AddToInventory(itemType, Amt, () => Destroy(gameObject), () => moveToPlayer = false);
+                return true;
             }
+            return false;
         }
         
         private IEnumerator WaitCo()
@@ -65,6 +72,17 @@ namespace FarmSim.Items
 
             inventory.AddToInventory(itemType, Amt, () => Destroy(gameObject));
             moveToPlayer = false;
+        }
+
+        public void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                if (!moveToPlayer)
+                {
+                    StartCoroutine(WaitCo());
+                }
+            }
         }
     }
 }

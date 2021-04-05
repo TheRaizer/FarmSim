@@ -4,6 +4,11 @@ using UnityEngine.UI;
 
 namespace FarmSim.Items
 {
+    /// <class name="SlotsHandler">
+    ///     <summary>
+    ///         Base class for managing a list of slots.
+    ///     </summary>
+    /// </class>
     public class SlotsHandler : MonoBehaviour
     {
         [SerializeField] protected bool loadOnAwake = false;
@@ -29,6 +34,10 @@ namespace FarmSim.Items
 
         protected virtual void ManageSlotOnLoad(GameObject slot, int slotIndex) { }
 
+        /// <summary>
+        ///     Loads slot images into their corrosponding positions in a given content panel.
+        /// </summary>
+        /// <param name="numOfSlots">The number of slots to Instantiate.</param>
         public void LoadSlots(int numOfSlots)
         {
             int y = 0;

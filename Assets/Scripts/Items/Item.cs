@@ -71,7 +71,13 @@ namespace FarmSim.Items
             }
         }
 
-        public GameObject SpawnImageObject(int slotIndex, InventorySlotsHandler slotsHandler)
+        /// <summary>
+        ///     Spawns the inventory icon into a given slot.
+        /// </summary>
+        /// <param name="slotIndex">The index of the slot that will parent the icon.</param>
+        /// <param name="slotsHandler">Used to pass into the icon's <see cref="ItemPositionManager"/></param>
+        /// <returns>The items icon <see cref="GameObject"/> instance</returns>
+        public GameObject SpawnInventoryIcon(int slotIndex, InventorySlotsHandler slotsHandler)
         {
             SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);

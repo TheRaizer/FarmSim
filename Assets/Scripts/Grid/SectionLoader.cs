@@ -110,8 +110,6 @@ namespace FarmSim.Grid
             {
                 WorldMaxX = int.Parse(worldLines[0]);
                 WorldMaxY = int.Parse(worldLines[1]);
-
-
             }
             catch (FormatException)
             {
@@ -119,6 +117,7 @@ namespace FarmSim.Grid
                 return;
             }
         }
+
         private void CreateSectionBounds()
         {
             sectionXStart = sectionNum * SECTION_SIZE_X;

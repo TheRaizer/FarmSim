@@ -4,6 +4,11 @@ using FarmSim.Utility;
 
 namespace FarmSim.Items
 {
+    /// <class name="ShopSlotsHandler">
+    ///     <summary>
+    ///         Manages the slots of a given content panel relating to a shops UI.
+    ///     </summary>
+    /// </class>
     public class ShopSlotsHandler : SlotsHandler
     {
         [SerializeField] private List<ItemType> buyables;

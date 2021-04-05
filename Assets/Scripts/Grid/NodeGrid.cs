@@ -39,21 +39,31 @@ namespace FarmSim.Grid
 
         
 
+        /// <summary>
+        ///     Attempts to load a section on scene change
+        /// </summary>
+        /// <param name="scene">The scene being loaded</param>
+        /// <param name="mode">The mode the scene is being loaded</param>
         public void LoadSection(Scene scene, LoadSceneMode mode)
         {
             LoadedSection = false;
+            
+            // section # is always 1 less then the scene index.
             SectionNum = scene.buildIndex - 1;
-            sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
-            Debug.Log(scene.buildIndex - 1);
 
+            sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
+
+            // initialize an empty grid.
             sectionGrid = sectionLoader.InitGrid();
 
+            // if the scene does not need loading don't load.
             if (scene.buildIndex - 1 < 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
             {
                 Debug.Log("no need to load this sections grid.");
                 return;
             }
-
+            
+            // init the section and its GameObjects.
             sectionLoader.InitSection(sectionGrid);
             StartCoroutine(sectionLoader.LoadSectionCo(sectionGrid, () => LoadedSection = true));
             //sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);

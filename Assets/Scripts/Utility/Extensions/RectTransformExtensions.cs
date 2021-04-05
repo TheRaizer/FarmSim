@@ -2,6 +2,11 @@
 
 namespace FarmSim.Utility
 {
+    /// <class name="RectTransformExtensions">
+    ///     <summary>
+    ///         Extensions that assist the use of <see cref="RectTransform"/>'s
+    ///     </summary>
+    /// </class>
     public static class RectTransformExtensions
     {
         public static void SetLeft(this RectTransform rt, float left)
