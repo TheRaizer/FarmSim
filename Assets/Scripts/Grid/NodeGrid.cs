@@ -2,6 +2,7 @@
 using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FarmSim.Grid
 {
@@ -14,26 +15,45 @@ namespace FarmSim.Grid
 
     public class NodeGrid : Singleton<NodeGrid>, ISavable
     {
-        [field: SerializeField] public int SectionNum { get; set; } = 0;
+        public int SectionNum { get; set; } = 0;
 
         public const int SECTION_SIZE_X = 30;
         public const int SECTION_SIZE_Y = 30;
         private readonly List<int> SaveableSections = new List<int> { 0 };
 
-        private Node[,] grid;
+        private Node[,] sectionGrid;
         private SectionLoader sectionLoader = null;
 
         public bool LoadedSection { get; private set; } = false;
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+
+            SectionNum = SaveData.Current.SectionNum;
+            SceneManager.sceneLoaded += LoadSection;
+        }
+
+        public void LoadSection(Scene scene, LoadSceneMode mode)
+        {
+            LoadedSection = false;
             sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
-            grid = sectionLoader.InitGrid();
-            StartCoroutine(sectionLoader.LoadSection(grid, () => LoadedSection = true));
+            Debug.Log(scene.buildIndex - 1);
+
+            sectionGrid = sectionLoader.InitGrid();
+
+            if (scene.buildIndex - 1 < 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
+            {
+                Debug.Log("no need to load this sections grid.");
+                return;
+            }
+
+            sectionLoader.InitSection(sectionGrid);
+            sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
         }
 
         /// <summary>
-        ///     Obtains a <see cref="Node"/> from the <see cref="grid"/> given a <see cref="Vector2"/>.
+        ///     Obtains a <see cref="Node"/> from the <see cref="sectionGrid"/> given a <see cref="Vector2"/>.
         /// </summary>
         /// <param name="vector">The vector to find a Node from</param>
         /// <returns>
@@ -47,7 +67,7 @@ namespace FarmSim.Grid
 
             if (IsInSection(x, y))
             {
-                return grid[x, y];
+                return sectionGrid[x, y];
             }
             else
             {
@@ -75,7 +95,7 @@ namespace FarmSim.Grid
                     int nodeY = y + yStart;
                     
                     // not valid placement if a node is outside the section or it is occupied
-                    if (!IsInSection(nodeX, nodeY) || grid[nodeX, nodeY].Data.IsOccupied)
+                    if (!IsInSection(nodeX, nodeY) || sectionGrid[nodeX, nodeY].Data.IsOccupied)
                     {
                         return false;
                     }
@@ -103,8 +123,8 @@ namespace FarmSim.Grid
                     int nodeY = y + yStart;
                     if (IsInSection(nodeX, nodeY))
                     {
-                        grid[nodeX, nodeY].Data.IsOccupied = true;
-                        grid[nodeX, nodeY].Data.IsWalkable = isWalkable;
+                        sectionGrid[nodeX, nodeY].Data.IsOccupied = true;
+                        sectionGrid[nodeX, nodeY].Data.IsWalkable = isWalkable;
                     }
 
                 }
@@ -137,7 +157,7 @@ namespace FarmSim.Grid
 
         public Node GetNodeFromXY(int x, int y)
         {
-            return grid[x, y];
+            return sectionGrid[x, y];
         }
 
         public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)
@@ -154,7 +174,7 @@ namespace FarmSim.Grid
                     int nodeY = y + yStart;
                     if (IsInSection(nodeX, nodeY))
                     {
-                        nodes.Add(grid[nodeX, nodeY]);
+                        nodes.Add(sectionGrid[nodeX, nodeY]);
                     }
                 }
             }
@@ -180,7 +200,7 @@ namespace FarmSim.Grid
 
                     if (IsInSection(nodeX, nodeY))
                     {
-                        neighbours.Add(grid[nodeX, nodeY]);
+                        neighbours.Add(sectionGrid[nodeX, nodeY]);
                     }
                 }
             }
@@ -194,19 +214,19 @@ namespace FarmSim.Grid
 
             if (IsInSection(middleNode.Data.x - 1, middleNode.Data.y))
             {
-                neighbours.Add(grid[middleNode.Data.x - 1, middleNode.Data.y]);
+                neighbours.Add(sectionGrid[middleNode.Data.x - 1, middleNode.Data.y]);
             }
             if (IsInSection(middleNode.Data.x + 1, middleNode.Data.y))
             {
-                neighbours.Add(grid[middleNode.Data.x + 1, middleNode.Data.y]);
+                neighbours.Add(sectionGrid[middleNode.Data.x + 1, middleNode.Data.y]);
             }
             if (IsInSection(middleNode.Data.x, middleNode.Data.y - 1))
             {
-                neighbours.Add(grid[middleNode.Data.x, middleNode.Data.y - 1]);
+                neighbours.Add(sectionGrid[middleNode.Data.x, middleNode.Data.y - 1]);
             }
             if (IsInSection(middleNode.Data.x, middleNode.Data.y + 1))
             {
-                neighbours.Add(grid[middleNode.Data.x, middleNode.Data.y + 1]);
+                neighbours.Add(sectionGrid[middleNode.Data.x, middleNode.Data.y + 1]);
             }
 
             return neighbours;
@@ -222,13 +242,14 @@ namespace FarmSim.Grid
             if (!SaveableSections.Contains(SectionNum))
                 return;
 
-            SaveData.Current.nodeDatas[SectionNum] = new NodeData[grid.GetLength(0), grid.GetLength(1)];
+            SaveData.Current.SectionNum = SectionNum;
+            SaveData.Current.nodeDatas[SectionNum] = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
 
-            for (int x = 0; x < grid.GetLength(0); x++)
+            for (int x = 0; x < sectionGrid.GetLength(0); x++)
             {
-                for (int y = 0; y < grid.GetLength(1); y++)
+                for (int y = 0; y < sectionGrid.GetLength(1); y++)
                 {
-                    SaveData.Current.nodeDatas[SectionNum][x, y] = grid[x, y].Data;
+                    SaveData.Current.nodeDatas[SectionNum][x, y] = sectionGrid[x, y].Data;
                 }
             }
         }

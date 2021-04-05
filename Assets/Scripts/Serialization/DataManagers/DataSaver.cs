@@ -33,8 +33,8 @@ namespace FarmSim.Serialization
                     s.Save();
                 }
 
-                Debug.Log("plant num: " + SaveData.Current.plantDatas.Count);
-                Debug.Log("dirt num: " + SaveData.Current.dirtDatas.Count);
+                Debug.Log("plant section count: " + SaveData.Current.plantDatas.Count);
+                Debug.Log("dirt section count: " + SaveData.Current.dirtDatas.Count);
                 Debug.Log("item num: " + SaveData.Current.playerData.itemDatas.Count);
 
                 // translate it through binary formatter

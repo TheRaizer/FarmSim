@@ -11,7 +11,7 @@ namespace FarmSim.Serialization
     [System.Serializable]
     public class PlayerData
     {
-        public Vector2 position;
+        public Vector2 position = Vector2.zero;
         public List<ItemData> itemDatas;
     }
 }

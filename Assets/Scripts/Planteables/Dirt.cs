@@ -187,8 +187,12 @@ namespace FarmSim.Planteables
         public void Load()
         {
             int sectionNum = NodeGrid.Instance.SectionNum;
+            bool containsSection = SaveData.Current.dirtDatas.ContainsKey(sectionNum);
+            bool isEmpty = false;
+            if (containsSection)
+                isEmpty = SaveData.Current.dirtDatas[sectionNum] == null || SaveData.Current.dirtDatas[sectionNum].Count <= 0;
 
-            if (SaveData.Current.dirtDatas[sectionNum] == null || SaveData.Current.dirtDatas[sectionNum].Count <= 0)
+            if (!containsSection || isEmpty)
             {
                 // if there is no dirt data that was loaded then create a new one.
                 Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
@@ -197,9 +201,14 @@ namespace FarmSim.Planteables
             {
                 // find the dirts data that matches its x and y.
                 Data = SaveData.Current.dirtDatas[sectionNum].Find(dirt => X == dirt.x && Y == dirt.y);
-                PlanteableData plantData = SaveData.Current.plantDatas[sectionNum].Find(plant => plant.Id == Data.Id);
 
-                // if there is any plant data
+                PlanteableData plantData = null;
+                
+                // if there are plants
+                if(SaveData.Current.plantDatas.ContainsKey(sectionNum))
+                    plantData = SaveData.Current.plantDatas[sectionNum].Find(plant => plant.Id == Data.Id);
+
+                // if there is a matching plant data
                 if(plantData != null)
                 {
                     // we must create a plant game object

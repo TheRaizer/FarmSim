@@ -10,3 +10,11 @@ Any GameObject that has the ItemPositionManager component must have its first ch
 mesh pro gui component.
 
 Said object must also be anchored in the center.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Scene #'s must match section #'s with the following pattern:
+Scene # = section # + 1
+
+If Scene # - 1 < 0 then it is not a loadable section
+If Scene # - 1 > # of sections it is not a loadable section.

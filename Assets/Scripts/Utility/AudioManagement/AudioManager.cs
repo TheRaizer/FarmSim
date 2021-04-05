@@ -11,6 +11,7 @@ namespace FarmSim.Utility
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             sounds.ForEach(sound => { 
                 sound.SetSource(gameObject.AddComponent<AudioSource>());
                 soundsDict.Add(sound.Name, sound);
@@ -21,7 +22,7 @@ namespace FarmSim.Utility
         {
             if (!soundsDict.ContainsKey(name))
             {
-                Debug.LogError($"Sound with name {name} does not exist.");
+                Debug.LogWarning($"Sound with name {name} does not exist.");
                 return;
             }
 

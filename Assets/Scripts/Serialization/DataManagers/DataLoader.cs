@@ -24,7 +24,8 @@ namespace FarmSim.Serialization
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                SceneManager.LoadScene(1);
+                // scene numbers should corrospond to section numbers + 1
+                SceneManager.LoadScene(SaveData.Current.SectionNum + 1);
             }
         }
     }

@@ -232,6 +232,9 @@ namespace FarmSim.Player
 
         public void Load()
         {
+            if (SaveData.Current.playerData.position == Vector2.zero)
+                return;
+
             transform.position = SaveData.Current.playerData.position;
         }
     }

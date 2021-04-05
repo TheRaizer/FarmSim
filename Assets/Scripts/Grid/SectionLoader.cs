@@ -16,8 +16,8 @@ namespace FarmSim.Grid
     {
         private bool loading = false;
 
-        private int worldMaxX = 150;
-        private int worldMaxY = 150;
+        public int WorldMaxX { get; private set; } = 150;
+        public int WorldMaxY { get; private set; } = 150;
 
         private int sectionXStart = 0;
         private int sectionYStart = 0;
@@ -41,30 +41,28 @@ namespace FarmSim.Grid
         public Node[,] InitGrid()
         {
             ExtractGridDimensionsFromTxt();
-            CreateSection();
-            if (worldMaxX % SECTION_SIZE_X != 0 || worldMaxY % SECTION_SIZE_Y != 0)
-            {
-                Debug.LogError("Section size does is not valid for grid dimensions");
-            }
-            if(sectionNum < 0 || sectionNum * SECTION_SIZE_X >= worldMaxX || sectionNum * SECTION_SIZE_Y >= worldMaxY)
-            {
-                Debug.LogError($"Section number {sectionNum} is not valid");
-            }
+            Node[,] sectionGrid = new Node[SECTION_SIZE_X, SECTION_SIZE_Y];
 
-            Node[,] grid = new Node[SECTION_SIZE_X, SECTION_SIZE_Y];
-            InitSection(grid);
-
-            return grid;
+            return sectionGrid;
         }
 
         /// <summary>
         /// Initialize's nodes into the <see cref="grid"/> and assigns a 
         /// world position to each.
         /// </summary>
-        private void InitSection(Node[,] grid)
+        public void InitSection(Node[,] sectionGrid)
         {
+            CreateSectionBounds();
+
+            if (WorldMaxX % SECTION_SIZE_X != 0 || WorldMaxY % SECTION_SIZE_Y != 0)
+                Debug.LogError("Section size does is not valid for grid dimensions");
+            if (sectionNum < 0 || sectionNum * SECTION_SIZE_X >= WorldMaxX || sectionNum * SECTION_SIZE_Y >= WorldMaxY)
+                Debug.LogError($"Section number {sectionNum} is not valid");
+
             bool containsSection = SaveData.Current.nodeDatas.ContainsKey(sectionNum);
-            bool sectionIsEmpty = SaveData.Current.nodeDatas[sectionNum] == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0;
+            bool sectionIsEmpty = false;
+            if (containsSection)
+                sectionIsEmpty = SaveData.Current.nodeDatas[sectionNum] == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0;
 
             for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
@@ -75,12 +73,12 @@ namespace FarmSim.Grid
                     {
                         // create new ones
                         Vector2 pos = GetNodePosition(x, y);
-                        grid[x, y] = new Node(new NodeData(false, pos, x, y));
+                        sectionGrid[x, y] = new Node(new NodeData(false, pos, x, y));
                     }
                     else
                     {
                         // load saved ones
-                        grid[x, y] = new Node(SaveData.Current.nodeDatas[sectionNum][x, y]);
+                        sectionGrid[x, y] = new Node(SaveData.Current.nodeDatas[sectionNum][x, y]);
                     }
                 }
             }
@@ -110,8 +108,8 @@ namespace FarmSim.Grid
             string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
             try
             {
-                worldMaxX = int.Parse(worldLines[0]);
-                worldMaxY = int.Parse(worldLines[1]);
+                WorldMaxX = int.Parse(worldLines[0]);
+                WorldMaxY = int.Parse(worldLines[1]);
 
 
             }
@@ -121,7 +119,7 @@ namespace FarmSim.Grid
                 return;
             }
         }
-        private void CreateSection()
+        private void CreateSectionBounds()
         {
             sectionXStart = sectionNum * SECTION_SIZE_X;
             sectionXEnd = sectionXStart + SECTION_SIZE_X;
@@ -130,7 +128,25 @@ namespace FarmSim.Grid
             sectionYEnd = sectionYStart + SECTION_SIZE_Y;
         }
 
-        public IEnumerator LoadSection(Node[,] grid, Action onLoaded = null)
+        public void LoadSectionVoid(Node[,] sectionGrid, Action onLoaded = null)
+        {
+            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
+
+            // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
+
+            for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
+            {
+                string[] line = worldLines[y].Split(' ');
+
+                for (int x = sectionXStart; x < sectionXEnd; x++)
+                {
+                    DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2, sectionGrid);
+                }
+            }
+            onLoaded?.Invoke();
+        }
+
+        public IEnumerator LoadSection(Node[,] sectionGrid, Action onLoaded = null)
         {
             if (!loading)
             {
@@ -145,7 +161,7 @@ namespace FarmSim.Grid
 
                     for (int x = sectionXStart; x < sectionXEnd; x++)
                     {
-                        DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2, grid);
+                        DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2, sectionGrid);
                         yield return null;
                     }
                 }
@@ -154,7 +170,7 @@ namespace FarmSim.Grid
             }
         }
 
-        private void DetermineTileType(string val, int x, int y, Node[,] grid)
+        private void DetermineTileType(string val, int x, int y, Node[,] sectionGrid)
         {
             if (pooler == null)
                 return;
@@ -162,14 +178,14 @@ namespace FarmSim.Grid
             switch (val)
             {
                 case "0":
-                    grid[x, y].Data.IsWalkable = true;
-                    grid[x, y].Data.IsOccupied = false;
-                    spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Data.pos, Quaternion.identity);
+                    sectionGrid[x, y].Data.IsWalkable = true;
+                    sectionGrid[x, y].Data.IsOccupied = false;
+                    spawnedObject = pooler.SpawnGameObject("Dirt", sectionGrid[x, y].Data.pos, Quaternion.identity);
                     break;
                 case "1":
-                    grid[x, y].Data.IsWalkable = false;
-                    grid[x, y].Data.IsOccupied = true;
-                    spawnedObject = pooler.SpawnGameObject("Water", grid[x, y].Data.pos, Quaternion.identity);
+                    sectionGrid[x, y].Data.IsWalkable = false;
+                    sectionGrid[x, y].Data.IsOccupied = true;
+                    spawnedObject = pooler.SpawnGameObject("Water", sectionGrid[x, y].Data.pos, Quaternion.identity);
                     break;
                 default:
                     throw new ArgumentException($"No such tile for given code {val}");
@@ -177,7 +193,7 @@ namespace FarmSim.Grid
 
             if (spawnedObject.TryGetComponent(out IInteractable interactable))
             {
-                grid[x, y].Interactable = interactable;
+                sectionGrid[x, y].Interactable = interactable;
                 interactable.X = x;
                 interactable.Y = y;
             }
@@ -188,13 +204,13 @@ namespace FarmSim.Grid
             using (StreamWriter file =
             new StreamWriter("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt"))
             {
-                file.WriteLine(worldMaxX);
-                file.WriteLine(worldMaxY);
-                for (int y = 0; y < worldMaxY; y++)
+                file.WriteLine(WorldMaxX);
+                file.WriteLine(WorldMaxY);
+                for (int y = 0; y < WorldMaxY; y++)
                 {
-                    for (int x = 0; x < worldMaxX; x++)
+                    for (int x = 0; x < WorldMaxX; x++)
                     {
-                        if (x != worldMaxX - 1)
+                        if (x != WorldMaxX - 1)
                         {
                             file.Write("0 ");
                         }
