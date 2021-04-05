@@ -174,7 +174,11 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
+            if (!NodeGrid.Instance.IsSavableSection)
+                return;
+
             int sectionNum = NodeGrid.Instance.SectionNum;
+
             if (!SaveData.Current.dirtDatas.ContainsKey(sectionNum))
                 SaveData.Current.dirtDatas[sectionNum] = new List<DirtData>();
 
@@ -189,6 +193,7 @@ namespace FarmSim.Planteables
             int sectionNum = NodeGrid.Instance.SectionNum;
             bool containsSection = SaveData.Current.dirtDatas.ContainsKey(sectionNum);
             bool isEmpty = false;
+
             if (containsSection)
                 isEmpty = SaveData.Current.dirtDatas[sectionNum] == null || SaveData.Current.dirtDatas[sectionNum].Count <= 0;
 

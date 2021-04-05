@@ -97,7 +97,11 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
+            if (!NodeGrid.Instance.IsSavableSection)
+                return;
+
             int sectionNum = NodeGrid.Instance.SectionNum;
+
             if (!SaveData.Current.plantDatas.ContainsKey(sectionNum))
                 SaveData.Current.plantDatas[sectionNum] = new List<PlanteableData>();
 

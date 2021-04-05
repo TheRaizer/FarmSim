@@ -25,6 +25,7 @@ namespace FarmSim.Grid
         private SectionLoader sectionLoader = null;
 
         public bool LoadedSection { get; private set; } = false;
+        public bool IsSavableSection => SaveableSections.Contains(SectionNum);
 
         private void Awake()
         {
@@ -33,6 +34,8 @@ namespace FarmSim.Grid
             SectionNum = SaveData.Current.SectionNum;
             SceneManager.sceneLoaded += LoadSection;
         }
+
+        
 
         public void LoadSection(Scene scene, LoadSceneMode mode)
         {
@@ -240,7 +243,7 @@ namespace FarmSim.Grid
 
         public void Save()
         {
-            if (!SaveableSections.Contains(SectionNum))
+            if (!IsSavableSection)
                 return;
 
             SaveData.Current.SectionNum = SectionNum;
