@@ -2,7 +2,8 @@
     "name": "TimeBased",
     "references": [
         "GUID:3926798bbc9965742b0dc016696b6d2e",
-        "GUID:b8e2af46e7a633043a8340dba4a9b25c"
+        "GUID:b8e2af46e7a633043a8340dba4a9b25c",
+        "GUID:eaaa8f1176726214f9205db5c7175a7e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

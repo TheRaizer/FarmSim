@@ -63,12 +63,15 @@ namespace FarmSim.Grid
         /// </summary>
         private void InitSection(Node[,] grid)
         {
+            bool containsSection = SaveData.Current.nodeDatas.ContainsKey(sectionNum);
+            bool sectionIsEmpty = SaveData.Current.nodeDatas[sectionNum] == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0;
+
             for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
                 for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
-                    // if there are no nodes that have been saved
-                    if (SaveData.Current.nodeDatas == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0)
+                    // if there are no nodes that have been saved for this section
+                    if (!containsSection || sectionIsEmpty)
                     {
                         // create new ones
                         Vector2 pos = GetNodePosition(x, y);

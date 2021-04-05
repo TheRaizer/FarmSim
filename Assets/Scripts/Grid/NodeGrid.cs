@@ -18,6 +18,7 @@ namespace FarmSim.Grid
 
         public const int SECTION_SIZE_X = 30;
         public const int SECTION_SIZE_Y = 30;
+        private readonly List<int> SaveableSections = new List<int> { 0 };
 
         private Node[,] grid;
         private SectionLoader sectionLoader = null;
@@ -218,7 +219,11 @@ namespace FarmSim.Grid
 
         public void Save()
         {
+            if (!SaveableSections.Contains(SectionNum))
+                return;
+
             SaveData.Current.nodeDatas[SectionNum] = new NodeData[grid.GetLength(0), grid.GetLength(1)];
+
             for (int x = 0; x < grid.GetLength(0); x++)
             {
                 for (int y = 0; y < grid.GetLength(1); y++)

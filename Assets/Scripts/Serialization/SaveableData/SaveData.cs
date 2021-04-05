@@ -20,7 +20,7 @@ namespace FarmSim.Serialization
 
         // Data's to store and be accessed.
         public PlayerData playerData = new PlayerData();
-
+        public int SectionNum = -1;
         // collections are within lists to represent the possible sections that each collection can be part of.
         public Dictionary<int, List<DirtData>> dirtDatas = new Dictionary<int, List<DirtData>>();
         public Dictionary<int, List<PlanteableData>> plantDatas = new Dictionary<int, List<PlanteableData>>();

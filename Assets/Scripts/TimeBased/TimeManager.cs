@@ -11,20 +11,18 @@ namespace FarmSim.TimeBased
         [SerializeField] private GameObject dayPassBackground;
 
         private List<ITimeBased> timeBasedObjects = null;
-        private NodeGrid grid;
         private DataSaver dataSaver;
 
         public int CurrentDay { get; private set; } = 0;
 
         private void Awake()
         {
-            grid = GetComponent<NodeGrid>();
             dataSaver = GetComponent<DataSaver>();
         }
 
         private void Update()
         {
-            if (grid.LoadedSection && timeBasedObjects == null)
+            if (NodeGrid.Instance.LoadedSection && timeBasedObjects == null)
             {
                 timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
             }
