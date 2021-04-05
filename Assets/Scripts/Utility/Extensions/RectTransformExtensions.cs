@@ -24,6 +24,15 @@ namespace FarmSim.Utility
             rt.offsetMin = new Vector2(rt.offsetMin.x, bottom);
         }
 
+        public static void Center(this RectTransform rt)
+        {
+            // reset its position to the origin
+            rt.SetLeft(0);
+            rt.SetRight(0);
+            rt.SetTop(0);
+            rt.SetBottom(0);
+        }
+
         public static void SetToMouse(this RectTransform rt, Canvas canvas)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 pos);
