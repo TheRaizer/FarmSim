@@ -1,4 +1,5 @@
-﻿namespace FarmSim.Serialization
+﻿
+namespace FarmSim.Serialization
 {
     /// <class name="ISaveable">
     ///     <summary>

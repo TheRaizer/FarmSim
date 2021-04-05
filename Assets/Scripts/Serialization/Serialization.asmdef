@@ -1,7 +1,8 @@
 {
     "name": "Serialization",
     "references": [
-        "GUID:eaaa8f1176726214f9205db5c7175a7e"
+        "GUID:eaaa8f1176726214f9205db5c7175a7e",
+        "GUID:b7e2dee78b24bf649ba4bf60be9a84d1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

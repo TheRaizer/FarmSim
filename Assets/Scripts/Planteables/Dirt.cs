@@ -3,11 +3,11 @@ using FarmSim.Grid;
 using FarmSim.TimeBased;
 using FarmSim.Serialization;
 using FarmSim.Utility;
-using System.Linq;
 using System;
 using UnityEngine;
 using FarmSim.Loading;
 using System.Collections.Generic;
+using FarmSim.Attributes;
 
 namespace FarmSim.Planteables
 {
@@ -16,6 +16,7 @@ namespace FarmSim.Planteables
     ///         Manages the state of the dirt and the plant it contains if there is any.
     ///     </summary>
     /// </class>
+    [Savable(false)]
     public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable
     {
         [SerializeField] private Sprite dryDirt = null;

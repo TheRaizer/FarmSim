@@ -1,4 +1,5 @@
-﻿using FarmSim.Enums;
+﻿using FarmSim.Attributes;
+using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
 using FarmSim.Serialization;
@@ -7,6 +8,7 @@ using UnityEngine;
 
 namespace FarmSim.Player
 {
+    [Savable(true)]
     public class PlayerController : MonoBehaviour, ISavable, ILoadable
     {
         [SerializeField] private float speed;

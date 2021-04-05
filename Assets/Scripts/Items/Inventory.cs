@@ -1,4 +1,5 @@
-﻿using FarmSim.Serialization;
+﻿using FarmSim.Attributes;
+using FarmSim.Serialization;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ namespace FarmSim.Items
     ///         Class that contains and manages the player's items.
     ///     </summary>
     /// </class>
+    [Savable(true)]
     public class Inventory : MonoBehaviour, ISavable, ILoadable
     {
         private readonly int maxStorage = 6;

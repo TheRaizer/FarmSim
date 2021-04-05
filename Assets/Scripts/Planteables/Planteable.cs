@@ -6,6 +6,7 @@ using FarmSim.Loading;
 using FarmSim.Enums;
 using FarmSim.Items;
 using FarmSim.Grid;
+using FarmSim.Attributes;
 
 namespace FarmSim.Planteables
 {
@@ -15,6 +16,7 @@ namespace FarmSim.Planteables
     ///         Base class for any planteable gameObject.
     ///     </summary>
     /// </class>
+    [Savable(false)]
     public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
         [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }

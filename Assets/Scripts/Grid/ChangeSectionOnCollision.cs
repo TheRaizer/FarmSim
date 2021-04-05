@@ -19,7 +19,6 @@ namespace FarmSim.Grid
         {
             if (collision.gameObject.CompareTag("Player"))
             {
-                dataSaver.SaveAllVoid();
                 NodeGrid.Instance.SectionNum = scene - 1;
                 SceneManager.LoadScene(scene);
             }

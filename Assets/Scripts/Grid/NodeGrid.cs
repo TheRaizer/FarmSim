@@ -1,4 +1,5 @@
-﻿using FarmSim.Serialization;
+﻿using FarmSim.Attributes;
+using FarmSim.Serialization;
 using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ namespace FarmSim.Grid
     ///     </summary>
     /// </class>
 
+    [Savable(false)]
     public class NodeGrid : Singleton<NodeGrid>, ISavable
     {
         public int SectionNum { get; set; } = 0;
@@ -40,6 +42,7 @@ namespace FarmSim.Grid
         public void LoadSection(Scene scene, LoadSceneMode mode)
         {
             LoadedSection = false;
+            SectionNum = scene.buildIndex - 1;
             sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
             Debug.Log(scene.buildIndex - 1);
 
