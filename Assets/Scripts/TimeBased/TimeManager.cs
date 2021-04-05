@@ -50,7 +50,8 @@ namespace FarmSim.TimeBased
             CurrentDay++;
             timeBasedObjects.ForEach(timeBased => timeBased.OnDayPass());
 
-            StartCoroutine(dataSaver.SaveAll());
+            //StartCoroutine(dataSaver.SaveAllCo());
+            dataSaver.SaveAllVoid();
         }
     }
 }

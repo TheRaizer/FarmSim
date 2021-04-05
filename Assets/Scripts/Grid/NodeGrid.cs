@@ -49,7 +49,8 @@ namespace FarmSim.Grid
             }
 
             sectionLoader.InitSection(sectionGrid);
-            sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
+            StartCoroutine(sectionLoader.LoadSectionCo(sectionGrid, () => LoadedSection = true));
+            //sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
         }
 
         /// <summary>

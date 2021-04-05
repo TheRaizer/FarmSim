@@ -146,7 +146,7 @@ namespace FarmSim.Grid
             onLoaded?.Invoke();
         }
 
-        public IEnumerator LoadSection(Node[,] sectionGrid, Action onLoaded = null)
+        public IEnumerator LoadSectionCo(Node[,] sectionGrid, Action onLoaded = null)
         {
             if (!loading)
             {
@@ -158,11 +158,11 @@ namespace FarmSim.Grid
                 for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
                 {
                     string[] line = worldLines[y].Split(' ');
+                    yield return null;
 
                     for (int x = sectionXStart; x < sectionXEnd; x++)
                     {
                         DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2, sectionGrid);
-                        yield return null;
                     }
                 }
                 loading = false;
