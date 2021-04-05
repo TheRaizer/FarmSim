@@ -40,7 +40,7 @@ namespace FarmSim.Items
         /// <param name="otherSlotIndex">The slot index of the other item</param>
         /// <param name="otherItem">The other item that will be swapped with the <see cref="attachedItem"/></param>
         /// <param name="slotHandler">Used to move the attached item to the correct empty slot</param>
-        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem, ItemSlotsHandler slotHandler=null)
+        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem, InventorySlotsHandler slotHandler=null)
         {
             ItemPositionManager attachedItemPosManager = attachedItem.Icon.GetComponent<ItemPositionManager>();
 
@@ -57,7 +57,7 @@ namespace FarmSim.Items
                 otherItem.SlotsHandler.MoveImageToSlot(attachedItem.Icon.gameObject, otherSlotIndex);
 
                 // swap which slot handler they will reference
-                ItemSlotsHandler temp = attachedItemPosManager.SlotsHandler;
+                InventorySlotsHandler temp = attachedItemPosManager.SlotsHandler;
                 attachedItemPosManager.SlotsHandler = otherItem.SlotsHandler;
                 otherItem.SlotsHandler = temp;
             }

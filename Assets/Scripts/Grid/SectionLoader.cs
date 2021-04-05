@@ -155,13 +155,18 @@ namespace FarmSim.Grid
         {
             if (pooler == null)
                 return;
-            GameObject spawnedObject = null;
+            GameObject spawnedObject;
             switch (val)
             {
                 case "0":
                     grid[x, y].Data.IsWalkable = true;
                     grid[x, y].Data.IsOccupied = false;
                     spawnedObject = pooler.SpawnGameObject("Dirt", grid[x, y].Data.pos, Quaternion.identity);
+                    break;
+                case "1":
+                    grid[x, y].Data.IsWalkable = false;
+                    grid[x, y].Data.IsOccupied = true;
+                    spawnedObject = pooler.SpawnGameObject("Water", grid[x, y].Data.pos, Quaternion.identity);
                     break;
                 default:
                     throw new ArgumentException($"No such tile for given code {val}");

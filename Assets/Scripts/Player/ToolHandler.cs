@@ -16,7 +16,6 @@ namespace FarmSim.Player
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
 
         public Node NodeToToolOn;
-
         public Tool EquippedTool { get; private set; }
 
         private PlayerController player;
@@ -100,7 +99,9 @@ namespace FarmSim.Player
         // animation event to use during tool animations
         private void UseTool()
         {
-            tools[player.ToolToUse].OnUse(NodeToToolOn);
+            Tool tool = tools[player.ToolToUse];
+            AudioManager.Instance.Play(tool.GetAudioId());
+            tool.OnUse(NodeToToolOn);
         }
 
         public void PostLoad()

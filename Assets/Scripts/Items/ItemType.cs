@@ -10,6 +10,7 @@ namespace FarmSim.Items
         [field: SerializeField] public int Price { get; private set; }
         [field: SerializeField] public int MaxCarryAmt { get; private set; }
         [field: SerializeField] public GameObject IconPrefab { get; private set; }
+        [field: SerializeField] public GameObject ShopIconPrefab { get; private set; }
         [field: SerializeField] public GameObject WorldItemPrefab { get; private set; }
 
         public void SpawnWorldItem(Vector2 spawnPos, int amt)

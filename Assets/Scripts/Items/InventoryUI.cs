@@ -9,13 +9,14 @@ namespace FarmSim.Items
     ///         Controls the slots in the inventory UI as well as the <see cref="Image"/>'s within the slots.
     ///     </summary>
     /// </class>
-    public class InventoryUI : ItemSlotsHandler
+    public class InventoryUI : InventorySlotsHandler
     {
         [SerializeField] private GameObject inventoryUI;
         public bool IsActive { get; private set; } = false;
 
         protected override void Awake()
         {
+            base.Awake();
             inventoryUI.SetActive(false);
         }
         private void LateUpdate()

@@ -14,7 +14,7 @@ namespace FarmSim.Items
         /// <summary>
         ///     The slots handler that contains this slot
         /// </summary>
-        public ItemSlotsHandler SlotsHandler { private get; set; }
+        public InventorySlotsHandler SlotsHandler { private get; set; }
         private ItemMovementManager movementManager;
 
         private void Awake()

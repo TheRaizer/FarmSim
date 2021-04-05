@@ -16,7 +16,7 @@ namespace FarmSim.Items
         /// <summary>
         ///     The slots handler that contains the slot this item is in.
         /// </summary>
-        public ItemSlotsHandler SlotsHandler { get; set; }
+        public InventorySlotsHandler SlotsHandler { get; set; }
 
         private ItemMovementManager movementManager;
 
@@ -27,7 +27,6 @@ namespace FarmSim.Items
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log("click");
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 if (movementManager.HasAttachedItem())

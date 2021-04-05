@@ -206,9 +206,18 @@ namespace FarmSim.Player
 
         private void RequestPath()
         {
-            Node start = grid.GetNodeFromVector2(gameObject.transform.position);
+            Node start;
+            if (path != null)
+            {
+                start = grid.GetNodeFromVector2(path[pathIdx]);
+            }
+            else
+            {
+                start = grid.GetNodeFromVector2(transform.position);
+            }
+
             Node end = grid.GetNodeFromMousePosition();
-            if (start == null || end == null)
+            if (start == null || end == null || !end.Data.IsWalkable)
                 return;
             Destination = end;
 

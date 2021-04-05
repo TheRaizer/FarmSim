@@ -71,7 +71,7 @@ namespace FarmSim.Items
             }
         }
 
-        public GameObject SpawnImageObject(int slotIndex, ItemSlotsHandler slotsHandler)
+        public GameObject SpawnImageObject(int slotIndex, InventorySlotsHandler slotsHandler)
         {
             SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
