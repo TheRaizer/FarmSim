@@ -17,7 +17,8 @@ namespace FarmSim.Utility
         private void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            sounds.ForEach(sound => { 
+            sounds.ForEach(sound =>
+            {
                 sound.SetSource(gameObject.AddComponent<AudioSource>());
                 soundsDict.Add(sound.Name, sound);
             });

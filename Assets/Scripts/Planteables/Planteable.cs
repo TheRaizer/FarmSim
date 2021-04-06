@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using FarmSim.TimeBased;
-using FarmSim.Serialization;
-using FarmSim.Loading;
+﻿using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Items;
-using FarmSim.Grid;
-using FarmSim.Attributes;
+using FarmSim.Loading;
+using FarmSim.Serialization;
+using FarmSim.TimeBased;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace FarmSim.Planteables
 {
@@ -74,7 +73,7 @@ namespace FarmSim.Planteables
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
 
-            for(int i = 0; i < amtToDrop; i++)
+            for (int i = 0; i < amtToDrop; i++)
             {
                 itemType.SpawnWorldItem(transform.position, 1);
             }

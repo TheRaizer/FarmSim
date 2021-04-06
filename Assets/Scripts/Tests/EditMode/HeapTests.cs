@@ -70,7 +70,7 @@ namespace Tests
 
             int lastItem = int.MinValue;
 
-            while(minHeap.Count > 0)
+            while (minHeap.Count > 0)
             {
                 MinHeapInt removed = minHeap.RemoveFirst();
                 Assert.LessOrEqual(lastItem, removed.num);
@@ -79,7 +79,7 @@ namespace Tests
 
             lastItem = int.MaxValue;
 
-            while(maxHeap.Count > 0)
+            while (maxHeap.Count > 0)
             {
                 MaxHeapInt removed = maxHeap.RemoveFirst();
                 Assert.GreaterOrEqual(lastItem, removed.num);

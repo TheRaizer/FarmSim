@@ -33,7 +33,7 @@ namespace FarmSim.Items
             // find items that match and have enough room
             List<Item> validItems = inventory.FindAll(x => (x.itemType == itemType) && (x.Amt < itemType.MaxCarryAmt));
 
-            if(inventory.Count >= maxStorage && validItems.Count <= 0)
+            if (inventory.Count >= maxStorage && validItems.Count <= 0)
             {
                 onFailure?.Invoke();
                 return;
@@ -49,12 +49,12 @@ namespace FarmSim.Items
             {
                 // fill up all the valid matching items with the amt
                 int remaining = amt;
-                foreach(Item item in validItems)
+                foreach (Item item in validItems)
                 {
                     // calculate the amt that would come from adding onto the item.Amt
                     int newAmt = item.Amt + remaining;
 
-                    if(item.Amt < item.itemType.MaxCarryAmt)
+                    if (item.Amt < item.itemType.MaxCarryAmt)
                     {
                         int tempAmt = item.Amt;
 
@@ -156,7 +156,7 @@ namespace FarmSim.Items
         public int StackItems(Item item1, Item item2)
         {
             // if adding item1 to item2 does not create an overflow
-            if(item1.Amt + item2.Amt <= item2.itemType.MaxCarryAmt)
+            if (item1.Amt + item2.Amt <= item2.itemType.MaxCarryAmt)
             {
                 // add item1 amt to item2
                 item2.AddToAmt(item1.Amt);
@@ -219,39 +219,6 @@ namespace FarmSim.Items
             return inventory.FindAll(x => x.itemType == instanceType);
         }
 
-        public void Load()
-        {
-            // obtain list of itemDatas
-            List<ItemData> itemDatas = PlayerData.Current.itemDatas;
-
-            // if there is data
-            if (itemDatas != null)
-            {
-                Debug.Log("There are items to load");
-                itemDatas.ForEach(itemData =>
-                {
-                    // Obtain the SO from the data's itemTypeName attribute.
-                    ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
-                    if (itemType == null)
-                    {
-                        Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
-                    }
-
-                    Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
-
-                    // Loads the item into the inventory
-                    Item item = new Item(itemData.amt, itemType);
-                    inventory.Add(item);
-                    item.SlotIndex = itemData.slotIndex;
-                });
-            }
-            else
-            {
-                Debug.Log("No items to load");
-            }
-            Debug.Log("list loading");
-            inventoryUI.InitializeUI(maxStorage, inventory);
-        }
 
         public void Save()
         {
@@ -275,6 +242,39 @@ namespace FarmSim.Items
              */
             PlayerData.Current.itemDatas = itemDatas;
             Debug.Log("Save item data");
+        }
+
+        public void Load()
+        {
+            // obtain list of itemDatas
+            List<ItemData> itemDatas = PlayerData.Current.itemDatas;
+
+            // if there is data
+            if (itemDatas != null)
+            {
+                LoadExistingItems(itemDatas);
+            }
+            inventoryUI.InitializeUI(maxStorage, inventory);
+        }
+
+        private void LoadExistingItems(List<ItemData> itemDatas)
+        {
+            itemDatas.ForEach(itemData =>
+            {
+                // Obtain the SO from the data's itemTypeName attribute.
+                ItemType itemType = Resources.Load("SO/" + itemData.itemTypeName) as ItemType;
+                if (itemType == null)
+                {
+                    Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
+                }
+
+                Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
+
+                // Loads the item into the inventory
+                Item item = new Item(itemData.amt, itemType);
+                inventory.Add(item);
+                item.SlotIndex = itemData.slotIndex;
+            });
         }
     }
 }

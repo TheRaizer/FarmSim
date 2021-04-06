@@ -1,11 +1,11 @@
-﻿using FarmSim.Player;
-using FarmSim.Utility;
-using FarmSim.Enums;
+﻿using FarmSim.Enums;
 using FarmSim.Items;
+using FarmSim.Player;
+using FarmSim.Utility;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FarmSim.Placeables 
+namespace FarmSim.Placeables
 {
     /// <class name="SpawnPlaceableOnClick">
     ///     <summary>

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FarmSim.Items
@@ -16,7 +14,7 @@ namespace FarmSim.Items
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if(eventData.button == PointerEventData.InputButton.Left)
+            if (eventData.button == PointerEventData.InputButton.Left)
             {
                 itemMovementManager.DestroyAttachedItem();
             }

@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using FarmSim.Grid;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
-using FarmSim.Grid;
 
 namespace Tests
 {

@@ -7,7 +7,6 @@ namespace FarmSim.Grid
     public class ChangeSectionOnCollision : MonoBehaviour
     {
         [SerializeField] private int scene;
-
         private DataSaver dataSaver;
 
         private void Awake()

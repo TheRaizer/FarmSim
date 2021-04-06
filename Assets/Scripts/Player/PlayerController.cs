@@ -12,7 +12,7 @@ namespace FarmSim.Player
     public class PlayerController : MonoBehaviour, ISavable, ILoadable
     {
         [SerializeField] private float speed;
-        [SerializeField] private GameObject tileRing; 
+        [SerializeField] private GameObject tileRing;
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
@@ -46,7 +46,7 @@ namespace FarmSim.Player
                 Time.timeScale = 0f;
                 return;
             }
-            else if(Time.time != 1f)
+            else if (Time.time != 1f)
             {
                 Time.timeScale = 1f;
             }
@@ -100,11 +100,11 @@ namespace FarmSim.Player
             {
                 dir = CardinalDirections.West;
             }
-            else if(travelDir.y > 0)
+            else if (travelDir.y > 0)
             {
                 dir = CardinalDirections.North;
             }
-            else if(travelDir.y < 0)
+            else if (travelDir.y < 0)
             {
                 dir = CardinalDirections.South;
             }

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿using FarmSim.Items;
 using FarmSim.Planteables;
 using FarmSim.Serialization;
-using FarmSim.Items;
 using NUnit.Framework;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -14,19 +14,19 @@ namespace Tests
         public void GrowthTest()
         {
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
-            if(prefab == null)
+            if (prefab == null)
             {
                 Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
             }
             var planteableObj = Object.Instantiate(prefab);
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
-            
+
             // we can't harvest until grown
             Assert.IsFalse(plant.CanHarvest);
 
             // grow 7 days
-            for(int i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 plant.Grow();
             }

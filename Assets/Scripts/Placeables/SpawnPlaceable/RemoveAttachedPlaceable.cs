@@ -1,7 +1,7 @@
 ﻿using FarmSim.Player;
 using UnityEngine;
 
-namespace FarmSim.Placeables 
+namespace FarmSim.Placeables
 {
     /// <class name="PlayerInventoryList">
     ///     <summary>
@@ -21,7 +21,7 @@ namespace FarmSim.Placeables
 
         private void Update()
         {
-            if(toolHandler.EquippedTool.ToolType != Enums.ToolTypes.Hand && moveObject.AttachedObject != null)
+            if (toolHandler.EquippedTool.ToolType != Enums.ToolTypes.Hand && moveObject.AttachedObject != null)
             {
                 moveObject.AttachedObject.gameObject.SetActive(false);
                 moveObject.AttachedObject = null;

@@ -1,5 +1,5 @@
 ﻿
-namespace FarmSim.Enums 
+namespace FarmSim.Enums
 {
     public enum CardinalDirections
     {

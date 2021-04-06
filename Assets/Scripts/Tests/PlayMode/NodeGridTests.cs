@@ -1,7 +1,7 @@
-﻿using NUnit.Framework;
-using UnityEngine;
-using FarmSim.Grid;
+﻿using FarmSim.Grid;
+using NUnit.Framework;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Tests
 {
@@ -10,7 +10,7 @@ namespace Tests
         [Test]
         public void GetNodeFromVector2Test()
         {
-            
+
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = new Vector3(55, -25.4f, 0);
@@ -55,7 +55,7 @@ namespace Tests
 
             Assert.IsFalse(grid.IsValidPlacement(node, 1, 1));
         }
-        
+
         [Test]
         public void MakeDimensionsOccupiedTest()
         {

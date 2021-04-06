@@ -1,8 +1,8 @@
-﻿using System;
+﻿using FarmSim.Utility;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using FarmSim.Utility;
 
 namespace FarmSim.Items
 {
@@ -13,7 +13,6 @@ namespace FarmSim.Items
     /// </class>
     public class Item
     {
-
         /// <summary>
         ///     The Icon of the item in the inventory
         /// </summary>
@@ -58,14 +57,14 @@ namespace FarmSim.Items
                 return;
             }
             Amt -= amt;
-            if(Amt < 0)
+            if (Amt < 0)
                 Amt = 0;
             SetTextAmt();
         }
 
         private void SetTextAmt()
         {
-            if(TextAmt != null)
+            if (TextAmt != null)
             {
                 TextAmt.SetText(Amt.ToString());
             }

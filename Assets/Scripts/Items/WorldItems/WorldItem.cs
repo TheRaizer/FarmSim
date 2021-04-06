@@ -47,7 +47,7 @@ namespace FarmSim.Items
 
             transform.position = newPos;
         }
-        
+
         private bool AddToInventoryInRange(Vector2 distance)
         {
             if (Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
@@ -57,7 +57,7 @@ namespace FarmSim.Items
             }
             return false;
         }
-        
+
         private IEnumerator WaitCo()
         {
             yield return waitTime;

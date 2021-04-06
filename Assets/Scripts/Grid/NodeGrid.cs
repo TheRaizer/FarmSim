@@ -37,7 +37,7 @@ namespace FarmSim.Grid
             SceneManager.sceneLoaded += LoadSection;
         }
 
-        
+
 
         /// <summary>
         ///     Attempts to load a section on scene change
@@ -47,7 +47,7 @@ namespace FarmSim.Grid
         public void LoadSection(Scene scene, LoadSceneMode mode)
         {
             LoadedSection = false;
-            
+
             // section # is always 1 less then the scene index.
             SectionNum = scene.buildIndex - 1;
 
@@ -62,7 +62,7 @@ namespace FarmSim.Grid
                 Debug.Log("no need to load this sections grid.");
                 return;
             }
-            
+
             // init the section and its GameObjects.
             sectionLoader.InitSection(sectionGrid);
             StartCoroutine(sectionLoader.LoadSectionCo(sectionGrid, () => LoadedSection = true));
@@ -110,7 +110,7 @@ namespace FarmSim.Grid
                 {
                     int nodeX = x + xStart;
                     int nodeY = y + yStart;
-                    
+
                     // not valid placement if a node is outside the section or it is occupied
                     if (!IsInSection(nodeX, nodeY) || sectionGrid[nodeX, nodeY].Data.IsOccupied)
                     {
@@ -207,7 +207,7 @@ namespace FarmSim.Grid
             {
                 for (int x = -1; x <= 1; x++)
                 {
-                    if(x == 0 && y == 0)
+                    if (x == 0 && y == 0)
                     {
                         continue;
                     }

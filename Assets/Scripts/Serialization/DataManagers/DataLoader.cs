@@ -15,8 +15,10 @@ namespace FarmSim.Serialization
     {
         private void Awake()
         {
-            // this can be changed to happen when a button to load is pressed instead.
+            // load player data
             PlayerData.Current = (PlayerData)SerializationManager.Load(Application.persistentDataPath + "/saves/Player.save");
+
+            // load the section data that the player was last in
             SectionData.Current = (SectionData)SerializationManager.Load(Application.persistentDataPath + "/saves/Section_" + PlayerData.Current.SectionNum + ".save");
         }
 

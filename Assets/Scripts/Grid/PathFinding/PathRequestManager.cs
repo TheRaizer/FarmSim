@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Grid 
+namespace FarmSim.Grid
 {
     public class PathRequestManager : Singleton<PathRequestManager>
     {

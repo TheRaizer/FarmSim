@@ -2,7 +2,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace FarmSim.Serialization 
+namespace FarmSim.Serialization
 {
     /// <class name="DataInjector">
     ///     <summary>

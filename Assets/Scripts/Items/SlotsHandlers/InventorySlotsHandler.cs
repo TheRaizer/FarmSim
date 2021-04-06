@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using FarmSim.Utility;
+﻿using FarmSim.Utility;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace FarmSim.Items
 {
@@ -34,7 +34,7 @@ namespace FarmSim.Items
         {
             if (slotPrefab == null && contentParent == null)
                 return;
-            
+
             for (int i = 0; i < slots.Count; i++)
             {
                 if (slots[i].transform.childCount <= 0)

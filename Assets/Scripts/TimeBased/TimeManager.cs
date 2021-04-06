@@ -30,7 +30,7 @@ namespace FarmSim.TimeBased
             {
                 dayPassBackground.SetActive(false);
             }
-            else if(dataSaver.Saving && !dayPassBackground.activeInHierarchy)
+            else if (dataSaver.Saving && !dayPassBackground.activeInHierarchy)
             {
                 dayPassBackground.SetActive(true);
             }

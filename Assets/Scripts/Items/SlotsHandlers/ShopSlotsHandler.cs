@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FarmSim.Utility;
+using System.Collections.Generic;
 using UnityEngine;
-using FarmSim.Utility;
 
 namespace FarmSim.Items
 {

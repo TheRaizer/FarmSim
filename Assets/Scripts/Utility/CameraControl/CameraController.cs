@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FarmSim.Utility 
+namespace FarmSim.Utility
 {
     public class CameraController : MonoBehaviour
     {

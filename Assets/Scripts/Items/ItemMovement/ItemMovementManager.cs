@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using FarmSim.Utility;
+﻿using FarmSim.Utility;
+using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
-namespace FarmSim.Items 
+namespace FarmSim.Items
 {
     /// <class name="ItemMovementManager">
     ///     <summary>
@@ -40,7 +40,7 @@ namespace FarmSim.Items
         /// <param name="otherSlotIndex">The slot index of the other item</param>
         /// <param name="otherItem">The other item that will be swapped with the <see cref="attachedItem"/></param>
         /// <param name="slotHandler">Used to move the attached item to the correct empty slot</param>
-        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem, InventorySlotsHandler slotHandler=null)
+        public void SwapPositions(int otherSlotIndex, ItemPositionManager otherItem, InventorySlotsHandler slotHandler = null)
         {
             ItemPositionManager attachedItemPosManager = attachedItem.Icon.GetComponent<ItemPositionManager>();
 

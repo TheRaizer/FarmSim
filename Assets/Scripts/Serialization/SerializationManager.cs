@@ -27,7 +27,7 @@ namespace FarmSim.Serialization
                 // create a directory if none exist
                 Directory.CreateDirectory(Application.persistentDataPath + "/saves");
             }
-            
+
             // obtain the path using Unity's Application.persistentDataPath
             string path = Application.persistentDataPath + "/saves/" + saveName + ".save";
 

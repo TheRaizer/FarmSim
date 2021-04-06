@@ -39,7 +39,7 @@ namespace FarmSim.Player
             if (Input.GetMouseButtonDown(0))
             {
                 Node node = NodeGrid.Instance.GetNodeFromMousePosition();
-                if(node != null)
+                if (node != null)
                 {
                     NodeToToolOn = node;
                 }

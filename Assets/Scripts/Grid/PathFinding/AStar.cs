@@ -61,7 +61,7 @@ namespace FarmSim.Grid
 
             bool foundPath = false;
 
-            while(openHeap.Count > 0)
+            while (openHeap.Count > 0)
             {
                 Node currentNode = openHeap.RemoveFirst();
                 closedSet.Add(currentNode);
@@ -91,7 +91,7 @@ namespace FarmSim.Grid
                     // the new gcost of the neighbour to the start through the current node
                     int newNeighbourGCost = currentNode.gCost + distCurrToNeighbour;
 
-                    if(!openHeap.Contains(neighbour) || newNeighbourGCost < neighbour.gCost)
+                    if (!openHeap.Contains(neighbour) || newNeighbourGCost < neighbour.gCost)
                     {
                         neighbour.gCost = newNeighbourGCost;
                         neighbour.parentNode = currentNode;

@@ -1,7 +1,6 @@
-﻿using FarmSim.Utility;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace FarmSim.Items
 {
