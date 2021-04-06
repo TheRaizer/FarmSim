@@ -13,28 +13,23 @@ namespace FarmSim.Serialization
     ///     </summary>
     /// </class>
     [System.Serializable]
-    public class SaveData
+    public class SectionData
     {
         // Singleton
-        private static SaveData _current;
+        private static SectionData _current;
 
-        // Data's to store and be accessed.
-        public PlayerData playerData = new PlayerData();
-
-        // 0 is the starting section
-        public int SectionNum = 0;
         // collections are within lists to represent the possible sections that each collection can be part of.
-        public Dictionary<int, List<DirtData>> dirtDatas = new Dictionary<int, List<DirtData>>();
-        public Dictionary<int, List<PlanteableData>> plantDatas = new Dictionary<int, List<PlanteableData>>();
-        public Dictionary<int, NodeData[,]> nodeDatas = new Dictionary<int, NodeData[,]>();
+        public List<DirtData> dirtDatas = new List<DirtData>();
+        public List<PlanteableData> plantDatas = new List<PlanteableData>();
+        public NodeData[,] nodeDatas;
 
-        public static SaveData Current
+        public static SectionData Current
         {
             get
             {
                 if (_current == null)
                 {
-                    _current = new SaveData();
+                    _current = new SectionData();
                 }
                 return _current;
             }

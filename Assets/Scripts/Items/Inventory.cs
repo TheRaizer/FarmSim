@@ -222,7 +222,7 @@ namespace FarmSim.Items
         public void Load()
         {
             // obtain list of itemDatas
-            List<ItemData> itemDatas = SaveData.Current.playerData.itemDatas;
+            List<ItemData> itemDatas = PlayerData.Current.itemDatas;
 
             // if there is data
             if (itemDatas != null)
@@ -273,7 +273,7 @@ namespace FarmSim.Items
             /* assign the itemDatas list to the Serializable SaveData singleton in 
              * order for it to be saved along side the rest of the games data
              */
-            SaveData.Current.playerData.itemDatas = itemDatas;
+            PlayerData.Current.itemDatas = itemDatas;
             Debug.Log("Save item data");
         }
     }

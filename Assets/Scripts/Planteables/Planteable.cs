@@ -80,7 +80,7 @@ namespace FarmSim.Planteables
             }
 
             // we do not need to check if it contains the plant because for a plant to be harvested the game must have saved/passed a day at least once.
-            SaveData.Current.plantDatas[NodeGrid.Instance.SectionNum].Remove(Data);
+            SectionData.Current.plantDatas.Remove(Data);
             Destroy(gameObject);
         }
 
@@ -99,17 +99,9 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!NodeGrid.Instance.IsSavableSection)
-                return;
-
-            int sectionNum = NodeGrid.Instance.SectionNum;
-
-            if (!SaveData.Current.plantDatas.ContainsKey(sectionNum))
-                SaveData.Current.plantDatas[sectionNum] = new List<PlanteableData>();
-
-            if (!SaveData.Current.plantDatas[sectionNum].Contains(Data))
+            if (!SectionData.Current.plantDatas.Contains(Data))
             {
-                SaveData.Current.plantDatas[sectionNum].Add(Data);
+                SectionData.Current.plantDatas.Add(Data);
             }
         }
 

@@ -16,41 +16,9 @@ namespace FarmSim.Serialization
         public bool Saving { get; private set; } = false;
 
         /// <summary>
-        ///     Finds all ISaveables in the scene and Saves their data.
+        ///     Finds all ISaveables in the section/scene and Saves their data to a specific section file.
         /// </summary>
-        public IEnumerator SaveAllCo()
-        {
-            if (!Saving)
-            {
-                Saving = true;
-
-                IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>();
-
-                // save every item
-                foreach (ISavable s in saveables)
-                {
-                    yield return null;
-                    s.Save();
-                }
-
-                Debug.Log("plant section count: " + SaveData.Current.plantDatas.Count);
-                Debug.Log("dirt section count: " + SaveData.Current.dirtDatas.Count);
-                Debug.Log("item num: " + SaveData.Current.playerData.itemDatas.Count);
-
-                // translate it through binary formatter
-                if (SerializationManager.Save(SaveData.Current))
-                {
-                    Debug.Log("Save was succesful");
-                }
-
-                Saving = false;
-            }
-        }
-
-        /// <summary>
-        ///     Finds all ISaveables in the scene and Saves their data.
-        /// </summary>
-        public void SaveAllVoid(bool isSavableSection, int sectionNum, string save="Save")
+        public void SaveSectionVoid(bool isSavableSection, int sectionNum)
         {
             Saving = true;
 
@@ -59,10 +27,9 @@ namespace FarmSim.Serialization
             // save every item
             foreach (ISavable s in saveables)
             {
-                Debug.Log(s.GetType());
                 SavableAttribute attribute = (SavableAttribute)Attribute.GetCustomAttribute(s.GetType(), typeof(SavableAttribute));
 
-                if(attribute == null)
+                if (attribute == null)
                 {
                     Debug.LogError($"No SavableAttribute was found on instance of class {s.GetType()}");
                 }
@@ -73,14 +40,14 @@ namespace FarmSim.Serialization
                 }
             }
 
-            SaveData.Current.SectionNum = sectionNum;
+            PlayerData.Current.SectionNum = sectionNum;
 
-            Debug.Log("plant section count: " + SaveData.Current.plantDatas.Count);
-            Debug.Log("dirt section count: " + SaveData.Current.dirtDatas.Count);
-            Debug.Log("item num: " + SaveData.Current.playerData.itemDatas.Count);
+            Debug.Log("plant section count: " + SectionData.Current.plantDatas.Count);
+            Debug.Log("dirt section count: " + SectionData.Current.dirtDatas.Count);
+            Debug.Log("item num: " + PlayerData.Current.itemDatas.Count);
 
             // translate it through binary formatter
-            if (SerializationManager.Save(SaveData.Current, save))
+            if (SerializationManager.Save(SectionData.Current, "Section_" + sectionNum) && SerializationManager.Save(PlayerData.Current, "Player"))
             {
                 Debug.Log("Save was succesful");
             }

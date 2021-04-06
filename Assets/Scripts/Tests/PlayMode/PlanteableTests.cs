@@ -50,29 +50,29 @@ namespace Tests
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             Planteable plant_2 = planteableObj_2.GetComponent<Planteable>();
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 0);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 0);
 
             plant.Save();
 
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 1);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 1);
 
             plant.Save();
 
             // because SaveData contains the plant already, saving it should not add it again.
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 1);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 1);
 
             plant_2.Save();
 
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 2);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 2);
 
             plant.OnHarvest();
 
             // after harvesting the plant should no longer be saved.
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 1);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 1);
 
             plant_2.OnHarvest();
 
-            Assert.AreEqual(SaveData.Current.plantDatas.Count, 0);
+            Assert.AreEqual(SectionData.Current.plantDatas.Count, 0);
         }
 
         [UnityTest]

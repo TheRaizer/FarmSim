@@ -18,7 +18,7 @@ namespace FarmSim.Serialization
         /// <param name="saveData">The serializable object to save.</param>
         /// <param name="saveName">The name of the file.</param>
         /// <returns></returns>
-        public static bool Save(object saveData, string saveName = "Save")
+        public static bool Save(object saveData, string saveName = "MainSave")
         {
             BinaryFormatter formatter = GetBinaryFormatter();
 

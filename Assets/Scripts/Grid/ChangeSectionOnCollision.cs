@@ -19,7 +19,22 @@ namespace FarmSim.Grid
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                dataSaver.SaveSectionVoid(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
+
                 NodeGrid.Instance.SectionNum = scene - 1;
+                SectionData sect = (SectionData)SerializationManager.Load(Application.persistentDataPath + "/saves/Section_" + NodeGrid.Instance.SectionNum + ".save");
+
+                // if there is no save
+                if (sect == null)
+                {
+                    // create empty section data
+                    SectionData.Current = new SectionData();
+                }
+                else
+                {
+                    // otherwise use the previous section data.s
+                    SectionData.Current = sect;
+                }
                 SceneManager.LoadScene(scene);
             }
         }

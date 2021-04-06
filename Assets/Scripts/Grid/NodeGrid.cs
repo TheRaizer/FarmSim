@@ -33,7 +33,7 @@ namespace FarmSim.Grid
         {
             DontDestroyOnLoad(gameObject);
 
-            SectionNum = SaveData.Current.SectionNum;
+            SectionNum = PlayerData.Current.SectionNum;
             SceneManager.sceneLoaded += LoadSection;
         }
 
@@ -256,17 +256,14 @@ namespace FarmSim.Grid
 
         public void Save()
         {
-            if (!IsSavableSection)
-                return;
-
-            SaveData.Current.SectionNum = SectionNum;
-            SaveData.Current.nodeDatas[SectionNum] = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
+            PlayerData.Current.SectionNum = SectionNum;
+            SectionData.Current.nodeDatas = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
 
             for (int x = 0; x < sectionGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < sectionGrid.GetLength(1); y++)
                 {
-                    SaveData.Current.nodeDatas[SectionNum][x, y] = sectionGrid[x, y].Data;
+                    SectionData.Current.nodeDatas[x, y] = sectionGrid[x, y].Data;
                 }
             }
         }

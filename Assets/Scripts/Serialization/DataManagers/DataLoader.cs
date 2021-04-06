@@ -16,7 +16,8 @@ namespace FarmSim.Serialization
         private void Awake()
         {
             // this can be changed to happen when a button to load is pressed instead.
-            SaveData.Current = (SaveData)SerializationManager.Load(Application.persistentDataPath + "/saves/Save.save");
+            PlayerData.Current = (PlayerData)SerializationManager.Load(Application.persistentDataPath + "/saves/Player.save");
+            SectionData.Current = (SectionData)SerializationManager.Load(Application.persistentDataPath + "/saves/Section_" + PlayerData.Current.SectionNum + ".save");
         }
 
         //TEST CODE
@@ -25,7 +26,7 @@ namespace FarmSim.Serialization
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 // scene numbers should corrospond to section numbers + 1
-                SceneManager.LoadScene(SaveData.Current.SectionNum + 1);
+                SceneManager.LoadScene(PlayerData.Current.SectionNum + 1);
             }
         }
     }

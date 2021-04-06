@@ -59,17 +59,14 @@ namespace FarmSim.Grid
             if (sectionNum < 0 || sectionNum * SECTION_SIZE_X >= WorldMaxX || sectionNum * SECTION_SIZE_Y >= WorldMaxY)
                 Debug.LogError($"Section number {sectionNum} is not valid");
 
-            bool containsSection = SaveData.Current.nodeDatas.ContainsKey(sectionNum);
-            bool sectionIsEmpty = false;
-            if (containsSection)
-                sectionIsEmpty = SaveData.Current.nodeDatas[sectionNum] == null || SaveData.Current.nodeDatas[sectionNum].Length <= 0;
+            bool sectionIsEmpty = SectionData.Current.nodeDatas == null || SectionData.Current.nodeDatas.Length <= 0;
 
             for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
                 for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
                     // if there are no nodes that have been saved for this section
-                    if (!containsSection || sectionIsEmpty)
+                    if (sectionIsEmpty)
                     {
                         // create new ones
                         Vector2 pos = GetNodePosition(x, y);
@@ -78,7 +75,7 @@ namespace FarmSim.Grid
                     else
                     {
                         // load saved ones
-                        sectionGrid[x, y] = new Node(SaveData.Current.nodeDatas[sectionNum][x, y]);
+                        sectionGrid[x, y] = new Node(SectionData.Current.nodeDatas[x, y]);
                     }
                 }
             }
@@ -167,6 +164,7 @@ namespace FarmSim.Grid
                 loading = false;
                 onLoaded?.Invoke();
             }
+            Debug.Log("Loaded section");
         }
 
         private void DetermineTileType(string val, int x, int y, Node[,] sectionGrid)

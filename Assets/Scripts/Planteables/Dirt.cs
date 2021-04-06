@@ -175,30 +175,16 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!NodeGrid.Instance.IsSavableSection)
-                return;
-
-            int sectionNum = NodeGrid.Instance.SectionNum;
-
-            if (!SaveData.Current.dirtDatas.ContainsKey(sectionNum))
-                SaveData.Current.dirtDatas[sectionNum] = new List<DirtData>();
-
-            if (!SaveData.Current.dirtDatas[sectionNum].Contains(Data))
+            if (!SectionData.Current.dirtDatas.Contains(Data))
             {
-                SaveData.Current.dirtDatas[sectionNum].Add(Data);
+                SectionData.Current.dirtDatas.Add(Data);
             }
         }
 
         public void Load()
         {
-            int sectionNum = NodeGrid.Instance.SectionNum;
-            bool containsSection = SaveData.Current.dirtDatas.ContainsKey(sectionNum);
-            bool isEmpty = false;
-
-            if (containsSection)
-                isEmpty = SaveData.Current.dirtDatas[sectionNum] == null || SaveData.Current.dirtDatas[sectionNum].Count <= 0;
-
-            if (!containsSection || isEmpty)
+            bool isEmpty = SectionData.Current.dirtDatas == null || SectionData.Current.dirtDatas.Count <= 0;
+            if (isEmpty)
             {
                 // if there is no dirt data that was loaded then create a new one.
                 Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
@@ -206,16 +192,12 @@ namespace FarmSim.Planteables
             else
             {
                 // find the dirts data that matches its x and y.
-                Data = SaveData.Current.dirtDatas[sectionNum].Find(dirt => X == dirt.x && Y == dirt.y);
+                Data = SectionData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
 
-                PlanteableData plantData = null;
-                
-                // if there are plants
-                if(SaveData.Current.plantDatas.ContainsKey(sectionNum))
-                    plantData = SaveData.Current.plantDatas[sectionNum].Find(plant => plant.Id == Data.Id);
+                PlanteableData plantData = SectionData.Current.plantDatas.Find(plant => plant.Id == Data.Id);
 
                 // if there is a matching plant data
-                if(plantData != null)
+                if (plantData != null)
                 {
                     // we must create a plant game object
                     var gameObject = Resources.Load("Prefabs/Planteables/" + plantData.PrefabName) as GameObject;
