@@ -18,3 +18,8 @@ Scene # = section # + 1
 
 If Scene # - 1 < 0 then it is not a loadable section
 If Scene # - 1 > # of sections it is not a loadable section.
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+Save files for sections are named Section_ + the section number to save.

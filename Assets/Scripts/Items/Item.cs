@@ -1,4 +1,5 @@
-﻿using FarmSim.Utility;
+﻿using FarmSim.Slots;
+using FarmSim.Utility;
 using System;
 using TMPro;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace FarmSim.Items
     ///         Class that represents anything that can be stored in the players inventory.
     ///     </summary>
     /// </class>
-    public class Item
+    public class Item : ISwappable
     {
         /// <summary>
         ///     The Icon of the item in the inventory
@@ -19,21 +20,25 @@ namespace FarmSim.Items
         public Image Icon { get; private set; }
         public int Amt { get; private set; }
         public int SlotIndex { get; set; }
+        public bool CanSubtract => Amt > 0;
 
+        public IPositionManager PositionManager { get; private set; }
+
+        private TextMeshProUGUI TextAmt;
         /// <summary>
         ///     Given to other objects through the <see cref="InventorySlotsHandler.SpawnImage(Item, Image)"/> method.
         /// </summary>
         public readonly string guid;
         public readonly ItemType itemType;
-        public bool CanSubtract => Amt > 0;
-        private TextMeshProUGUI TextAmt;
+        private readonly Inventory inventory;
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
-        public Item(int startAmt, ItemType _itemType)
+        public Item(int startAmt, ItemType _itemType, Inventory _inventory)
         {
             Amt = startAmt;
             itemType = _itemType;
+            inventory = _inventory;
             guid = Guid.NewGuid().ToString();
         }
 
@@ -91,8 +96,10 @@ namespace FarmSim.Items
 
             // assign the slot index to the position manager for movement of items
             var positionManager = itemObj.GetComponent<ItemPositionManager>();
-            positionManager.Item = this;
+            positionManager.SetSwappable(this);
             positionManager.SlotsHandler = slotsHandler;
+
+            PositionManager = positionManager;
 
             Icon = itemObj.GetComponent<Image>();
 
@@ -101,6 +108,46 @@ namespace FarmSim.Items
             SetTextAmt();
 
             return itemObj;
+        }
+
+        /// <summary>
+        ///     Stacks the attached item onto the other item and returns true if it was stacked.
+        /// </summary>
+        /// <param name="other">The item that will act as the stack.</param>
+        /// <returns>True if attached item was stacked onto other item, otherwise false.</returns>
+        public bool AvoidSwap(IPositionManager other)
+        {
+            // if the other position manager is holding an item
+            if(other.GetType() == typeof(ItemPositionManager))
+            {
+                // cast the swappable to an item
+                Item otherItem = (Item)other.Swappable;
+
+                // if the item types are the same we can potentially stack them
+                if (otherItem.itemType == itemType)
+                {
+                    int remainder = inventory.StackItems(this, otherItem);
+                    if (remainder == 0)
+                    {
+                        UnityEngine.Object.Destroy(Icon.gameObject);
+                        return true;
+                    }
+                    else
+                    {
+                        SubtractFromAmt(int.MaxValue);
+                        AddToAmt(remainder);
+                        return true;
+                    }
+                }
+                return false;
+            }
+            Debug.Log("Avoid");
+            return true;
+        }
+
+        public void OnDestroy()
+        {
+            inventory.DeleteItem(guid);
         }
     }
 }

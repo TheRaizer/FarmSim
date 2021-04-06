@@ -1990,6 +1990,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1077948135}
     - target: {fileID: 357524579, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
+      propertyPath: movementParent
+      value: 
+      objectReference: {fileID: 1645995117}
+    - target: {fileID: 357524579, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
       propertyPath: itemMovementParent
       value: 
       objectReference: {fileID: 1645995117}
@@ -2200,6 +2204,11 @@ PrefabInstance:
       propertyPath: tileRing
       value: 
       objectReference: {fileID: 1752067401}
+    - target: {fileID: 3742074760932526146, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
+        type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 483349493}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_RootOrder

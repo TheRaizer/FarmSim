@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Items
+namespace FarmSim.Slots
 {
     /// <class name="SlotsHandler">
     ///     <summary>
@@ -30,6 +30,17 @@ namespace FarmSim.Items
         {
             if (loadOnAwake)
                 LoadSlots(numberOfSlots);
+        }
+
+        public void MoveImageToSlot(GameObject obj, int slotIndex)
+        {
+            Image slotImg = slots[slotIndex];
+            Image image = obj.GetComponent<Image>();
+
+            obj.transform.SetParent(slotImg.transform);
+
+            // sets the image center to the slot center
+            image.rectTransform.anchoredPosition = Vector3.zero;
         }
 
         protected virtual void ManageSlotOnLoad(GameObject slot, int slotIndex) { }

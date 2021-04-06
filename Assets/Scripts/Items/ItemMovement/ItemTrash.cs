@@ -1,22 +1,23 @@
-﻿using UnityEngine;
+﻿using FarmSim.Slots;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FarmSim.Items
 {
     public class ItemTrash : MonoBehaviour, IPointerClickHandler
     {
-        private ItemMovementManager itemMovementManager;
+        private SwapManager itemMovementManager;
 
         private void Awake()
         {
-            itemMovementManager = FindObjectOfType<ItemMovementManager>();
+            itemMovementManager = FindObjectOfType<SwapManager>();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                itemMovementManager.DestroyAttachedItem();
+                itemMovementManager.DestroyAttachedSwappable();
             }
         }
     }

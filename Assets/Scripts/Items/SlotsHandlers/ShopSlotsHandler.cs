@@ -1,4 +1,5 @@
-﻿using FarmSim.Utility;
+﻿using FarmSim.Slots;
+using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 

@@ -267,20 +267,5 @@ namespace FarmSim.Grid
                 }
             }
         }
-
-        /*  private void OnDrawGizmos()
-          {
-              if (Application.isPlaying)
-              {
-                  for (int y = 0; y < SECTION_SIZE_Y; y++)
-                  {
-                      for (int x = 0; x < SECTION_SIZE_X; x++)
-                      {
-                          Gizmos.DrawSphere(grid[x, y].Position, 0.1f);
-                          Gizmos.DrawWireCube(grid[x, y].Position, new Vector3(Node.NODE_DIAMETER, Node.NODE_DIAMETER, 0));
-                      }
-                  }
-              }
-          }*/
     }
 }

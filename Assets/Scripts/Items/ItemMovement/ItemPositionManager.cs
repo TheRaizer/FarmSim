@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FarmSim.Slots;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -9,34 +10,34 @@ namespace FarmSim.Items
     ///         Manages the position of an Item Icon/<see cref="Image"/> in the inventory.
     ///     </summary>
     /// </class>
-    public class ItemPositionManager : MonoBehaviour, IPointerClickHandler
+    public class ItemPositionManager : MonoBehaviour, IPointerClickHandler, IPositionManager
     {
-        public Item Item { get; set; }
         /// <summary>
         ///     The slots handler that contains the slot this item is in.
         /// </summary>
-        public InventorySlotsHandler SlotsHandler { get; set; }
+        public SlotsHandler SlotsHandler { get; set; }
+        public ISwappable Swappable { get; private set; }
 
-        private ItemMovementManager movementManager;
+        private SwapManager movementManager;
 
         private void Awake()
         {
-            movementManager = FindObjectOfType<ItemMovementManager>();
+            movementManager = FindObjectOfType<SwapManager>();
         }
+
+        public void SetSwappable(Item item) => Swappable = item;
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                if (movementManager.HasAttachedItem())
+                if (movementManager.HasAttachedSwappable())
                 {
-                    movementManager.SwapPositions(Item.SlotIndex, this);
+                    movementManager.SwapPositions(Swappable.SlotIndex, this);
                 }
                 else
                 {
-                    // set this item as the attached item
-                    movementManager.AttachedItemSlotIndex = Item.SlotIndex;
-                    movementManager.SetAttachedItem(Item);
+                    movementManager.SetAttachedSwappable(Swappable);
                 }
             }
         }

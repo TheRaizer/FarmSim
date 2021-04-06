@@ -1,4 +1,5 @@
-﻿using FarmSim.Utility;
+﻿using FarmSim.Slots;
+using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,6 @@ namespace FarmSim.Items
     public class InventorySlotsHandler : SlotsHandler
     {
         [SerializeField] private GameObject inventoryUI;
-        public bool IsActive { get; private set; } = false;
 
         protected override void Awake()
         {
@@ -25,8 +25,7 @@ namespace FarmSim.Items
         {
             if (Input.GetKeyDown(KeyCode.Tab))
             {
-                IsActive = !IsActive;
-                inventoryUI.SetActive(IsActive);
+                inventoryUI.SetActive(!inventoryUI.activeInHierarchy);
             }
         }
 
@@ -45,17 +44,6 @@ namespace FarmSim.Items
                     return;
                 }
             }
-        }
-
-        public void MoveImageToSlot(GameObject obj, int slotIndex)
-        {
-            Image slotImg = slots[slotIndex];
-            Image image = obj.GetComponent<Image>();
-
-            obj.transform.SetParent(slotImg.transform);
-
-            // sets the image center to the slot center
-            image.rectTransform.anchoredPosition = Vector3.zero;
         }
 
         protected override void ManageSlotOnLoad(GameObject slot, int slotIndex)

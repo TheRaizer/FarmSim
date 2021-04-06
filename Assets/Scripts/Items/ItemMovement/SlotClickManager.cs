@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FarmSim.Slots;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FarmSim.Items
@@ -15,18 +16,18 @@ namespace FarmSim.Items
         ///     The slots handler that contains this slot
         /// </summary>
         public InventorySlotsHandler SlotsHandler { private get; set; }
-        private ItemMovementManager movementManager;
+        private SwapManager movementManager;
 
         private void Awake()
         {
-            movementManager = FindObjectOfType<ItemMovementManager>();
+            movementManager = FindObjectOfType<SwapManager>();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                if (movementManager.HasAttachedItem())
+                if (movementManager.HasAttachedSwappable())
                 {
                     // move attached item to this slot using the given index for the list of slots in the SlotsHandler
                     movementManager.SwapPositions(SlotIndex, null, SlotsHandler);

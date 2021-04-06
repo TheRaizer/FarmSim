@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Content: {fileID: 1077948136}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -1757,7 +1757,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1750656492}
   m_Direction: 2
   m_Value: 0.999986
-  m_Size: 0.5977682
+  m_Size: 0.5977681
   m_NumberOfSteps: 1
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1806,6 +1806,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 357524579, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
+      propertyPath: movementParent
+      value: 
+      objectReference: {fileID: 1645995117}
     - target: {fileID: 357524579, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
       propertyPath: itemMovementParent
       value: 
@@ -2005,6 +2009,11 @@ PrefabInstance:
       propertyPath: tileRing
       value: 
       objectReference: {fileID: 1752067401}
+    - target: {fileID: 3742074760932526146, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
+        type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 483349493}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_RootOrder

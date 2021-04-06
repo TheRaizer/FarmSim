@@ -1,7 +1,6 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Grid;
-using FarmSim.Items;
 using FarmSim.Serialization;
 using System;
 using UnityEngine;
@@ -13,13 +12,13 @@ namespace FarmSim.Player
     {
         [SerializeField] private float speed;
         [SerializeField] private GameObject tileRing;
+        [SerializeField] private GameObject inventoryUI;
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
         public Node Destination { get; private set; }
 
         private Animator animator;
-        private InventorySlotsHandler inventoryUI;
         private CardinalDirections dir = CardinalDirections.South;
 
         private Vector2[] path;
@@ -34,14 +33,12 @@ namespace FarmSim.Player
         {
             //to hide the curser
             Cursor.visible = false;
-
-            inventoryUI = FindObjectOfType<InventorySlotsHandler>();
             animator = GetComponent<Animator>();
         }
 
         private void Update()
         {
-            if (inventoryUI.IsActive)
+            if (inventoryUI.activeInHierarchy)
             {
                 Time.timeScale = 0f;
                 return;
