@@ -40,19 +40,22 @@ namespace FarmSim.Serialization
                 }
             }
 
-            PlayerData.Current.SectionNum = sectionNum;
-
-            Debug.Log("plant section count: " + SectionData.Current.plantDatas.Count);
-            Debug.Log("dirt section count: " + SectionData.Current.dirtDatas.Count);
-            Debug.Log("item num: " + PlayerData.Current.itemDatas.Count);
-
             // translate it through binary formatter
-            if (SerializationManager.Save(SectionData.Current, "Section_" + sectionNum) && SerializationManager.Save(PlayerData.Current, "Player"))
+            if (SerializationManager.Save(SectionData.Current, "Section_" + sectionNum))
             {
-                Debug.Log("Save was succesful");
+                Debug.Log("Section Save was Succesful");
             }
 
             Saving = false;
+        }
+
+        public void SavePlayer(int sectionNum)
+        {
+            PlayerData.Current.SectionNum = sectionNum;
+            if(SerializationManager.Save(PlayerData.Current, "Player"))
+            {
+                Debug.Log("Player Save was Succesful");
+            }
         }
     }
 }

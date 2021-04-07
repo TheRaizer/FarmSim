@@ -52,6 +52,7 @@ namespace FarmSim.TimeBased
 
             //StartCoroutine(dataSaver.SaveAllCo());
             dataSaver.SaveSectionVoid(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
+            dataSaver.SavePlayer(NodeGrid.Instance.SectionNum);
         }
     }
 }
