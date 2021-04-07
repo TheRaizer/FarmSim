@@ -30,15 +30,17 @@ namespace FarmSim.Items
         /// </summary>
         public readonly string guid;
         public readonly ItemType itemType;
-        private readonly Inventory inventory;
+        private readonly Func<Item, Item, int> stackItems;
+        private readonly Action<string> deleteItem;
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
-        public Item(int startAmt, ItemType _itemType, Inventory _inventory)
+        public Item(int startAmt, ItemType _itemType, Func<Item, Item, int> _stackItems, Action<string> _deleteItem)
         {
             Amt = startAmt;
             itemType = _itemType;
-            inventory = _inventory;
+            stackItems = _stackItems;
+            deleteItem = _deleteItem;
             guid = Guid.NewGuid().ToString();
         }
 
@@ -126,7 +128,7 @@ namespace FarmSim.Items
                 // if the item types are the same we can potentially stack them
                 if (otherItem.itemType == itemType)
                 {
-                    int remainder = inventory.StackItems(this, otherItem);
+                    int remainder = stackItems(this, otherItem);
                     if (remainder == 0)
                     {
                         UnityEngine.Object.Destroy(Icon.gameObject);
@@ -147,7 +149,7 @@ namespace FarmSim.Items
 
         public void OnDestroy()
         {
-            inventory.DeleteItem(guid);
+            deleteItem(guid);
         }
     }
 }

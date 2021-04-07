@@ -118,7 +118,7 @@ namespace FarmSim.Items
                 // if we can add to the inventory
                 if (inventory.Count + 1 <= maxStorage)
                 {
-                    Item item = new Item(itemType.MaxCarryAmt, itemType, this);
+                    Item item = new Item(itemType.MaxCarryAmt, itemType, StackItems, DeleteItem);
 
                     // add item with max carry amt to the inventory
                     inventory.Add(item);
@@ -135,7 +135,7 @@ namespace FarmSim.Items
             // add one more item with the remaining amt if we can
             if (inventory.Count + 1 <= maxStorage && amt > 0)
             {
-                Item item = new Item(amt, itemType, this);
+                Item item = new Item(amt, itemType, StackItems, DeleteItem);
 
                 inventory.Add(item);
                 AddImage(item);
@@ -271,7 +271,7 @@ namespace FarmSim.Items
                 Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 
                 // Loads the item into the inventory
-                Item item = new Item(itemData.amt, itemType, this);
+                Item item = new Item(itemData.amt, itemType, StackItems, DeleteItem);
                 inventory.Add(item);
                 item.SlotIndex = itemData.slotIndex;
             });
