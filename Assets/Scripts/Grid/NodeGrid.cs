@@ -257,6 +257,8 @@ namespace FarmSim.Grid
         public void Save()
         {
             PlayerData.Current.SectionNum = SectionNum;
+
+            SectionData.Current.SectionNum = SectionNum;
             SectionData.Current.nodeDatas = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
 
             for (int x = 0; x < sectionGrid.GetLength(0); x++)

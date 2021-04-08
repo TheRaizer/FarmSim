@@ -1,6 +1,7 @@
 ﻿using FarmSim.Attributes;
 using System;
 using System.Collections;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 
@@ -41,7 +42,7 @@ namespace FarmSim.Serialization
             }
 
             // translate it through binary formatter
-            if (SerializationManager.Save(SectionData.Current, "Section_" + sectionNum))
+            if (SerializationManager.Save(SectionData.Current, SavePaths.SECTION_PREFIX + sectionNum, SavePaths.SECTIONS_DIRECTORY))
             {
                 Debug.Log("Section Save was Succesful");
             }
@@ -52,10 +53,29 @@ namespace FarmSim.Serialization
         public void SavePlayer(int sectionNum)
         {
             PlayerData.Current.SectionNum = sectionNum;
-            if(SerializationManager.Save(PlayerData.Current, "Player"))
+            if(SerializationManager.Save(PlayerData.Current, SavePaths.PLAYER_FILE))
             {
                 Debug.Log("Player Save was Succesful");
             }
+        }
+
+        public void SaveMain(bool isSavableSection, int sectionNum)
+        {
+            SaveSectionVoid(isSavableSection, sectionNum);
+            SavePlayer(sectionNum);
+
+            MainSaveData mainSave = new MainSaveData();
+
+            string[] filePaths = Directory.GetFiles(Application.persistentDataPath + "/" + SavePaths.SECTIONS_DIRECTORY + "/");
+
+            foreach(string path in filePaths)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(path);
+                SectionData section = (SectionData)SerializationManager.LoadSave(fileName, SavePaths.SECTIONS_DIRECTORY);
+
+                mainSave.sections.Add(section);
+            }
+            SerializationManager.Save(mainSave);
         }
     }
 }

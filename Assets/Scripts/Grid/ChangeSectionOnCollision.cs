@@ -18,10 +18,14 @@ namespace FarmSim.Grid
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                // save the current section
                 dataSaver.SaveSectionVoid(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
 
+                // get the new sections number
                 NodeGrid.Instance.SectionNum = scene - 1;
-                SectionData sect = (SectionData)SerializationManager.Load(Application.persistentDataPath + "/saves/Section_" + NodeGrid.Instance.SectionNum + ".save");
+
+                // load the new section
+                SectionData sect = (SectionData)SerializationManager.LoadSave(SavePaths.SECTION_PREFIX + NodeGrid.Instance.SectionNum, SavePaths.SECTIONS_DIRECTORY);
 
                 // if there is no save
                 if (sect == null)
@@ -31,7 +35,7 @@ namespace FarmSim.Grid
                 }
                 else
                 {
-                    // otherwise use the previous section data.s
+                    // make the current section data to point to the new sections data.
                     SectionData.Current = sect;
                 }
                 SceneManager.LoadScene(scene);

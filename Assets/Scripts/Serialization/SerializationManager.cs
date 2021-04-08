@@ -18,18 +18,18 @@ namespace FarmSim.Serialization
         /// <param name="saveData">The serializable object to save.</param>
         /// <param name="saveName">The name of the file.</param>
         /// <returns></returns>
-        public static bool Save(object saveData, string saveName = "MainSave")
+        public static bool Save(object saveData, string saveName = SavePaths.MAIN_SAVE_FILE, string directory = SavePaths.GENERAL_DIRECTORY)
         {
             BinaryFormatter formatter = GetBinaryFormatter();
 
-            if (!Directory.Exists(Application.persistentDataPath + "/saves"))
+            if (!Directory.Exists(Application.persistentDataPath + "/" + directory))
             {
                 // create a directory if none exist
-                Directory.CreateDirectory(Application.persistentDataPath + "/saves");
+                Directory.CreateDirectory(Application.persistentDataPath + "/" + directory);
             }
 
             // obtain the path using Unity's Application.persistentDataPath
-            string path = Application.persistentDataPath + "/saves/" + saveName + ".save";
+            string path = Application.persistentDataPath + "/" + directory + "/" + saveName + ".save";
 
             FileStream file = File.Create(path);
 
@@ -44,15 +44,17 @@ namespace FarmSim.Serialization
         /// </summary>
         /// <param name="path">The file path.</param>
         /// <returns><see cref="object"/> containing data.</returns>
-        public static object Load(string path)
+        public static object LoadSave(string saveName, string directory = "General")
         {
-            if (!File.Exists(path))
+            if (!File.Exists(Application.persistentDataPath + "/" + directory + "/" + saveName + ".save"))
             {
-                Debug.LogWarning($"No file exists at {path}");
+                Debug.LogWarning($"No file exists at {Application.persistentDataPath + "/" + directory + "/" + saveName + ".save"}");
                 return null;
             }
 
             BinaryFormatter formatter = GetBinaryFormatter();
+
+            string path = Application.persistentDataPath + "/" + directory + "/" + saveName + ".save";
             FileStream file = File.Open(path, FileMode.Open);
 
             try

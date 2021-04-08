@@ -17,6 +17,8 @@ namespace FarmSim.Serialization
         // Singleton
         private static SectionData _current;
 
+        public int SectionNum = -1;
+
         // collections are within lists to represent the possible sections that each collection can be part of.
         public List<DirtData> dirtDatas = new List<DirtData>();
         public List<PlanteableData> plantDatas = new List<PlanteableData>();

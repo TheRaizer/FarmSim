@@ -16,10 +16,17 @@ namespace FarmSim.Serialization
         private void Awake()
         {
             // load player data
-            PlayerData.Current = (PlayerData)SerializationManager.Load(Application.persistentDataPath + "/saves/Player.save");
+            PlayerData.Current = (PlayerData)SerializationManager.LoadSave(SavePaths.PLAYER_FILE);
 
-            // load the section data that the player was last in
-            SectionData.Current = (SectionData)SerializationManager.Load(Application.persistentDataPath + "/saves/Section_" + PlayerData.Current.SectionNum + ".save");
+            MainSaveData mainSave = (MainSaveData)SerializationManager.LoadSave(SavePaths.MAIN_SAVE_FILE);
+
+            // load the section data that the player last manually saved in
+            SectionData.Current = mainSave?.sections.Find(x => x.SectionNum == PlayerData.Current.SectionNum);
+
+            if(SectionData.Current == null)
+            {
+                SectionData.Current = new SectionData();
+            }
         }
 
         //TEST CODE
