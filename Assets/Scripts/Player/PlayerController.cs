@@ -204,7 +204,7 @@ namespace FarmSim.Player
         private void RequestPath()
         {
             Node start;
-            if (path != null)
+            if (path != null && path.Length > pathIdx)
             {
                 start = NodeGrid.Instance.GetNodeFromVector2(path[pathIdx]);
             }
