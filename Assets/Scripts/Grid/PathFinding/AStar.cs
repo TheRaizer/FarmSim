@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace FarmSim.Grid
 {
-    class AStar
+    public class AStar
     {
         private readonly NodeGrid grid;
 

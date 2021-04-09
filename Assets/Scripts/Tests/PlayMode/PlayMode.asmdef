@@ -1,5 +1,6 @@
 {
     "name": "PlayMode",
+    "rootNamespace": "",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
@@ -11,7 +12,8 @@
         "Player",
         "Enums",
         "Items",
-        "Utility"
+        "Utility",
+        "Slots"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

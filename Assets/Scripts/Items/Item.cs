@@ -25,6 +25,7 @@ namespace FarmSim.Items
         public IPositionManager PositionManager { get; private set; }
 
         private TextMeshProUGUI TextAmt;
+
         /// <summary>
         ///     Given to other objects through the <see cref="InventorySlotsHandler.SpawnImage(Item, Image)"/> method.
         /// </summary>
@@ -150,6 +151,11 @@ namespace FarmSim.Items
         public void OnDestroy()
         {
             deleteItem(guid);
+        }
+
+        public override string ToString()
+        {
+            return itemType + " || Amount: " + Amt;
         }
     }
 }

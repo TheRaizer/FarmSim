@@ -53,5 +53,10 @@ namespace FarmSim.Grid
             }
             return -compare;
         }
+
+        public override string ToString()
+        {
+            return "X: " + Data.x + " || Y: " + Data.y;
+        }
     }
 }

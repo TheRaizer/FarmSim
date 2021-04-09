@@ -27,5 +27,10 @@ namespace FarmSim.Items
             Vector2 direction = Random.insideUnitCircle.normalized;
             rb.AddForce(direction * 5, ForceMode2D.Impulse);
         }
+
+        public override string ToString()
+        {
+            return ItemName + " || Costs: " + Price + " || Max amount: " + MaxCarryAmt;
+        }
     }
 }
