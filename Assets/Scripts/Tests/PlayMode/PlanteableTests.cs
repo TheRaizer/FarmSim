@@ -78,7 +78,22 @@ namespace Tests
         [UnityTest]
         public IEnumerator HarvestTest()
         {
+            // load the needed GameObjects
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+            prefab.transform.position = Vector3.zero;
+
+            var player = new GameObject();
+            // set up player trigger for picking up world items
+            var collider = player.AddComponent<BoxCollider2D>();
+            collider.isTrigger = true;
+            collider.size = Vector2.one * 10;
+
+            player.transform.position = Vector3.zero;
+
+            GameObject obj = new GameObject();
+            var inventory = obj.AddComponent<Inventory>();
+
+            player.tag = "Player";
 
             if (prefab == null)
             {
@@ -87,8 +102,6 @@ namespace Tests
 
             var planteableObj = Object.Instantiate(prefab);
 
-            GameObject obj = new GameObject();
-            var inventory = obj.AddComponent<Inventory>();
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
@@ -100,6 +113,12 @@ namespace Tests
 
             // Harvest the plant
             plant.OnHarvest();
+
+            WorldItem[] worldItem = Object.FindObjectsOfType<WorldItem>();
+
+            Assert.IsTrue(worldItem.Length >= 2 && worldItem.Length <= 5);
+
+            yield return new WaitForSeconds(1f);
 
             // make sure that the players inventory has obtained the harvested plant
             Assert.IsTrue(inventory.Contains(itemType));

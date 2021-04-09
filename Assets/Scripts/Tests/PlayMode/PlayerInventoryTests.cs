@@ -15,7 +15,6 @@ namespace Tests
         [Test]
         public void AddInventoryTest()
         {
-
             GameObject gameObject = new GameObject();
             Inventory inventory = gameObject.AddComponent<Inventory>();
 

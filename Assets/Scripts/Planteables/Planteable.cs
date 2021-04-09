@@ -71,7 +71,7 @@ namespace FarmSim.Planteables
         /// </summary>
         public void OnHarvest()
         {
-            int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop);
+            int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop + 1);
 
             for (int i = 0; i < amtToDrop; i++)
             {

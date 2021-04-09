@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Tests
 {
@@ -14,6 +15,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = new Vector3(55, -25.4f, 0);
+            grid.LoadSectionTest();
 
             // get a node
             Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER - 0.05f, Node.NODE_DIAMETER - 0.05f) + (Vector2)gameObject.transform.position);
@@ -44,6 +46,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
+            grid.LoadSectionTest();
 
             Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
@@ -62,6 +65,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
+            grid.LoadSectionTest();
 
             Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
@@ -80,6 +84,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
+            grid.LoadSectionTest();
 
             Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
@@ -109,6 +114,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
+            grid.LoadSectionTest();
 
             Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
 
@@ -129,6 +135,7 @@ namespace Tests
             var gameObject = new GameObject();
             var grid = gameObject.AddComponent<NodeGrid>();
             grid.transform.position = Vector3.zero;
+            grid.LoadSectionTest();
 
             Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
             Node node_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));

@@ -34,7 +34,7 @@ namespace FarmSim.Grid
             DontDestroyOnLoad(gameObject);
 
             SectionNum = PlayerData.Current.SectionNum;
-            SceneManager.sceneLoaded += LoadSection;
+            SceneManager.sceneLoaded += LoadSectionOnSceneLoad;
         }
 
 
@@ -44,7 +44,7 @@ namespace FarmSim.Grid
         /// </summary>
         /// <param name="scene">The scene being loaded</param>
         /// <param name="mode">The mode the scene is being loaded</param>
-        public void LoadSection(Scene scene, LoadSceneMode mode)
+        private void LoadSectionOnSceneLoad(Scene scene, LoadSceneMode mode)
         {
             LoadedSection = false;
 
@@ -62,6 +62,24 @@ namespace FarmSim.Grid
                 Debug.Log("no need to load this sections grid.");
                 return;
             }
+
+            // init the section and its GameObjects.
+            sectionLoader.InitSection(sectionGrid);
+            StartCoroutine(sectionLoader.LoadSectionCo(sectionGrid, () => LoadedSection = true));
+            //sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
+        }
+
+        public void LoadSectionTest()
+        {
+            LoadedSection = false;
+
+            // section # is always 1 less then the scene index.
+            SectionNum = 0;
+
+            sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
+
+            // initialize an empty grid.
+            sectionGrid = sectionLoader.InitGrid();
 
             // init the section and its GameObjects.
             sectionLoader.InitSection(sectionGrid);
