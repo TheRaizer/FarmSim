@@ -80,8 +80,6 @@ public class AStarTests
 
         Node startNode = grid.GetNodeFromVector2(start);
         Node endNode = grid.GetNodeFromVector2(end);
-        Debug.Log(startNode);
-        Debug.Log(endNode);
 
         // create the walls
         Node blockage_1_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 1, Node.NODE_DIAMETER * 4));

@@ -1,4 +1,5 @@
 ﻿using FarmSim.Attributes;
+using FarmSim.Entity;
 using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Serialization;
@@ -19,60 +20,37 @@ namespace FarmSim.Player
         public Node Destination { get; private set; }
 
         private Animator animator;
-        private CardinalDirections dir = CardinalDirections.South;
-
-        private Vector2[] path;
-        private PathRequest currentRequest;
-
-        private bool processingPath = false;
-        private bool stop = false;
-
-        private int pathIdx = 0;
+        private EntityPathFind pathFind;
 
         private void Awake()
         {
+            pathFind = new EntityPathFind(TriggerAnimation, gameObject, speed);
             //to hide the curser
             Cursor.visible = false;
             animator = GetComponent<Animator>();
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (inventoryUI.activeInHierarchy)
-            {
-                Time.timeScale = 0f;
-                return;
-            }
-            else if (Time.time != 1f)
-            {
-                Time.timeScale = 1f;
-            }
             KeyHandler();
+            ChangeRingPosition();
         }
 
         private void KeyHandler()
         {
-            if (path != null)
+            if (!pathFind.HasPath())
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {
-                    stop = true;
-                    if (processingPath)
-                        PathRequestManager.Instance.StopSearch(currentRequest.id);
+                    pathFind.StopMoving();
                 }
             }
-            else
-            {
-                ChangeRingPosition();
-            }
-
-
-            MoveOnPath();
 
             if (Input.GetMouseButtonDown(0))
             {
-                RequestPath();
+                pathFind.RequestPath();
             }
+            pathFind.MoveOnPath();
         }
 
         private void ChangeRingPosition()
@@ -82,65 +60,6 @@ namespace FarmSim.Player
             {
                 Vector2 pos = node.Data.pos;
                 tileRing.transform.position = pos;
-            }
-        }
-
-        private void ChangeDir(Vector2 next)
-        {
-            Vector2 travelDir = next - (Vector2)transform.position;
-
-            if (travelDir.x > 0)
-            {
-                dir = CardinalDirections.East;
-            }
-            else if (travelDir.x < 0)
-            {
-                dir = CardinalDirections.West;
-            }
-            else if (travelDir.y > 0)
-            {
-                dir = CardinalDirections.North;
-            }
-            else if (travelDir.y < 0)
-            {
-                dir = CardinalDirections.South;
-            }
-
-            animator.SetInteger("Direction", (int)dir);
-        }
-
-        private void MoveOnPath()
-        {
-            if (path != null)
-            {
-                animator.SetBool("Walking", true);
-                if (pathIdx < path.Length)
-                {
-                    Vector2 curr = gameObject.transform.position;
-                    Vector2 target = path[pathIdx];
-
-                    ChangeDir(target);
-
-                    if (Mathf.Abs(curr.x - target.x) < 0.01f && Mathf.Abs(curr.y - target.y) < 0.01f)
-                    {
-                        if (stop)
-                        {
-                            // stop early
-                            animator.SetBool("Walking", false);
-                            path = null;
-                            stop = false;
-                        }
-                        pathIdx++;
-                    }
-                    gameObject.transform.position = Vector2.MoveTowards(curr, target, speed * Time.deltaTime);
-                }
-                else
-                {
-                    // it has completed the path
-                    animator.SetBool("Walking", false);
-                    TriggerAnimation();
-                    path = null;
-                }
             }
         }
 
@@ -183,45 +102,6 @@ namespace FarmSim.Player
                 default:
                     break;
             }
-        }
-
-        private void PathFindCallBack(Vector2[] path, bool isSuccesful)
-        {
-            pathIdx = 0;
-            if (isSuccesful)
-            {
-                this.path = path;
-                ChangeRingPosition();
-            }
-            else
-            {
-                this.path = null;
-            }
-
-            processingPath = false;
-        }
-
-        private void RequestPath()
-        {
-            Node start;
-            if (path != null && path.Length > pathIdx)
-            {
-                start = NodeGrid.Instance.GetNodeFromVector2(path[pathIdx]);
-            }
-            else
-            {
-                start = NodeGrid.Instance.GetNodeFromVector2(transform.position);
-            }
-
-            Node end = NodeGrid.Instance.GetNodeFromMousePosition();
-            if (start == null || end == null || !end.Data.IsWalkable)
-                return;
-            Destination = end;
-
-            currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
-
-            PathRequestManager.Instance.RequestPath(currentRequest);
-            processingPath = true;
         }
 
         public void Save()
