@@ -1,10 +1,10 @@
-﻿using FarmSim.Slots;
+﻿using FarmSim.Items;
 using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Items
+namespace FarmSim.Slots
 {
     /// <class name="InventorySlotsHandler">
     ///     <summary>

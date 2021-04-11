@@ -1,4 +1,3 @@
-using FarmSim.Entity;
 using FarmSim.Items;
 using System;
 using UnityEngine;
@@ -15,13 +14,13 @@ namespace FarmSim.Shops
     {
         [SerializeField] private ItemType itemType;
 
-        public Action<int, string> OpenBuyPanel { private get; set; }
+        public Action<ItemType> OpenBuyPanel { private get; set; }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                OpenBuyPanel(itemType.Price, itemType.ItemName);
+                OpenBuyPanel(itemType);
             }
         }
     }

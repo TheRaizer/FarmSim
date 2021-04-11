@@ -1,5 +1,6 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Serialization;
+using FarmSim.Slots;
 using System;
 using System.Collections.Generic;
 using UnityEngine;

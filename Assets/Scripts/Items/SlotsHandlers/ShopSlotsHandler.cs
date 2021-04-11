@@ -1,10 +1,12 @@
-﻿using FarmSim.Slots;
+﻿using FarmSim.Items;
+using FarmSim.Slots;
 using FarmSim.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-namespace FarmSim.Items
+namespace FarmSim.Slots
 {
     /// <class name="ShopSlotsHandler">
     ///     <summary>
@@ -15,24 +17,66 @@ namespace FarmSim.Items
     {
         [SerializeField] private List<ItemType> buyables;
 
-        public Action<GameObject> AssignShopIconDelegate { private get; set; }
+        public Action<GameObject> OnIconCreation { private get; set; }
 
-        protected override void Awake()
+        private readonly Dictionary<string, List<GameObject>> shopImages = new Dictionary<string, List<GameObject>>();
+
+        private string currentShopId = "";
+
+        public void AddShopSpritesToSlot(List<ItemType> buyables, string shopId)
         {
-            base.Awake();
-            if (buyables.Count > slots.Count)
-                Debug.LogError("Cannot have more buyables than slots");
+            if(buyables.Count > slots.Count)
+            {
+                Debug.LogError("Too many buyables for the number of existing slots");
+            }
+
+            List<GameObject> itemImages = new List<GameObject>();
+
+            for(int i = 0; i < buyables.Count; i++)
+            {
+                Image slot = slots[i];
+                GameObject itemImage = Instantiate(buyables[i].ShopIconPrefab, slot.transform);
+
+                OnIconCreation(itemImage);
+
+                itemImage.SetActive(false);
+                var rect = itemImage.GetComponent<RectTransform>();
+
+                rect.Center();
+
+                // reset its scale to 1
+                rect.localScale = Vector3.one;
+
+                itemImages.Add(itemImage);
+            }
+
+            shopImages.Add(shopId, itemImages);
         }
 
-        protected override void ManageSlotOnLoad(GameObject slot, int slotIndex)
+        public void ActivateShopSprites(string shopId)
         {
-            GameObject shopSprite = Instantiate(buyables[slotIndex].ShopIconPrefab, slot.transform);
-            var rect = shopSprite.GetComponent<RectTransform>();
+            if (shopImages.ContainsKey(shopId))
+                Debug.LogError($"There are no such shop sprites with id {shopId}");
 
-            rect.Center();
+            DeactivateCurrentShopImages();
 
-            // reset its scale to 1
-            rect.localScale = Vector3.one;
+            currentShopId = shopId;
+
+            foreach (GameObject g in shopImages[shopId])
+            {
+                g.SetActive(false);
+            }
+        }
+
+        private void DeactivateCurrentShopImages()
+        {
+            if (shopImages.TryGetValue(currentShopId, out List<GameObject> objectsToDeactivate))
+            {
+                foreach (GameObject g in objectsToDeactivate)
+                {
+                    g.SetActive(false);
+                }
+            }
         }
     }
 }
