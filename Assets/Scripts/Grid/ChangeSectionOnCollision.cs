@@ -4,6 +4,11 @@ using UnityEngine.SceneManagement;
 
 namespace FarmSim.Grid
 {
+    /// <class name="ChangeSectionOnCollision">
+    ///     <summary>
+    ///         Changes the grid section and scene of the map.
+    ///     </summary>
+    /// </class>
     public class ChangeSectionOnCollision : MonoBehaviour
     {
         [SerializeField] private int scene;

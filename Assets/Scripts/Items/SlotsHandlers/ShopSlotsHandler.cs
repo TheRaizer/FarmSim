@@ -1,5 +1,6 @@
 ﻿using FarmSim.Slots;
 using FarmSim.Utility;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace FarmSim.Items
     public class ShopSlotsHandler : SlotsHandler
     {
         [SerializeField] private List<ItemType> buyables;
+
+        public Action<GameObject> AssignShopIconDelegate { private get; set; }
 
         protected override void Awake()
         {

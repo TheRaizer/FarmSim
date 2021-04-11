@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace FarmSim.Tools
 {
+    /// <class name="Tool">
+    ///     <summary>
+    ///         A class that contains the attributes of a tool, as well as the general functionality.
+    ///     </summary>
+    /// </class>
     [System.Serializable]
     public class Tool
     {

@@ -6,6 +6,11 @@ using UnityEngine;
 
 namespace FarmSim.TimeBased
 {
+    /// <class name="TimeManager">
+    ///     <summary>
+    ///         Manages in-game time as well as running the DayPass() function on each ITimeBased GameObjects.
+    ///     </summary>
+    /// </class>
     public class TimeManager : MonoBehaviour
     {
         [SerializeField] private GameObject dayPassBackground;

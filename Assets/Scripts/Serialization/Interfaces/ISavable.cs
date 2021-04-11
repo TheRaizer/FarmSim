@@ -8,6 +8,9 @@ namespace FarmSim.Serialization
     /// </class>
     public interface ISavable
     {
+        /// <summary>
+        ///     Save some data to a data class.
+        /// </summary>
         void Save();
     }
 }

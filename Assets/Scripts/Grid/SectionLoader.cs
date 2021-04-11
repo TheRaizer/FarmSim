@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace FarmSim.Grid
 {
-    /// <class name="WorldLoader">
+    /// <class name="SectionLoader">
     ///     <summary>
     ///         Extracts the world and loads a section of the world.
     ///     </summary>

@@ -5,6 +5,11 @@ using UnityEngine;
 
 namespace FarmSim.Entity
 {
+    /// <class name="EntityPathFind">
+    ///     <summary>
+    ///         Manages pathfinding requests and movement of an entity.
+    ///     </summary>
+    /// </class>
     public class EntityPathFind
     {
         public Node Destination { get; private set; }
@@ -43,20 +48,24 @@ namespace FarmSim.Entity
         public void RequestPath()
         {
             Node start;
+
+            // if there is a path and the index were moving too is still valid use it as the start
             if (path != null && path.Length > pathIdx)
             {
+                // this smooths some transitions
                 start = NodeGrid.Instance.GetNodeFromVector2(path[pathIdx]);
             }
             else
             {
                 start = NodeGrid.Instance.GetNodeFromVector2(transform.position);
             }
-
+            
             Node end = NodeGrid.Instance.GetNodeFromMousePosition();
+
             if (start == null || end == null || !end.Data.IsWalkable)
                 return;
-            Destination = end;
 
+            Destination = end;
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 
             PathRequestManager.Instance.RequestPath(currentRequest);

@@ -1,6 +1,11 @@
 ﻿
 namespace FarmSim.Serialization
 {
+    /// <class name="SavePaths">
+    ///     <summary>
+    ///         Contains the paths to each save.
+    ///     </summary>
+    /// </class>
     public static class SavePaths
     {
         public const string SECTIONS_DIRECTORY = "SectionsSaves";

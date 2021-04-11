@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace FarmSim.Grid
 {
+    /// <class name="PathRequestManager">
+    ///     <summary>
+    ///         A Singleton class that manages requests for pathfinding using A*.
+    ///     </summary>
+    /// </class>
     public class PathRequestManager : Singleton<PathRequestManager>
     {
         private AStar aStar;
@@ -25,7 +30,7 @@ namespace FarmSim.Grid
 
         private void TryProcessingNextPath()
         {
-            if (requests.Count > 0 && !isProcessing)
+            if (!isProcessing && requests.Count > 0)
             {
                 isProcessing = true;
                 currentPathProcess = requests.Dequeue();

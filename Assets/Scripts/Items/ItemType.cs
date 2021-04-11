@@ -2,7 +2,11 @@
 
 namespace FarmSim.Items
 {
-
+    /// <class name="ItemType">
+    ///     <summary>
+    ///         A SO that manages the parts that make up the general components of an item.
+    ///     </summary>
+    /// </class>
     [CreateAssetMenu]
     public class ItemType : ScriptableObject
     {

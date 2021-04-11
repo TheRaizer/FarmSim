@@ -2,6 +2,11 @@
 
 namespace FarmSim.Utility
 {
+    /// <class name="UniqueIdGenerator">
+    ///     <summary>
+    ///         Contains functions that generate unique ids.
+    ///     </summary>
+    /// </class>
     public static class UniqueIdGenerator
     {
         public static string IdFromDate()

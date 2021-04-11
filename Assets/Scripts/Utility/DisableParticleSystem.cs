@@ -2,6 +2,11 @@
 
 namespace FarmSim.Utility
 {
+    /// <class name="DisableParticleSystem">
+    ///     <summary>
+    ///         Disables a particle system once it has stopped playing.
+    ///     </summary>
+    /// </class>
     public class DisableParticleSystem : MonoBehaviour
     {
         private ParticleSystem particles;

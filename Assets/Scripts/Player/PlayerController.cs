@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace FarmSim.Player
 {
+    /// <class name="PlayerController">
+    ///     <summary>
+    ///         Controls and manages the components of the Player.
+    ///     </summary>
+    /// </class>
     [Savable(true)]
     public class PlayerController : MonoBehaviour, ISavable, ILoadable
     {

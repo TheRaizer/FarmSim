@@ -2,6 +2,11 @@
 
 namespace FarmSim.Utility
 {
+    /// <class name="FlashingSpriteRenderer">
+    ///     <summary>
+    ///         Manages the repeated flashing of some sprite.
+    ///     </summary>
+    /// </class>
     public class FlashingSpriteRenderer : MonoBehaviour
     {
         [SerializeField] private float flashInterval;

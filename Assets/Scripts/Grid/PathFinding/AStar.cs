@@ -4,6 +4,11 @@ using UnityEngine;
 
 namespace FarmSim.Grid
 {
+    /// <class name="AStar">
+    ///     <summary>
+    ///         Contains functions for pathfinding using the A* algorithm.
+    ///     </summary>
+    /// </class>
     public class AStar
     {
         private readonly NodeGrid grid;
@@ -42,9 +47,7 @@ namespace FarmSim.Grid
 
             return path;
         }
-
-
-
+        
         public IEnumerator PathFindCo(Node start, Node end, string id)
         {
             if (!start.Data.IsWalkable && !end.Data.IsWalkable)

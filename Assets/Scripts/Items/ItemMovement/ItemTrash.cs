@@ -4,6 +4,11 @@ using UnityEngine.EventSystems;
 
 namespace FarmSim.Items
 {
+    /// <class name="ItemTrash">
+    ///     <summary>
+    ///         Deletes any item that is placed over it from the inventory.
+    ///     </summary>
+    /// </class>
     public class ItemTrash : MonoBehaviour, IPointerClickHandler
     {
         private SwapManager itemMovementManager;

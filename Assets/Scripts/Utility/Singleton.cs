@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 
+/// <class name="Singleton">
+///     <summary>
+///         Base class for any singleton.
+///     </summary>
+/// </class>
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static bool m_ShuttingDown = false;

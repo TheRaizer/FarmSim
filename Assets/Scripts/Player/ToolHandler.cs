@@ -9,6 +9,11 @@ using UnityEngine.UI;
 
 namespace FarmSim.Player
 {
+    /// <class name="ToolHandler">
+    ///     <summary>
+    ///         Handles the use and currently equipped tool.
+    ///     </summary>
+    /// </class>
     public class ToolHandler : MonoBehaviour, IOccurPostLoad
     {
         [SerializeField] private List<Tool> toolList;
