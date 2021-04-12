@@ -59,16 +59,16 @@ namespace FarmSim.Shops
 
         public void ActivateShopSprites(string shopId)
         {
-            if (shopImages.ContainsKey(shopId))
+            if (!shopImages.ContainsKey(shopId))
                 Debug.LogError($"There are no such shop sprites with id {shopId}");
 
             DeactivateCurrentShopImages();
 
             currentShopId = shopId;
 
-            foreach (GameObject g in shopImages[shopId])
+            foreach (GameObject g in shopImages[currentShopId])
             {
-                g.SetActive(false);
+                g.SetActive(true);
             }
         }
 

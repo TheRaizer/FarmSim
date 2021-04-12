@@ -10,7 +10,7 @@ namespace FarmSim.Entity
     public class AmountManager : MonoBehaviour
     {
         [SerializeField] protected int maxAmt;
-        public int CurrentAmt { get; private set; }
+        public int CurrentAmt { get; private set; } = 0;
 
         public void IncreaseMax(int newMax) => maxAmt = newMax;
         public void IncreaseAmt(int amt) => CurrentAmt = Mathf.Clamp(CurrentAmt + amt, 0, maxAmt);

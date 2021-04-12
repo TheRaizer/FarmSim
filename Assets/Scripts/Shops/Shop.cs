@@ -1,6 +1,5 @@
 using FarmSim.Entity;
 using FarmSim.Items;
-using FarmSim.Utility;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,15 +13,17 @@ namespace FarmSim.Shops
     /// </class>
     public class Shop : MonoBehaviour
     {
+        private const float SELL_DECR = 0.65f;
+
         [Header("Main UI")]
         [SerializeField] private GameObject shopUI;
-        [SerializeField] private OnPress openButton;
 
-        [Header("Buy Panel")]
-        [SerializeField] private GameObject buyPanel;
-        [SerializeField] private TextMeshProUGUI itemNameText;
-        [SerializeField] private TextMeshProUGUI priceText;
-        [SerializeField] private TextMeshProUGUI amtText;
+        [Header("Exchange Panel")]
+        [SerializeField] private GameObject exchangePanel;
+        [SerializeField] private TextMeshProUGUI itemNameTxt;
+        [SerializeField] private TextMeshProUGUI moneyTxt;
+        [SerializeField] private TextMeshProUGUI amtTxt;
+        [SerializeField] private TextMeshProUGUI decisionBtnTxt;
 
         [Header("Player Currency")]
         [SerializeField] private CurrencyManager playerCurrencyManager;
@@ -32,10 +33,13 @@ namespace FarmSim.Shops
         [SerializeField] private string shopId;
 
         private bool CanBuy => TotalCost <= playerCurrencyManager.CurrentAmt;
-        private int TotalCost => itemToBuy.Price * amtToBuy;
+        private int TotalCost => itemToBuy.Price * amtToExchange;
+        private int SellValue => Mathf.FloorToInt(itemToSell.itemType.Price * amtToExchange / SELL_DECR);
 
-        private int amtToBuy = 1;
+        private int amtToExchange = 0;
+        private bool isBuying = false;
         private ItemType itemToBuy;
+        private Item itemToSell;
 
         /// <summary>
         ///     A <see cref="Shop"/> is connected to a <see cref="ShopSlotsHandler"/>/UI when it is on the same GameObject.
@@ -49,10 +53,11 @@ namespace FarmSim.Shops
         ///     </para>
         /// </summary>
         private ShopSlotsHandler shopSlots;
+        private Inventory inventory;
 
         private void Awake()
         {
-            openButton.actions.Add(InvertShopActiveness);
+            inventory = FindObjectOfType<Inventory>();
         }
 
         private void Start()
@@ -63,37 +68,113 @@ namespace FarmSim.Shops
             this.shopSlots = shopSlots;
         }
 
+        // Unity btn event
         public void InvertShopActiveness()
         {
             if (shopUI.activeInHierarchy)
             {
                 shopUI.SetActive(false);
+                Time.timeScale = 1;
                 return;
             }
 
+            Time.timeScale = 0;
             shopUI.SetActive(true);
             shopSlots.ActivateShopSprites(shopId);
         }
 
-        public void OpenBuyPanel(ItemType itemType)
+        // Unity btn event
+        public void MakeDecision()
         {
-            itemToBuy = itemType;
-            amtToBuy = 1;
-            itemNameText.SetText(itemType.ItemName);
-            buyPanel.SetActive(true);
+            if (isBuying)
+            {
+                Buy();
+            }
+            else
+            {
+                Sell();
+            }
+
+            exchangePanel.SetActive(false);
         }
 
-        public void Buy()
+        // Unity btn event
+        public void IncrementAmtToBuy()
         {
-            if (CanBuy)
+            if (!isBuying)
             {
-                playerCurrencyManager.DecreaseAmt(amtToBuy * itemToBuy.Price);
+                // if they try to sell more then they have.
+                if (amtToExchange >= itemToSell.Amt)
+                    return;
+            }
+
+            amtToExchange++;
+
+            SetTexts();
+
+            if (!isBuying)
+                return;
+            if (!CanBuy)
+            {
+                moneyTxt.color = Color.red;
+                amtTxt.color = Color.red;
             }
         }
 
-        public void Sell(ItemType itemType)
+        // Unity btn event
+        public void DecrementAmtToBuy()
         {
+            if (amtToExchange <= 1)
+                return;
 
+            amtToExchange--;
+
+            SetTexts();
+
+            if (!isBuying)
+                return;
+            if (!CanBuy)
+            {
+                moneyTxt.color = Color.red;
+                amtTxt.color = Color.red;
+            }
+            else
+            {
+                moneyTxt.color = Color.black;
+                amtTxt.color = Color.black;
+            }
+        }
+
+        public void OpenSellPanel(Item item)
+        {
+            isBuying = false;
+            itemToSell = item;
+            amtToExchange = 0;
+            IncrementAmtToBuy();
+
+            // set texts for the exchange panel
+            decisionBtnTxt.SetText("Sell");
+            itemNameTxt.SetText(item.itemType.ItemName);
+            SetTexts();
+
+            // show the exchange panel
+            exchangePanel.SetActive(true);
+        }
+
+        public void OpenBuyPanel(ItemType itemType)
+        {
+            isBuying = true;
+            itemToBuy = itemType;
+            amtToExchange = 0;
+            IncrementAmtToBuy();
+
+            // set texts for the exchange panel
+            decisionBtnTxt.SetText("Buy");
+            itemNameTxt.SetText(itemType.ItemName);
+            SetTexts();
+
+            // show the exchange panel
+            exchangePanel.SetActive(true);
         }
 
         private void AssignShopIconOpenPanel(GameObject icon)
@@ -101,40 +182,25 @@ namespace FarmSim.Shops
             var shopIcon = icon.GetComponent<ShopIcon>();
             shopIcon.OpenBuyPanel = OpenBuyPanel;
         }
-        
+
         private void SetTexts()
         {
-            priceText.SetText("Price: " + TotalCost);
-            amtText.SetText("Amount: " + amtToBuy);
+            moneyTxt.SetText(isBuying ? "Price: " + TotalCost : "Value: " + SellValue);
+            amtTxt.SetText("Amount: " + amtToExchange);
         }
 
-        public void IncrementAmtToBuy()
+        private void Buy()
         {
-            amtToBuy++;
-
-            SetTexts();
-
             if (CanBuy)
             {
-                priceText.color = Color.red;
-                amtText.color = Color.red;
+                playerCurrencyManager.DecreaseAmt(TotalCost);
             }
         }
 
-        public void DecrementAmtToBuy()
+        private void Sell()
         {
-            if (amtToBuy <= 1)
-                return;
-
-            amtToBuy--;
-
-            SetTexts();
-
-            if (!CanBuy)
-            {
-                priceText.color = Color.black;
-                amtText.color = Color.black;
-            }
+            playerCurrencyManager.IncreaseAmt(SellValue);
+            inventory.TakeFromInventory(itemToSell.guid, amtToExchange);
         }
     }
 }

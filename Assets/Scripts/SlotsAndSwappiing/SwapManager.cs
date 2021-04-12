@@ -73,9 +73,7 @@ namespace FarmSim.Slots
             }
 
 
-            // make it clickable again
-            attachedSwappable.Icon.raycastTarget = true;
-            attachedSwappable = null;
+            ResetAttachedSwappable();
         }
 
         public void SetAttachedSwappable(ISwappable _attachedSwappable)
@@ -87,6 +85,18 @@ namespace FarmSim.Slots
 
             // make sure it isn't clickable
             attachedSwappable.Icon.raycastTarget = false;
+        }
+
+        public ISwappable GetAttachedSwappable()
+        {
+            return attachedSwappable;
+        }
+
+        public void StopSwap()
+        {
+            // return the attached swappable back to its original slot
+            attachedSwappable.SlotsHandler.MoveImageToSlot(attachedSwappable.Icon.gameObject, attachedSwappable.SlotIndex);
+            ResetAttachedSwappable();
         }
 
         public void DestroyAttachedSwappable()
@@ -109,6 +119,13 @@ namespace FarmSim.Slots
             {
                 attachedSwappable.Icon.rectTransform.SetToMouse(canvas);
             }
+        }
+
+        private void ResetAttachedSwappable()
+        {
+            // make it clickable again
+            attachedSwappable.Icon.raycastTarget = true;
+            attachedSwappable = null;
         }
     }
 }
