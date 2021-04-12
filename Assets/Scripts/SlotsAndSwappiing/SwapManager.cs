@@ -30,9 +30,9 @@ namespace FarmSim.Slots
 
         /// <summary>
         ///     Swaps the positions of 1-2 item <see cref="Image"/>'s in the inventory UI.
-        ///     <remarks>
+        ///     <para>
         ///         If otherItem is null a slotHandler must be given.
-        ///     </remarks>
+        ///     </para>
         /// </summary>
         /// <param name="otherSlotIndex">The slot index of the other item</param>
         /// <param name="other">The other item that will be swapped with the <see cref="attachedSwappable"/></param>

@@ -1,11 +1,12 @@
-﻿using FarmSim.Slots;
+﻿using FarmSim.Items;
+using FarmSim.Slots;
 using FarmSim.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Items
+namespace FarmSim.Shops
 {
     /// <class name="ShopSlotsHandler">
     ///     <summary>

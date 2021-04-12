@@ -1,6 +1,6 @@
 using FarmSim.Entity;
 using FarmSim.Items;
-using FarmSim.Slots;
+using FarmSim.Utility;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,6 +14,10 @@ namespace FarmSim.Shops
     /// </class>
     public class Shop : MonoBehaviour
     {
+        [Header("Main UI")]
+        [SerializeField] private GameObject shopUI;
+        [SerializeField] private OnPress openButton;
+
         [Header("Buy Panel")]
         [SerializeField] private GameObject buyPanel;
         [SerializeField] private TextMeshProUGUI itemNameText;
@@ -46,6 +50,11 @@ namespace FarmSim.Shops
         /// </summary>
         private ShopSlotsHandler shopSlots;
 
+        private void Awake()
+        {
+            openButton.actions.Add(InvertShopActiveness);
+        }
+
         private void Start()
         {
             var shopSlots = GetComponent<ShopSlotsHandler>();
@@ -54,8 +63,15 @@ namespace FarmSim.Shops
             this.shopSlots = shopSlots;
         }
 
-        public void OpenShop()
+        public void InvertShopActiveness()
         {
+            if (shopUI.activeInHierarchy)
+            {
+                shopUI.SetActive(false);
+                return;
+            }
+
+            shopUI.SetActive(true);
             shopSlots.ActivateShopSprites(shopId);
         }
 
