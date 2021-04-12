@@ -32,9 +32,21 @@ namespace FarmSim.Shops
 
         private int amtToBuy = 1;
         private ItemType itemToBuy;
+
+        /// <summary>
+        ///     A <see cref="Shop"/> is connected to a <see cref="ShopSlotsHandler"/>/UI when it is on the same GameObject.
+        ///     
+        ///     <para>
+        ///         Multiple <see cref="Shop"/>'s can use the same <see cref="ShopSlotsHandler"/>.
+        ///     </para>
+        ///     <para>
+        ///         You may use a different style UI for a different shop by pairing a <see cref="Shop"/> and <see cref="ShopSlotsHandler"/>
+        ///         together on a new GameObject in the canvas.
+        ///     </para>
+        /// </summary>
         private ShopSlotsHandler shopSlots;
 
-        private void Awake()
+        private void Start()
         {
             var shopSlots = GetComponent<ShopSlotsHandler>();
             shopSlots.OnIconCreation = AssignShopIconOpenPanel;

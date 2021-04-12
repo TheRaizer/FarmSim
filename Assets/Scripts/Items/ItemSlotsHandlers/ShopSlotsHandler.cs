@@ -1,12 +1,11 @@
-﻿using FarmSim.Items;
-using FarmSim.Slots;
+﻿using FarmSim.Slots;
 using FarmSim.Utility;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Slots
+namespace FarmSim.Items
 {
     /// <class name="ShopSlotsHandler">
     ///     <summary>
@@ -15,19 +14,23 @@ namespace FarmSim.Slots
     /// </class>
     public class ShopSlotsHandler : SlotsHandler
     {
-        [SerializeField] private List<ItemType> buyables;
-
         public Action<GameObject> OnIconCreation { private get; set; }
 
         private readonly Dictionary<string, List<GameObject>> shopImages = new Dictionary<string, List<GameObject>>();
 
         private string currentShopId = "";
 
+        /// <summary>
+        ///     Adds Shop sprites to the slots. (Must be run after Awake. Due to unloaded slots.)
+        /// </summary>
+        /// <param name="buyables">The list of items whose images must be added to the slots.</param>
+        /// <param name="shopId">Used to identify which images to activate/deactivate.</param>
         public void AddShopSpritesToSlot(List<ItemType> buyables, string shopId)
         {
-            if(buyables.Count > slots.Count)
+            if(buyables.Count >= slots.Count)
             {
                 Debug.LogError("Too many buyables for the number of existing slots");
+                return;
             }
 
             List<GameObject> itemImages = new List<GameObject>();

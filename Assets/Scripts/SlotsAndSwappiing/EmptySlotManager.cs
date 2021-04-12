@@ -1,21 +1,20 @@
-﻿using FarmSim.Slots;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace FarmSim.Items
+namespace FarmSim.Slots
 {
-    /// <class name="SlotClickManager">
+    /// <class name="EmptySlotManager">
     ///     <summary>
-    ///         Manages the actions that run when a slot is clicked.
+    ///         Manages the actions of an empty slot.
     ///     </summary>
     /// </class>
-    public class SlotClickManager : MonoBehaviour, IPointerClickHandler
+    public class EmptySlotManager : MonoBehaviour, IPointerClickHandler
     {
         public int SlotIndex { private get; set; }
         /// <summary>
         ///     The slots handler that contains this slot
         /// </summary>
-        public InventorySlotsHandler SlotsHandler { private get; set; }
+        public SlotsHandler SlotsHandler { private get; set; }
         private SwapManager movementManager;
 
         private void Awake()

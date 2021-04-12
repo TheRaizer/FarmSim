@@ -22,13 +22,10 @@ namespace FarmSim.Items
         public int SlotIndex { get; set; }
         public bool CanSubtract => Amt > 0;
 
-        public IPositionManager PositionManager { get; private set; }
+        public SlotsHandler SlotsHandler { get; set; }
 
         private TextMeshProUGUI TextAmt;
 
-        /// <summary>
-        ///     Given to other objects through the <see cref="InventorySlotsHandler.SpawnImage(Item, Image)"/> method.
-        /// </summary>
         public readonly string guid;
         public readonly ItemType itemType;
         private readonly Func<Item, Item, int> stackItems;
@@ -82,7 +79,7 @@ namespace FarmSim.Items
         ///     Spawns the inventory icon into a given slot.
         /// </summary>
         /// <param name="slotIndex">The index of the slot that will parent the icon.</param>
-        /// <param name="slotsHandler">Used to pass into the icon's <see cref="ItemPositionManager"/></param>
+        /// <param name="slotsHandler">Used to pass into the icon's <see cref="SwappablePositionManager"/></param>
         /// <returns>The items icon <see cref="GameObject"/> instance</returns>
         public GameObject SpawnInventoryIcon(int slotIndex, InventorySlotsHandler slotsHandler)
         {
@@ -98,11 +95,9 @@ namespace FarmSim.Items
             }
 
             // assign the slot index to the position manager for movement of items
-            var positionManager = itemObj.GetComponent<ItemPositionManager>();
+            var positionManager = itemObj.GetComponent<SwappablePositionManager>();
             positionManager.SetSwappable(this);
-            positionManager.SlotsHandler = slotsHandler;
-
-            PositionManager = positionManager;
+            SlotsHandler = slotsHandler;
 
             Icon = itemObj.GetComponent<Image>();
 
@@ -118,13 +113,13 @@ namespace FarmSim.Items
         /// </summary>
         /// <param name="other">The item that will act as the stack.</param>
         /// <returns>True if attached item was stacked onto other item, otherwise false.</returns>
-        public bool AvoidSwap(IPositionManager other)
+        public bool AvoidSwap(ISwappable other)
         {
             // if the other position manager is holding an item
-            if(other.GetType() == typeof(ItemPositionManager))
+            if(other.GetType() == typeof(Item))
             {
                 // cast the swappable to an item
-                Item otherItem = (Item)other.Swappable;
+                Item otherItem = (Item)other;
 
                 // if the item types are the same we can potentially stack them
                 if (otherItem.itemType == itemType)

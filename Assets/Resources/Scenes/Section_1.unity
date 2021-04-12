@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 70921600}
   - component: {fileID: 70921599}
   m_Layer: 5
-  m_Name: ShopParent
+  m_Name: SeedShopParent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -189,6 +189,9 @@ MonoBehaviour:
   priceText: {fileID: 208477648}
   amtText: {fileID: 450697594}
   playerCurrencyManager: {fileID: 1090752707022115401}
+  buyables:
+  - {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
+  shopId: SeedShop
 --- !u!114 &70921600
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,13 +205,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadOnAwake: 1
-  numberOfSlots: 0
+  numberOfSlots: 8
   slotPrefab: {fileID: 2655680677248230199, guid: 5a485298846ac1d4ebb5cd4d66057d8a,
     type: 3}
   contentParent: {fileID: 978522797}
   firstSlotPos: {x: -83, y: 218}
   <SlotsInRow>k__BackingField: 4
-  buyables: []
 --- !u!1 &87504172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,58 +1232,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.004257672}
   m_SizeDelta: {x: 0, y: 509.22668}
   m_Pivot: {x: 0, y: 1}
---- !u!1 &1055287007
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1055287009}
-  - component: {fileID: 1055287008}
-  m_Layer: 0
-  m_Name: SeedsShop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1055287008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055287007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0a43bab61d7e154488c8acd73107f40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadOnAwake: 1
-  numberOfSlots: 1
-  slotPrefab: {fileID: 2655680677248230199, guid: 86402eeadd1ab614f8b626948e805885,
-    type: 3}
-  contentParent: {fileID: 978522797}
-  firstSlotPos: {x: -97.4, y: 221.6}
-  <SlotsInRow>k__BackingField: 4
-  buyables:
-  - {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
---- !u!4 &1055287009
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1055287007}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.6603494, y: 14.2827215, z: -4.6141043}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1077948135
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,7 +1284,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1175347123
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2064,7 +2014,7 @@ Transform:
   m_LocalScale: {x: 1, y: 4.996008, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1881372135
 GameObject:

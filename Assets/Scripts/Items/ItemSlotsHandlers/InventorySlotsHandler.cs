@@ -1,10 +1,10 @@
-﻿using FarmSim.Items;
+﻿using FarmSim.Slots;
 using FarmSim.Utility;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FarmSim.Slots
+namespace FarmSim.Items
 {
     /// <class name="InventorySlotsHandler">
     ///     <summary>
@@ -49,7 +49,7 @@ namespace FarmSim.Slots
         protected override void ManageSlotOnLoad(GameObject slot, int slotIndex)
         {
             // assign click manager properties
-            var slotManager = slot.GetComponent<SlotClickManager>();
+            var slotManager = slot.GetComponent<EmptySlotManager>();
             slotManager.SlotIndex = slotIndex;
             slotManager.SlotsHandler = this;
         }

@@ -37,19 +37,19 @@ namespace FarmSim.Slots
         /// <param name="otherSlotIndex">The slot index of the other item</param>
         /// <param name="other">The other item that will be swapped with the <see cref="attachedSwappable"/></param>
         /// <param name="slotHandler">Used to move the attached item to the correct empty slot</param>
-        public void SwapPositions(int otherSlotIndex, IPositionManager other, SlotsHandler slotHandler = null)
+        public void SwapPositions(int otherSlotIndex, ISwappable other, SlotsHandler slotHandler = null)
         {
             if (other != null)
             {
                 if (attachedSwappable.AvoidSwap(other))
                     return;
 
-                SlotsHandler attachedSlotHandler = attachedSwappable.PositionManager.SlotsHandler;
+                SlotsHandler attachedSlotHandler = attachedSwappable.SlotsHandler;
 
                 // move other swappable to the attached swappables slot
                 int temp_idx = attachedSwappable.SlotIndex;
-                other.Swappable.SlotIndex = attachedSwappable.SlotIndex;
-                attachedSlotHandler.MoveImageToSlot(other.Swappable.Icon.gameObject, temp_idx);
+                other.SlotIndex = attachedSwappable.SlotIndex;
+                attachedSlotHandler.MoveImageToSlot(other.Icon.gameObject, temp_idx);
 
                 // move attached swappable to the other swappables slot
                 attachedSwappable.SlotIndex = otherSlotIndex;
@@ -57,7 +57,7 @@ namespace FarmSim.Slots
 
                 // swap which slot handler they will reference
                 SlotsHandler temp_slots = attachedSlotHandler;
-                attachedSwappable.PositionManager.SlotsHandler = other.SlotsHandler;
+                attachedSwappable.SlotsHandler = other.SlotsHandler;
                 other.SlotsHandler = temp_slots;
             }
             else
@@ -69,7 +69,7 @@ namespace FarmSim.Slots
 
 
                 // assign the slot handler of the empty slot to the attached swappable.
-                attachedSwappable.PositionManager.SlotsHandler = slotHandler;
+                attachedSwappable.SlotsHandler = slotHandler;
             }
 
 

@@ -1,21 +1,15 @@
-﻿using FarmSim.Slots;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-namespace FarmSim.Items
+namespace FarmSim.Slots
 {
-    /// <class name="ItemPositionManager">
+    /// <class name="SwappablePositionManager">
     ///     <summary>
-    ///         Manages the position of an Item Icon/<see cref="Image"/> in the inventory.
+    ///         Manages the position of an <see cref="ISwappable"/> using the <see cref="SwapManager"/>.
     ///     </summary>
     /// </class>
-    public class ItemPositionManager : MonoBehaviour, IPointerClickHandler, IPositionManager
+    public class SwappablePositionManager : MonoBehaviour, IPointerClickHandler
     {
-        /// <summary>
-        ///     The slots handler that contains the slot this item is in.
-        /// </summary>
-        public SlotsHandler SlotsHandler { get; set; }
         public ISwappable Swappable { get; private set; }
 
         private SwapManager movementManager;
@@ -25,7 +19,7 @@ namespace FarmSim.Items
             movementManager = FindObjectOfType<SwapManager>();
         }
 
-        public void SetSwappable(Item item) => Swappable = item;
+        public void SetSwappable(ISwappable swappable) => Swappable = swappable;
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -33,7 +27,7 @@ namespace FarmSim.Items
             {
                 if (movementManager.HasAttachedSwappable())
                 {
-                    movementManager.SwapPositions(Swappable.SlotIndex, this);
+                    movementManager.SwapPositions(Swappable.SlotIndex, Swappable);
                 }
                 else
                 {
