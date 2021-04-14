@@ -1,5 +1,6 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Items;
+using FarmSim.Player;
 using FarmSim.Utility;
 using UnityEngine;
 
@@ -26,6 +27,7 @@ namespace FarmSim.Placeables
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
         public string Guid { protected get; set; }
+        protected PlayerController player;
         private Inventory inventory;
 
         private SpriteRenderer sprite = null;
@@ -42,6 +44,7 @@ namespace FarmSim.Placeables
             }
             sprite = GetComponent<SpriteRenderer>();
             moveObject = FindObjectOfType<MoveObject>();
+            player = FindObjectOfType<PlayerController>();
             inventory = FindObjectOfType<Inventory>();
 
             InitColors();
