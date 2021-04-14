@@ -190,7 +190,7 @@ MonoBehaviour:
   moneyTxt: {fileID: 208477648}
   amtTxt: {fileID: 450697594}
   decisionBtnTxt: {fileID: 1333088129}
-  decisionBtn: {fileID: 760733855}
+  decisionBtn: {fileID: 490517236}
   playerCurrencyManager: {fileID: 1090752707022115401}
   buyables:
   - {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
@@ -1861,12 +1861,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopToHandle: {fileID: 70921599}
   increment: 0
-  maxInterval: 0.5
-  minInterval: 0.01
-  intervalDecrease: 0.1
-  CurrentInterval: 0
-  timer: 0
-  isDown: 0
 --- !u!1 &763768784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3735,12 +3729,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shopToHandle: {fileID: 70921599}
   increment: 1
-  maxInterval: 0.5
-  minInterval: 0.01
-  intervalDecrease: 0.1
-  CurrentInterval: 0
-  timer: 0
-  isDown: 0
 --- !u!1 &1998528374
 GameObject:
   m_ObjectHideFlags: 0

@@ -106,9 +106,9 @@ namespace FarmSim.Shops
             if (!isBuying && amtToExchange >= itemToSell.Amt)
                 return;
 
-            DetermineInteractabilityOnBuy();
-
             amtToExchange++;
+
+            DetermineInteractabilityOnBuy();
 
             SetTexts();
         }

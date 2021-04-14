@@ -31,7 +31,10 @@ namespace FarmSim.Slots
         /// <summary>
         ///     Swaps the positions of 1-2 item <see cref="Image"/>'s in the inventory UI.
         ///     <para>
-        ///         If otherItem is null a slotHandler must be given.
+        ///         If there is an empty slot that can hold an item, other is null and a slotHandler must be given.
+        ///     </para>
+        ///     <para>
+        ///         If both other and slotHandler are null then that means the slot contents cannot be modified.
         ///     </para>
         /// </summary>
         /// <param name="otherSlotIndex">The slot index of the other item</param>
@@ -62,7 +65,11 @@ namespace FarmSim.Slots
             }
             else
             {
-                Assert.IsNotNull(slotHandler);
+                // if there is no assigned slot handler for the empty slot that means nothing can replace it
+                if(slotHandler == null)
+                {
+                    return;
+                }
                 // move attached swappable to the empty slot
                 attachedSwappable.SlotIndex = otherSlotIndex;
                 slotHandler.MoveImageToSlot(attachedSwappable.Icon.gameObject, otherSlotIndex);

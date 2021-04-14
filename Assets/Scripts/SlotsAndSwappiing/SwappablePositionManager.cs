@@ -10,6 +10,9 @@ namespace FarmSim.Slots
     /// </class>
     public class SwappablePositionManager : MonoBehaviour, IPointerClickHandler
     {
+        /// <summary>
+        ///     Set when the items slot sprite is created. 
+        /// </summary>
         public ISwappable Swappable { get; private set; }
 
         private SwapManager movementManager;
@@ -27,10 +30,12 @@ namespace FarmSim.Slots
             {
                 if (movementManager.HasAttachedSwappable())
                 {
+                    // swap the positions of the attached swappable with this one.
                     movementManager.SwapPositions(Swappable.SlotIndex, Swappable);
                 }
                 else
                 {
+                    // set the attached swappable to be this.
                     movementManager.SetAttachedSwappable(Swappable);
                 }
             }

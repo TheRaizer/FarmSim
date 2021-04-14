@@ -12,7 +12,7 @@ namespace FarmSim.Slots
     {
         public int SlotIndex { private get; set; }
         /// <summary>
-        ///     The slots handler that contains this slot
+        ///     The slots handler that contains this slot. Assigned when the slot <see cref="GameObject"/> is instantiated.
         /// </summary>
         public SlotsHandler SlotsHandler { private get; set; }
         private SwapManager movementManager;
@@ -28,7 +28,7 @@ namespace FarmSim.Slots
             {
                 if (movementManager.HasAttachedSwappable())
                 {
-                    // move attached item to this slot using the given index for the list of slots in the SlotsHandler
+                    // move attached item to this empty slot
                     movementManager.SwapPositions(SlotIndex, null, SlotsHandler);
                 }
             }
