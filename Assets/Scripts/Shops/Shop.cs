@@ -95,7 +95,7 @@ namespace FarmSim.Shops
                 Sell();
             }
 
-            exchangePanel.SetActive(false);
+            CloseExchangePanel();
         }
 
         // Unity btn event
@@ -113,7 +113,11 @@ namespace FarmSim.Shops
             SetTexts();
 
             if (!isBuying)
+            {
+                moneyTxt.color = Color.black;
+                amtTxt.color = Color.black;
                 return;
+            }
             if (!CanBuy)
             {
                 moneyTxt.color = Color.red;
@@ -145,8 +149,16 @@ namespace FarmSim.Shops
             }
         }
 
+        // Unity btn event
+        public void CloseExchangePanel()
+        {
+            exchangePanel.SetActive(false);
+            shopUI.SetActive(true);
+        }
+
         public void OpenSellPanel(Item item)
         {
+            shopUI.SetActive(false);
             isBuying = false;
             itemToSell = item;
             amtToExchange = 0;
@@ -163,6 +175,7 @@ namespace FarmSim.Shops
 
         public void OpenBuyPanel(ItemType itemType)
         {
+            shopUI.SetActive(false);
             isBuying = true;
             itemToBuy = itemType;
             amtToExchange = 0;
@@ -194,6 +207,7 @@ namespace FarmSim.Shops
             if (CanBuy)
             {
                 playerCurrencyManager.DecreaseAmt(TotalCost);
+                inventory.AddToInventory(itemToBuy, amtToExchange);
             }
         }
 

@@ -12,7 +12,6 @@ namespace FarmSim.Entity
     /// </class>
     public class EntityPathFind
     {
-        public Node Destination { get; private set; }
         public bool ProcessingPath { get; private set; }
         public float Speed { private get; set; }
 
@@ -65,7 +64,6 @@ namespace FarmSim.Entity
             if (start == null || end == null || !end.Data.IsWalkable)
                 return;
 
-            Destination = end;
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 
             PathRequestManager.Instance.RequestPath(currentRequest);

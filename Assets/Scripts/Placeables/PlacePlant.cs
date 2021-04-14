@@ -15,12 +15,16 @@ namespace FarmSim.Placeables
     /// </class>
     public class PlacePlant : Placeable
     {
+        Node destination = null;
+
         protected override void Update()
         {
             if (Input.GetMouseButtonDown(0))
             {
+                destination = NodeGrid.Instance.GetNodeFromMousePosition();
+
                 // unlike in the Placeable parent class we do not want to occupy the space unless the interaction was succesful.
-                if (NodeGrid.Instance.IsValidPlacement(player.Destination, xDim, yDim))
+                if (NodeGrid.Instance.IsValidPlacement(destination, xDim, yDim))
                 {
                     player.OnPlant = OnPlace;
                 }
@@ -29,10 +33,10 @@ namespace FarmSim.Placeables
 
         protected override void OnPlace()
         {
-            player.Destination.Interactable.OnInteract(ToolTypes.Other, objectToPlace,
+            destination.Interactable.OnInteract(ToolTypes.Other, objectToPlace,
                 () =>
                 {
-                    NodeGrid.Instance.MakeDimensionsOccupied(player.Destination, xDim, yDim, isWalkable);
+                    NodeGrid.Instance.MakeDimensionsOccupied(destination, xDim, yDim, isWalkable);
                     ReduceAmtPlaceable();
                 });
         }

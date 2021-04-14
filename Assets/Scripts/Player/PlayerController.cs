@@ -22,7 +22,6 @@ namespace FarmSim.Player
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
-        public Node Destination { get; private set; }
 
         private Animator animator;
         private EntityPathFind pathFind;
