@@ -190,6 +190,7 @@ MonoBehaviour:
   moneyTxt: {fileID: 208477648}
   amtTxt: {fileID: 450697594}
   decisionBtnTxt: {fileID: 1333088129}
+  decisionBtn: {fileID: 760733855}
   playerCurrencyManager: {fileID: 1090752707022115401}
   buyables:
   - {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
@@ -1736,6 +1737,7 @@ GameObject:
   - component: {fileID: 760733857}
   - component: {fileID: 760733856}
   - component: {fileID: 760733855}
+  - component: {fileID: 760733858}
   m_Layer: 5
   m_Name: DecrementBtn
   m_TagString: Untagged
@@ -1806,19 +1808,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 760733856}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 70921599}
-        m_TargetAssemblyTypeName: FarmSim.Shops.Shop, Shops
-        m_MethodName: DecrementAmtToBuy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &760733856
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1857,6 +1847,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 760733853}
   m_CullTransparentMesh: 1
+--- !u!114 &760733858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760733853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9938aa3488261a74199ef7c1eeea7548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopToHandle: {fileID: 70921599}
+  increment: 0
+  maxInterval: 0.5
+  minInterval: 0.01
+  intervalDecrease: 0.1
+  CurrentInterval: 0
+  timer: 0
+  isDown: 0
 --- !u!1 &763768784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3601,6 +3611,7 @@ GameObject:
   - component: {fileID: 1938946749}
   - component: {fileID: 1938946748}
   - component: {fileID: 1938946747}
+  - component: {fileID: 1938946750}
   m_Layer: 5
   m_Name: IncrementBtn
   m_TagString: Untagged
@@ -3671,19 +3682,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1938946748}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 70921599}
-        m_TargetAssemblyTypeName: FarmSim.Shops.Shop, Shops
-        m_MethodName: IncrementAmtToBuy
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1938946748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3722,6 +3721,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1938946745}
   m_CullTransparentMesh: 1
+--- !u!114 &1938946750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938946745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9938aa3488261a74199ef7c1eeea7548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shopToHandle: {fileID: 70921599}
+  increment: 1
+  maxInterval: 0.5
+  minInterval: 0.01
+  intervalDecrease: 0.1
+  CurrentInterval: 0
+  timer: 0
+  isDown: 0
 --- !u!1 &1998528374
 GameObject:
   m_ObjectHideFlags: 0

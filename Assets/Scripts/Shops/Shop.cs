@@ -3,6 +3,7 @@ using FarmSim.Items;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace FarmSim.Shops
 {
@@ -24,6 +25,7 @@ namespace FarmSim.Shops
         [SerializeField] private TextMeshProUGUI moneyTxt;
         [SerializeField] private TextMeshProUGUI amtTxt;
         [SerializeField] private TextMeshProUGUI decisionBtnTxt;
+        [SerializeField] private Button decisionBtn;
 
         [Header("Player Currency")]
         [SerializeField] private CurrencyManager playerCurrencyManager;
@@ -98,55 +100,30 @@ namespace FarmSim.Shops
             CloseExchangePanel();
         }
 
-        // Unity btn event
-        public void IncrementAmtToBuy()
+        public void IncrementAmt()
         {
-            if (!isBuying)
-            {
-                // if they try to sell more then they have.
-                if (amtToExchange >= itemToSell.Amt)
-                    return;
-            }
+            // if they try to sell more then they have.
+            if (!isBuying && amtToExchange >= itemToSell.Amt)
+                return;
+
+            DetermineInteractabilityOnBuy();
 
             amtToExchange++;
 
             SetTexts();
-
-            if (!isBuying)
-            {
-                moneyTxt.color = Color.black;
-                amtTxt.color = Color.black;
-                return;
-            }
-            if (!CanBuy)
-            {
-                moneyTxt.color = Color.red;
-                amtTxt.color = Color.red;
-            }
         }
 
-        // Unity btn event
-        public void DecrementAmtToBuy()
+        public void DecrementAmt()
         {
             if (amtToExchange <= 1)
                 return;
 
+
             amtToExchange--;
 
-            SetTexts();
+            DetermineInteractabilityOnBuy();
 
-            if (!isBuying)
-                return;
-            if (!CanBuy)
-            {
-                moneyTxt.color = Color.red;
-                amtTxt.color = Color.red;
-            }
-            else
-            {
-                moneyTxt.color = Color.black;
-                amtTxt.color = Color.black;
-            }
+            SetTexts();
         }
 
         // Unity btn event
@@ -162,7 +139,7 @@ namespace FarmSim.Shops
             isBuying = false;
             itemToSell = item;
             amtToExchange = 0;
-            IncrementAmtToBuy();
+            IncrementAmt();
 
             // set texts for the exchange panel
             decisionBtnTxt.SetText("Sell");
@@ -179,7 +156,7 @@ namespace FarmSim.Shops
             isBuying = true;
             itemToBuy = itemType;
             amtToExchange = 0;
-            IncrementAmtToBuy();
+            IncrementAmt();
 
             // set texts for the exchange panel
             decisionBtnTxt.SetText("Buy");
@@ -188,6 +165,29 @@ namespace FarmSim.Shops
 
             // show the exchange panel
             exchangePanel.SetActive(true);
+        }
+
+        private void DetermineInteractabilityOnBuy()
+        {
+            if (isBuying)
+            {
+                if (!CanBuy)
+                {
+
+                    moneyTxt.color = Color.red;
+                    amtTxt.color = Color.red;
+
+                    decisionBtn.interactable = false;
+                }
+                else if (!decisionBtn.interactable && CanBuy)
+                {
+
+                    moneyTxt.color = Color.black;
+                    amtTxt.color = Color.black;
+
+                    decisionBtn.interactable = true;
+                }
+            }
         }
 
         private void AssignShopIconOpenPanel(GameObject icon)
@@ -204,11 +204,8 @@ namespace FarmSim.Shops
 
         private void Buy()
         {
-            if (CanBuy)
-            {
-                playerCurrencyManager.DecreaseAmt(TotalCost);
-                inventory.AddToInventory(itemToBuy, amtToExchange);
-            }
+            playerCurrencyManager.DecreaseAmt(TotalCost);
+            inventory.AddToInventory(itemToBuy, amtToExchange);
         }
 
         private void Sell()
