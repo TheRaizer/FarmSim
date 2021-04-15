@@ -15,13 +15,13 @@ namespace FarmSim.Items
     [Savable(true)]
     public class Inventory : MonoBehaviour, ISavable, ILoadable
     {
-        private readonly int maxStorage = 6;
+        private int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();
-        private InventorySlotsHandler inventoryUI;
+        private InventorySlotsHandler inventorySlots;
 
         private void Awake()
         {
-            inventoryUI = GetComponent<InventorySlotsHandler>();
+            inventorySlots = GetComponent<InventorySlotsHandler>();
         }
 
         /// <summary>
@@ -178,12 +178,12 @@ namespace FarmSim.Items
         /// <param name="firstLoad">Whether this is run when the inventory is loading.</param>
         private void AddImage(Item item)
         {
-            if (inventoryUI == null)
+            if (inventorySlots == null)
             {
                 Debug.LogWarning("inventoryUI is null");
                 return;
             }
-            inventoryUI.AddImageToSlot(item);
+            inventorySlots.AddImageToSlot(item);
         }
 
         public void DeleteItem(string guid)
@@ -220,6 +220,16 @@ namespace FarmSim.Items
             return inventory.FindAll(x => x.itemType == instanceType);
         }
 
+        public bool WillOverFlowOnAdd(ItemType itemType, int amt)
+        {
+            int numSlotsOccupy = Mathf.CeilToInt((float)amt / itemType.MaxCarryAmt);
+
+            if(numSlotsOccupy + inventory.Count > maxStorage)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public void Save()
         {
@@ -255,7 +265,7 @@ namespace FarmSim.Items
             {
                 LoadExistingItems(itemDatas);
             }
-            inventoryUI.InitializeUI(maxStorage, inventory);
+            inventorySlots.InitializeUI(maxStorage, inventory);
         }
 
         private void LoadExistingItems(List<ItemData> itemDatas)

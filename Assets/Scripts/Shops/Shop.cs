@@ -34,7 +34,7 @@ namespace FarmSim.Shops
         [SerializeField] private List<ItemType> buyables;
         [SerializeField] private string shopId;
 
-        private bool CanBuy => TotalCost <= playerCurrencyManager.CurrentAmt;
+        private bool CanBuy => (TotalCost <= playerCurrencyManager.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
         private int TotalCost => itemToBuy.Price * amtToExchange;
         private int SellValue => Mathf.FloorToInt(itemToSell.itemType.Price * amtToExchange / SELL_DECR);
 
