@@ -209,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loadOnAwake: 1
   numberOfSlots: 8
-  slotPrefab: {fileID: 2655680677248230199, guid: 5a485298846ac1d4ebb5cd4d66057d8a,
+  slotPrefab: {fileID: 2655680677248230199, guid: 86402eeadd1ab614f8b626948e805885,
     type: 3}
   contentParent: {fileID: 978522797}
   firstSlotPos: {x: -83, y: 218}

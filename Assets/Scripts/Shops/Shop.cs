@@ -135,10 +135,15 @@ namespace FarmSim.Shops
 
         public void OpenSellPanel(Item item)
         {
+            // reset UI
+            ResetExchangeUI();
             shopUI.SetActive(false);
+
+            // assign variables
             isBuying = false;
             itemToSell = item;
             amtToExchange = 0;
+
             IncrementAmt();
 
             // set texts for the exchange panel
@@ -152,10 +157,14 @@ namespace FarmSim.Shops
 
         public void OpenBuyPanel(ItemType itemType)
         {
+            ResetExchangeUI();
             shopUI.SetActive(false);
+
+            // assign variables
             isBuying = true;
             itemToBuy = itemType;
             amtToExchange = 0;
+
             IncrementAmt();
 
             // set texts for the exchange panel
@@ -182,12 +191,17 @@ namespace FarmSim.Shops
                 else if (!decisionBtn.interactable && CanBuy)
                 {
 
-                    moneyTxt.color = Color.black;
-                    amtTxt.color = Color.black;
-
-                    decisionBtn.interactable = true;
+                    ResetExchangeUI();
                 }
             }
+        }
+
+        private void ResetExchangeUI()
+        {
+            moneyTxt.color = Color.black;
+            amtTxt.color = Color.black;
+
+            decisionBtn.interactable = true;
         }
 
         private void AssignShopIconOpenPanel(GameObject icon)
