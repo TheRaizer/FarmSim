@@ -68,7 +68,7 @@ namespace FarmSim.Items
 
         public void InitializeUI(int numSlots, List<Item> inventory)
         {
-            LoadSlots(numSlots);
+            AddSlots(numSlots);
             LoadItemImagesIntoSlots(inventory);
         }
 

@@ -29,7 +29,7 @@ namespace FarmSim.Slots
         protected virtual void Awake()
         {
             if (loadOnAwake)
-                LoadSlots(numberOfSlots);
+                AddSlots(numberOfSlots);
         }
 
         public void MoveImageToSlot(GameObject obj, int slotIndex)
@@ -46,17 +46,29 @@ namespace FarmSim.Slots
         protected virtual void ManageSlotOnLoad(GameObject slot, int slotIndex) { }
 
         /// <summary>
-        ///     Loads slot images into their corrosponding positions in a given content panel.
+        ///     Adds slot images into their corrosponding positions in a given content panel.
         /// </summary>
         /// <param name="numOfSlots">The number of slots to Instantiate.</param>
-        public void LoadSlots(int numOfSlots)
+        public void AddSlots(int numOfSlots)
         {
-            int y = 0;
-            int slotIndex = 0;
+            // calculate the starting y/row 0-based
+            int y = slots.Count == 0 ? 0 : Mathf.FloorToInt((float)slots.Count / SlotsInRow);
+
+            // find the slot index to start adding from
+            int slotIndex = Mathf.Clamp(slots.Count, 0, int.MaxValue);
+
+            // get the starting x
+            int startX = slots.Count - (y * SlotsInRow);
+            Debug.Log(startX);
+
+            // get the max number of slots
+            int max = slots.Count + numOfSlots;
+
+            bool firstIteration = true;
 
             while (true)
             {
-                for (int x = 0; x < SlotsInRow; x++)
+                for (int x = firstIteration ? startX : 0; x < SlotsInRow; x++)
                 {
                     GameObject slot = Instantiate(slotPrefab, contentParent.transform);
 
@@ -71,11 +83,12 @@ namespace FarmSim.Slots
 
                     slotIndex++;
 
-                    if (slotIndex >= numOfSlots)
+                    if (slotIndex >= max)
                     {
                         return;
                     }
                 }
+                firstIteration = false;
                 y++;
             }
         }
