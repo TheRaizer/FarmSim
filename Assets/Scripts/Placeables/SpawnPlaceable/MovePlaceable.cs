@@ -1,33 +1,32 @@
 ﻿using FarmSim.Grid;
 using UnityEngine;
 
-
 namespace FarmSim.Placeables
 {
-    /// <class name="MoveObject">
+    /// <class name="MovePlaceable">
     ///     <summary>
     ///         Manages the movement of a single IPlaceable object at a time.
     ///     </summary>
     /// </class>
-    public class MoveObject : MonoBehaviour
+    public class MovePlaceable : MonoBehaviour
     {
-        public Placeable AttachedObject { get; set; } = null;
+        public Placeable AttachedPlaceable { get; set; } = null;
         private Node currentNode = null;
 
         private void Update()
         {
-            if (AttachedObject != null)
+            if (AttachedPlaceable != null)
             {
                 MovePlaceableToNode();
             }
         }
 
-        public void RemoveAttachedObject()
+        public void RemoveAttachedPlaceable()
         {
-            if (AttachedObject != null)
+            if (AttachedPlaceable != null)
             {
-                AttachedObject.gameObject.SetActive(false);
-                AttachedObject = null;
+                AttachedPlaceable.gameObject.SetActive(false);
+                AttachedPlaceable = null;
             }
         }
 
@@ -38,12 +37,16 @@ namespace FarmSim.Placeables
         {
             Node node = NodeGrid.Instance.GetNodeFromMousePosition();
 
-            if (node != null && (Vector2)AttachedObject.transform.position != node.Data.pos)
+
+            if (node != null && (Vector2)AttachedPlaceable.transform.position != node.Data.pos)
             {
+                if (!AttachedPlaceable.CanBePlaced(node))
+                    return;
+
                 currentNode = node;
 
-                AttachedObject.Node = currentNode;
-                AttachedObject.ChangePosition(currentNode.Data.pos);
+                AttachedPlaceable.DestinationNode = currentNode;
+                AttachedPlaceable.ChangePosition(currentNode.Data.pos);
             }
         }
     }

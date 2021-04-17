@@ -14,7 +14,7 @@ namespace FarmSim.Placeables
     /// </class>
     public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler, IReferenceGUID
     {
-        private MoveObject moveObject = null;
+        private MovePlaceable movePlaceable = null;
         private ObjectPooler objectPooler = null;
 
         private Inventory inventory;
@@ -27,7 +27,7 @@ namespace FarmSim.Placeables
 
         private void Awake()
         {
-            moveObject = FindObjectOfType<MoveObject>();
+            movePlaceable = FindObjectOfType<MovePlaceable>();
             inventory = FindObjectOfType<Inventory>();
             objectPooler = FindObjectOfType<ObjectPooler>();
             toolHandler = FindObjectOfType<ToolHandler>();
@@ -51,7 +51,10 @@ namespace FarmSim.Placeables
         /// </summary>
         private void SpawnPlaceable()
         {
-            Item item = inventory.TakeFromInventory(Guid, 0);
+            Item item = inventory.GetExactItem(Guid);
+
+            // assign an action to the item that will be called when its destroyed in order to also remove the attached placeable if it matches
+            item.RemoveAttachedPlaceableIfMatching = RemoveAttachedSwappableIfMatching;
 
             // Spawn the items corrosponding placeable object
             GameObject objToAttach = objectPooler.SpawnGameObject(item.itemType.ItemName, Vector2.zero, Quaternion.identity);
@@ -60,30 +63,40 @@ namespace FarmSim.Placeables
             {
                 placeable.Guid = Guid;
                 bool setNewPlaceable = RemoveCurrentPlaceable(objToAttach);
+
                 if (!setNewPlaceable)
                 {
                     return;
                 }
                 // assign a new attached object
-                moveObject.AttachedObject = placeable;
+                movePlaceable.AttachedPlaceable = placeable;
             }
         }
 
         private bool RemoveCurrentPlaceable(GameObject objToAttach)
         {
             bool setNewPlaceable = true;
-            if (moveObject.AttachedObject != null)
+            if (movePlaceable.AttachedPlaceable != null)
             {
 
                 // if we click on the same object then dont set the new attached object.
-                if (moveObject.AttachedObject.gameObject == objToAttach)
+                if (movePlaceable.AttachedPlaceable.gameObject == objToAttach)
                 {
                     setNewPlaceable = false;
                 }
 
-                moveObject.RemoveAttachedObject();
+                movePlaceable.RemoveAttachedPlaceable();
             }
             return setNewPlaceable;
+        }
+
+        private void RemoveAttachedSwappableIfMatching(string guid)
+        {
+            string attachedGuid = movePlaceable.AttachedPlaceable.Guid;
+            if (attachedGuid == guid)
+            {
+                movePlaceable.RemoveAttachedPlaceable();
+            }
         }
     }
 }

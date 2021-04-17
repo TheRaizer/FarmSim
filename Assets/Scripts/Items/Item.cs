@@ -15,14 +15,31 @@ namespace FarmSim.Items
     public class Item : ISwappable
     {
         /// <summary>
+        ///     The specific slot this items icon lies in.
+        /// </summary>
+        public int SlotIndex { get; set; }
+
+        /// <summary>
+        ///     The slots area this items icon is contained in.
+        /// </summary>
+        public SlotsHandler SlotsHandler { get; set; }
+
+        /// <summary>
+        ///     When item is being destroyed remove attached placeable if its GUID matches this items.
+        ///     
+        ///     <para>
+        ///         Assigned only when the placeable is spawned.
+        ///     </para>
+        /// </summary>
+        public Action<string> RemoveAttachedPlaceableIfMatching { private get; set; }
+
+        /// <summary>
         ///     The Icon of the item in the inventory
         /// </summary>
         public Image Icon { get; private set; }
         public int Amt { get; private set; }
-        public int SlotIndex { get; set; }
-        public bool CanSubtract => Amt > 0;
 
-        public SlotsHandler SlotsHandler { get; set; }
+        public bool CanSubtract => Amt > 0;
 
         private TextMeshProUGUI TextAmt;
 
@@ -33,6 +50,8 @@ namespace FarmSim.Items
 
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
+        /// /// <param name="_stackItems">A function that attempts to stack two items together and returns the remainder.</param>
+        /// /// <param name="_deleteItem">A void function that deletes the item from the inventory.</param>
         public Item(int startAmt, ItemType _itemType, Func<Item, Item, int> _stackItems, Action<string> _deleteItem)
         {
             Amt = startAmt;
@@ -146,6 +165,7 @@ namespace FarmSim.Items
         public void OnDestroy()
         {
             deleteItem(guid);
+            RemoveAttachedPlaceableIfMatching?.Invoke(guid);
         }
 
         public override string ToString()

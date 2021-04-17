@@ -19,22 +19,23 @@ namespace FarmSim.Placeables
         [SerializeField] protected bool isWalkable = true;
         [SerializeField] protected GameObject objectToPlace;
 
-        // REPLACE THIS COMPLETELY WITH PLAYER DESTINATION NODE
-        public Node Node { get; set; }
+        public Node DestinationNode { get; set; }
 
         /// <summary>
         ///     This guid is given when the placeable is spawned.
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
-        public string Guid { protected get; set; }
+        public string Guid { get; set; }
         protected PlayerController player;
         private Inventory inventory;
 
         private SpriteRenderer sprite = null;
-        private MoveObject moveObject = null;
+        private MovePlaceable movePlaceable = null;
 
         private Color invalidColor;
         private Color validColor;
+
+        public bool CanBePlaced(Node node) => node != null && NodeGrid.Instance.IsValidPlacement(node, xDim, yDim);
 
         protected virtual void Awake()
         {
@@ -43,7 +44,7 @@ namespace FarmSim.Placeables
                 Debug.LogError("Center node cannot be found with even dimensions");
             }
             sprite = GetComponent<SpriteRenderer>();
-            moveObject = FindObjectOfType<MoveObject>();
+            movePlaceable = FindObjectOfType<MovePlaceable>();
             player = FindObjectOfType<PlayerController>();
             inventory = FindObjectOfType<Inventory>();
 
@@ -55,9 +56,9 @@ namespace FarmSim.Placeables
         {
             if (Input.GetMouseButtonDown(1))
             {
-                if (NodeGrid.Instance.IsValidPlacement(Node, xDim, yDim))
+                if (CanBePlaced(DestinationNode))
                 {
-                    NodeGrid.Instance.MakeDimensionsOccupied(Node, xDim, yDim, isWalkable);
+                    NodeGrid.Instance.MakeDimensionsOccupied(DestinationNode, xDim, yDim, isWalkable);
                     OnPlace();
                 }
             }
@@ -80,7 +81,7 @@ namespace FarmSim.Placeables
         {
             transform.position = newPos;
 
-            if (!NodeGrid.Instance.IsValidPlacement(Node, xDim, yDim))
+            if (!CanBePlaced(DestinationNode))
             {
                 sprite.color = invalidColor;
             }
@@ -90,6 +91,7 @@ namespace FarmSim.Placeables
             }
         }
 
+
         /// <summary>
         ///     Places <see cref="objectToPlace"/> at the current node.
         /// </summary>
@@ -97,7 +99,7 @@ namespace FarmSim.Placeables
         {
             ReduceAmtPlaceable();
             var obj = Instantiate(objectToPlace);
-            obj.transform.position = Node.Data.pos;
+            obj.transform.position = DestinationNode.Data.pos;
         }
 
         protected void ReduceAmtPlaceable()
@@ -105,7 +107,7 @@ namespace FarmSim.Placeables
             Item item = inventory.TakeFromInventory(Guid, 1);
             if (item != null && item.Amt <= 0)
             {
-                moveObject.RemoveAttachedObject();
+                movePlaceable.RemoveAttachedPlaceable();
             }
         }
     }

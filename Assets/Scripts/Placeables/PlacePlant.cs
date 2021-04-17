@@ -24,7 +24,7 @@ namespace FarmSim.Placeables
                 destination = NodeGrid.Instance.GetNodeFromMousePosition();
 
                 // unlike in the Placeable parent class we do not want to occupy the space unless the interaction was succesful.
-                if (NodeGrid.Instance.IsValidPlacement(destination, xDim, yDim))
+                if (destination != null && NodeGrid.Instance.IsValidPlacement(destination, xDim, yDim))
                 {
                     player.OnPlant = OnPlace;
                 }

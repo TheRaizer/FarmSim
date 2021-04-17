@@ -10,20 +10,20 @@ namespace FarmSim.Placeables
     /// </class>
     public class RemoveAttachedPlaceable : MonoBehaviour
     {
-        private MoveObject moveObject;
+        private MovePlaceable movePlaceable;
         private ToolHandler toolHandler;
 
         private void Awake()
         {
             toolHandler = FindObjectOfType<ToolHandler>();
-            moveObject = GetComponent<MoveObject>();
+            movePlaceable = GetComponent<MovePlaceable>();
         }
 
         private void Update()
         {
             if (toolHandler.EquippedTool.ToolType != Enums.ToolTypes.Hand)
             {
-                moveObject.RemoveAttachedObject();
+                movePlaceable.RemoveAttachedPlaceable();
             }
         }
     }
