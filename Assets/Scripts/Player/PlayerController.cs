@@ -5,6 +5,7 @@ using FarmSim.Grid;
 using FarmSim.Serialization;
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FarmSim.Player
 {
@@ -50,7 +51,8 @@ namespace FarmSim.Player
                 }
             }
 
-            if (Input.GetMouseButtonDown(0))
+            // check if mouse is pressed and if the pointer is not on a UI object
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 pathFind.RequestPath();
             }

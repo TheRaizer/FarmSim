@@ -1,13 +1,12 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Serialization;
-using FarmSim.Slots;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Items
 {
-    /// <class name="PlayerInventoryList">
+    /// <class name="Inventory">
     ///     <summary>
     ///         Class that contains and manages the player's items.
     ///     </summary>

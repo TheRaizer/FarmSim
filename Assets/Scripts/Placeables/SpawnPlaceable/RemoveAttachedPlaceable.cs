@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace FarmSim.Placeables
 {
-    /// <class name="PlayerInventoryList">
+    /// <class name="RemoveAttachedPlaceable">
     ///     <summary>
     ///         Removes the attached placeable if it is not the hand.
     ///     </summary>
@@ -21,10 +21,9 @@ namespace FarmSim.Placeables
 
         private void Update()
         {
-            if (toolHandler.EquippedTool.ToolType != Enums.ToolTypes.Hand && moveObject.AttachedObject != null)
+            if (toolHandler.EquippedTool.ToolType != Enums.ToolTypes.Hand)
             {
-                moveObject.AttachedObject.gameObject.SetActive(false);
-                moveObject.AttachedObject = null;
+                moveObject.RemoveAttachedObject();
             }
         }
     }

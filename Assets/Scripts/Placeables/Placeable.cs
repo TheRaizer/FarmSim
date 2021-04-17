@@ -105,8 +105,7 @@ namespace FarmSim.Placeables
             Item item = inventory.TakeFromInventory(Guid, 1);
             if (item != null && item.Amt <= 0)
             {
-                moveObject.AttachedObject = null;
-                gameObject.SetActive(false);
+                moveObject.RemoveAttachedObject();
             }
         }
     }

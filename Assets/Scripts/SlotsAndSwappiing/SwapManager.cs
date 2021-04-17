@@ -1,6 +1,5 @@
 ﻿using FarmSim.Utility;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 namespace FarmSim.Slots

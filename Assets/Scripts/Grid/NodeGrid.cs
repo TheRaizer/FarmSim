@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace FarmSim.Grid
 {
-    /// <class name="GridLayout">
+    /// <class name="NodeGrid">
     ///     <summary>
     ///         Contains a grid of <see cref="Node"/>'s and functions
     ///         that manage them.

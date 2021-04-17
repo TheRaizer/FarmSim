@@ -22,6 +22,15 @@ namespace FarmSim.Placeables
             }
         }
 
+        public void RemoveAttachedObject()
+        {
+            if (AttachedObject != null)
+            {
+                AttachedObject.gameObject.SetActive(false);
+                AttachedObject = null;
+            }
+        }
+
         /// <summary>
         ///     Moves some IPlaceable to its closest node.
         /// </summary>

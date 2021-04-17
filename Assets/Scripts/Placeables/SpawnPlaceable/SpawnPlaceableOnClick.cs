@@ -74,8 +74,6 @@ namespace FarmSim.Placeables
             bool setNewPlaceable = true;
             if (moveObject.AttachedObject != null)
             {
-                // if there is currently an attached object then because attached objects are spawned from object pooler set it unactive
-                moveObject.AttachedObject.gameObject.SetActive(false);
 
                 // if we click on the same object then dont set the new attached object.
                 if (moveObject.AttachedObject.gameObject == objToAttach)
@@ -83,7 +81,7 @@ namespace FarmSim.Placeables
                     setNewPlaceable = false;
                 }
 
-                moveObject.AttachedObject = null;
+                moveObject.RemoveAttachedObject();
             }
             return setNewPlaceable;
         }
