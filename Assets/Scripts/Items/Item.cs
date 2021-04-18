@@ -48,6 +48,8 @@ namespace FarmSim.Items
         private readonly Func<Item, Item, int> stackItems;
         private readonly Action<string> deleteItem;
 
+        private const int TEXT_CHILD_IDX = 1;
+
         /// <param name="startAmt">The amount to initialize the item with.</param>
         /// <param name="_itemType">Acts as an enum as there should be only a single instance of a Scriptable Object.</param>
         /// /// <param name="_stackItems">A function that attempts to stack two items together and returns the remainder.</param>
@@ -105,8 +107,8 @@ namespace FarmSim.Items
             SlotIndex = slotIndex;
             GameObject itemObj = UnityEngine.Object.Instantiate(itemType.IconPrefab);
 
-            // First child of the icon gameObject must be the text amt
-            GameObject textAmt = itemObj.transform.GetChild(0).gameObject;
+            // Second child of the icon gameObject must be the text amt
+            GameObject textAmt = itemObj.transform.GetChild(TEXT_CHILD_IDX).gameObject;
 
             if (itemObj.TryGetComponent(out IReferenceGUID guid))
             {
