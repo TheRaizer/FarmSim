@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xDim: 1
   yDim: 1
+  isWalkable: 1
   objectToPlace: {fileID: 800048636282084859, guid: 611926425801d584784783c90b2b3a96,
     type: 3}
 --- !u!212 &4143157420248380044
@@ -63,6 +64,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -87,9 +89,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -585230308400216287, guid: bd45801b839a68d46abe8469550f8c71,
+  m_Sprite: {fileID: 6459203684388587281, guid: 19b9dca472e264c46adc7298478580d1,
     type: 3}
-  m_Color: {r: 0.35104248, g: 0.33490568, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
