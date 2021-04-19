@@ -57,6 +57,14 @@ namespace FarmSim.Shops
             shopImages.Add(shopId, itemImages);
         }
 
+        /// <summary>
+        ///     Activates different sets of <see cref="Item"/> shop icons depending on the id given.
+        ///     
+        ///     <para>
+        ///         The use of this function allows multiple shops to share the same UI.
+        ///     </para>
+        /// </summary>
+        /// <param name="shopId">The id that points to a set of shop icons contained in the slots.</param>
         public void ActivateShopSprites(string shopId)
         {
             if (!shopImages.ContainsKey(shopId))

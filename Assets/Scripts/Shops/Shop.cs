@@ -9,7 +9,7 @@ namespace FarmSim.Shops
 {
     /// <class name="Shop">
     ///     <summary>
-    ///         Component attached to any shop which manages buying and selling.
+    ///         Component attached to any shop which manages buying and selling of items.
     ///     </summary>
     /// </class>
     public class Shop : MonoBehaviour

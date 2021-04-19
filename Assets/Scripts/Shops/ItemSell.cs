@@ -5,6 +5,11 @@ using UnityEngine.EventSystems;
 
 namespace FarmSim.Shops
 {
+    /// <class name="ItemSell">
+    ///     <summary>
+    ///         When clicked opens the sell panel of given <see cref="Shop"/> with the <see cref="Item"/> held in the <see cref="SwapManager"/>.
+    ///     </summary>
+    /// </class>
     public class ItemSell : MonoBehaviour, IPointerClickHandler
     {
         [SerializeField] private Shop shop;
