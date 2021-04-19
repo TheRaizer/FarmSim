@@ -53,7 +53,7 @@ namespace FarmSim.Serialization
         public void SavePlayer(int sectionNum)
         {
             PlayerData.Current.SectionNum = sectionNum;
-            if(SerializationManager.Save(PlayerData.Current, SavePaths.PLAYER_FILE))
+            if (SerializationManager.Save(PlayerData.Current, SavePaths.PLAYER_FILE))
             {
                 Debug.Log("Player Save was Succesful");
             }
@@ -68,7 +68,7 @@ namespace FarmSim.Serialization
 
             string[] filePaths = Directory.GetFiles(Application.persistentDataPath + "/" + SavePaths.SECTIONS_DIRECTORY + "/");
 
-            foreach(string path in filePaths)
+            foreach (string path in filePaths)
             {
                 string fileName = Path.GetFileNameWithoutExtension(path);
                 SectionData section = (SectionData)SerializationManager.LoadSave(fileName, SavePaths.SECTIONS_DIRECTORY);

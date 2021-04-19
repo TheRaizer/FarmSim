@@ -35,7 +35,7 @@ namespace FarmSim.Shops
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if(eventData.button == PointerEventData.InputButton.Left && !isDown)
+            if (eventData.button == PointerEventData.InputButton.Left && !isDown)
             {
                 isDown = true;
 

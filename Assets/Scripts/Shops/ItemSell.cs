@@ -1,7 +1,7 @@
-using UnityEngine;
-using FarmSim.Slots;
-using UnityEngine.EventSystems;
 using FarmSim.Items;
+using FarmSim.Slots;
+using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FarmSim.Shops
 {
@@ -34,7 +34,7 @@ namespace FarmSim.Shops
                 // open the sell panel with that item.
                 Item item = (Item)swappable;
                 shop.OpenSellPanel(item);
-                
+
                 // return the attached item back to its slot
                 swapManager.StopSwap();
             }

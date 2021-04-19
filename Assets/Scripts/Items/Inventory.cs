@@ -223,7 +223,7 @@ namespace FarmSim.Items
         {
             int numSlotsOccupy = Mathf.CeilToInt((float)amt / itemType.MaxCarryAmt);
 
-            if(numSlotsOccupy + inventory.Count > maxStorage)
+            if (numSlotsOccupy + inventory.Count > maxStorage)
             {
                 return true;
             }

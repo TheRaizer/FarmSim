@@ -28,7 +28,7 @@ namespace FarmSim.Shops
         /// <param name="shopId">Used to identify which images to activate/deactivate.</param>
         public void AddShopSpritesToSlot(List<ItemType> buyables, string shopId)
         {
-            if(buyables.Count >= slots.Count)
+            if (buyables.Count >= slots.Count)
             {
                 Debug.LogError("Too many buyables for the number of existing slots");
                 return;
@@ -36,7 +36,7 @@ namespace FarmSim.Shops
 
             List<GameObject> itemImages = new List<GameObject>();
 
-            for(int i = 0; i < buyables.Count; i++)
+            for (int i = 0; i < buyables.Count; i++)
             {
                 Image slot = slots[i];
                 GameObject itemImage = Instantiate(buyables[i].ShopIconPrefab, slot.transform);

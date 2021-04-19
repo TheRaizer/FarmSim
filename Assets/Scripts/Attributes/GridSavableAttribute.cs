@@ -16,7 +16,7 @@ namespace FarmSim.Attributes
         {
             saveOnAnySection = _saveOnAnySection;
         }
-        
+
         // this method will be used to check during saving
         public bool GetCanSaveOnAnySection()
         {

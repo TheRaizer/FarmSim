@@ -47,7 +47,7 @@ namespace FarmSim.Grid
 
             return path;
         }
-        
+
         public IEnumerator PathFindCo(Node start, Node end, string id)
         {
             if (!start.Data.IsWalkable && !end.Data.IsWalkable)

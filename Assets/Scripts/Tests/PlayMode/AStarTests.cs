@@ -1,6 +1,6 @@
-using System.Collections;
 using FarmSim.Grid;
 using NUnit.Framework;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -118,7 +118,7 @@ public class AStarTests
         for (int i = 0; i < path.Length; i++)
         {
             Node node = grid.GetNodeFromVector2(path[i]);
-            if(i <= 4)
+            if (i <= 4)
             {
                 // the previous node should be one to the right of the current node during steps <= 4
                 Assert.IsTrue((prevNode.Data.x == node.Data.x + 1) && (prevNode.Data.y == node.Data.y));

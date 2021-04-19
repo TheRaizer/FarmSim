@@ -1,6 +1,4 @@
 using FarmSim.TimeBased;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Sprinkler : MonoBehaviour, ITimeBased

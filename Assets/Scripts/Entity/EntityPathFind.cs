@@ -58,7 +58,7 @@ namespace FarmSim.Entity
             {
                 start = NodeGrid.Instance.GetNodeFromVector2(transform.position);
             }
-            
+
             Node end = NodeGrid.Instance.GetNodeFromMousePosition();
 
             if (start == null || end == null || !end.Data.IsWalkable)

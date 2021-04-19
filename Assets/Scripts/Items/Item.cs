@@ -137,7 +137,7 @@ namespace FarmSim.Items
         public bool AvoidSwap(ISwappable other)
         {
             // if the other position manager is holding an item
-            if(other.GetType() == typeof(Item))
+            if (other.GetType() == typeof(Item))
             {
                 // cast the swappable to an item
                 Item otherItem = (Item)other;

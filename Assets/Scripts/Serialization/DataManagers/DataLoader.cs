@@ -23,7 +23,7 @@ namespace FarmSim.Serialization
             // load the section data that the player last manually saved in
             SectionData.Current = mainSave?.sections.Find(x => x.SectionNum == PlayerData.Current.SectionNum);
 
-            if(SectionData.Current == null)
+            if (SectionData.Current == null)
             {
                 SectionData.Current = new SectionData();
             }
