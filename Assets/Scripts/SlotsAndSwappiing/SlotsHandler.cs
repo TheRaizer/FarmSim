@@ -20,11 +20,11 @@ namespace FarmSim.Slots
         // first slot is the top left slot
         [SerializeField] private Vector2 firstSlotPos = new Vector2(-87, 331);
 
+        [SerializeField] private int offset = 60;
+
         [field: SerializeField] public int SlotsInRow { get; private set; } = 4;
 
         protected readonly List<Image> slots = new List<Image>();
-
-        private const int OFFSET = 60;
 
         protected virtual void Awake()
         {
@@ -76,7 +76,7 @@ namespace FarmSim.Slots
 
                     Image slotImg = slot.GetComponent<Image>();
 
-                    slotImg.rectTransform.anchoredPosition = new Vector3(x * OFFSET + firstSlotPos.x, y * -OFFSET + firstSlotPos.y);
+                    slotImg.rectTransform.anchoredPosition = new Vector3(x * offset + firstSlotPos.x, y * -offset + firstSlotPos.y);
 
 
                     slots.Add(slotImg);

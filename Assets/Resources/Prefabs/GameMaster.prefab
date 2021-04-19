@@ -18,7 +18,8 @@ GameObject:
   - component: {fileID: 357524579}
   - component: {fileID: 357524580}
   - component: {fileID: 357524581}
-  - component: {fileID: 8740643151230519184}
+  - component: {fileID: 948761820}
+  - component: {fileID: 948761821}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: Untagged
@@ -56,11 +57,11 @@ MonoBehaviour:
   - id: Dirt
     numOfGameObjects: 900
     prefab: {fileID: 656009546809215653, guid: 200eb7ff15685534e929feba342bd171, type: 3}
-  - id: TomatoSeed
+  - id: Tomato Seed
     numOfGameObjects: 1
     prefab: {fileID: 7301315993295839137, guid: 16ba59f1180778244808608de007aa2d,
       type: 3}
-  - id: PotatoSeed
+  - id: Potato Seed
     numOfGameObjects: 1
     prefab: {fileID: 7301315993295839137, guid: 934988dfcd5228d4597d54b72f902dcc,
       type: 3}
@@ -176,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmt: 999999999
---- !u!114 &8740643151230519184
+--- !u!114 &948761820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,3 +197,15 @@ MonoBehaviour:
   firstSlotPos: {x: -87, y: 331}
   <SlotsInRow>k__BackingField: 4
   inventoryUI: {fileID: 0}
+--- !u!114 &948761821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090752706648671787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744fff619f9993e4ab6475c4a7ce7456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

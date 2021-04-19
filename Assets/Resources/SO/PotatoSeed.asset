@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d309e1815a307d5419bbdae02aa5d624, type: 3}
   m_Name: PotatoSeed
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: PotatoSeed
+  <ItemName>k__BackingField: Potato Seed
   <Price>k__BackingField: 3
   <MaxCarryAmt>k__BackingField: 10
   <IconPrefab>k__BackingField: {fileID: 1623432799832004589, guid: 54fd465d6c26968489a203d8dbd14760,

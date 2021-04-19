@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d309e1815a307d5419bbdae02aa5d624, type: 3}
   m_Name: TomatoSeed
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: TomatoSeed
+  <ItemName>k__BackingField: Tomato Seed
   <Price>k__BackingField: 3
   <MaxCarryAmt>k__BackingField: 100
   <IconPrefab>k__BackingField: {fileID: 1475856525572920501, guid: cb5f528907121654ebb1812cea07aa20,
     type: 3}
+  <ShopIconPrefab>k__BackingField: {fileID: 0}
   <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: ed4f6d6b38de6d94f95ec5f9efcd156e,
     type: 3}
