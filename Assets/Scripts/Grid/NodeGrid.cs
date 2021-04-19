@@ -21,7 +21,7 @@ namespace FarmSim.Grid
 
         public const int SECTION_SIZE_X = 30;
         public const int SECTION_SIZE_Y = 30;
-        private readonly List<int> SaveableSections = new List<int> { 0 };
+        private readonly List<int> SaveableSections = new List<int> { 0, 2 };
 
         private Node[,] sectionGrid;
         private SectionLoader sectionLoader = null;

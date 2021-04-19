@@ -75,7 +75,10 @@ namespace FarmSim.Serialization
 
                 mainSave.sections.Add(section);
             }
-            SerializationManager.Save(mainSave);
+            if (SerializationManager.Save(mainSave))
+            {
+                Debug.Log("Main Save was succesful");
+            }
         }
     }
 }
