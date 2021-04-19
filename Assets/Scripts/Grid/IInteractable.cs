@@ -9,12 +9,12 @@ namespace FarmSim.Grid
         /// <summary>
         ///     The X position of the node in the grid.
         /// </summary>
-        int X { get; set; }
+        int X { get; }
 
         /// <summary>
         ///     The X position of the node in the grid.
         /// </summary>
-        int Y { get; set; }
+        int Y { get; }
 
         /// <summary>
         ///     Interacts with the IInteractable.

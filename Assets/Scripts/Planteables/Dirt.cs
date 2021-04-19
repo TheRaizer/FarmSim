@@ -154,13 +154,15 @@ namespace FarmSim.Planteables
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Other:
-                    // check if this gameObject contains a planteable
-                    if (gameObject != null && gameObject.TryGetComponent<Planteable>(out _) && Data.Hoed)
+                    // check if the given gameObject contains a Planteable component
+                    if (Data.Hoed && gameObject != null && gameObject.TryGetComponent<Planteable>(out _))
                     {
+                        // generate the Planteable GameObject
                         var obj = Instantiate(gameObject);
                         obj.transform.position = transform.position;
-                        Plant = obj.GetComponent<Planteable>();
 
+                        // initialize the Dirts Plant field and give it the same Id as this Dirt instance.
+                        Plant = obj.GetComponent<Planteable>();
                         Plant.SetDataId(Data.Id);
 
                         onSuccessful?.Invoke();

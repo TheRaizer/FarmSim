@@ -192,7 +192,10 @@ namespace FarmSim.Grid
 
         public Node GetNodeFromXY(int x, int y)
         {
-            return sectionGrid[x, y];
+            if (IsInSection(x, y))
+                return sectionGrid[x, y];
+            else
+                return null;
         }
 
         public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)

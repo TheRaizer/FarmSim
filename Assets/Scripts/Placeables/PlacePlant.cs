@@ -33,12 +33,14 @@ namespace FarmSim.Placeables
 
         protected override void OnPlace()
         {
-            destination.Interactable.OnInteract(ToolTypes.Other, objectToPlace,
-                () =>
-                {
-                    NodeGrid.Instance.MakeDimensionsOccupied(destination, xDim, yDim, isWalkable);
-                    ReduceAmtPlaceable();
-                });
+            // use the Node OnInteract in an attempt to spawn a planteable on a instance of Dirt.
+            destination.Interactable.OnInteract(ToolTypes.Other, objectToPlace, OnPlantingSuccesful);
+        }
+
+        private void OnPlantingSuccesful()
+        {
+            NodeGrid.Instance.MakeDimensionsOccupied(destination, xDim, yDim, isWalkable);
+            ReduceAmtPlaceable();
         }
     }
 }
