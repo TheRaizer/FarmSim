@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6939850219046529757}
   - component: {fileID: 6939850219046529758}
   - component: {fileID: 6939850219046529756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TomatoDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}

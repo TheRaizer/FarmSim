@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6939850219046529757}
   - component: {fileID: 6939850219046529758}
   - component: {fileID: 6939850219046529756}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PotatoSeedDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6939850219046529753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.5, y: -0.52, z: 0}
-  m_LocalScale: {x: 6.5957108, y: 6.5957108, z: 6.5957108}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -49,6 +49,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -73,9 +74,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -840914439956534067, guid: bd45801b839a68d46abe8469550f8c71,
+  m_Sprite: {fileID: -283987104976234103, guid: 6a58db4060d14f74b87d82569c356ddf,
     type: 3}
-  m_Color: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -119,18 +120,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000058984384, y: 0.0027427278}
+  m_Offset: {x: -0.0052122474, y: -0.0051226914}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.3409091}
-    oldSize: {x: 0.32, y: 0.44}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.21, y: 0.21}
     newSize: {x: 0.32, y: 0.44}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.040140163, y: 0.024014454}
+  m_Size: {x: 0.10082404, y: 0.13955486}
   m_EdgeRadius: 0
 --- !u!114 &6939850219046529756
 MonoBehaviour:

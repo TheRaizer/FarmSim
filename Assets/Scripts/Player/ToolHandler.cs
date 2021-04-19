@@ -20,7 +20,7 @@ namespace FarmSim.Player
         [SerializeField] private Image toolPointer;
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
 
-        public Node NodeToToolOn;
+        private Node nodeToToolOn;
         public Tool EquippedTool { get; private set; }
 
         private PlayerController player;
@@ -46,7 +46,7 @@ namespace FarmSim.Player
                 Node node = NodeGrid.Instance.GetNodeFromMousePosition();
                 if (node != null)
                 {
-                    NodeToToolOn = node;
+                    nodeToToolOn = node;
                 }
                 player.ToolToUse = EquippedTool.ToolType;
             }
@@ -102,7 +102,7 @@ namespace FarmSim.Player
         {
             Tool tool = tools[player.ToolToUse];
             AudioManager.Instance.Play(tool.GetAudioId());
-            tool.OnUse(NodeToToolOn);
+            tool.OnUse(nodeToToolOn);
         }
 
         public void PostLoad()
