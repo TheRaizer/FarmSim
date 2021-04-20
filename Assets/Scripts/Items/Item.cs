@@ -110,9 +110,10 @@ namespace FarmSim.Items
             // Second child of the icon gameObject must be the text amt
             GameObject textAmt = itemObj.transform.GetChild(TEXT_CHILD_IDX).gameObject;
 
-            if (itemObj.TryGetComponent(out IReferenceGUID guid))
+            if (itemObj.TryGetComponent(out IItemRefsGUID guid))
             {
-                guid.Guid = this.guid;
+                // assign the reference guid to be this items guid
+                guid.itemGuid = this.guid;
             }
 
             // assign the slot index to the position manager for movement of items

@@ -12,7 +12,7 @@ namespace FarmSim.Placeables
     ///         Manages the placement of a given object.
     ///     </summary>
     /// </class>
-    public class Placeable : MonoBehaviour, IReferenceGUID
+    public class Placeable : MonoBehaviour, IItemRefsGUID
     {
         [SerializeField] protected int xDim = 0;
         [SerializeField] protected int yDim = 0;
@@ -25,7 +25,7 @@ namespace FarmSim.Placeables
         ///     This guid is given when the placeable is spawned.
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
-        public string Guid { get; set; }
+        public string itemGuid { get; set; }
         protected PlayerController player;
         private Inventory inventory;
 
@@ -104,7 +104,7 @@ namespace FarmSim.Placeables
 
         protected void ReduceAmtPlaceable()
         {
-            Item item = inventory.TakeFromInventory(Guid, 1);
+            Item item = inventory.TakeFromInventory(itemGuid, 1);
             if (item != null && item.Amt <= 0)
             {
                 movePlaceable.RemoveAttachedPlaceable();

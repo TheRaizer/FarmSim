@@ -242,7 +242,7 @@ namespace FarmSim.Items
 
                 // create an itemData object
                 ItemData itemData = new ItemData(item.Amt, itemType.name, item.SlotIndex);
-                Debug.Log("item type: " + itemData.itemTypeName + " || amt: " + itemData.amt);
+
                 // assign the object to the itemDatas list
                 itemDatas.Add(itemData);
             }
@@ -251,7 +251,6 @@ namespace FarmSim.Items
              * order for it to be saved along side the rest of the games data
              */
             PlayerData.Current.itemDatas = itemDatas;
-            Debug.Log("Save item data");
         }
 
         public void Load()
@@ -277,8 +276,6 @@ namespace FarmSim.Items
                 {
                     Debug.LogError("There is no scriptable object at path: " + "SO/" + itemData.itemTypeName);
                 }
-
-                Debug.Log("Item type: " + itemType.ItemName + " || Item amt: " + itemData.amt);
 
                 // Loads the item into the inventory
                 Item item = new Item(itemData.amt, itemType, StackItems, DeleteItem);

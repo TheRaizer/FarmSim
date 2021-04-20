@@ -6,6 +6,7 @@ using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using FarmSim.Utility;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -16,18 +17,23 @@ namespace FarmSim.Planteables
     ///     </summary>
     /// </class>
     [Savable(false)]
-    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable
+    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable, IWaterSourceRefsGUID
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
         [SerializeField] private Sprite wetHoedDirt = null;
 
-        public Planteable Plant { private get; set; } = null;
+        private Planteable plant = null;
 
         public DirtData Data { private get; set; }
 
         public int X { get; set; }
         public int Y { get; set; }
+
+        /// <summary>
+        ///     List of GUIDs representing the unique WaterSources
+        /// </summary>
+        public List<string> waterSrcGuids { get; } = new List<string>();
 
         private int daysTillRevert = 0;
 
@@ -46,7 +52,7 @@ namespace FarmSim.Planteables
 
         public void OnTimePass(int daysPassed = 1)
         {
-            if (Plant == null)
+            if (plant == null)
             {
                 daysTillRevert -= daysPassed;
                 CheckIfDried();
@@ -55,7 +61,10 @@ namespace FarmSim.Planteables
             {
                 if (Data.Watered)
                 {
-                    Plant.Grow(daysPassed);
+                    if (Data.HasWaterSource)
+                        plant.Grow(daysPassed);
+                    else
+                        plant.Grow(1);
                 }
             }
             Data.Watered = false;
@@ -89,9 +98,9 @@ namespace FarmSim.Planteables
 
         private void Harvest()
         {
-            if (Plant != null && Plant.CanHarvest)
+            if (plant != null && plant.CanHarvest)
             {
-                Plant.OnHarvest();
+                plant.OnHarvest();
                 Node node = NodeGrid.Instance.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
             }
@@ -135,23 +144,19 @@ namespace FarmSim.Planteables
             {
                 case ToolTypes.Hoe:
                     Hoe();
-                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.WateringCan:
                     Water();
-                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Sickle:
-                    if (Plant == null || Plant.ToolToHarvestWith != ToolTypes.Sickle)
+                    if (plant == null || plant.ToolToHarvestWith != ToolTypes.Sickle)
                         return;
                     Harvest();
-                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Axe:
-                    if (Plant == null || Plant.ToolToHarvestWith != ToolTypes.Axe)
+                    if (plant == null || plant.ToolToHarvestWith != ToolTypes.Axe)
                         return;
                     Harvest();
-                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Other:
                     // check if the given gameObject contains a Planteable component
@@ -162,16 +167,16 @@ namespace FarmSim.Planteables
                         obj.transform.position = transform.position;
 
                         // initialize the Dirts Plant field and give it the same Id as this Dirt instance.
-                        Plant = obj.GetComponent<Planteable>();
-                        Plant.SetDataId(Data.Id);
-
-                        onSuccessful?.Invoke();
+                        plant = obj.GetComponent<Planteable>();
+                        plant.SetDataId(Data.Id);
                     }
                     break;
                 default:
                     /*Debug.Log($"Do nothing with tooltype {toolType}");*/
                     break;
             }
+            Debug.Log("Success");
+            onSuccessful?.Invoke();
         }
 
         public void Save()
@@ -184,8 +189,8 @@ namespace FarmSim.Planteables
 
         public void Load()
         {
-            bool isEmpty = SectionData.Current.dirtDatas == null || SectionData.Current.dirtDatas.Count <= 0;
-            if (isEmpty)
+            bool noDirt = SectionData.Current.dirtDatas == null || SectionData.Current.dirtDatas.Count <= 0;
+            if (noDirt)
             {
                 // if there is no dirt data that was loaded then create a new one.
                 Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
@@ -195,9 +200,18 @@ namespace FarmSim.Planteables
                 LoadExistingDirt();
             }
 
-            if (SectionData.Current.internalDay != TimeData.Current.day)
+            CatchupOnTime();
+        }
+
+        private void CatchupOnTime()
+        {
+            if (SectionData.Current.internalDay < TimeData.Current.day)
             {
-                // pass a day passing in a optional int catchup
+                // catchup on the time difference between global and section internal days
+                int timeDiff = TimeData.Current.day - SectionData.Current.internalDay;
+
+                Debug.Log("Catchup " + timeDiff);
+                OnTimePass(timeDiff);
             }
         }
 
@@ -223,8 +237,8 @@ namespace FarmSim.Planteables
                 objInstance.transform.position = transform.position;
 
                 // assign the plant data
-                Plant = objInstance.GetComponent<Planteable>();
-                Plant.Data = plantData;
+                plant = objInstance.GetComponent<Planteable>();
+                plant.Data = plantData;
             }
         }
 

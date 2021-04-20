@@ -40,15 +40,18 @@ namespace FarmSim.Serialization
             // load the main save
             MainSaveData mainSave = (MainSaveData)SerializationManager.LoadSave(SavePaths.MAIN_SAVE_FILE);
 
-            foreach (SectionData sd in mainSave.sections)
+            if (mainSave != null)
             {
-                // Create new temp section data with the sections that were manually saved.
-                SerializationManager.Save(sd, SavePaths.SECTION_PREFIX + sd.SectionNum, SavePaths.SECTIONS_DIRECTORY);
-
-                if (sd.SectionNum == PlayerData.Current.SectionNum)
+                foreach (SectionData sd in mainSave.sections)
                 {
-                    // assign the current section to be section the player manually saved in
-                    SectionData.Current = sd;
+                    // Create new temp section data with the sections that were manually saved.
+                    SerializationManager.Save(sd, SavePaths.SECTION_PREFIX + sd.SectionNum, SavePaths.SECTIONS_DIRECTORY);
+
+                    if (sd.SectionNum == PlayerData.Current.SectionNum)
+                    {
+                        // assign the current section to be section the player manually saved in
+                        SectionData.Current = sd;
+                    }
                 }
             }
 

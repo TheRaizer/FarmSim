@@ -2,10 +2,12 @@ using FarmSim.TimeBased;
 using FarmSim.Grid;
 using FarmSim.Items;
 using FarmSim.Enums;
+using FarmSim.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using FarmSim.Planteables;
 
 public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
 {
@@ -36,11 +38,19 @@ public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
     public int X { get; set; }
     public int Y { get; set; }
 
+    private readonly string guid = Guid.NewGuid().ToString();
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         animationWait = new WaitForSeconds(animationInterval);
 
+        InitializeNodeInfo();
+        AddAsWaterSource();
+    }
+
+    private void InitializeNodeInfo()
+    {
         Node node = NodeGrid.Instance.GetNodeFromVector2(gameObject.transform.position);
         X = node.Data.x;
         Y = node.Data.y;
@@ -54,8 +64,6 @@ public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
 
         StopCoroutine(AnimationCo());
         StartCoroutine(AnimationCo());
-
-        WaterDimensions();
     }
 
     private IEnumerator AnimationCo()
@@ -70,16 +78,34 @@ public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
     private void WaterDimensions()
     {
         Node middleNode = NodeGrid.Instance.GetNodeFromXY(X, Y);
+
         if (middleNode == null)
-        {
             Debug.LogError("Middle node of a sprinkler was null");
-        }
 
         List<Node> nodesToWater = NodeGrid.Instance.GetNodesFromDimensions(middleNode, xDist, yDist);
 
         foreach (Node n in nodesToWater)
         {
             n.Interactable.OnInteract(ToolTypes.WateringCan);
+        }
+    }
+
+    private void AddAsWaterSource()
+    {
+        Node middleNode = NodeGrid.Instance.GetNodeFromXY(X, Y);
+
+        if (middleNode == null)
+            Debug.LogError("Middle node of a sprinkler was null");
+
+        List<Node> nodesToWater = NodeGrid.Instance.GetNodesFromDimensions(middleNode, xDist, yDist);
+
+        foreach (Node n in nodesToWater)
+        {
+            // if the interactable 
+            if (n.Interactable)
+            {
+                referenceList.Guids.Add(guid);
+            }
         }
     }
 

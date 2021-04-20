@@ -12,7 +12,7 @@ namespace FarmSim.Placeables
     ///         Spawns a Placeable object and references a <see cref="Item"/> through its GUUID.
     ///     </summary>
     /// </class>
-    public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler, IReferenceGUID
+    public class SpawnPlaceableOnClick : MonoBehaviour, IPointerClickHandler, IItemRefsGUID
     {
         private MovePlaceable movePlaceable = null;
         private ObjectPooler objectPooler = null;
@@ -23,7 +23,7 @@ namespace FarmSim.Placeables
         /// <summary>
         ///     Points to some item in the inventory and will be passed to the placeable.
         /// </summary>
-        public string Guid { get; set; }
+        public string itemGuid { get; set; }
 
         private void Awake()
         {
@@ -51,7 +51,7 @@ namespace FarmSim.Placeables
         /// </summary>
         private void SpawnPlaceable()
         {
-            Item item = inventory.GetExactItem(Guid);
+            Item item = inventory.GetExactItem(itemGuid);
 
             // assign an action to the item that will be called when its destroyed in order to also remove the attached placeable if it matches
             item.RemoveAttachedPlaceableIfMatching = RemoveAttachedSwappableIfMatching;
@@ -61,7 +61,7 @@ namespace FarmSim.Placeables
 
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
-                placeable.Guid = Guid;
+                placeable.itemGuid = itemGuid;
                 bool setNewPlaceable = RemoveCurrentPlaceable(objToAttach);
 
                 if (!setNewPlaceable)
@@ -92,7 +92,7 @@ namespace FarmSim.Placeables
 
         private void RemoveAttachedSwappableIfMatching(string guid)
         {
-            string attachedGuid = movePlaceable.AttachedPlaceable.Guid;
+            string attachedGuid = movePlaceable.AttachedPlaceable.itemGuid;
             if (attachedGuid == guid)
             {
                 movePlaceable.RemoveAttachedPlaceable();

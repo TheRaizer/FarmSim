@@ -53,8 +53,6 @@ namespace FarmSim.Planteables
         /// </summary>
         public void Grow(int daysPassed)
         {
-            if (Data.CurrentGrowthDay >= daysToGrow)
-                return;
             CheckSpriteChange();
             Data.CurrentGrowthDay += daysPassed;
 
