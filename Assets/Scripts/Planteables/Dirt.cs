@@ -17,7 +17,7 @@ namespace FarmSim.Planteables
     ///     </summary>
     /// </class>
     [Savable(false)]
-    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable, IWaterSourceRefsGUIDs
+    public class Dirt : TimeCatchUp, IInteractable, ISavable, ILoadable, IWaterSourceRefsGUIDs
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
@@ -50,7 +50,7 @@ namespace FarmSim.Planteables
             objectPooler = FindObjectOfType<ObjectPooler>();
         }
 
-        public void OnTimePass(int daysPassed = 1)
+        public override void OnTimePass(int daysPassed = 1)
         {
             if (plant == null)
             {
@@ -202,20 +202,6 @@ namespace FarmSim.Planteables
             {
                 LoadExistingDirt();
             }
-
-            CatchupOnTime();
-        }
-
-        private void CatchupOnTime()
-        {
-            if (SectionData.Current.internalDay < TimeData.Current.day)
-            {
-                // catchup on the time difference between global and section internal days
-                int timeDiff = TimeData.Current.day - SectionData.Current.internalDay;
-
-                Debug.Log("Catchup " + timeDiff);
-                OnTimePass(timeDiff);
-            }
         }
 
         private void LoadExistingDirt()
@@ -245,8 +231,9 @@ namespace FarmSim.Planteables
             }
         }
 
-        public void PostLoad()
+        public override void PostLoad()
         {
+            base.PostLoad();
             CheckSpriteType();
         }
     }
