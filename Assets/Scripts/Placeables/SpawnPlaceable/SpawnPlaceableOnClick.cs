@@ -23,7 +23,7 @@ namespace FarmSim.Placeables
         /// <summary>
         ///     Points to some item in the inventory and will be passed to the placeable.
         /// </summary>
-        public string itemGuid { get; set; }
+        public string ItemGuid { get; set; }
 
         private void Awake()
         {
@@ -51,7 +51,7 @@ namespace FarmSim.Placeables
         /// </summary>
         private void SpawnPlaceable()
         {
-            Item item = inventory.GetExactItem(itemGuid);
+            Item item = inventory.GetExactItem(ItemGuid);
 
             // assign an action to the item that will be called when its destroyed in order to also remove the attached placeable if it matches
             item.RemoveAttachedPlaceableIfMatching = RemoveAttachedSwappableIfMatching;
@@ -61,7 +61,7 @@ namespace FarmSim.Placeables
 
             if (objToAttach.TryGetComponent(out Placeable placeable))
             {
-                placeable.itemGuid = itemGuid;
+                placeable.ItemGuid = ItemGuid;
                 bool setNewPlaceable = RemoveCurrentPlaceable(objToAttach);
 
                 if (!setNewPlaceable)
@@ -92,7 +92,7 @@ namespace FarmSim.Placeables
 
         private void RemoveAttachedSwappableIfMatching(string guid)
         {
-            string attachedGuid = movePlaceable.AttachedPlaceable.itemGuid;
+            string attachedGuid = movePlaceable.AttachedPlaceable.ItemGuid;
             if (attachedGuid == guid)
             {
                 movePlaceable.RemoveAttachedPlaceable();

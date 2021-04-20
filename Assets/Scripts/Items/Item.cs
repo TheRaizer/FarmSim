@@ -113,7 +113,7 @@ namespace FarmSim.Items
             if (itemObj.TryGetComponent(out IItemRefsGUID guid))
             {
                 // assign the reference guid to be this items guid
-                guid.itemGuid = this.guid;
+                guid.ItemGuid = this.guid;
             }
 
             // assign the slot index to the position manager for movement of items

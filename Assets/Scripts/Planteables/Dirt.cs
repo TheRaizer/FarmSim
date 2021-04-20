@@ -17,7 +17,7 @@ namespace FarmSim.Planteables
     ///     </summary>
     /// </class>
     [Savable(false)]
-    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable, IWaterSourceRefsGUID
+    public class Dirt : MonoBehaviour, IOccurPostLoad, ITimeBased, IInteractable, ISavable, ILoadable, IWaterSourceRefsGUIDs
     {
         [SerializeField] private Sprite dryDirt = null;
         [SerializeField] private Sprite hoedDirt = null;
@@ -33,7 +33,7 @@ namespace FarmSim.Planteables
         /// <summary>
         ///     List of GUIDs representing the unique WaterSources
         /// </summary>
-        public List<string> waterSrcGuids { get; } = new List<string>();
+        public List<string> WaterSrcGuids { get; } = new List<string>();
 
         private int daysTillRevert = 0;
 
@@ -61,7 +61,7 @@ namespace FarmSim.Planteables
             {
                 if (Data.Watered)
                 {
-                    if (Data.HasWaterSource)
+                    if (WaterSrcGuids.Count > 0)
                         plant.Grow(daysPassed);
                     else
                         plant.Grow(1);

@@ -25,7 +25,7 @@ namespace FarmSim.Placeables
         ///     This guid is given when the placeable is spawned.
         ///     The relating item amount should be reduced whenever a placement was succesful.
         /// </summary>
-        public string itemGuid { get; set; }
+        public string ItemGuid { get; set; }
         protected PlayerController player;
         private Inventory inventory;
 
@@ -104,7 +104,7 @@ namespace FarmSim.Placeables
 
         protected void ReduceAmtPlaceable()
         {
-            Item item = inventory.TakeFromInventory(itemGuid, 1);
+            Item item = inventory.TakeFromInventory(ItemGuid, 1);
             if (item != null && item.Amt <= 0)
             {
                 movePlaceable.RemoveAttachedPlaceable();
