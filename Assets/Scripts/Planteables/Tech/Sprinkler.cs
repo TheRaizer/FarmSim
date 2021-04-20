@@ -83,7 +83,7 @@ public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
         }
     }
 
-    public void OnDayPass()
+    public void OnTimePass(int daysPassed = 1)
     {
         StartCoroutine(SprinkleCo());
     }

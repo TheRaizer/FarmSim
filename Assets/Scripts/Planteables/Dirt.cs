@@ -44,18 +44,18 @@ namespace FarmSim.Planteables
             objectPooler = FindObjectOfType<ObjectPooler>();
         }
 
-        public void OnDayPass()
+        public void OnTimePass(int daysPassed = 1)
         {
             if (Plant == null)
             {
-                daysTillRevert--;
+                daysTillRevert -= daysPassed;
                 CheckIfDried();
             }
             else
             {
                 if (Data.Watered)
                 {
-                    Plant.Grow();
+                    Plant.Grow(daysPassed);
                 }
             }
             Data.Watered = false;
@@ -193,6 +193,11 @@ namespace FarmSim.Planteables
             else
             {
                 LoadExistingDirt();
+            }
+
+            if (SectionData.Current.internalDay != TimeData.Current.day)
+            {
+                // pass a day passing in a optional int catchup
             }
         }
 

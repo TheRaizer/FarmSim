@@ -24,6 +24,8 @@ namespace FarmSim.Serialization
         public List<PlanteableData> plantDatas = new List<PlanteableData>();
         public NodeData[,] nodeDatas;
 
+        public int internalDay;
+
         public static SectionData Current
         {
             get

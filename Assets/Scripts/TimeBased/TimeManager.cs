@@ -51,7 +51,7 @@ namespace FarmSim.TimeBased
         {
             dayPassBackground.SetActive(true);
             TimeData.Current.day++;
-            timeBasedObjects.ForEach(timeBased => timeBased.OnDayPass());
+            timeBasedObjects.ForEach(timeBased => timeBased.OnTimePass());
 
             dataSaver.SaveMain(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
         }

@@ -49,14 +49,14 @@ namespace FarmSim.Planteables
         }
 
         /// <summary>
-        ///     Function that grows the given planteable and should be called in some class that has a function <see cref="ITimeBased.OnDayPass"/>.
+        ///     Function that grows the given planteable and should be called in some class that has a function <see cref="ITimeBased.OnTimePass"/>.
         /// </summary>
-        public void Grow()
+        public void Grow(int daysPassed)
         {
             if (Data.CurrentGrowthDay >= daysToGrow)
                 return;
             CheckSpriteChange();
-            Data.CurrentGrowthDay++;
+            Data.CurrentGrowthDay += daysPassed;
 
             // if the current growth day is the last day thats when we can assign the last sprite
             if (Data.CurrentGrowthDay >= daysToGrow)
@@ -88,11 +88,19 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckSpriteChange()
         {
-            // if its on the interval to change and the sprite index isnt the last sprite
-            if (Data.CurrentGrowthDay == spriteChangeInterval * (Data.SpriteIdx + 1) && Data.SpriteIdx != spriteLifeCycle.Count - 1)
+            // if the plant is still growing
+            if (Data.CurrentGrowthDay <= daysToGrow)
             {
-                Data.SpriteIdx++;
+                // calculate the sprite idx
+                Data.SpriteIdx = Mathf.RoundToInt((float)Data.CurrentGrowthDay / spriteChangeInterval);
+
+                // assign the sprite
                 spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
+            }
+            else
+            {
+                // assign the last sprite
+                spriteRenderer.sprite = spriteLifeCycle[spriteLifeCycle.Count - 1];
             }
         }
 

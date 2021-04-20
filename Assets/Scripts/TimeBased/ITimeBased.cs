@@ -6,6 +6,6 @@ namespace FarmSim.TimeBased
         /// <summary>
         ///     Runs on the pass of each in-game day.
         /// </summary>
-        void OnDayPass();
+        void OnTimePass(int daysPassed = 1);
     }
 }

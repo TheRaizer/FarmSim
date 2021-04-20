@@ -28,7 +28,7 @@ namespace Tests
             // grow 7 days
             for (int i = 0; i < 7; i++)
             {
-                plant.Grow();
+                plant.Grow(1);
             }
 
             // we should be able to harvest now
