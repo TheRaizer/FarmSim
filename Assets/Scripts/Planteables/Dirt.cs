@@ -144,19 +144,23 @@ namespace FarmSim.Planteables
             {
                 case ToolTypes.Hoe:
                     Hoe();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.WateringCan:
                     Water();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Sickle:
                     if (plant == null || plant.ToolToHarvestWith != ToolTypes.Sickle)
                         return;
                     Harvest();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Axe:
                     if (plant == null || plant.ToolToHarvestWith != ToolTypes.Axe)
                         return;
                     Harvest();
+                    onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Other:
                     // check if the given gameObject contains a Planteable component
@@ -170,13 +174,12 @@ namespace FarmSim.Planteables
                         plant = obj.GetComponent<Planteable>();
                         plant.SetDataId(Data.Id);
                     }
+                    onSuccessful?.Invoke();
                     break;
                 default:
                     /*Debug.Log($"Do nothing with tooltype {toolType}");*/
                     break;
             }
-            Debug.Log("Success");
-            onSuccessful?.Invoke();
         }
 
         public void Save()
