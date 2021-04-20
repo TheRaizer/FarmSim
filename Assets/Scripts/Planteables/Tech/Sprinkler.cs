@@ -104,7 +104,7 @@ public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable
 
         Node middleNode = NodeGrid.Instance.GetNodeFromXY(X, Y);
 
-        // reassign the previous interactable
+        // reassign to the previous interactable
         middleNode.Interactable = prevInteractable;
 
         Destroy(gameObject);

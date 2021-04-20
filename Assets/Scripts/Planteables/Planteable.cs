@@ -59,7 +59,7 @@ namespace FarmSim.Planteables
             Data.CurrentGrowthDay++;
 
             // if the current growth day is the last day thats when we can assign the last sprite
-            if (Data.CurrentGrowthDay == daysToGrow)
+            if (Data.CurrentGrowthDay >= daysToGrow)
             {
                 Data.CanHarvest = true;
             }

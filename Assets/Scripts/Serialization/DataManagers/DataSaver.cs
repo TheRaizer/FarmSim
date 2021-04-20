@@ -63,6 +63,7 @@ namespace FarmSim.Serialization
         {
             SaveSectionVoid(isSavableSection, sectionNum);
             SavePlayer(sectionNum);
+            SaveTime();
 
             MainSaveData mainSave = new MainSaveData();
 
@@ -78,6 +79,14 @@ namespace FarmSim.Serialization
             if (SerializationManager.Save(mainSave))
             {
                 Debug.Log("Main Save was succesful");
+            }
+        }
+
+        public void SaveTime()
+        {
+            if(SerializationManager.Save(TimeData.Current, SavePaths.TIME_FILE))
+            {
+                Debug.Log("Time Save was succesful");
             }
         }
     }

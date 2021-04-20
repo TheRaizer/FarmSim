@@ -18,8 +18,6 @@ namespace FarmSim.TimeBased
         private List<ITimeBased> timeBasedObjects = null;
         private DataSaver dataSaver;
 
-        public int CurrentDay { get; private set; } = 0;
-
         private void Awake()
         {
             dataSaver = GetComponent<DataSaver>();
@@ -52,7 +50,7 @@ namespace FarmSim.TimeBased
         private void MoveToNextDay()
         {
             dayPassBackground.SetActive(true);
-            CurrentDay++;
+            TimeData.Current.day++;
             timeBasedObjects.ForEach(timeBased => timeBased.OnDayPass());
 
             dataSaver.SaveMain(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);

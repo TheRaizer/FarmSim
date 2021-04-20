@@ -18,6 +18,7 @@ namespace FarmSim.Serialization
         {
             // load player data
             PlayerData.Current = (PlayerData)SerializationManager.LoadSave(SavePaths.PLAYER_FILE);
+            TimeData.Current = (TimeData)SerializationManager.LoadSave(SavePaths.TIME_FILE);
 
             RemoveTemporarySectionData();
 
