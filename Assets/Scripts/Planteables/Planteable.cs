@@ -20,9 +20,7 @@ namespace FarmSim.Planteables
     {
         [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
         [SerializeField] private string originalPrefabName = null;
-        /// <summary>
-        ///     Includes the day it was planted.
-        /// </summary>
+
         [SerializeField] private int daysToGrow = 0;
 
         [SerializeField] private int maxAmtToDrop = 0;
@@ -36,7 +34,7 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
+        public PlanteableData Data { private get; set; } = new PlanteableData("", 0, 0, false);
         private SpriteRenderer spriteRenderer;
 
         private int spriteChangeInterval = 0;
@@ -51,10 +49,10 @@ namespace FarmSim.Planteables
         /// <summary>
         ///     Function that grows the given planteable and should be called in some class that has a function <see cref="ITimeBased.OnTimePass"/>.
         /// </summary>
-        public void Grow(int daysPassed)
+        public void Grow(int daysPassed = 1)
         {
-            CheckSpriteChange();
             Data.CurrentGrowthDay += daysPassed;
+            CheckSpriteChange();
 
             // if the current growth day is the last day thats when we can assign the last sprite
             if (Data.CurrentGrowthDay >= daysToGrow)
@@ -98,7 +96,8 @@ namespace FarmSim.Planteables
             else
             {
                 // assign the last sprite
-                spriteRenderer.sprite = spriteLifeCycle[spriteLifeCycle.Count - 1];
+                Data.SpriteIdx = spriteLifeCycle.Count - 1;
+                spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
             }
         }
 

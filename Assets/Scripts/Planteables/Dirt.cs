@@ -1,7 +1,6 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Grid;
-using FarmSim.Loading;
 using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using FarmSim.Utility;
@@ -64,7 +63,7 @@ namespace FarmSim.Planteables
                     if (WaterSrcGuids.Count > 0)
                         plant.Grow(daysPassed);
                     else
-                        plant.Grow(1);
+                        plant.Grow();
                 }
             }
             Data.Watered = false;
