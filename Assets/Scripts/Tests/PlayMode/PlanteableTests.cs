@@ -36,6 +36,31 @@ namespace Tests
         }
 
         [Test]
+        public void CatchUpDaysGrowthTest()
+        {
+            var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+            if (prefab == null)
+            {
+                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
+            }
+            var planteableObj = Object.Instantiate(prefab);
+
+            Planteable plant = planteableObj.GetComponent<Planteable>();
+
+            // we can't harvest until grown
+            Assert.IsFalse(plant.CanHarvest);
+
+            plant.Grow(2);
+
+            Assert.IsFalse(plant.CanHarvest);
+
+            plant.Grow(7);
+
+            // we should be able to harvest now
+            Assert.IsTrue(plant.CanHarvest);
+        }
+
+        [Test]
         public void PlantSaveTest()
         {
             var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
