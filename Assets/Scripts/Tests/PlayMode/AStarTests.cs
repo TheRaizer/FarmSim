@@ -6,15 +6,29 @@ using UnityEngine.TestTools;
 
 public class AStarTests
 {
+    private NodeGrid currNodeGrid;
+    private PathRequestManager currRequestManager;
+
+    [SetUp]
+    public void SetUp()
+    {
+        currNodeGrid = new GameObject().AddComponent<NodeGrid>();
+
+        currNodeGrid.transform.position = Vector3.zero;
+        currNodeGrid.LoadSectionTest();
+
+        currRequestManager = currNodeGrid.gameObject.AddComponent<PathRequestManager>();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Object.DestroyImmediate(currNodeGrid.gameObject);
+    }
+
     [UnityTest]
     public IEnumerator AStarPathFindingNoBlocksTest()
     {
-        var gameObject = new GameObject();
-        var grid = gameObject.AddComponent<NodeGrid>();
-        var requestManager = gameObject.AddComponent<PathRequestManager>();
-        grid.transform.position = Vector3.zero;
-        grid.LoadSectionTest();
-
         float xStart = Node.NODE_DIAMETER * 5;
         float yStart = Node.NODE_DIAMETER * 5;
 
@@ -32,8 +46,8 @@ public class AStarTests
         var start = new Vector2(xStart, yStart);
         var end = new Vector2(xEnd, yEnd);
 
-        Node startNode = grid.GetNodeFromVector2(start);
-        Node endNode = grid.GetNodeFromVector2(end);
+        Node startNode = currNodeGrid.GetNodeFromVector2(start);
+        Node endNode = currNodeGrid.GetNodeFromVector2(end);
 
         Vector2[] path = null;
         PathRequest request = new PathRequest("test", startNode, endNode, (Vector2[] _path, bool foundPath) =>
@@ -42,26 +56,19 @@ public class AStarTests
             Assert.IsTrue(foundPath);
         });
 
-        requestManager.RequestPath(request);
+        currRequestManager.RequestPath(request);
 
         yield return new WaitForSeconds(0.1f);
 
         Assert.NotNull(path);
 
-        Assert.AreEqual(7, grid.GetManhattanDistance(startNode, endNode));
+        Assert.AreEqual(7, currNodeGrid.GetManhattanDistance(startNode, endNode));
         Assert.AreEqual(7, path.Length);
     }
 
     [UnityTest]
     public IEnumerator AStarPathFindingWithBlockageTest()
     {
-        Debug.Log(Object.FindObjectOfType<NodeGrid>());
-        var gameObject = new GameObject();
-        var grid = gameObject.AddComponent<NodeGrid>();
-        var requestManager = gameObject.AddComponent<PathRequestManager>();
-        grid.transform.position = Vector3.zero;
-        grid.LoadSectionTest();
-
         float xStart = Node.NODE_DIAMETER * 5;
         float yStart = Node.NODE_DIAMETER * 5;
 
@@ -81,16 +88,16 @@ public class AStarTests
         var end = new Vector2(xEnd, yEnd);
 
 
-        Node startNode = grid.GetNodeFromVector2(start);
-        Node endNode = grid.GetNodeFromVector2(end);
+        Node startNode = currNodeGrid.GetNodeFromVector2(start);
+        Node endNode = currNodeGrid.GetNodeFromVector2(end);
 
         // create the walls
-        Node blockage_1_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 1, Node.NODE_DIAMETER * 4));
-        Node blockage_2_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 2, Node.NODE_DIAMETER * 4));
-        Node blockage_3_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 4));
-        Node blockage_3_3 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 3));
-        Node blockage_3_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 2));
-        Node blockage_3_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 1));
+        Node blockage_1_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 1, Node.NODE_DIAMETER * 4));
+        Node blockage_2_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 2, Node.NODE_DIAMETER * 4));
+        Node blockage_3_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 4));
+        Node blockage_3_3 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 3));
+        Node blockage_3_2 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 2));
+        Node blockage_3_1 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 1));
 
         // make the walls appear as walls to the algorithm
         blockage_1_4.Data.IsWalkable = false;
@@ -107,20 +114,20 @@ public class AStarTests
             Assert.IsTrue(foundPath);
         });
 
-        requestManager.RequestPath(request);
+        currRequestManager.RequestPath(request);
 
         yield return new WaitForSeconds(0.1f);
 
         Assert.NotNull(path);
 
-        Assert.AreEqual(7, grid.GetManhattanDistance(startNode, endNode));
+        Assert.AreEqual(7, currNodeGrid.GetManhattanDistance(startNode, endNode));
         Assert.AreEqual(9, path.Length);
 
         Node prevNode = startNode;
 
         for (int i = 0; i < path.Length; i++)
         {
-            Node node = grid.GetNodeFromVector2(path[i]);
+            Node node = currNodeGrid.GetNodeFromVector2(path[i]);
             if (i <= 4)
             {
                 // the previous node should be one to the right of the current node during steps <= 4

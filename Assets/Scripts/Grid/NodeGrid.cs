@@ -1,6 +1,7 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Serialization;
 using FarmSim.Utility;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -55,7 +56,7 @@ namespace FarmSim.Grid
 
             // initialize an empty grid.
             sectionGrid = sectionLoader.InitGrid();
-            Debug.Log("index: " + scene.buildIndex);
+
             // if the scene does not need loading don't load.
             if (scene.buildIndex - 1 < 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
             {
@@ -97,8 +98,13 @@ namespace FarmSim.Grid
         /// </returns>
         public Node GetNodeFromVector2(Vector2 vector)
         {
-            int x = Mathf.FloorToInt((vector.x - transform.position.x) / Node.NODE_DIAMETER);
-            int y = Mathf.FloorToInt((vector.y - transform.position.y) / Node.NODE_DIAMETER);
+            // round the actual value to 4 decimal places to avoid incorrect indexes
+            float xVal = (float)Math.Round((float)((vector.x - transform.position.x) / Node.NODE_DIAMETER), 4);
+            float yVal = (float)Math.Round((float)((vector.y - transform.position.y) / Node.NODE_DIAMETER), 4);
+
+            // floor the values to get the correct node in the case that the vector is not exactly at the nodes position
+            int x = Mathf.FloorToInt(xVal);
+            int y = Mathf.FloorToInt(yVal);
 
             if (IsInSection(x, y))
             {
@@ -119,8 +125,8 @@ namespace FarmSim.Grid
         /// <returns>true if there are no occupied Nodes in the space, otherwise false.</returns>
         public bool IsValidPlacement(Node node, int xDim, int yDim)
         {
-            int yStart = node.Data.y - yDim / 2;
-            int xStart = node.Data.x - xDim / 2;
+            int yStart = node.Data.y - (yDim / 2);
+            int xStart = node.Data.x - (xDim / 2);
 
             for (int y = 0; y < yDim; y++)
             {
@@ -147,8 +153,8 @@ namespace FarmSim.Grid
         /// <param name="yDim">The y-dimension.</param>
         public void MakeDimensionsOccupied(Node node, int xDim, int yDim, bool isWalkable = true)
         {
-            int yStart = node.Data.y - yDim / 2;
-            int xStart = node.Data.x - xDim / 2;
+            int yStart = node.Data.y - (yDim / 2);
+            int xStart = node.Data.x - (xDim / 2);
 
             for (int y = 0; y < yDim; y++)
             {
@@ -201,8 +207,8 @@ namespace FarmSim.Grid
         public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)
         {
             List<Node> nodes = new List<Node>();
-            int yStart = middleNode.Data.y - yDim / 2;
-            int xStart = middleNode.Data.x - xDim / 2;
+            int yStart = middleNode.Data.y - (yDim / 2);
+            int xStart = middleNode.Data.x - (xDim / 2);
 
             for (int y = 0; y < yDim; y++)
             {
