@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 3742074760872906717}
   - component: {fileID: 3742074760872906718}
   m_Layer: 0
-  m_Name: Player
+  m_Name: PlayerUnitTest
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  tileRing: {fileID: 0}
+  tileRing: {fileID: 2777183793427770251, guid: b5fa84fe9633ce946956d35dc72ec1dd,
+    type: 3}
   inventoryUI: {fileID: 0}
 --- !u!95 &3742074760932526145
 Animator:

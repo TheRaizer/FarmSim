@@ -1803,16 +1803,6 @@ PrefabInstance:
       propertyPath: toolPointer
       value: 
       objectReference: {fileID: 87504174}
-    - target: {fileID: 3742074760872906717, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
-        type: 3}
-      propertyPath: toolList.Array.data[0].numOfSounds
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3742074760872906717, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
-        type: 3}
-      propertyPath: toolList.Array.data[0].AudioIdPrefix
-      value: HoeingDirt_
-      objectReference: {fileID: 0}
     - target: {fileID: 3742074760872906718, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: inventoryUI

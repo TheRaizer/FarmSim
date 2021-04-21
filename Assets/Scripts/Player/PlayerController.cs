@@ -19,7 +19,6 @@ namespace FarmSim.Player
     {
         [SerializeField] private float speed;
         [SerializeField] private GameObject tileRing;
-        [SerializeField] private GameObject inventoryUI;
 
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
@@ -62,7 +61,7 @@ namespace FarmSim.Player
         private void ChangeRingPosition()
         {
             Node node = NodeGrid.Instance.GetNodeFromMousePosition();
-            if (node != null)
+            if (node != null && tileRing != null)
             {
                 Vector2 pos = node.Data.pos;
                 tileRing.transform.position = pos;
