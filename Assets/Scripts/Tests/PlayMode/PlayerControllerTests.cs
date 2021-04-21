@@ -4,6 +4,7 @@ using FarmSim.Grid;
 using FarmSim.Player;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 public class PlayerControllerTests
@@ -11,19 +12,7 @@ public class PlayerControllerTests
     [UnityTest]
     public IEnumerator PlayerPathFindingTest()
     {
-        var playerPrefab = Resources.Load("Prefabs/UnitTests/PlayerUnitTest") as GameObject;
-        if (playerPrefab == null)
-        {
-            Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PlayerUnitTest");
-        }
-        var playerObj = Object.Instantiate(playerPrefab);
-        playerObj.transform.position = Vector3.zero;
-
-        var playerController = playerObj.GetComponent<PlayerController>();
-
-        var grid = new GameObject().AddComponent<NodeGrid>();
-        grid.transform.position = Vector3.zero;
-        grid.LoadSectionTest();
+        SceneManager.LoadScene(1);
 
         yield return new WaitForSeconds(3);
     }

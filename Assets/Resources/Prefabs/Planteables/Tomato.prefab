@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4701ad9329d1447a8b82e3261fefdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ToolToHarvestWith>k__BackingField: 2
   originalPrefabName: Tomato
   daysToGrow: 4
-  <ToolToHarvestWith>k__BackingField: 2
   maxAmtToDrop: 5
   minAmtToDrop: 2
   spriteLifeCycle:
@@ -70,6 +70,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -21,6 +21,7 @@ namespace FarmSim.Planteables
         [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
         [SerializeField] private string originalPrefabName = null;
 
+        // includes the day it was planted
         [SerializeField] private int daysToGrow = 0;
 
         [SerializeField] private int maxAmtToDrop = 0;
@@ -34,7 +35,7 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        public PlanteableData Data { private get; set; } = new PlanteableData("", 0, 0, false);
+        public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
         private SpriteRenderer spriteRenderer;
 
         private int spriteChangeInterval = 0;
@@ -43,6 +44,9 @@ namespace FarmSim.Planteables
         {
             Data.PrefabName = originalPrefabName;
             spriteRenderer = GetComponent<SpriteRenderer>();
+
+            if (daysToGrow < spriteLifeCycle.Count)
+                Debug.LogError("Days to grow cannot be less than the number of sprites. " + gameObject.name);
             spriteChangeInterval = Mathf.CeilToInt((float)daysToGrow / spriteLifeCycle.Count);
         }
 
@@ -88,7 +92,7 @@ namespace FarmSim.Planteables
             if (Data.CurrentGrowthDay <= daysToGrow)
             {
                 // calculate the sprite idx
-                int idx = Mathf.RoundToInt((float)Data.CurrentGrowthDay / spriteChangeInterval);
+                int idx = Mathf.CeilToInt(((float)Data.CurrentGrowthDay / spriteChangeInterval) - 1);
                 Data.SpriteIdx = Mathf.Clamp(idx, 0, spriteLifeCycle.Count - 1);
 
                 // assign the sprite
