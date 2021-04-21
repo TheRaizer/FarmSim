@@ -88,7 +88,8 @@ namespace FarmSim.Planteables
             if (Data.CurrentGrowthDay <= daysToGrow)
             {
                 // calculate the sprite idx
-                Data.SpriteIdx = Mathf.RoundToInt((float)Data.CurrentGrowthDay / spriteChangeInterval);
+                int idx = Mathf.RoundToInt((float)Data.CurrentGrowthDay / spriteChangeInterval);
+                Data.SpriteIdx = Mathf.Clamp(idx, 0, spriteLifeCycle.Count - 1);
 
                 // assign the sprite
                 spriteRenderer.sprite = spriteLifeCycle[Data.SpriteIdx];
