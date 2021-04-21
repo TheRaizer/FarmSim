@@ -27,6 +27,7 @@ namespace FarmSim.Placeables
         /// </summary>
         public string ItemGuid { get; set; }
         protected PlayerController player;
+        protected NodeGrid nodeGrid;
         private Inventory inventory;
 
         private SpriteRenderer sprite = null;
@@ -35,7 +36,7 @@ namespace FarmSim.Placeables
         private Color invalidColor;
         private Color validColor;
 
-        public bool CanBePlaced(Node node) => node != null && NodeGrid.Instance.IsValidPlacement(node, xDim, yDim);
+        public bool CanBePlaced(Node node) => node != null && nodeGrid.IsValidPlacement(node, xDim, yDim);
 
         protected virtual void Awake()
         {
@@ -47,6 +48,7 @@ namespace FarmSim.Placeables
             movePlaceable = FindObjectOfType<MovePlaceable>();
             player = FindObjectOfType<PlayerController>();
             inventory = FindObjectOfType<Inventory>();
+            nodeGrid = FindObjectOfType<NodeGrid>();
 
             InitColors();
         }
@@ -58,7 +60,7 @@ namespace FarmSim.Placeables
             {
                 if (CanBePlaced(DestinationNode))
                 {
-                    NodeGrid.Instance.MakeDimensionsOccupied(DestinationNode, xDim, yDim, isWalkable);
+                    nodeGrid.MakeDimensionsOccupied(DestinationNode, xDim, yDim, isWalkable);
                     OnPlace();
                 }
             }

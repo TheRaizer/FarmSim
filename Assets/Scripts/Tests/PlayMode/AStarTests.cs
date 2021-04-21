@@ -11,6 +11,7 @@ public class AStarTests
     {
         var gameObject = new GameObject();
         var grid = gameObject.AddComponent<NodeGrid>();
+        var requestManager = gameObject.AddComponent<PathRequestManager>();
         grid.transform.position = Vector3.zero;
         grid.LoadSectionTest();
 
@@ -41,7 +42,7 @@ public class AStarTests
             Assert.IsTrue(foundPath);
         });
 
-        PathRequestManager.Instance.RequestPath(request);
+        requestManager.RequestPath(request);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -54,8 +55,10 @@ public class AStarTests
     [UnityTest]
     public IEnumerator AStarPathFindingWithBlockageTest()
     {
+        Debug.Log(Object.FindObjectOfType<NodeGrid>());
         var gameObject = new GameObject();
         var grid = gameObject.AddComponent<NodeGrid>();
+        var requestManager = gameObject.AddComponent<PathRequestManager>();
         grid.transform.position = Vector3.zero;
         grid.LoadSectionTest();
 
@@ -104,7 +107,7 @@ public class AStarTests
             Assert.IsTrue(foundPath);
         });
 
-        PathRequestManager.Instance.RequestPath(request);
+        requestManager.RequestPath(request);
 
         yield return new WaitForSeconds(0.1f);
 

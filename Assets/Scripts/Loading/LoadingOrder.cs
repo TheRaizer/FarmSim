@@ -15,17 +15,19 @@ namespace FarmSim.Loading
     {
         [SerializeField] private GameObject introScreenCover;
         private DataInjector dataInjector;
+        private NodeGrid nodeGrid;
 
         public bool LoadedAll { get; private set; } = false;
 
         private void Awake()
         {
             dataInjector = GetComponent<DataInjector>();
+            nodeGrid = FindObjectOfType<NodeGrid>();
         }
 
         void Update()
         {
-            if (NodeGrid.Instance.LoadedSection && !LoadedAll)
+            if (nodeGrid.LoadedSection && !LoadedAll)
             {
                 // once we've loaded the grid load the rest of the data
                 dataInjector.LoadAllVoid();

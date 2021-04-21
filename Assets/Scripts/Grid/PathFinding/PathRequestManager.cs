@@ -9,7 +9,7 @@ namespace FarmSim.Grid
     ///         A Singleton class that manages requests for pathfinding using A*.
     ///     </summary>
     /// </class>
-    public class PathRequestManager : Singleton<PathRequestManager>
+    public class PathRequestManager : MonoBehaviour
     {
         private AStar aStar;
         private bool isProcessing;
@@ -19,7 +19,7 @@ namespace FarmSim.Grid
 
         private void Awake()
         {
-            aStar = new AStar(NodeGrid.Instance);
+            aStar = new AStar(FindObjectOfType<NodeGrid>(), FindObjectOfType<PathRequestManager>());
         }
 
         public void RequestPath(PathRequest pathRequest)

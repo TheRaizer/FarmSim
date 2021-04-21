@@ -25,13 +25,17 @@ namespace FarmSim.Player
 
         private PlayerController player;
         private Canvas canvas;
+        private NodeGrid nodeGrid;
+        private AudioManager audioManager;
 
         private bool detectKeys = false;
 
         private void Awake()
         {
+            nodeGrid = FindObjectOfType<NodeGrid>();
             player = GetComponent<PlayerController>();
             canvas = FindObjectOfType<Canvas>();
+            audioManager = FindObjectOfType<AudioManager>();
 
             InitTools();
             EquippedTool = tools[ToolTypes.Hand];
@@ -43,7 +47,7 @@ namespace FarmSim.Player
 
             if (Input.GetMouseButtonDown(0))
             {
-                Node node = NodeGrid.Instance.GetNodeFromMousePosition();
+                Node node = nodeGrid.GetNodeFromMousePosition();
                 if (node != null)
                 {
                     nodeToToolOn = node;
@@ -101,8 +105,8 @@ namespace FarmSim.Player
         private void UseTool()
         {
             Tool tool = tools[player.ToolToUse];
-            AudioManager.Instance.Play(tool.GetAudioId());
-            tool.OnUse(nodeToToolOn);
+            audioManager.Play(tool.GetAudioId());
+            tool.OnUse(nodeToToolOn, nodeGrid);
         }
 
         public void PostLoad()

@@ -8,7 +8,7 @@ namespace FarmSim.Utility
     ///         Manages the sounds that will be played during the game.
     ///     </summary>
     /// </class>
-    public class AudioManager : Singleton<AudioManager>
+    public class AudioManager : MonoBehaviour
     {
         [SerializeField] private List<Sound> sounds;
 

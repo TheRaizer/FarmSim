@@ -15,7 +15,7 @@ namespace FarmSim.Grid
     /// </class>
 
     [Savable(false)]
-    public class NodeGrid : Singleton<NodeGrid>, ISavable
+    public class NodeGrid : MonoBehaviour, ISavable
     {
         public int SectionNum { get; set; } = 0;
 
@@ -55,7 +55,7 @@ namespace FarmSim.Grid
 
             // initialize an empty grid.
             sectionGrid = sectionLoader.InitGrid();
-
+            Debug.Log("index: " + scene.buildIndex);
             // if the scene does not need loading don't load.
             if (scene.buildIndex - 1 < 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
             {

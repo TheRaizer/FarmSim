@@ -17,15 +17,17 @@ namespace FarmSim.TimeBased
 
         private List<ITimeBased> timeBasedObjects = null;
         private DataSaver dataSaver;
+        private NodeGrid nodeGrid;
 
         private void Awake()
         {
+            nodeGrid = FindObjectOfType<NodeGrid>();
             dataSaver = GetComponent<DataSaver>();
         }
 
         private void Update()
         {
-            if (NodeGrid.Instance.LoadedSection && timeBasedObjects == null)
+            if (nodeGrid.LoadedSection && timeBasedObjects == null)
             {
                 timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
             }
@@ -53,7 +55,7 @@ namespace FarmSim.TimeBased
             TimeData.Current.day++;
             timeBasedObjects.ForEach(timeBased => timeBased.OnTimePass());
 
-            dataSaver.SaveMain(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
+            dataSaver.SaveMain(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
         }
     }
 }

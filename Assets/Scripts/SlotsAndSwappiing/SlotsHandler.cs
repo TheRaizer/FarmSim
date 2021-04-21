@@ -59,7 +59,6 @@ namespace FarmSim.Slots
 
             // get the starting x
             int startX = slots.Count - (y * SlotsInRow);
-            Debug.Log(startX);
 
             // get the max number of slots
             int max = slots.Count + numOfSlots;

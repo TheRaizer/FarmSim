@@ -1,39 +1,52 @@
 ﻿using FarmSim.Grid;
 using NUnit.Framework;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
 
 namespace Tests
 {
     public class NodeGridTests
     {
+        [UnitySetUp]
+        public void SetUp()
+        {
+            var obj = new GameObject().AddComponent<NodeGrid>().gameObject;
+            Object.Instantiate(obj);
+        }
+
+        [UnityTearDown]
+        public void TearDown()
+        {
+            Object.Destroy(Object.FindObjectOfType<NodeGrid>());
+        }
+
         [Test]
         public void GetNodeFromVector2Test()
         {
-
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = new Vector3(55, -25.4f, 0);
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
             // get a node
-            Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER - 0.05f, Node.NODE_DIAMETER - 0.05f) + (Vector2)gameObject.transform.position);
+            Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER - 0.05f, Node.NODE_DIAMETER - 0.05f) + (Vector2)grid.transform.position);
 
             // make sure the node obtained is the correct node
             Assert.AreEqual(0, node_1.Data.x);
             Assert.AreEqual(0, node_1.Data.y);
 
-            Node node_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 - 0.05f, Node.NODE_DIAMETER * 8 - 0.05f) + (Vector2)gameObject.transform.position);
+            Node node_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 - 0.05f, Node.NODE_DIAMETER * 8 - 0.05f) + (Vector2)grid.transform.position);
 
             Assert.AreEqual(5, node_2.Data.x);
             Assert.AreEqual(7, node_2.Data.y);
 
-            Node node_3 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 + 0.05f, Node.NODE_DIAMETER * 8 + 0.05f) + (Vector2)gameObject.transform.position);
+            Node node_3 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 + 0.05f, Node.NODE_DIAMETER * 8 + 0.05f) + (Vector2)grid.transform.position);
 
             Assert.AreEqual(6, node_3.Data.x);
             Assert.AreEqual(8, node_3.Data.y);
 
-            Node node_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 25, Node.NODE_DIAMETER * 22) + (Vector2)gameObject.transform.position);
+            Node node_4 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 25, Node.NODE_DIAMETER * 22) + (Vector2)grid.transform.position);
 
             Assert.AreEqual(25, node_4.Data.x);
             Assert.AreEqual(22, node_4.Data.y);
@@ -42,12 +55,9 @@ namespace Tests
         [Test]
         public void IsValidPlacementTest()
         {
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = Vector3.zero;
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5) + (Vector2)grid.transform.position);
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
@@ -61,12 +71,9 @@ namespace Tests
         [Test]
         public void MakeDimensionsOccupiedTest()
         {
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = Vector3.zero;
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5) + (Vector2)grid.transform.position);
 
             grid.MakeDimensionsOccupied(node, 3, 3);
 
@@ -80,12 +87,9 @@ namespace Tests
         [Test]
         public void MooreNeighboursTest()
         {
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = Vector3.zero;
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5) + (Vector2)grid.transform.position);
 
             List<Node> neighbours = grid.GetMooreNeighbours(node);
 
@@ -110,12 +114,9 @@ namespace Tests
         [Test]
         public void CardinalNeighboursTest()
         {
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = Vector3.zero;
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
+            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5) + (Vector2)grid.transform.position);
 
             List<Node> neighbours = grid.GetCardinalNeighbours(node);
 
@@ -131,14 +132,11 @@ namespace Tests
         [Test]
         public void ManhattanDistanceTest()
         {
-            var gameObject = new GameObject();
-            var grid = gameObject.AddComponent<NodeGrid>();
-            grid.transform.position = Vector3.zero;
-            grid.LoadSectionTest();
+            var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5));
-            Node node_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6));
-            Node node_3 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 9));
+            Node node_1 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5) + (Vector2)grid.transform.position);
+            Node node_2 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6) + (Vector2)grid.transform.position);
+            Node node_3 = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 9) + (Vector2)grid.transform.position);
 
             Assert.IsTrue(grid.GetManhattanDistance(node_1, node_2) == 2);
             Assert.IsTrue(grid.GetManhattanDistance(node_2, node_1) == 2);

@@ -26,10 +26,12 @@ namespace FarmSim.Player
 
         private Animator animator;
         private EntityPathFind pathFind;
+        private NodeGrid nodeGrid;
 
         private void Awake()
         {
-            pathFind = new EntityPathFind(TriggerAnimation, gameObject, speed);
+            nodeGrid = FindObjectOfType<NodeGrid>();
+            pathFind = new EntityPathFind(TriggerAnimation, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
             //to hide the curser
             Cursor.visible = false;
             animator = GetComponent<Animator>();
@@ -61,7 +63,7 @@ namespace FarmSim.Player
 
         private void ChangeRingPosition()
         {
-            Node node = NodeGrid.Instance.GetNodeFromMousePosition();
+            Node node = nodeGrid.GetNodeFromMousePosition();
             if (node != null)
             {
                 Vector2 pos = node.Data.pos;

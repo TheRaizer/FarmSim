@@ -12,13 +12,15 @@ namespace FarmSim.Grid
     public class AStar
     {
         private readonly NodeGrid grid;
+        private readonly PathRequestManager requestManager;
 
         private bool stopSearch = false;
         private string idToStop = "";
 
-        public AStar(NodeGrid _grid)
+        public AStar(NodeGrid _grid, PathRequestManager _requestManager)
         {
             grid = _grid;
+            requestManager = _requestManager;
         }
 
         public void StopSearch(string id)
@@ -52,7 +54,7 @@ namespace FarmSim.Grid
         {
             if (!start.Data.IsWalkable && !end.Data.IsWalkable)
             {
-                PathRequestManager.Instance.OnFinishProcess(null, false);
+                requestManager.OnFinishProcess(null, false);
                 yield break;
             }
             Heap<Node> openHeap = new Heap<Node>(NodeGrid.SECTION_SIZE_X * NodeGrid.SECTION_SIZE_Y);
@@ -124,7 +126,7 @@ namespace FarmSim.Grid
                 Debug.Log("NO path found");
             }
 
-            PathRequestManager.Instance.OnFinishProcess(path, foundPath);
+            requestManager.OnFinishProcess(path, foundPath);
         }
     }
 }

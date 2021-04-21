@@ -12,6 +12,12 @@ namespace FarmSim.Placeables
     {
         public Placeable AttachedPlaceable { get; set; } = null;
         private Node currentNode = null;
+        private NodeGrid nodeGrid;
+
+        private void Awake()
+        {
+            nodeGrid = FindObjectOfType<NodeGrid>();
+        }
 
         private void Update()
         {
@@ -35,7 +41,7 @@ namespace FarmSim.Placeables
         /// </summary>
         private void MovePlaceableToNode()
         {
-            Node node = NodeGrid.Instance.GetNodeFromMousePosition();
+            Node node = nodeGrid.GetNodeFromMousePosition();
 
 
             if (node != null && (Vector2)AttachedPlaceable.transform.position != node.Data.pos)

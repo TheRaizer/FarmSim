@@ -23,6 +23,7 @@ namespace FarmSim.Planteables
         [SerializeField] private Sprite wetHoedDirt = null;
 
         private Planteable plant = null;
+        private NodeGrid nodeGrid;
 
         public DirtData Data { private get; set; }
 
@@ -47,6 +48,7 @@ namespace FarmSim.Planteables
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             objectPooler = FindObjectOfType<ObjectPooler>();
+            nodeGrid = FindObjectOfType<NodeGrid>();
         }
 
         public override void OnTimePass(int daysPassed = 1)
@@ -100,7 +102,7 @@ namespace FarmSim.Planteables
             if (plant != null && plant.CanHarvest)
             {
                 plant.OnHarvest();
-                Node node = NodeGrid.Instance.GetNodeFromXY(X, Y);
+                Node node = nodeGrid.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
             }
         }

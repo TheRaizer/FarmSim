@@ -13,10 +13,12 @@ namespace FarmSim.Grid
     {
         [SerializeField] private int scene;
         private DataSaver dataSaver;
+        private NodeGrid nodeGrid;
 
         private void Awake()
         {
             dataSaver = FindObjectOfType<DataSaver>();
+            nodeGrid = FindObjectOfType<NodeGrid>();
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
@@ -45,16 +47,16 @@ namespace FarmSim.Grid
         private void SaveCurrentSection()
         {
             SectionData.Current.internalDay = TimeData.Current.day;
-            dataSaver.SaveSectionVoid(NodeGrid.Instance.IsSavableSection, NodeGrid.Instance.SectionNum);
+            dataSaver.SaveSectionVoid(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
         }
 
         private SectionData LoadNextSection()
         {
             // assign the neext sections number
-            NodeGrid.Instance.SectionNum = scene - 1;
+            nodeGrid.SectionNum = scene - 1;
 
             // load the new section
-            SectionData sect = (SectionData)SerializationManager.LoadSave(SavePaths.SECTION_PREFIX + NodeGrid.Instance.SectionNum, SavePaths.SECTIONS_DIRECTORY);
+            SectionData sect = (SectionData)SerializationManager.LoadSave(SavePaths.SECTION_PREFIX + nodeGrid.SectionNum, SavePaths.SECTIONS_DIRECTORY);
 
             return sect;
         }

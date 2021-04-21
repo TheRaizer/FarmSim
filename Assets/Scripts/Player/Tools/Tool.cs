@@ -29,9 +29,9 @@ namespace FarmSim.Tools
             return AudioIdPrefix + num;
         }
 
-        public void OnUse(Node middleNode)
+        public void OnUse(Node middleNode, NodeGrid nodeGrid)
         {
-            List<Node> nodes = NodeGrid.Instance.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
+            List<Node> nodes = nodeGrid.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
             InteractWithNodes(nodes);
         }
 

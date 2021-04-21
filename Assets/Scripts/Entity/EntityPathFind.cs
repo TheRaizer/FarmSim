@@ -27,18 +27,22 @@ namespace FarmSim.Entity
         private readonly Transform transform;
         private readonly GameObject gameObject;
         private readonly Animator animator;
+        private readonly NodeGrid nodeGrid;
+        private readonly PathRequestManager requestManager;
 
         private readonly string walkingBoolAnimTag;
         private readonly string directionIntTag;
 
 
-        public EntityPathFind(Action _onArrival, GameObject _gameObject, float speed = 10, string _walkingBoolAnimTag = "Walking", string _directionIntTag = "Direction")
+        public EntityPathFind(Action _onArrival, GameObject _gameObject, NodeGrid _nodeGrid, PathRequestManager _requestManager, float speed = 10, string _walkingBoolAnimTag = "Walking", string _directionIntTag = "Direction")
         {
             onArrival = _onArrival;
             gameObject = _gameObject;
             Speed = speed;
             walkingBoolAnimTag = _walkingBoolAnimTag;
             directionIntTag = _directionIntTag;
+            nodeGrid = _nodeGrid;
+            requestManager = _requestManager;
 
             transform = gameObject.transform;
             animator = gameObject.GetComponent<Animator>();
@@ -52,21 +56,21 @@ namespace FarmSim.Entity
             if (path != null && path.Length > pathIdx)
             {
                 // this smooths some transitions
-                start = NodeGrid.Instance.GetNodeFromVector2(path[pathIdx]);
+                start = nodeGrid.GetNodeFromVector2(path[pathIdx]);
             }
             else
             {
-                start = NodeGrid.Instance.GetNodeFromVector2(transform.position);
+                start = nodeGrid.GetNodeFromVector2(transform.position);
             }
 
-            Node end = NodeGrid.Instance.GetNodeFromMousePosition();
+            Node end = nodeGrid.GetNodeFromMousePosition();
 
             if (start == null || end == null || !end.Data.IsWalkable)
                 return;
 
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
 
-            PathRequestManager.Instance.RequestPath(currentRequest);
+            requestManager.RequestPath(currentRequest);
             ProcessingPath = true;
         }
 
@@ -148,7 +152,7 @@ namespace FarmSim.Entity
         {
             stop = true;
             if (ProcessingPath)
-                PathRequestManager.Instance.StopSearch(currentRequest.id);
+                requestManager.StopSearch(currentRequest.id);
         }
     }
 }

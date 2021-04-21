@@ -28,6 +28,7 @@ namespace FarmSim.Planteables
         [SerializeField] private string animationName = "Sprinkle";
 
         private Animator animator;
+        private NodeGrid nodeGrid;
 
         private readonly WaitForSeconds initialWait = new WaitForSeconds(1.5f);
         private WaitForSeconds animationWait;
@@ -48,6 +49,7 @@ namespace FarmSim.Planteables
 
         private void Awake()
         {
+            nodeGrid = FindObjectOfType<NodeGrid>();
             animator = GetComponent<Animator>();
             animationWait = new WaitForSeconds(animationInterval);
 
@@ -57,7 +59,7 @@ namespace FarmSim.Planteables
 
         private void InitializeNodeInfo()
         {
-            Node node = NodeGrid.Instance.GetNodeFromVector2(gameObject.transform.position);
+            Node node = nodeGrid.GetNodeFromVector2(gameObject.transform.position);
             X = node.Data.x;
             Y = node.Data.y;
             prevInteractable = node.Interactable;
@@ -70,12 +72,12 @@ namespace FarmSim.Planteables
         /// <param name="add">Whether to add or remove water source.</param>
         private void ModifyAsWaterSource(bool add)
         {
-            Node middleNode = NodeGrid.Instance.GetNodeFromXY(X, Y);
+            Node middleNode = nodeGrid.GetNodeFromXY(X, Y);
 
             if (middleNode == null)
                 Debug.LogError("Middle node of a sprinkler was null");
 
-            List<Node> nodesToWater = NodeGrid.Instance.GetNodesFromDimensions(middleNode, xDist, yDist);
+            List<Node> nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xDist, yDist);
 
             foreach (Node n in nodesToWater)
             {
@@ -115,7 +117,7 @@ namespace FarmSim.Planteables
             var worldItem = Instantiate(sprinklerItem.WorldItemPrefab);
             worldItem.transform.position = gameObject.transform.position;
 
-            Node middleNode = NodeGrid.Instance.GetNodeFromXY(X, Y);
+            Node middleNode = nodeGrid.GetNodeFromXY(X, Y);
 
             // reassign to the previous interactable
             middleNode.Interactable = prevInteractable;
