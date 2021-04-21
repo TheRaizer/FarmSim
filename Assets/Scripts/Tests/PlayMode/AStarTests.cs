@@ -20,9 +20,9 @@ public class AStarTests
         float xEnd = Node.NODE_DIAMETER * 1;
         float yEnd = Node.NODE_DIAMETER * 2;
 
-        // 5 * * * * * S
-        // 4 * * * * * *
-        // 3 * * * * * *
+        // 5 * i i i i S
+        // 4 * i * * * *
+        // 3 * i * * * *
         // 2 * E * * * *
         // 1 * * * * * *
         // 0 * * * * * *
@@ -66,9 +66,9 @@ public class AStarTests
         float yEnd = Node.NODE_DIAMETER * 2;
 
 
-        // 5 * * * * * S
-        // 4 * - - | * *
-        // 3 * * * | * *
+        // 5 i i i i i S
+        // 4 i - - | * *
+        // 3 i i * | * *
         // 2 * E * | * *
         // 1 * * * | * *
         // 0 * * * * * *
