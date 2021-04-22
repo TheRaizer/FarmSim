@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800048636282084859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.02, y: 0.64, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 4.388364, y: 4.388364, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4701ad9329d1447a8b82e3261fefdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <ToolToHarvestWith>k__BackingField: 2
   originalPrefabName: Potato
   daysToGrow: 7
-  <ToolToHarvestWith>k__BackingField: 2
   maxAmtToDrop: 5
   minAmtToDrop: 2
   spriteLifeCycle:
@@ -70,6 +70,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

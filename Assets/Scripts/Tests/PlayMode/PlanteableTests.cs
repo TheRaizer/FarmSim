@@ -10,18 +10,33 @@ namespace Tests
 {
     public class PlanteableTest
     {
-        [Test]
-        public void GrowthTest()
+        private GameObject planteableObj;
+        private Planteable plant;
+
+        private readonly GameObject prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+
+        [SetUp]
+        public void SetUp()
         {
-            var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
+            prefab.transform.position = Vector3.zero;
             if (prefab == null)
             {
                 Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
             }
-            var planteableObj = Object.Instantiate(prefab);
+            planteableObj = Object.Instantiate(prefab);
 
-            Planteable plant = planteableObj.GetComponent<Planteable>();
+            plant = planteableObj.GetComponent<Planteable>();
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
+            Object.DestroyImmediate(planteableObj);
+        }
+
+        [Test]
+        public void GrowthTest()
+        {
             // we can't harvest until grown
             Assert.IsFalse(plant.CanHarvest);
 
@@ -38,15 +53,6 @@ namespace Tests
         [Test]
         public void CatchUpDaysGrowthTest()
         {
-            var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
-            if (prefab == null)
-            {
-                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
-            }
-            var planteableObj = Object.Instantiate(prefab);
-
-            Planteable plant = planteableObj.GetComponent<Planteable>();
-
             // we can't harvest until grown
             Assert.IsFalse(plant.CanHarvest);
 
@@ -63,18 +69,9 @@ namespace Tests
         [Test]
         public void PlantSaveTest()
         {
-            var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
-
-            if (prefab == null)
-            {
-                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
-            }
-
-            var planteableObj = Object.Instantiate(prefab);
-            var planteableObj_2 = Object.Instantiate(prefab);
-
-            Planteable plant = planteableObj.GetComponent<Planteable>();
+            var planteableObj_2 = Object.Instantiate(planteableObj);
             Planteable plant_2 = planteableObj_2.GetComponent<Planteable>();
+
             Assert.AreEqual(SectionData.Current.plantDatas.Count, 0);
 
             plant.Save();
@@ -103,30 +100,21 @@ namespace Tests
         [UnityTest]
         public IEnumerator HarvestTest()
         {
-            // load the needed GameObjects
-            var prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
-            prefab.transform.position = Vector3.zero;
 
             var player = new GameObject();
-            // set up player trigger for picking up world items
+
+            // setup player trigger for picking up world items
             var collider = player.AddComponent<BoxCollider2D>();
             collider.isTrigger = true;
             collider.size = Vector2.one * 10;
 
             player.transform.position = Vector3.zero;
 
+            // setup inventory
             GameObject obj = new GameObject();
             var inventory = obj.AddComponent<Inventory>();
 
             player.tag = "Player";
-
-            if (prefab == null)
-            {
-                Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
-            }
-
-            var planteableObj = Object.Instantiate(prefab);
-
 
             Planteable plant = planteableObj.GetComponent<Planteable>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;

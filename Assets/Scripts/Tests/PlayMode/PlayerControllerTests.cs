@@ -12,8 +12,6 @@ public class PlayerControllerTests
     [UnityTest]
     public IEnumerator PlayerPathFindingTest()
     {
-        SceneManager.LoadScene(1);
-
         yield return new WaitForSeconds(3);
     }
 }
