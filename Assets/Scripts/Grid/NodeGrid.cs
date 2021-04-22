@@ -70,12 +70,15 @@ namespace FarmSim.Grid
             //sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
         }
 
-        public void LoadSectionTest()
+        /// <summary>
+        ///     Unit Test function
+        /// </summary>
+        public void LoadSectionTest(int sectionNum = 0)
         {
             LoadedSection = false;
 
             // section # is always 1 less then the scene index.
-            SectionNum = 0;
+            SectionNum = sectionNum;
 
             sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
 

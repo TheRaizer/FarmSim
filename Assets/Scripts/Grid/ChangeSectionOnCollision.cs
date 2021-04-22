@@ -52,7 +52,7 @@ namespace FarmSim.Grid
 
         private SectionData LoadNextSection()
         {
-            // assign the neext sections number
+            // assign the next sections number
             nodeGrid.SectionNum = scene - 1;
 
             // load the new section

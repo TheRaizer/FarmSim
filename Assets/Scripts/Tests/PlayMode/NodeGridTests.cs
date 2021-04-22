@@ -1,4 +1,5 @@
 ﻿using FarmSim.Grid;
+using FarmSim.Serialization;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -149,6 +150,27 @@ namespace Tests
 
             Assert.AreEqual(4, currNodeGrid.GetManhattanDistance(node_3, node_2));
             Assert.AreEqual(4, currNodeGrid.GetManhattanDistance(node_2, node_3));
+        }
+
+        [Test]
+        public void GridSaveTest()
+        {
+            currNodeGrid.LoadSectionTest(1);
+            currNodeGrid.Save();
+
+            Assert.AreEqual(1, PlayerData.Current.SectionNum);
+            Assert.AreEqual(1, SectionData.Current.SectionNum);
+
+            Assert.AreEqual(30, SectionData.Current.nodeDatas.GetLength(0));
+            Assert.AreEqual(30, SectionData.Current.nodeDatas.GetLength(1));
+
+            for (int x = 0; x < SectionData.Current.nodeDatas.GetLength(0); x++)
+            {
+                for (int y = 0; y < SectionData.Current.nodeDatas.GetLength(1); y++)
+                {
+                    Assert.NotNull(SectionData.Current.nodeDatas[x, y]);
+                }
+            }
         }
     }
 }

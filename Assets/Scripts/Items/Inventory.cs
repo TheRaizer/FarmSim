@@ -94,7 +94,7 @@ namespace FarmSim.Items
                 if (!item.CanSubtract)
                 {
                     if (item.Icon == null)
-                        Debug.LogWarning($"Icon on {item} is null");
+                        Debug.LogWarning($"Icon on {item}, is null");
                     else
                         Destroy(item.Icon.gameObject);
                     inventory.Remove(item);
