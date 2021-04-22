@@ -1,4 +1,5 @@
 ﻿using FarmSim.Items;
+using FarmSim.Serialization;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,31 +13,54 @@ namespace Tests
         private const int TOMATO_AMT = 10;
         private const int HOUSE_AMT = 11;
 
-        [Test]
-        public void AddInventoryTest()
+        private Inventory inventory;
+
+        private ItemType tomatoType;
+        private ItemType potatoType;
+        private ItemType houseType;
+
+        private Item tomato;
+        private Item potato;
+        private Item house;
+
+        [SetUp]
+        public void SetUp()
         {
-            GameObject gameObject = new GameObject();
-            Inventory inventory = gameObject.AddComponent<Inventory>();
+            inventory = new GameObject().AddComponent<Inventory>();
 
-            ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
-            ItemType potatoType = Resources.Load("SO/Potato") as ItemType;
-            ItemType houseType = Resources.Load("SO/House") as ItemType;
+            tomatoType = Resources.Load("SO/Tomato") as ItemType;
+            potatoType = Resources.Load("SO/Potato") as ItemType;
+            houseType = Resources.Load("SO/House") as ItemType;
+        }
 
+        [TearDown]
+        public void TearDown()
+        {
+            Object.DestroyImmediate(inventory.gameObject);
+        }
 
+        private void AddToInventory()
+        {
             // add to the inventory
             inventory.AddToInventory(tomatoType, TOMATO_AMT);
             inventory.AddToInventory(potatoType, POTATO_AMT);
             inventory.AddToInventory(houseType, HOUSE_AMT);
 
             // take the item but not any of the amounts
-            Item tomato = inventory.GetFirstInstance(tomatoType);
-            Item potato = inventory.GetFirstInstance(potatoType);
-            Item house = inventory.GetFirstInstance(houseType);
+            tomato = inventory.GetFirstInstance(tomatoType);
+            potato = inventory.GetFirstInstance(potatoType);
+            house = inventory.GetFirstInstance(houseType);
 
             // make sure that the items have the correct amount added
             Assert.AreEqual(TOMATO_AMT, tomato.Amt);
             Assert.AreEqual(POTATO_AMT, potato.Amt);
             Assert.AreEqual(HOUSE_AMT, house.Amt);
+        }
+
+        [Test]
+        public void AddInventoryTest()
+        {
+            AddToInventory();
 
             // add another potato
             inventory.AddToInventory(potatoType, POTATO_AMT);
@@ -75,12 +99,6 @@ namespace Tests
         [Test]
         public void IterationAddInventoryTest()
         {
-            GameObject gameObject = new GameObject();
-            Inventory inventory = gameObject.AddComponent<Inventory>();
-
-            ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
-
-
             // add to the inventory
             inventory.AddToInventory(tomatoType, TOMATO_AMT);
 
@@ -111,40 +129,16 @@ namespace Tests
         [Test]
         public void TakeFromInventoryTest()
         {
-            GameObject gameObject = new GameObject();
-            Inventory inventory = gameObject.AddComponent<Inventory>();
-
-            ItemType tomatoType = Resources.Load("SO/Tomato") as ItemType;
-            ItemType potatoType = Resources.Load("SO/Potato") as ItemType;
-            ItemType houseType = Resources.Load("SO/House") as ItemType;
-
-
-            // add to the inventory
-            inventory.AddToInventory(tomatoType, TOMATO_AMT);
-            inventory.AddToInventory(potatoType, POTATO_AMT);
-            inventory.AddToInventory(houseType, HOUSE_AMT);
-
-            Item tomato = inventory.GetFirstInstance(tomatoType);
-            Item potato = inventory.GetFirstInstance(potatoType);
-            Item house = inventory.GetFirstInstance(houseType);
-
-            // take an arbitruary amount from the inventory.
-            inventory.TakeFromInventory(tomato.guid, 1);
-            inventory.TakeFromInventory(potato.guid, 2);
-            inventory.TakeFromInventory(house.guid, 3);
-
-            // make sure that the items have the correct amount added
-            Assert.AreEqual(TOMATO_AMT - 1, tomato.Amt);
-            Assert.AreEqual(POTATO_AMT - 2, potato.Amt);
-            Assert.AreEqual(HOUSE_AMT - 3, house.Amt);
+            AddToInventory();
 
             // take more of the tomato item then there is available.
-            Item item = inventory.TakeFromInventory(tomato.guid, TOMATO_AMT);
+            Item item = inventory.TakeFromInventory(tomato.guid, TOMATO_AMT + 1);
 
             // the item returned should still be the tomato item.
             Assert.IsNull(item);
+
             // item amount should be untouched
-            Assert.AreEqual(TOMATO_AMT - 1, tomato.Amt);
+            Assert.AreEqual(TOMATO_AMT, tomato.Amt);
 
             inventory.TakeFromInventory(tomato.guid, tomato.Amt);
 
@@ -152,7 +146,16 @@ namespace Tests
 
             // the tomato item should be removed from the inventory
             Assert.AreEqual(inventory.FindInstances(tomatoType).Count, 0);
+        }
 
+        [Test]
+        public void InventorySaveTest() 
+        {
+            AddToInventory();
+
+            inventory.Save();
+
+            Assert.AreEqual(3, PlayerData.Current.itemDatas.Count);
         }
     }
 }
