@@ -86,7 +86,7 @@ public class AStarTests
 
         var start = new Vector2(xStart, yStart);
         var end = new Vector2(xEnd, yEnd);
-
+        Debug.Log(currNodeGrid);
 
         Node startNode = currNodeGrid.GetNodeFromVector2(start);
         Node endNode = currNodeGrid.GetNodeFromVector2(end);

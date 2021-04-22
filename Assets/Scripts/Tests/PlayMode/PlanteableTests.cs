@@ -100,7 +100,6 @@ namespace Tests
         [UnityTest]
         public IEnumerator HarvestTest()
         {
-
             var player = new GameObject();
 
             // setup player trigger for picking up world items

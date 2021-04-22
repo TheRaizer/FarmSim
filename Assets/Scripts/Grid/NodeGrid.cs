@@ -49,17 +49,18 @@ namespace FarmSim.Grid
         {
             LoadedSection = false;
 
-            // section # is always 1 less then the scene index.
-            SectionNum = scene.buildIndex - 1;
+            // if the scene is a test scene the section # = 0 otherwise it is always scene index - 1.
+            SectionNum = scene.buildIndex == -1 ? 0 : scene.buildIndex - 1;
 
             sectionLoader = new SectionLoader(transform.position, SectionNum, FindObjectOfType<ObjectPooler>());
 
             // initialize an empty grid.
             sectionGrid = sectionLoader.InitGrid();
 
-            // if the scene does not need loading don't load.
-            if (scene.buildIndex - 1 < 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
+            // if the scene is not a section scene as per the scene to section rule
+            if (scene.buildIndex == 0 || scene.buildIndex - 1 >= sectionLoader.WorldMaxX / SECTION_SIZE_X)
             {
+                // if the scene does not need loading don't load.
                 Debug.Log("no need to load this sections grid.");
                 return;
             }
