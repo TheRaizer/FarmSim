@@ -11,16 +11,16 @@ namespace FarmSim.Serialization
     /// </class>
     public class DataInjector : MonoBehaviour
     {
-        public bool Loading { get; private set; } = false;
+        private bool loading = false;
 
         /// <summary>
         ///     Finds all ILoadables in the scene and injects the loaded data into them.
         /// </summary>
         public IEnumerator LoadAll()
         {
-            if (!Loading)
+            if (!loading)
             {
-                Loading = true;
+                loading = true;
                 IEnumerable loadables = FindObjectsOfType<MonoBehaviour>().OfType<ILoadable>();
 
                 foreach (ILoadable l in loadables)
@@ -29,7 +29,7 @@ namespace FarmSim.Serialization
                     l.Load();
                 }
 
-                Loading = false;
+                loading = false;
             }
             Debug.Log("Succesfully loaded");
         }
@@ -39,9 +39,9 @@ namespace FarmSim.Serialization
         /// </summary>
         public void LoadAllVoid()
         {
-            if (!Loading)
+            if (!loading)
             {
-                Loading = true;
+                loading = true;
                 IEnumerable loadables = FindObjectsOfType<MonoBehaviour>().OfType<ILoadable>();
 
                 foreach (ILoadable l in loadables)
@@ -49,7 +49,7 @@ namespace FarmSim.Serialization
                     l.Load();
                 }
 
-                Loading = false;
+                loading = false;
             }
             Debug.Log("Succesfully loaded");
         }

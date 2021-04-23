@@ -1,9 +1,14 @@
-﻿using FarmSim.Items;
+﻿using FarmSim.Enums;
+using FarmSim.Grid;
+using FarmSim.Items;
 using FarmSim.Planteables;
+using FarmSim.Player;
 using FarmSim.Serialization;
 using NUnit.Framework;
 using System.Collections;
+using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
 namespace Tests
@@ -18,20 +23,14 @@ namespace Tests
         [SetUp]
         public void SetUp()
         {
-            prefab.transform.position = Vector3.zero;
             if (prefab == null)
             {
                 Debug.LogError("There is no unit test prefab at path: Prefabs/UnitTests/PotatoUnitTest");
             }
+            prefab.transform.position = Vector3.zero;
             planteableObj = Object.Instantiate(prefab);
 
             plant = planteableObj.GetComponent<Planteable>();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Object.DestroyImmediate(planteableObj);
         }
 
         [Test]
@@ -100,22 +99,17 @@ namespace Tests
         [UnityTest]
         public IEnumerator HarvestTest()
         {
-            var player = new GameObject();
+            // load the test scene
+            EditorSceneManager.LoadSceneInPlayMode
+            (
+            "Assets/Resources/Scenes/Test_Scene.unity",
+            new LoadSceneParameters(LoadSceneMode.Single, LocalPhysicsMode.Physics2D)
+            );
 
-            // setup player trigger for picking up world items
-            var collider = player.AddComponent<BoxCollider2D>();
-            collider.isTrigger = true;
-            collider.size = Vector2.one * 10;
+            yield return TestUtilities.AssertSceneLoaded("Assets/Resources/Scenes/Test_Scene.unity");
 
-            player.transform.position = Vector3.zero;
-
-            // setup inventory
-            GameObject obj = new GameObject();
-            var inventory = obj.AddComponent<Inventory>();
-
-            player.tag = "Player";
-
-            Planteable plant = planteableObj.GetComponent<Planteable>();
+            Inventory inventory = Object.FindObjectOfType<Inventory>();
+            NodeGrid grid = Object.FindObjectOfType<NodeGrid>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
 
             if (itemType == null)
@@ -123,12 +117,27 @@ namespace Tests
                 Debug.LogError("There is no ItemType scriptable object at path: SO/Potato");
             }
 
+            // get the node we are going to plant on
+            Node nodeToPlant = grid.GetNodeFromXY(0, 0);
+
+            // plant the prefab
+            bool succesfulPlanting = false;
+            nodeToPlant.Interactable.OnInteract(ToolTypes.Other, prefab, () => succesfulPlanting = true);
+            Assert.IsTrue(succesfulPlanting);
+
+            // get the single plant we made in this scene
+            Planteable plant = Object.FindObjectOfType<Planteable>();
+
             // Harvest the plant
             plant.OnHarvest();
 
+            // check if the items dropped
             WorldItem[] worldItem = Object.FindObjectsOfType<WorldItem>();
-
             Assert.IsTrue(worldItem.Length >= 2 && worldItem.Length <= 5);
+
+            // move player to the plant in order to pick up the items
+            PlayerController player = Object.FindObjectOfType<PlayerController>();
+            player.transform.position = nodeToPlant.Data.pos;
 
             yield return new WaitForSeconds(1f);
 

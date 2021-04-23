@@ -23,12 +23,12 @@ public class PlayerControllerTests
     [UnityTest]
     public IEnumerator Test()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
     }
 
     [UnityTest]
     public IEnumerator PlayerPathFindingTest()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
     }
 }

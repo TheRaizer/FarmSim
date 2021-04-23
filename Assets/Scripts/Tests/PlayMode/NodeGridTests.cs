@@ -10,7 +10,7 @@ namespace Tests
     {
         private NodeGrid currNodeGrid;
 
-        [SetUp]
+        [OneTimeSetUp]
         public void SetUp()
         {
             currNodeGrid = new GameObject().AddComponent<NodeGrid>();
@@ -18,12 +18,6 @@ namespace Tests
             // all tests should work even if the location of the section is changed
             currNodeGrid.transform.position = new Vector2(Random.Range(-100, 100), Random.Range(-100, 100));
             currNodeGrid.LoadSectionTest();
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            Object.DestroyImmediate(currNodeGrid.gameObject);
         }
 
         [Test]

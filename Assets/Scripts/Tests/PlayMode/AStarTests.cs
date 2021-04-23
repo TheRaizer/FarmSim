@@ -9,7 +9,7 @@ public class AStarTests
     private NodeGrid currNodeGrid;
     private PathRequestManager currRequestManager;
 
-    [SetUp]
+    [OneTimeSetUp]
     public void SetUp()
     {
         currNodeGrid = new GameObject().AddComponent<NodeGrid>();
@@ -18,12 +18,6 @@ public class AStarTests
         currNodeGrid.LoadSectionTest();
 
         currRequestManager = currNodeGrid.gameObject.AddComponent<PathRequestManager>();
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        Object.DestroyImmediate(currNodeGrid.gameObject);
     }
 
     [UnityTest]
@@ -69,6 +63,7 @@ public class AStarTests
     [UnityTest]
     public IEnumerator AStarPathFindingWithBlockageTest()
     {
+        Debug.Log("Test");
         float xStart = Node.NODE_DIAMETER * 5;
         float yStart = Node.NODE_DIAMETER * 5;
 
