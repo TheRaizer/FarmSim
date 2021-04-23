@@ -47,7 +47,7 @@ namespace FarmSim.Grid
         private void SaveCurrentSection()
         {
             SectionData.Current.internalDay = TimeData.Current.day;
-            dataSaver.SaveSectionVoid(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
+            dataSaver.SaveSection(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
         }
 
         private SectionData LoadNextSection()

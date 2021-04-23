@@ -1,5 +1,5 @@
 ﻿
-namespace FarmSim.Loading
+namespace FarmSim.Serialization
 {
     public interface IOccurPostLoad
     {

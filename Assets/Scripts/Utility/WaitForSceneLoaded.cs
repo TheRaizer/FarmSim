@@ -3,10 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class WaitForSceneLoaded : CustomYieldInstruction
 {
-    readonly string scenePath;
-    readonly float timeout;
-    readonly float startTime;
-    bool timedOut;
+    private readonly string scenePath;
+    private readonly float timeout;
+    private readonly float startTime;
+    private bool timedOut;
 
     public bool TimedOut => timedOut;
 
@@ -26,10 +26,10 @@ public class WaitForSceneLoaded : CustomYieldInstruction
         }
     }
 
-    public WaitForSceneLoaded(string newScenePath, float newTimeout = 10)
+    public WaitForSceneLoaded(string _scenePath, float _timeout = 10)
     {
-        scenePath = newScenePath;
-        timeout = newTimeout;
+        scenePath = _scenePath;
+        timeout = _timeout;
         startTime = Time.realtimeSinceStartup;
     }
 }

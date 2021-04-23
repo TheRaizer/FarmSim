@@ -1635,6 +1635,11 @@ PrefabInstance:
       propertyPath: dayPassBackground
       value: 
       objectReference: {fileID: 920170883}
+    - target: {fileID: 1090752706648671780, guid: b03efc30d11194340bdfeb1425a4ec06,
+        type: 3}
+      propertyPath: loadInterval
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1090752706648671781, guid: b03efc30d11194340bdfeb1425a4ec06,
         type: 3}
       propertyPath: introScreenCover

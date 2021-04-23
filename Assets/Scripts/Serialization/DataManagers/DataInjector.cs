@@ -11,13 +11,18 @@ namespace FarmSim.Serialization
     /// </class>
     public class DataInjector : MonoBehaviour
     {
+        /// <summary>
+        ///     Number of ILoadables to load before yielding the coroutine.
+        /// </summary>
+        [SerializeField] private int loadInterval = 5;
         private bool loading = false;
 
         /// <summary>
         ///     Finds all ILoadables in the scene and injects the loaded data into them.
         /// </summary>
-        public IEnumerator LoadAll()
+        public IEnumerator InjectAllData()
         {
+            int i = 0;
             if (!loading)
             {
                 loading = true;
@@ -25,7 +30,11 @@ namespace FarmSim.Serialization
 
                 foreach (ILoadable l in loadables)
                 {
-                    yield return null;
+                    i++;
+
+                    // only when it is on the interval do we yield to allow other work to be done
+                    if(i % loadInterval == 0)
+                        yield return null;
                     l.Load();
                 }
 
@@ -34,24 +43,19 @@ namespace FarmSim.Serialization
             Debug.Log("Succesfully loaded");
         }
 
-        /// <summary>
-        ///     Finds all ILoadables in the scene and injects the loaded data into them.
-        /// </summary>
-        public void LoadAllVoid()
+        public IEnumerator PostInjectionAll()
         {
-            if (!loading)
+            int i = 0;
+            IEnumerable postLoads = FindObjectsOfType<MonoBehaviour>().OfType<IOccurPostLoad>();
+            foreach (IOccurPostLoad p in postLoads)
             {
-                loading = true;
-                IEnumerable loadables = FindObjectsOfType<MonoBehaviour>().OfType<ILoadable>();
+                i++;
 
-                foreach (ILoadable l in loadables)
-                {
-                    l.Load();
-                }
-
-                loading = false;
+                // only when it is on the interval do we yield to allow other work to be done
+                if (i % loadInterval == 0)
+                    yield return null;
+                p.PostLoad();
             }
-            Debug.Log("Succesfully loaded");
         }
     }
 }

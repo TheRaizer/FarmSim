@@ -1,23 +1,25 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Serialization;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 
 namespace FarmSim.Loading
 {
     /// <class name="LoadingOrder">
     ///     <summary>
-    ///         Manages the loading order of Data. Starting by loading the grid section, then the data of each node.
+    ///         Manages the loading order of Data. Starting by loading the grid section, then the data of each node, then any post loading.
     ///     </summary>
     /// </class>
     public class LoadingOrder : MonoBehaviour
     {
         [SerializeField] private GameObject introScreenCover;
+
         private DataInjector dataInjector;
         private NodeGrid nodeGrid;
 
-        public bool LoadedAll { get; private set; } = false;
+        private bool loadedAll = false;
+        private bool startedLoading = false;
+
 
         private void Awake()
         {
@@ -27,29 +29,26 @@ namespace FarmSim.Loading
 
         void Update()
         {
-            if (nodeGrid.LoadedSection && !LoadedAll)
+            if (nodeGrid.LoadedSection && !loadedAll && !startedLoading)
             {
+                startedLoading = true;
                 // once we've loaded the grid load the rest of the data
-                dataInjector.LoadAllVoid();
-                PostLoadAll();
-
-                LoadedAll = true;
+                StartCoroutine(InjectCo());
             }
 
-            if (LoadedAll)
+            if (loadedAll)
             {
                 // once finished loading close the screen cover
                 introScreenCover.SetActive(false);
             }
         }
 
-        private void PostLoadAll()
+        private IEnumerator InjectCo()
         {
-            IEnumerable postLoads = FindObjectsOfType<MonoBehaviour>().OfType<IOccurPostLoad>();
-            foreach (IOccurPostLoad p in postLoads)
-            {
-                p.PostLoad();
-            }
+            yield return StartCoroutine(dataInjector.InjectAllData());
+            yield return StartCoroutine(dataInjector.PostInjectionAll());
+
+            loadedAll = true;
         }
     }
 }

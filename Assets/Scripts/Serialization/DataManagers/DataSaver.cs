@@ -19,7 +19,7 @@ namespace FarmSim.Serialization
         /// <summary>
         ///     Finds all ISaveables in the section/scene and Saves their data to a specific section file.
         /// </summary>
-        public void SaveSectionVoid(bool isSavableSection, int sectionNum)
+        public void SaveSection(bool isSavableSection, int sectionNum)
         {
             Saving = true;
 
@@ -61,7 +61,7 @@ namespace FarmSim.Serialization
 
         public void SaveMain(bool isSavableSection, int sectionNum)
         {
-            SaveSectionVoid(isSavableSection, sectionNum);
+            SaveSection(isSavableSection, sectionNum);
             SavePlayer(sectionNum);
             SaveTime();
 
