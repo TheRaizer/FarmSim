@@ -40,6 +40,8 @@ namespace FarmSim.Utility
 
         public static void SetToMouse(this RectTransform rt, Canvas canvas)
         {
+            if (rt == null)
+                return;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, Input.mousePosition, canvas.worldCamera, out Vector2 pos);
             rt.transform.position = canvas.transform.TransformPoint(pos);
         }

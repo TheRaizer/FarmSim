@@ -63,7 +63,6 @@ public class AStarTests
     [UnityTest]
     public IEnumerator AStarPathFindingWithBlockageTest()
     {
-        Debug.Log("Test");
         float xStart = Node.NODE_DIAMETER * 5;
         float yStart = Node.NODE_DIAMETER * 5;
 

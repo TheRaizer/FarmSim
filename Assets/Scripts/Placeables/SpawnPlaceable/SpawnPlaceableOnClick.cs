@@ -52,7 +52,6 @@ namespace FarmSim.Placeables
         private void SpawnPlaceable()
         {
             Item item = inventory.GetExactItem(ItemGuid);
-
             // assign an action to the item that will be called when its destroyed in order to also remove the attached placeable if it matches
             item.RemoveAttachedPlaceableIfMatching = RemoveAttachedSwappableIfMatching;
 
@@ -92,10 +91,14 @@ namespace FarmSim.Placeables
 
         private void RemoveAttachedSwappableIfMatching(string guid)
         {
-            string attachedGuid = movePlaceable.AttachedPlaceable.ItemGuid;
-            if (attachedGuid == guid)
+
+            if (movePlaceable.AttachedPlaceable != null)
             {
-                movePlaceable.RemoveAttachedPlaceable();
+                string attachedGuid = movePlaceable.AttachedPlaceable.ItemGuid;
+                if (attachedGuid == guid)
+                {
+                    movePlaceable.RemoveAttachedPlaceable();
+                }
             }
         }
     }

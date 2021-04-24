@@ -35,8 +35,6 @@ namespace FarmSim.Planteables
         /// </summary>
         public List<string> WaterSrcGuids { get; } = new List<string>();
 
-        private int daysTillRevert = 0;
-
         private SpriteRenderer spriteRenderer = null;
         private ObjectPooler objectPooler = null;
 
@@ -55,7 +53,7 @@ namespace FarmSim.Planteables
         {
             if (plant == null)
             {
-                daysTillRevert -= daysPassed;
+                Data.DaysTillRevert -= daysPassed;
                 CheckIfDried();
             }
             else
@@ -72,6 +70,8 @@ namespace FarmSim.Planteables
             CheckSpriteType();
         }
 
+        private void SetDaysTillRevert() => Data.DaysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
+
         /// <summary>
         ///     Hoes the dirt changing it from dried dirt to hoed dirt.
         ///     Reinitializes the number of days before it returns back to dried dirt.
@@ -82,7 +82,7 @@ namespace FarmSim.Planteables
             {
                 objectPooler.SpawnGameObject("HoedDirtParticles", transform.position, Quaternion.identity);
                 Data.Hoed = true;
-                daysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
+                SetDaysTillRevert();
                 spriteRenderer.sprite = hoedDirt;
             }
         }
@@ -93,7 +93,7 @@ namespace FarmSim.Planteables
         private void Water()
         {
             Data.Watered = true;
-
+            SetDaysTillRevert();
             CheckSpriteType();
         }
 
@@ -102,6 +102,7 @@ namespace FarmSim.Planteables
             if (plant != null && plant.CanHarvest)
             {
                 plant.OnHarvest();
+                plant = null;
                 Node node = nodeGrid.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
             }
@@ -112,7 +113,7 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckIfDried()
         {
-            if (daysTillRevert <= 0)
+            if (Data.DaysTillRevert <= 0)
             {
                 Data.Hoed = false;
                 Data.Watered = false;
@@ -197,7 +198,7 @@ namespace FarmSim.Planteables
             if (noDirt)
             {
                 // if there is no dirt data that was loaded then create a new one.
-                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, daysTillRevert);
+                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, 0);
             }
             else
             {

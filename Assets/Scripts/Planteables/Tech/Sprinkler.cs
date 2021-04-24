@@ -47,11 +47,17 @@ namespace FarmSim.Planteables
 
         private readonly string guid = Guid.NewGuid().ToString();
 
+        private List<Node> nodesToWater;
+        private Node middleNode;
+
         private void Awake()
         {
             nodeGrid = FindObjectOfType<NodeGrid>();
             animator = GetComponent<Animator>();
             animationWait = new WaitForSeconds(animationInterval);
+
+            middleNode = nodeGrid.GetNodeFromXY(X, Y);
+            nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xDist, yDist);
 
             InitializeNodeInfo();
             ModifyAsWaterSource(true);
@@ -72,12 +78,8 @@ namespace FarmSim.Planteables
         /// <param name="add">Whether to add or remove water source.</param>
         private void ModifyAsWaterSource(bool add)
         {
-            Node middleNode = nodeGrid.GetNodeFromXY(X, Y);
-
             if (middleNode == null)
                 Debug.LogError("Middle node of a sprinkler was null");
-
-            List<Node> nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xDist, yDist);
 
             foreach (Node n in nodesToWater)
             {
@@ -98,8 +100,17 @@ namespace FarmSim.Planteables
             }
         }
 
+        public void WaterNeighbours()
+        {
+            foreach(Node n in nodesToWater)
+            {
+                n.Interactable.OnInteract(ToolTypes.WateringCan);
+            }
+        }
+
         public void OnTimePass(int daysPassed = 1)
         {
+            WaterNeighbours();
             StartCoroutine(SprinkleCo());
         }
 
