@@ -1,6 +1,7 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
+using FarmSim.Loading;
 using FarmSim.Planteables;
 using FarmSim.Player;
 using FarmSim.Serialization;
@@ -102,15 +103,24 @@ namespace Tests
             // load the test scene
             EditorSceneManager.LoadSceneInPlayMode
             (
-            "Assets/Resources/Scenes/Test_Scene.unity",
-            new LoadSceneParameters(LoadSceneMode.Single, LocalPhysicsMode.Physics2D)
+                "Assets/Resources/Scenes/Test_Scene.unity",
+                new LoadSceneParameters(LoadSceneMode.Single, LocalPhysicsMode.Physics2D)
             );
 
             yield return TestUtilities.AssertSceneLoaded("Assets/Resources/Scenes/Test_Scene.unity");
 
             Inventory inventory = Object.FindObjectOfType<Inventory>();
             NodeGrid grid = Object.FindObjectOfType<NodeGrid>();
+            LoadingOrder loadingOrder = Object.FindObjectOfType<LoadingOrder>();
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
+
+            // wait till grid is loaded
+            while(!grid.LoadedSection)
+                yield return null;
+
+            // wait till all data is loaded
+            while (!loadingOrder.LoadedAll)
+                yield return null;
 
             if (itemType == null)
             {
@@ -122,6 +132,7 @@ namespace Tests
 
             // plant the prefab
             bool succesfulPlanting = false;
+            nodeToPlant.Interactable.OnInteract(ToolTypes.Hoe);
             nodeToPlant.Interactable.OnInteract(ToolTypes.Other, prefab, () => succesfulPlanting = true);
             Assert.IsTrue(succesfulPlanting);
 
@@ -134,15 +145,6 @@ namespace Tests
             // check if the items dropped
             WorldItem[] worldItem = Object.FindObjectsOfType<WorldItem>();
             Assert.IsTrue(worldItem.Length >= 2 && worldItem.Length <= 5);
-
-            // move player to the plant in order to pick up the items
-            PlayerController player = Object.FindObjectOfType<PlayerController>();
-            player.transform.position = nodeToPlant.Data.pos;
-
-            yield return new WaitForSeconds(1f);
-
-            // make sure that the players inventory has obtained the harvested plant
-            Assert.IsTrue(inventory.Contains(itemType));
 
             yield return null;
 

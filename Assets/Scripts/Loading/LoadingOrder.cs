@@ -17,7 +17,7 @@ namespace FarmSim.Loading
         private DataInjector dataInjector;
         private NodeGrid nodeGrid;
 
-        private bool loadedAll = false;
+        public bool LoadedAll { get; private set; } = false;
         private bool startedLoading = false;
 
 
@@ -29,14 +29,14 @@ namespace FarmSim.Loading
 
         void Update()
         {
-            if (nodeGrid.LoadedSection && !loadedAll && !startedLoading)
+            if (nodeGrid.LoadedSection && !LoadedAll && !startedLoading)
             {
                 startedLoading = true;
                 // once we've loaded the grid load the rest of the data
                 StartCoroutine(InjectCo());
             }
 
-            if (loadedAll)
+            if (LoadedAll)
             {
                 // once finished loading close the screen cover
                 introScreenCover.SetActive(false);
@@ -48,7 +48,7 @@ namespace FarmSim.Loading
             yield return StartCoroutine(dataInjector.InjectAllData());
             yield return StartCoroutine(dataInjector.PostInjectionAll());
 
-            loadedAll = true;
+            LoadedAll = true;
         }
     }
 }
