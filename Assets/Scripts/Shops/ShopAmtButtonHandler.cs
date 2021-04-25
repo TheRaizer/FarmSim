@@ -1,6 +1,6 @@
+using FarmSim.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using FarmSim.Items;
 
 namespace FarmSim.Shops
 {

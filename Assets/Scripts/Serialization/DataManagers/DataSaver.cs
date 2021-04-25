@@ -84,7 +84,7 @@ namespace FarmSim.Serialization
 
         public void SaveTime()
         {
-            if(SerializationManager.Save(TimeData.Current, SavePaths.TIME_FILE))
+            if (SerializationManager.Save(TimeData.Current, SavePaths.TIME_FILE))
             {
                 Debug.Log("Time Save was succesful");
             }

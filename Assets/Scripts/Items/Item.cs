@@ -1,5 +1,4 @@
 ﻿using FarmSim.Slots;
-using FarmSim.Utility;
 using System;
 using TMPro;
 using UnityEngine;

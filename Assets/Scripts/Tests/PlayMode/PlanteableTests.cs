@@ -3,7 +3,6 @@ using FarmSim.Grid;
 using FarmSim.Items;
 using FarmSim.Loading;
 using FarmSim.Planteables;
-using FarmSim.Player;
 using FarmSim.Serialization;
 using NUnit.Framework;
 using System.Collections;
@@ -115,7 +114,7 @@ namespace Tests
             ItemType itemType = Resources.Load("SO/Potato") as ItemType;
 
             // wait till grid is loaded
-            while(!grid.LoadedSection)
+            while (!grid.LoadedSection)
                 yield return null;
 
             // wait till all data is loaded

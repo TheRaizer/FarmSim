@@ -1,12 +1,12 @@
-using FarmSim.TimeBased;
+using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
-using FarmSim.Enums;
+using FarmSim.Serialization;
+using FarmSim.TimeBased;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using FarmSim.Serialization;
 
 namespace FarmSim.Planteables
 {
@@ -102,7 +102,7 @@ namespace FarmSim.Planteables
 
         public void WaterNeighbours()
         {
-            foreach(Node n in nodesToWater)
+            foreach (Node n in nodesToWater)
             {
                 n.Interactable.OnInteract(ToolTypes.WateringCan);
             }

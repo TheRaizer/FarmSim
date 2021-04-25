@@ -33,7 +33,7 @@ namespace FarmSim.Serialization
                     i++;
 
                     // only when it is on the interval do we yield to allow other work to be done
-                    if(i % loadInterval == 0)
+                    if (i % loadInterval == 0)
                         yield return null;
                     l.Load();
                 }

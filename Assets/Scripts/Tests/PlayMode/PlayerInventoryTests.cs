@@ -8,7 +8,6 @@ namespace Tests
 {
     public class PlayerInventoryTests
     {
-
         private const int POTATO_AMT = 5;
         private const int TOMATO_AMT = 10;
         private const int HOUSE_AMT = 11;
@@ -154,7 +153,7 @@ namespace Tests
         }
 
         [Test]
-        public void InventorySaveTest() 
+        public void InventorySaveTest()
         {
             AddToInventory();
 
