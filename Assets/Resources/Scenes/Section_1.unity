@@ -194,6 +194,8 @@ MonoBehaviour:
   playerCurrencyManager: {fileID: 1090752707022115401}
   buyables:
   - {fileID: 11400000, guid: bfc49abd4d0d85f40babb2e1e8630b93, type: 2}
+  - {fileID: 11400000, guid: a2629428a0704194ba1ba0dfa42d87db, type: 2}
+  - {fileID: 11400000, guid: a3c48554b2e63fd4e86d14361f0e149c, type: 2}
   shopId: SeedShop
 --- !u!114 &70921600
 MonoBehaviour:
@@ -528,7 +530,7 @@ GameObject:
   - component: {fileID: 311228385}
   - component: {fileID: 311228384}
   m_Layer: 5
-  m_Name: CameraCanvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

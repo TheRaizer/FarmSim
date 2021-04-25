@@ -2,7 +2,7 @@
 
 namespace FarmSim.Items
 {
-    public class AddToInventoryOnClick : MonoBehaviour
+    public class SpawnWorldItemOnClick : MonoBehaviour
     {
         [SerializeField] private ItemType itemType;
         [SerializeField] private int amt;

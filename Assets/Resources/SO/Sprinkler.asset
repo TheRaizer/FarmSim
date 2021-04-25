@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d309e1815a307d5419bbdae02aa5d624, type: 3}
-  m_Name: House
+  m_Name: Sprinkler
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: House
-  <Price>k__BackingField: 500
+  <ItemName>k__BackingField: Sprinkler
+  <Price>k__BackingField: 100
   <MaxCarryAmt>k__BackingField: 99
-  <IconPrefab>k__BackingField: {fileID: 650068336292026346, guid: ebf349aed9fc129429f8969b564c7195,
+  <IconPrefab>k__BackingField: {fileID: 1475856525572920501, guid: df1c54abb35bdda42b974915bd45027e,
     type: 3}
-  <ShopIconPrefab>k__BackingField: {fileID: 0}
-  <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: 042d7c2f27bae544e90f5ca94cce664c,
+  <ShopIconPrefab>k__BackingField: {fileID: 1623432799832004589, guid: a4015f369fc7d0f4d92fd62a662e07c1,
+    type: 3}
+  <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: 2ffe44e952684824c9f7e92f96e7c893,
     type: 3}

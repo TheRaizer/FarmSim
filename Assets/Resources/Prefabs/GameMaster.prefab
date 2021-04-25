@@ -73,6 +73,10 @@ MonoBehaviour:
     numOfGameObjects: 1
     prefab: {fileID: 7301315993295839137, guid: 6b67db1f0279bba4e924b29bc10ee9d6,
       type: 3}
+  - id: Sprinkler
+    numOfGameObjects: 1
+    prefab: {fileID: 7301315993295839137, guid: 5fa211b23e9c5e74caef814dd7c59d16,
+      type: 3}
   - id: Water
     numOfGameObjects: 50
     prefab: {fileID: 3277684549557045750, guid: d0b6bdeb3019d4f4d8c906b6bdab4480,
@@ -114,6 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e278401fd646a454e9d9c599d25a35c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadInterval: 10
 --- !u!114 &1090752706648671781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +200,7 @@ MonoBehaviour:
     type: 3}
   contentParent: {fileID: 0}
   firstSlotPos: {x: -87, y: 331}
+  offset: 60
   <SlotsInRow>k__BackingField: 4
   inventoryUI: {fileID: 0}
 --- !u!114 &948761821

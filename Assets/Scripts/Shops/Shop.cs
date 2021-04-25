@@ -36,7 +36,7 @@ namespace FarmSim.Shops
 
         private bool CanBuy => (TotalCost <= playerCurrencyManager.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
         private int TotalCost => itemToBuy.Price * amtToExchange;
-        private int SellValue => Mathf.FloorToInt(itemToSell.itemType.Price * amtToExchange / SELL_DECR);
+        private int SellValue => Mathf.FloorToInt(itemToSell.itemType.Price * amtToExchange * SELL_DECR);
 
         private int amtToExchange = 0;
         private bool isBuying = false;
