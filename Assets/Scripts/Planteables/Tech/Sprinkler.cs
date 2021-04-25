@@ -20,18 +20,19 @@ namespace FarmSim.Planteables
         [SerializeField] private ItemType sprinklerItem;
 
         [Header("Sprinkling distance")]
-        [SerializeField] private int xDist = 1;
-        [SerializeField] private int yDist = 1;
+        [SerializeField] private int xWaterDim = 3;
+        [SerializeField] private int yWaterDim = 3;
 
         [Header("Animation Settings")]
-        [SerializeField] private float animationInterval = 15f;
-        [SerializeField] private string animationName = "Sprinkle";
+        [SerializeField] private float animInterval = 10f;
+        [SerializeField] private string animParamName = "Sprinkle";
+        [SerializeField] private float animPlayTime = 3f;
 
         private Animator animator;
         private NodeGrid nodeGrid;
 
-        private readonly WaitForSeconds initialWait = new WaitForSeconds(1.5f);
-        private WaitForSeconds animationWait;
+        private WaitForSeconds animWait;
+        private WaitForSeconds animPlay;
 
         /// <summary>
         ///     The previous <see cref="IInteractable"/> that was held in the <see cref="Node"/> this sprinkler lies on.
@@ -54,13 +55,20 @@ namespace FarmSim.Planteables
         {
             nodeGrid = FindObjectOfType<NodeGrid>();
             animator = GetComponent<Animator>();
-            animationWait = new WaitForSeconds(animationInterval);
+            animWait = new WaitForSeconds(animInterval);
+            animPlay = new WaitForSeconds(animPlayTime);
+        }
+
+        private void Start()
+        {
+            InitializeNodeInfo();
 
             middleNode = nodeGrid.GetNodeFromXY(X, Y);
-            nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xDist, yDist);
+            nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xWaterDim, yWaterDim);
 
-            InitializeNodeInfo();
             ModifyAsWaterSource(true);
+
+            Sprinkle();
         }
 
         private void InitializeNodeInfo()
@@ -104,14 +112,15 @@ namespace FarmSim.Planteables
         {
             foreach (Node n in nodesToWater)
             {
+                if (n == middleNode)
+                    continue;
                 n.Interactable.OnInteract(ToolTypes.WateringCan);
             }
         }
 
         public void OnTimePass(int daysPassed = 1)
         {
-            WaterNeighbours();
-            StartCoroutine(SprinkleCo());
+            Sprinkle();
         }
 
         public void OnInteract(ToolTypes toolType, GameObject gameObject = null, Action onSuccessful = null)
@@ -139,19 +148,22 @@ namespace FarmSim.Planteables
             Destroy(gameObject);
         }
 
-        private IEnumerator SprinkleCo()
+        private void Sprinkle()
         {
-            yield return initialWait;
-
+            WaterNeighbours();
             StopCoroutine(AnimationCo());
             StartCoroutine(AnimationCo());
         }
 
         private IEnumerator AnimationCo()
         {
-            animator.SetTrigger(animationName);
+            animator.SetBool(animParamName, true);
 
-            yield return animationWait;
+            yield return animPlay;
+
+            animator.SetBool(animParamName, false);
+
+            yield return animWait;
 
             StartCoroutine(AnimationCo());
         }

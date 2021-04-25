@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 6984330460740525283}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4.388364, y: 4.388364, z: 4.388364}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -117,7 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprinklerItem: {fileID: 11400000, guid: a3c48554b2e63fd4e86d14361f0e149c, type: 2}
-  xDist: 1
-  yDist: 1
-  animationInterval: 15
-  animationName: Sprinkle
+  xWaterDim: 3
+  yWaterDim: 3
+  animInterval: 15
+  animParamName: Sprinkle
+  animPlayTime: 3

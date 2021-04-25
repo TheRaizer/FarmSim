@@ -2,6 +2,7 @@
 using FarmSim.Items;
 using FarmSim.Player;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FarmSim.Placeables
 {
@@ -55,7 +56,7 @@ namespace FarmSim.Placeables
 
         protected virtual void Update()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
             {
                 if (CanBePlaced(DestinationNode))
                 {

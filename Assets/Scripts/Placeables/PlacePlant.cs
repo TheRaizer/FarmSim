@@ -1,6 +1,7 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace FarmSim.Placeables
 {
@@ -19,7 +20,7 @@ namespace FarmSim.Placeables
 
         protected override void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 destination = nodeGrid.GetNodeFromMousePosition();
 
