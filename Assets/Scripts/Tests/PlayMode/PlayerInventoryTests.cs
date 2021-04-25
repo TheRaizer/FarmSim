@@ -62,6 +62,8 @@ namespace Tests
         {
             AddToInventory();
 
+            int amountOfTomato = 200;
+
             // add another potato
             inventory.AddToInventory(potatoType, POTATO_AMT);
 
@@ -69,31 +71,34 @@ namespace Tests
             Assert.AreEqual(POTATO_AMT * 2, potato.Amt);
 
             // overflow the tomato item
-            inventory.AddToInventory(tomatoType, 200);
+            inventory.AddToInventory(tomatoType, amountOfTomato);
 
             // make sure that the tomato we first added had maxed out
             Assert.AreEqual(tomato.itemType.MaxCarryAmt, tomato.Amt);
 
             // obtain all the tomato items in the inventory
             List<Item> tomatoes = inventory.FindInstances(tomatoType);
-
-            // due to overflow there should be exactly 2 tomato objects in the inventory.
             int instancesOfTomato = tomatoes.Count;
+            int correctInstancesOfTomato = Mathf.CeilToInt((float)(amountOfTomato + TOMATO_AMT) / tomato.itemType.MaxCarryAmt);
 
-            Assert.AreEqual(3, instancesOfTomato);
+            /*
+            We ran AddToInventory() and added 'amountOfTomato' more. there should be exactly amountOfTomato + TOMATO_AMT) / tomato.itemType.MaxCarryAmt
+            instances of tomato in the inventory rounded up.
+            */
+            Assert.AreEqual(correctInstancesOfTomato, instancesOfTomato);
 
-            // due to overflow the second tomato object should have amount of 10.
-            bool foundTomatoAmt10 = false;
+            bool foundCorrectNonFullAmt = false;
+            int correctNonFullAmt = amountOfTomato + TOMATO_AMT - tomato.itemType.MaxCarryAmt * (correctInstancesOfTomato - 1);
 
             tomatoes.ForEach(x =>
             {
-                if (x.Amt == 10)
+                if (x.Amt == correctNonFullAmt)
                 {
-                    foundTomatoAmt10 = true;
+                    foundCorrectNonFullAmt = true;
                 }
             });
 
-            Assert.IsTrue(foundTomatoAmt10);
+            Assert.IsTrue(foundCorrectNonFullAmt);
         }
 
         [Test]
