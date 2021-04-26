@@ -5,11 +5,13 @@ public class TechData
 {
     public Vector2 pos;
     public string prefabName;
+    public string guid;
 
-    public TechData(Vector2 pos, string prefabName)
+    public TechData(Vector2 pos, string prefabName, string guid)
     {
         this.pos = pos;
         this.prefabName = prefabName;
+        this.guid = guid;
     }
 }
 

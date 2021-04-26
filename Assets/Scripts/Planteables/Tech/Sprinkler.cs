@@ -13,7 +13,9 @@ namespace FarmSim.Planteables
 {
     /// <class name="Sprinkler">
     ///     <summary>
-    ///         Manages a sprinkler water source and what nodes it interacts with.
+    ///         Manages a sprinkler water source and what nodes surrounding it.
+    ///         
+    ///         <para>This GameObject is always instantiated after post load has occured, meaning all interactables have already been loaded in.</para>
     ///     </summary>
     /// </class>
     [Savable(false)]
@@ -52,8 +54,6 @@ namespace FarmSim.Planteables
         public int X { get; set; }
         public int Y { get; set; }
 
-        private readonly string guid = Guid.NewGuid().ToString();
-
         private List<Node> nodesToWater;
         private Node middleNode;
 
@@ -63,25 +63,42 @@ namespace FarmSim.Planteables
             animator = GetComponent<Animator>();
             animWait = new WaitForSeconds(animInterval);
             animPlay = new WaitForSeconds(animPlayTime);
+
+            // if data was loaded from save
+            if (Data != null)
+            {
+                InitializeNodeInfo();
+            }
         }
 
         private void Start()
         {
-            InitializeNodeInfo();
+            // if this sprinkler was not loaded from save
+            if (Data == null)
+            {
+                InitializeNodeInfo();
+                Data = new TechData(transform.position, TECH_PATH, Guid.NewGuid().ToString());
+                InitSurroundings();
+            }
+        }
 
-            middleNode = nodeGrid.GetNodeFromXY(X, Y);
-            nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xWaterDim, yWaterDim);
-
+        private void InitSurroundings()
+        {
+            // we init the surroundings once this Sprinkler is created which is always after data has been injected and interactables initiated.
             ModifyAsWaterSource(true);
         }
 
         private void InitializeNodeInfo()
         {
-            Node node = nodeGrid.GetNodeFromVector2(gameObject.transform.position);
-            X = node.Data.x;
-            Y = node.Data.y;
-            prevInteractable = node.Interactable;
-            node.Interactable = this;
+            middleNode = nodeGrid.GetNodeFromVector2(transform.position);
+            X = middleNode.Data.x;
+            Y = middleNode.Data.y;
+
+            // store the nodes interactable that we will replace
+            prevInteractable = middleNode.Interactable;
+            middleNode.Interactable = this;
+
+            nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xWaterDim, yWaterDim);
         }
 
         /// <summary>
@@ -95,18 +112,22 @@ namespace FarmSim.Planteables
 
             foreach (Node n in nodesToWater)
             {
+                if (n == middleNode)
+                    continue;
+
+                Debug.Log(n.Interactable);
                 // if the interactable is able to hold reference to waterSources
                 if (n.Interactable is IWaterSourceRefsGUIDs waterSources)
                 {
                     if (add)
                     {
                         // add this water source as reference
-                        waterSources.WaterSrcGuids.Add(guid);
+                        waterSources.AddToWaterSources(Data.guid);
                     }
                     else
                     {
                         // remove this water source from reference
-                        waterSources.WaterSrcGuids.Remove(guid);
+                        waterSources.RemoveFromWaterSources(Data.guid);
                     }
                 }
             }
@@ -154,8 +175,6 @@ namespace FarmSim.Planteables
 
         private void Sprinkle()
         {
-            Debug.Log("Sprinkle");
-            WaterNeighbours();
             StopCoroutine(AnimationCo());
             StartCoroutine(AnimationCo());
         }
@@ -167,6 +186,9 @@ namespace FarmSim.Planteables
             yield return animPlay;
 
             animator.SetBool(animParamName, false);
+            
+            // watering neighbours has to happen a bit after the initial time passes or the dirt may not be affected by it.
+            WaterNeighbours();
 
             yield return animWait;
 
@@ -177,7 +199,7 @@ namespace FarmSim.Planteables
         {
             if (!SectionData.Current.techDatas.Contains(Data))
             {
-                SectionData.Current.techDatas.Add(new TechData(transform.position, TECH_PATH));
+                SectionData.Current.techDatas.Add(Data);
             }
         }
     }

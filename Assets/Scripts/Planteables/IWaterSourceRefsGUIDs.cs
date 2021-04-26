@@ -2,5 +2,6 @@ using System.Collections.Generic;
 
 public interface IWaterSourceRefsGUIDs
 {
-    List<string> WaterSrcGuids { get; }
+    void AddToWaterSources(string guid);
+    void RemoveFromWaterSources(string guid);
 }

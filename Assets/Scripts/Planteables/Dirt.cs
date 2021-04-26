@@ -5,7 +5,6 @@ using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using FarmSim.Utility;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -32,11 +31,6 @@ namespace FarmSim.Planteables
         public int X { get; set; }
         public int Y { get; set; }
 
-        /// <summary>
-        ///     List of GUIDs representing the unique WaterSources
-        /// </summary>
-        public List<string> WaterSrcGuids { get; } = new List<string>();
-
         private SpriteRenderer spriteRenderer = null;
         private ObjectPooler objectPooler = null;
 
@@ -60,8 +54,9 @@ namespace FarmSim.Planteables
             }
             else
             {
-                if(WaterSrcGuids.Count > 0)
+                if (data.WaterSrcGuids.Count > 0)
                 {
+                    Debug.Log("Grow multiple");
                     // if theres a water source we can make multiple days pass
                     plant.Grow(daysPassed);
                 }
@@ -242,6 +237,18 @@ namespace FarmSim.Planteables
         {
             base.PostLoad();
             CheckSpriteType();
+        }
+
+        public void AddToWaterSources(string guid)
+        {
+            data.WaterSrcGuids.Add(guid);
+            Debug.Log(data.WaterSrcGuids.Count);
+        }
+
+        public void RemoveFromWaterSources(string guid)
+        {
+            data.WaterSrcGuids.Remove(guid);
+            Debug.Log(data.WaterSrcGuids.Count);
         }
     }
 }

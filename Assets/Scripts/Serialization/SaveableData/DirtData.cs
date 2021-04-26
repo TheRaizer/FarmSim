@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace FarmSim.Serialization
 {
     /// <class name="DirtData">
@@ -26,6 +28,12 @@ namespace FarmSim.Serialization
         ///     The number of days before the dirt reverts back to the dry from hoed.
         /// </summary>
         public int DaysTillRevert { get; set; }
+
+
+        /// <summary>
+        ///     List of GUIDs representing the unique WaterSources
+        /// </summary>
+        public List<string> WaterSrcGuids { get; } = new List<string>();
 
         public DirtData(string _id, int _x, int _y, bool _hoed, bool _watered, int _daysTillRevert)
         {
