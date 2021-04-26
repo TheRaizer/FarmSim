@@ -24,6 +24,9 @@ namespace FarmSim.Serialization
         {
             Saving = true;
 
+            // overwrite the sections internal day to the current day
+            SectionData.Current.internalDay = TimeData.Current.day;
+
             IEnumerable saveables = FindObjectsOfType<MonoBehaviour>().OfType<ISavable>();
 
             // save every item

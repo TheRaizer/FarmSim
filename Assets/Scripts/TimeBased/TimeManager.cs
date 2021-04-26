@@ -56,7 +56,7 @@ namespace FarmSim.TimeBased
             // pass the time on each object by 1 day
             timeBasedObjects.ForEach(timeBased => timeBased.OnTimePass());
 
-            // execute the main save
+            // execute the main save with the current section as the origin
             dataSaver.SaveMain(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
         }
     }

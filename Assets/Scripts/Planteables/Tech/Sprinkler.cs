@@ -201,6 +201,8 @@ namespace FarmSim.Planteables
             {
                 SectionData.Current.techDatas.Add(Data);
             }
+
+            StopCoroutine(AnimationCo());
         }
     }
 }

@@ -25,7 +25,7 @@ namespace FarmSim.Serialization
         public List<TechData> techDatas = new List<TechData>();
         public NodeData[,] nodeDatas;
 
-        public int internalDay;
+        public int internalDay { get; set; }
 
         public static SectionData Current
         {
