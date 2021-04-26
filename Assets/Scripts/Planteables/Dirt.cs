@@ -22,10 +22,12 @@ namespace FarmSim.Planteables
         [SerializeField] private Sprite hoedDirt = null;
         [SerializeField] private Sprite wetHoedDirt = null;
 
+        private const string PLANTEABLE_PREFAB_FOLDER = "Prefabs/Planteables/";
+
         private Planteable plant = null;
         private NodeGrid nodeGrid;
 
-        public DirtData Data { private get; set; }
+        private DirtData data;
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -53,24 +55,27 @@ namespace FarmSim.Planteables
         {
             if (plant == null)
             {
-                Data.DaysTillRevert -= daysPassed;
+                data.DaysTillRevert -= daysPassed;
                 CheckIfDried();
             }
             else
             {
-                if (Data.Watered)
+                if(WaterSrcGuids.Count > 0)
                 {
-                    if (WaterSrcGuids.Count > 0)
-                        plant.Grow(daysPassed);
-                    else
-                        plant.Grow();
+                    // if theres a water source we can make multiple days pass
+                    plant.Grow(daysPassed);
+                }
+                else if (data.Watered)
+                {
+                    // if its just watered only grow it once
+                    plant.Grow();
                 }
             }
-            Data.Watered = false;
+            data.Watered = false;
             CheckSpriteType();
         }
 
-        private void SetDaysTillRevert() => Data.DaysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
+        private void SetDaysTillRevert() => data.DaysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);
 
         /// <summary>
         ///     Hoes the dirt changing it from dried dirt to hoed dirt.
@@ -78,10 +83,10 @@ namespace FarmSim.Planteables
         /// </summary>
         private void Hoe()
         {
-            if (!Data.Hoed)
+            if (!data.Hoed)
             {
                 objectPooler.SpawnGameObject("HoedDirtParticles", transform.position, Quaternion.identity);
-                Data.Hoed = true;
+                data.Hoed = true;
                 SetDaysTillRevert();
                 spriteRenderer.sprite = hoedDirt;
             }
@@ -92,7 +97,7 @@ namespace FarmSim.Planteables
         /// </summary>
         private void Water()
         {
-            Data.Watered = true;
+            data.Watered = true;
             SetDaysTillRevert();
             CheckSpriteType();
         }
@@ -113,19 +118,19 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckIfDried()
         {
-            if (Data.DaysTillRevert <= 0)
+            if (data.DaysTillRevert <= 0)
             {
-                Data.Hoed = false;
-                Data.Watered = false;
+                data.Hoed = false;
+                data.Watered = false;
                 CheckSpriteType();
             }
         }
 
         private void CheckSpriteType()
         {
-            if (Data.Hoed)
+            if (data.Hoed)
             {
-                if (Data.Watered)
+                if (data.Watered)
                 {
                     spriteRenderer.sprite = wetHoedDirt;
                 }
@@ -166,7 +171,7 @@ namespace FarmSim.Planteables
                     break;
                 case ToolTypes.Other:
                     // check if the given gameObject contains a Planteable component
-                    if (Data.Hoed && gameObject != null && gameObject.TryGetComponent<Planteable>(out _))
+                    if (data.Hoed && gameObject != null && gameObject.TryGetComponent<Planteable>(out _))
                     {
                         // generate the Planteable GameObject
                         var obj = Instantiate(gameObject);
@@ -174,7 +179,7 @@ namespace FarmSim.Planteables
 
                         // initialize the Dirts Plant field and give it the same Id as this Dirt instance.
                         plant = obj.GetComponent<Planteable>();
-                        plant.SetDataId(Data.Id);
+                        plant.SetDataId(data.Id);
                     }
                     onSuccessful?.Invoke();
                     break;
@@ -186,9 +191,9 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!SectionData.Current.dirtDatas.Contains(Data))
+            if (!SectionData.Current.dirtDatas.Contains(data))
             {
-                SectionData.Current.dirtDatas.Add(Data);
+                SectionData.Current.dirtDatas.Add(data);
             }
         }
 
@@ -198,7 +203,7 @@ namespace FarmSim.Planteables
             if (noDirt)
             {
                 // if there is no dirt data that was loaded then create a new one.
-                Data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, 0);
+                data = new DirtData(UniqueIdGenerator.IdFromDate(), X, Y, false, false, 0);
             }
             else
             {
@@ -209,26 +214,26 @@ namespace FarmSim.Planteables
         private void LoadExistingDirt()
         {
             // find the dirts data that matches its x and y.
-            Data = SectionData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
+            data = SectionData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
 
-            PlanteableData plantData = SectionData.Current.plantDatas.Find(plant => plant.Id == Data.Id);
+            PlanteableData plantData = SectionData.Current.plantDatas.Find(plant => plant.Id == data.Id);
 
             // if there is a matching plant data
             if (plantData != null)
             {
                 // we must create a plant game object
-                var gameObject = Resources.Load("Prefabs/Planteables/" + plantData.PrefabName) as GameObject;
+                var prefab = Resources.Load(PLANTEABLE_PREFAB_FOLDER + plantData.PrefabName) as GameObject;
 
-                if (gameObject == null)
+                if (prefab == null)
                 {
-                    Debug.LogError("There is no planteable prefab at path: " + "Prefabs/Planteables/" + plantData.PrefabName);
+                    Debug.LogError("There is no planteable prefab at path: " + PLANTEABLE_PREFAB_FOLDER + plantData.PrefabName);
                 }
 
-                var objInstance = Instantiate(gameObject);
-                objInstance.transform.position = transform.position;
+                var gameObject = Instantiate(prefab);
+                gameObject.transform.position = transform.position;
 
                 // assign the plant data
-                plant = objInstance.GetComponent<Planteable>();
+                plant = gameObject.GetComponent<Planteable>();
                 plant.Data = plantData;
             }
         }

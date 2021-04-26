@@ -1,3 +1,4 @@
+using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
@@ -15,7 +16,8 @@ namespace FarmSim.Planteables
     ///         Manages a sprinkler water source and what nodes it interacts with.
     ///     </summary>
     /// </class>
-    public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable, ISavable, ILoadable
+    [Savable(false)]
+    public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable, ISavable, ITech
     {
         [SerializeField] private ItemType sprinklerItem;
 
@@ -33,6 +35,10 @@ namespace FarmSim.Planteables
 
         private WaitForSeconds animWait;
         private WaitForSeconds animPlay;
+
+        private const string TECH_PATH = "Sprinkler";
+
+        public TechData Data { private get; set; }
 
         /// <summary>
         ///     The previous <see cref="IInteractable"/> that was held in the <see cref="Node"/> this sprinkler lies on.
@@ -67,8 +73,6 @@ namespace FarmSim.Planteables
             nodesToWater = nodeGrid.GetNodesFromDimensions(middleNode, xWaterDim, yWaterDim);
 
             ModifyAsWaterSource(true);
-
-            Sprinkle();
         }
 
         private void InitializeNodeInfo()
@@ -150,6 +154,7 @@ namespace FarmSim.Planteables
 
         private void Sprinkle()
         {
+            Debug.Log("Sprinkle");
             WaterNeighbours();
             StopCoroutine(AnimationCo());
             StartCoroutine(AnimationCo());
@@ -167,14 +172,13 @@ namespace FarmSim.Planteables
 
             StartCoroutine(AnimationCo());
         }
+
         public void Save()
         {
-            throw new NotImplementedException();
-        }
-
-        public void Load()
-        {
-            throw new NotImplementedException();
+            if (!SectionData.Current.techDatas.Contains(Data))
+            {
+                SectionData.Current.techDatas.Add(new TechData(transform.position, TECH_PATH));
+            }
         }
     }
 }

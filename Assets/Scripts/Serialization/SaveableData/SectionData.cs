@@ -22,6 +22,7 @@ namespace FarmSim.Serialization
         // collections are within lists to represent the possible sections that each collection can be part of.
         public List<DirtData> dirtDatas = new List<DirtData>();
         public List<PlanteableData> plantDatas = new List<PlanteableData>();
+        public List<TechData> techDatas = new List<TechData>();
         public NodeData[,] nodeDatas;
 
         public int internalDay;

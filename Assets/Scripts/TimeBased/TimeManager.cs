@@ -15,7 +15,6 @@ namespace FarmSim.TimeBased
     {
         [SerializeField] private GameObject dayPassBackground;
 
-        private List<ITimeBased> timeBasedObjects = null;
         private DataSaver dataSaver;
         private NodeGrid nodeGrid;
 
@@ -27,10 +26,6 @@ namespace FarmSim.TimeBased
 
         private void Update()
         {
-            if (nodeGrid.LoadedSection && timeBasedObjects == null)
-            {
-                timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
-            }
             if (!dataSaver.Saving && dayPassBackground.activeInHierarchy)
             {
                 dayPassBackground.SetActive(false);
@@ -52,9 +47,16 @@ namespace FarmSim.TimeBased
         private void MoveToNextDay()
         {
             dayPassBackground.SetActive(true);
+
+            // get all time based objects
+            List<ITimeBased> timeBasedObjects = FindObjectsOfType<MonoBehaviour>().OfType<ITimeBased>().ToList();
+
             TimeData.Current.day++;
+
+            // pass the time on each object by 1 day
             timeBasedObjects.ForEach(timeBased => timeBased.OnTimePass());
 
+            // execute the main save
             dataSaver.SaveMain(nodeGrid.IsSavableSection, nodeGrid.SectionNum);
         }
     }

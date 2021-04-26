@@ -15,17 +15,17 @@ namespace FarmSim.Serialization
         ///     Number of ILoadables to load before yielding the coroutine.
         /// </summary>
         [SerializeField] private int loadInterval = 5;
-        private bool loading = false;
+        private bool injecting = false;
 
         /// <summary>
         ///     Finds all ILoadables in the scene and injects the loaded data into them.
         /// </summary>
         public IEnumerator InjectAllData()
         {
-            int i = 0;
-            if (!loading)
+            if (!injecting)
             {
-                loading = true;
+                int i = 0;
+                injecting = true;
                 IEnumerable loadables = FindObjectsOfType<MonoBehaviour>().OfType<ILoadable>();
 
                 foreach (ILoadable l in loadables)
@@ -38,24 +38,29 @@ namespace FarmSim.Serialization
                     l.Load();
                 }
 
-                loading = false;
+                injecting = false;
             }
             Debug.Log("Succesfully loaded");
         }
 
         public IEnumerator PostInjectionAll()
         {
-            int i = 0;
-            IEnumerable postLoads = FindObjectsOfType<MonoBehaviour>().OfType<IOccurPostLoad>();
-            foreach (IOccurPostLoad p in postLoads)
+            if (!injecting)
             {
-                i++;
+                int i = 0;
+                injecting = true;
+                IEnumerable postLoads = FindObjectsOfType<MonoBehaviour>().OfType<IOccurPostLoad>();
+                foreach (IOccurPostLoad p in postLoads)
+                {
+                    i++;
 
-                // only when it is on the interval do we yield to allow other work to be done
-                if (i % loadInterval == 0)
-                    yield return null;
-                p.PostLoad();
+                    // only when it is on the interval do we yield to allow other work to be done
+                    if (i % loadInterval == 0)
+                        yield return null;
+                    p.PostLoad();
+                }
             }
+            injecting = false;
         }
     }
 }
