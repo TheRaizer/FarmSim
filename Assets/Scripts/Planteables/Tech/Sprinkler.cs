@@ -38,7 +38,7 @@ namespace FarmSim.Planteables
         private WaitForSeconds animWait;
         private WaitForSeconds animPlay;
 
-        private const string TECH_PATH = "Sprinkler";
+        private const string SPRINKLER_PREFAB_PATH = "Sprinkler";
 
         public TechData Data { private get; set; }
 
@@ -72,7 +72,7 @@ namespace FarmSim.Planteables
             // if this sprinkler was not loaded from save
             if (Data == null)
             {
-                Data = new TechData(transform.position, TECH_PATH, Guid.NewGuid().ToString());
+                Data = new TechData(transform.position, SPRINKLER_PREFAB_PATH, Guid.NewGuid().ToString());
                 InitSurroundings();
             }
         }
@@ -164,6 +164,7 @@ namespace FarmSim.Planteables
 
             // remove as a water source from neighbours
             ModifyAsWaterSource(false);
+            SectionData.Current.techDatas.Remove(Data);
 
             Destroy(gameObject);
         }
