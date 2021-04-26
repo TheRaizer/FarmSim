@@ -63,20 +63,15 @@ namespace FarmSim.Planteables
             animator = GetComponent<Animator>();
             animWait = new WaitForSeconds(animInterval);
             animPlay = new WaitForSeconds(animPlayTime);
-
-            // if data was loaded from save
-            if (Data != null)
-            {
-                InitializeNodeInfo();
-            }
         }
 
         private void Start()
         {
+            InitNodeInfo();
+
             // if this sprinkler was not loaded from save
             if (Data == null)
             {
-                InitializeNodeInfo();
                 Data = new TechData(transform.position, TECH_PATH, Guid.NewGuid().ToString());
                 InitSurroundings();
             }
@@ -88,11 +83,13 @@ namespace FarmSim.Planteables
             ModifyAsWaterSource(true);
         }
 
-        private void InitializeNodeInfo()
+        private void InitNodeInfo()
         {
             middleNode = nodeGrid.GetNodeFromVector2(transform.position);
             X = middleNode.Data.x;
             Y = middleNode.Data.y;
+
+            Debug.Log(middleNode.Interactable);
 
             // store the nodes interactable that we will replace
             prevInteractable = middleNode.Interactable;
@@ -115,7 +112,6 @@ namespace FarmSim.Planteables
                 if (n == middleNode)
                     continue;
 
-                Debug.Log(n.Interactable);
                 // if the interactable is able to hold reference to waterSources
                 if (n.Interactable is IWaterSourceRefsGUIDs waterSources)
                 {
@@ -159,8 +155,7 @@ namespace FarmSim.Planteables
         private void RemoveSprinkler()
         {
             // drop the world item
-            var worldItem = Instantiate(sprinklerItem.WorldItemPrefab);
-            worldItem.transform.position = gameObject.transform.position;
+            sprinklerItem.SpawnWorldItem(transform.position, 1);
 
             Node middleNode = nodeGrid.GetNodeFromXY(X, Y);
 

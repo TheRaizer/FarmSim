@@ -18,5 +18,5 @@ MonoBehaviour:
   <IconPrefab>k__BackingField: {fileID: 8565358942090029306, guid: f93d563279e81be43a6162ff5bed8d39,
     type: 3}
   <ShopIconPrefab>k__BackingField: {fileID: 0}
-  <WorldItemPrefab>k__BackingField: {fileID: 6939850219046529753, guid: de00585f45554b44881a519ccac17a49,
+  worldItemPrefab: {fileID: 6939850219046529753, guid: de00585f45554b44881a519ccac17a49,
     type: 3}

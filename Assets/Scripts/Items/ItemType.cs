@@ -15,11 +15,11 @@ namespace FarmSim.Items
         [field: SerializeField] public int MaxCarryAmt { get; private set; }
         [field: SerializeField] public GameObject IconPrefab { get; private set; }
         [field: SerializeField] public GameObject ShopIconPrefab { get; private set; }
-        [field: SerializeField] public GameObject WorldItemPrefab { get; private set; }
+        [SerializeField] private GameObject worldItemPrefab;
 
         public void SpawnWorldItem(Vector2 spawnPos, int amt)
         {
-            var gameObject = Instantiate(WorldItemPrefab);
+            var gameObject = Instantiate(worldItemPrefab);
 
             gameObject.transform.position = spawnPos;
 
