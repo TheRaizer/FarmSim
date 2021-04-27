@@ -1,5 +1,6 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Serialization;
+using FarmSim.Slots;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,11 +17,15 @@ namespace FarmSim.Items
     {
         private int maxStorage = 6;
         private readonly List<Item> inventory = new List<Item>();
+
         private InventorySlotsHandler inventorySlots;
+        private SwapManager swapManager;
 
         private void Awake()
         {
+            swapManager = FindObjectOfType<SwapManager>();
             inventorySlots = GetComponent<InventorySlotsHandler>();
+            inventorySlots.OnInventoryClosed = RemoveSwappableIfInventoryItem;
         }
 
         /// <summary>
@@ -228,6 +233,20 @@ namespace FarmSim.Items
                 return true;
             }
             return false;
+        }
+
+        private void RemoveSwappableIfInventoryItem()
+        {
+            // if the swap managers swappable is an item
+            if(swapManager.GetAttachedSwappable() is Item item)
+            {
+                // if the inventory has that exact item
+                if(GetExactItem(item.guid) != null)
+                {
+                    // return the item back to its slot
+                    swapManager.StopSwap();
+                }
+            }
         }
 
         public void Save()

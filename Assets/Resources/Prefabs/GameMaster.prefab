@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxAmt: 999999999
+  amtText: {fileID: 0}
 --- !u!114 &948761820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +201,7 @@ MonoBehaviour:
   slotPrefab: {fileID: 2655680677248230199, guid: 5a485298846ac1d4ebb5cd4d66057d8a,
     type: 3}
   contentParent: {fileID: 0}
-  firstSlotPos: {x: -87, y: 331}
+  firstSlotPos: {x: -87, y: 320}
   offset: 60
   <SlotsInRow>k__BackingField: 4
   inventoryUI: {fileID: 0}

@@ -1,5 +1,6 @@
 ﻿using FarmSim.Slots;
 using FarmSim.Utility;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +16,8 @@ namespace FarmSim.Items
     {
         [SerializeField] private GameObject inventoryUI;
 
+        public Action OnInventoryClosed { private get; set; } 
+
         protected override void Awake()
         {
             base.Awake();
@@ -26,6 +29,10 @@ namespace FarmSim.Items
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 inventoryUI.SetActive(!inventoryUI.activeInHierarchy);
+                if (!inventoryUI.activeInHierarchy)
+                {
+                    OnInventoryClosed?.Invoke();
+                }
             }
         }
 
