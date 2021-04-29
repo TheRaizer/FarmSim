@@ -25,7 +25,8 @@ namespace FarmSim.Items
         {
             swapManager = FindObjectOfType<SwapManager>();
             inventorySlots = GetComponent<InventorySlotsHandler>();
-            inventorySlots.OnInventoryClosed = RemoveSwappableIfInventoryItem;
+            if(inventorySlots != null)
+                inventorySlots.OnInventoryClosed = RemoveSwappableIfInventoryItem;
         }
 
         /// <summary>

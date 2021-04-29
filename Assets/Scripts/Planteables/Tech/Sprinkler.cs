@@ -89,8 +89,6 @@ namespace FarmSim.Planteables
             X = middleNode.Data.x;
             Y = middleNode.Data.y;
 
-            Debug.Log(middleNode.Interactable);
-
             // store the nodes interactable that we will replace
             prevInteractable = middleNode.Interactable;
             middleNode.Interactable = this;

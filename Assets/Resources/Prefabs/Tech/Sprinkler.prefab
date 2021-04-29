@@ -117,8 +117,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprinklerItem: {fileID: 11400000, guid: a3c48554b2e63fd4e86d14361f0e149c, type: 2}
-  xWaterDim: 3
-  yWaterDim: 3
+  xWaterDim: 5
+  yWaterDim: 5
   animInterval: 15
   animParamName: Sprinkle
   animPlayTime: 3
