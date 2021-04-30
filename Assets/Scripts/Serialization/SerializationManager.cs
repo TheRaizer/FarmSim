@@ -22,16 +22,16 @@ namespace FarmSim.Serialization
         {
             BinaryFormatter formatter = GetBinaryFormatter();
 
-            if (!Directory.Exists(Application.persistentDataPath + "/" + directory))
+            string directoryPath = Path.Combine(Application.persistentDataPath + "/", directory);
+            string savePath = Path.Combine(Application.persistentDataPath + "/" + directory + "/", saveName + ".save");
+
+            if (!Directory.Exists(directoryPath))
             {
                 // create a directory if none exist
-                Directory.CreateDirectory(Application.persistentDataPath + "/" + directory);
+                Directory.CreateDirectory(directoryPath);
             }
 
-            // obtain the path using Unity's Application.persistentDataPath
-            string path = Application.persistentDataPath + "/" + directory + "/" + saveName + ".save";
-
-            FileStream file = File.Create(path);
+            FileStream file = File.Create(savePath);
 
             formatter.Serialize(file, saveData);
             file.Close();
@@ -46,16 +46,17 @@ namespace FarmSim.Serialization
         /// <returns><see cref="object"/> containing data.</returns>
         public static object LoadSave(string saveName, string directory = "General")
         {
-            if (!File.Exists(Application.persistentDataPath + "/" + directory + "/" + saveName + ".save"))
+            string savePath = Path.Combine(Application.persistentDataPath + "/" + directory + "/", saveName + ".save");
+
+            if (!File.Exists(savePath))
             {
-                Debug.LogWarning($"No file exists at {Application.persistentDataPath + "/" + directory + "/" + saveName + ".save"}");
+                Debug.LogWarning($"No file exists at {savePath}");
                 return null;
             }
 
             BinaryFormatter formatter = GetBinaryFormatter();
 
-            string path = Application.persistentDataPath + "/" + directory + "/" + saveName + ".save";
-            FileStream file = File.Open(path, FileMode.Open);
+            FileStream file = File.Open(savePath, FileMode.Open);
 
             try
             {
@@ -65,7 +66,7 @@ namespace FarmSim.Serialization
             }
             catch
             {
-                Debug.LogErrorFormat("Failed to load file at {0}", path);
+                Debug.LogErrorFormat("Failed to load file at {0}", savePath);
                 file.Close();
                 return null;
             }
