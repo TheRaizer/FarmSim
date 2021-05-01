@@ -14,7 +14,8 @@
         "Items",
         "Utility",
         "Slots",
-        "SaveableData"
+        "SaveableData",
+        "TimeBased"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

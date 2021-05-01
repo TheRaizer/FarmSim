@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace FarmSim.Planteables 
 {
-    /// <class name="TechCreator">
+    /// <class name="TechLoader">
     ///     <summary>
-    ///         Creates all the tech objects that were saved in the given section before the data is injected in the Update function.
+    ///         Loads/Instantiates all the tech objects that were saved in the given section after data has been injected into other objects
     ///     </summary>
     /// </class>
     public class TechLoader : MonoBehaviour, IOccurPostLoad

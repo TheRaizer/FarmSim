@@ -4,6 +4,7 @@ using UnityEngine;
 public class WorldItemData
 {
     public Vector2 Pos { get; set; }
+    public int DaysActive { get; set; }
     public readonly int amt;
     public readonly string prefabName;
 

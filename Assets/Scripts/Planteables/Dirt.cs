@@ -56,7 +56,6 @@ namespace FarmSim.Planteables
             {
                 if (data.WaterSrcGuids.Count > 0)
                 {
-                    Debug.Log("Grow multiple");
                     // if theres a water source we can make multiple days pass
                     plant.Grow(daysPassed);
                 }

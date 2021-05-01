@@ -1,6 +1,8 @@
 ﻿using FarmSim.Serialization;
 using System.Collections;
+using FarmSim.TimeBased;
 using UnityEngine;
+using FarmSim.Attributes;
 
 namespace FarmSim.Items
 {
@@ -9,7 +11,8 @@ namespace FarmSim.Items
     ///         Manages a spawned world item. 
     ///     </summary>
     /// </class>
-    public class WorldItem : MonoBehaviour, ISavable, IWorldItem
+    [Savable(true)]
+    public class WorldItem : TimeCatchUp, ISavable, IWorldItem
     {
         [SerializeField] private ItemType itemType;
 
@@ -22,7 +25,9 @@ namespace FarmSim.Items
 
         private readonly WaitForSeconds followTime = new WaitForSeconds(2);
         private readonly WaitForSeconds waitTime = new WaitForSeconds(0.5f);
-        private const float speed = 3;
+
+        private const float SPEED = 3;
+        private const int MAX_DAYS_ACTIVE = 2;
 
         private void Awake()
         {
@@ -38,9 +43,23 @@ namespace FarmSim.Items
             }
         }
 
+        public override void OnTimePass(int daysPassed = 1)
+        {
+            base.OnTimePass(daysPassed);
+
+            // add onto the number of days this world item has been active
+            Data.DaysActive += daysPassed;
+
+            if (Data.DaysActive > MAX_DAYS_ACTIVE)
+            {
+                // if the number of active days exceeds the max, remove this world item.
+                OnRemoval();
+            }
+        }
+
         private void MoveToPlayer()
         {
-            Vector2 newPos = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+            Vector2 newPos = Vector2.MoveTowards(transform.position, player.position, SPEED * Time.deltaTime);
             Vector2 distance = (Vector2)player.position - newPos;
 
             if (AddToInventoryInRange(distance))
@@ -54,13 +73,13 @@ namespace FarmSim.Items
             if (Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
             {
                 // try to add to inventory, if succesful destroy this gameobject
-                inventory.AddToInventory(itemType, Data.amt, OnAddedToInventory, () => moveToPlayer = false);
+                inventory.AddToInventory(itemType, Data.amt, OnRemoval, () => moveToPlayer = false);
                 return true;
             }
             return false;
         }
 
-        private void OnAddedToInventory()
+        private void OnRemoval()
         {
             SectionData.Current.WorldItemDatas.Remove(Data);
             Destroy(gameObject);
