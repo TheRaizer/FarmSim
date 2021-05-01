@@ -9,7 +9,7 @@ namespace FarmSim.Items
     ///         Manages a spawned world item. 
     ///     </summary>
     /// </class>
-    public class WorldItem : MonoBehaviour, ISavable
+    public class WorldItem : MonoBehaviour, ISavable, IWorldItem
     {
         [SerializeField] private ItemType itemType;
 
@@ -54,10 +54,16 @@ namespace FarmSim.Items
             if (Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
             {
                 // try to add to inventory, if succesful destroy this gameobject
-                inventory.AddToInventory(itemType, Data.amt, () => Destroy(gameObject), () => moveToPlayer = false);
+                inventory.AddToInventory(itemType, Data.amt, OnAddedToInventory, () => moveToPlayer = false);
                 return true;
             }
             return false;
+        }
+
+        private void OnAddedToInventory()
+        {
+            SectionData.Current.WorldItemDatas.Remove(Data);
+            Destroy(gameObject);
         }
 
         private IEnumerator WaitCo()

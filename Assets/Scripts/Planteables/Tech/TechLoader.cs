@@ -11,7 +11,6 @@ namespace FarmSim.Planteables
     public class TechLoader : MonoBehaviour, IOccurPostLoad
     {
         private const string TECH_PREFAB_FOLDER = "Prefabs/Tech/";
-
         public void PostLoad()
         {
             if (SectionData.Current.TechDatas != null)

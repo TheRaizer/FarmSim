@@ -17,5 +17,5 @@ public class WorldItemData
 
 public interface IWorldItem
 {
-
+    public WorldItemData Data { set; }
 }
