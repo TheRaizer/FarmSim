@@ -13,7 +13,8 @@
         "Enums",
         "Items",
         "Utility",
-        "Slots"
+        "Slots",
+        "SaveableData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

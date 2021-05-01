@@ -24,26 +24,26 @@ namespace Tests
         public void GetNodeFromVector2Test()
         {
             // get a node
-            Node node_1 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER - 0.05f, Node.NODE_DIAMETER - 0.05f)
+            Node node_1 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER - 0.05f, NodeMeasures.NODE_DIAMETER - 0.05f)
                 + (Vector2)currNodeGrid.transform.position);
 
             // make sure the node obtained is the correct node
             Assert.AreEqual(0, node_1.Data.x);
             Assert.AreEqual(0, node_1.Data.y);
 
-            Node node_2 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 - 0.05f, Node.NODE_DIAMETER * 8 - 0.05f)
+            Node node_2 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 6 - 0.05f, NodeMeasures.NODE_DIAMETER * 8 - 0.05f)
                 + (Vector2)currNodeGrid.transform.position);
 
             Assert.AreEqual(5, node_2.Data.x);
             Assert.AreEqual(7, node_2.Data.y);
 
-            Node node_3 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 6 + 0.05f, Node.NODE_DIAMETER * 8 + 0.05f)
+            Node node_3 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 6 + 0.05f, NodeMeasures.NODE_DIAMETER * 8 + 0.05f)
                 + (Vector2)currNodeGrid.transform.position);
 
             Assert.AreEqual(6, node_3.Data.x);
             Assert.AreEqual(8, node_3.Data.y);
 
-            Node node_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 25, Node.NODE_DIAMETER * 22)
+            Node node_4 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 25, NodeMeasures.NODE_DIAMETER * 22)
                 + (Vector2)currNodeGrid.transform.position);
 
             Assert.AreEqual(25, node_4.Data.x);
@@ -53,7 +53,7 @@ namespace Tests
         [Test]
         public void IsValidPlacementTest()
         {
-            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5)
+            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 5)
                 + (Vector2)currNodeGrid.transform.position);
 
             currNodeGrid.MakeDimensionsOccupied(node, 3, 3);
@@ -70,7 +70,7 @@ namespace Tests
         {
             var grid = Object.FindObjectOfType<NodeGrid>();
 
-            Node node = grid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5)
+            Node node = grid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 5)
                 + (Vector2)grid.transform.position);
 
             grid.MakeDimensionsOccupied(node, 3, 3);
@@ -85,7 +85,7 @@ namespace Tests
         [Test]
         public void MooreNeighboursTest()
         {
-            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5)
+            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 5)
                 + (Vector2)currNodeGrid.transform.position);
 
             List<Node> neighbours = currNodeGrid.GetMooreNeighbours(node);
@@ -111,7 +111,7 @@ namespace Tests
         [Test]
         public void CardinalNeighboursTest()
         {
-            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5)
+            Node node = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 5)
                 + (Vector2)currNodeGrid.transform.position);
 
             List<Node> neighbours = currNodeGrid.GetCardinalNeighbours(node);
@@ -128,9 +128,9 @@ namespace Tests
         [Test]
         public void ManhattanDistanceTest()
         {
-            Vector2 vector_1 = new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 5);
-            Vector2 vector_2 = new Vector2(Node.NODE_DIAMETER * 6, Node.NODE_DIAMETER * 6);
-            Vector2 vector_3 = new Vector2(Node.NODE_DIAMETER * 5, Node.NODE_DIAMETER * 9);
+            Vector2 vector_1 = new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 5);
+            Vector2 vector_2 = new Vector2(NodeMeasures.NODE_DIAMETER * 6, NodeMeasures.NODE_DIAMETER * 6);
+            Vector2 vector_3 = new Vector2(NodeMeasures.NODE_DIAMETER * 5, NodeMeasures.NODE_DIAMETER * 9);
 
             Node node_1 = currNodeGrid.GetNodeFromVector2(vector_1 + (Vector2)currNodeGrid.transform.position);
             Node node_2 = currNodeGrid.GetNodeFromVector2(vector_2 + (Vector2)currNodeGrid.transform.position);

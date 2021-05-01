@@ -23,11 +23,11 @@ public class AStarTests
     [UnityTest]
     public IEnumerator AStarPathFindingNoBlocksTest()
     {
-        float xStart = Node.NODE_DIAMETER * 5;
-        float yStart = Node.NODE_DIAMETER * 5;
+        float xStart = NodeMeasures.NODE_DIAMETER * 5;
+        float yStart = NodeMeasures.NODE_DIAMETER * 5;
 
-        float xEnd = Node.NODE_DIAMETER * 1;
-        float yEnd = Node.NODE_DIAMETER * 2;
+        float xEnd = NodeMeasures.NODE_DIAMETER * 1;
+        float yEnd = NodeMeasures.NODE_DIAMETER * 2;
 
         // 5 * i i i i S
         // 4 * i * * * *
@@ -63,11 +63,11 @@ public class AStarTests
     [UnityTest]
     public IEnumerator AStarPathFindingWithBlockageTest()
     {
-        float xStart = Node.NODE_DIAMETER * 5;
-        float yStart = Node.NODE_DIAMETER * 5;
+        float xStart = NodeMeasures.NODE_DIAMETER * 5;
+        float yStart = NodeMeasures.NODE_DIAMETER * 5;
 
-        float xEnd = Node.NODE_DIAMETER * 1;
-        float yEnd = Node.NODE_DIAMETER * 2;
+        float xEnd = NodeMeasures.NODE_DIAMETER * 1;
+        float yEnd = NodeMeasures.NODE_DIAMETER * 2;
 
 
         // 5 i i i i i S
@@ -86,12 +86,12 @@ public class AStarTests
         Node endNode = currNodeGrid.GetNodeFromVector2(end);
 
         // create the walls
-        Node blockage_1_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 1, Node.NODE_DIAMETER * 4));
-        Node blockage_2_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 2, Node.NODE_DIAMETER * 4));
-        Node blockage_3_4 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 4));
-        Node blockage_3_3 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 3));
-        Node blockage_3_2 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 2));
-        Node blockage_3_1 = currNodeGrid.GetNodeFromVector2(new Vector2(Node.NODE_DIAMETER * 3, Node.NODE_DIAMETER * 1));
+        Node blockage_1_4 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 1, NodeMeasures.NODE_DIAMETER * 4));
+        Node blockage_2_4 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 2, NodeMeasures.NODE_DIAMETER * 4));
+        Node blockage_3_4 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 3, NodeMeasures.NODE_DIAMETER * 4));
+        Node blockage_3_3 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 3, NodeMeasures.NODE_DIAMETER * 3));
+        Node blockage_3_2 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 3, NodeMeasures.NODE_DIAMETER * 2));
+        Node blockage_3_1 = currNodeGrid.GetNodeFromVector2(new Vector2(NodeMeasures.NODE_DIAMETER * 3, NodeMeasures.NODE_DIAMETER * 1));
 
         // make the walls appear as walls to the algorithm
         blockage_1_4.Data.IsWalkable = false;

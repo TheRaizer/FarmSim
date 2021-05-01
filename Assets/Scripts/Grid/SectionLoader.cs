@@ -89,8 +89,8 @@ namespace FarmSim.Grid
         /// <returns><see cref="Vector2"/> position of a node at indices x and y</returns>
         private Vector2 GetNodePosition(int x, int y)
         {
-            float xPos = x * Node.NODE_DIAMETER + Node.NODE_RADIUS;
-            float yPos = y * Node.NODE_DIAMETER + Node.NODE_RADIUS;
+            float xPos = x * NodeMeasures.NODE_DIAMETER + NodeMeasures.NODE_RADIUS;
+            float yPos = y * NodeMeasures.NODE_DIAMETER + NodeMeasures.NODE_RADIUS;
 
             Vector2 pos = new Vector2(xPos + gridBottomLeft.x, yPos + gridBottomLeft.y);
             return pos;

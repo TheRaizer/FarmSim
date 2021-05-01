@@ -1,4 +1,5 @@
 ﻿using FarmSim.Grid;
+using FarmSim.Serialization;
 using UnityEngine;
 
 namespace FarmSim.Placeables
@@ -11,7 +12,7 @@ namespace FarmSim.Placeables
     public class MovePlaceable : MonoBehaviour
     {
         public Placeable AttachedPlaceable { get; set; } = null;
-        private Node currentNode = null;
+        private INodeData currentNode = null;
         private NodeGrid nodeGrid;
 
         private void Awake()
@@ -41,7 +42,7 @@ namespace FarmSim.Placeables
         /// </summary>
         private void MovePlaceableToNode()
         {
-            Node node = nodeGrid.GetNodeFromMousePosition();
+            INodeData node = nodeGrid.GetNodeFromMousePosition();
 
 
             if (node != null && (Vector2)AttachedPlaceable.transform.position != node.Data.pos)
@@ -51,7 +52,7 @@ namespace FarmSim.Placeables
 
                 currentNode = node;
 
-                AttachedPlaceable.DestinationNode = currentNode;
+                AttachedPlaceable.DestinationNodeData = currentNode;
                 AttachedPlaceable.ChangePosition(currentNode.Data.pos);
             }
         }

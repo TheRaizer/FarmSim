@@ -1,8 +1,10 @@
 {
     "name": "Serialization",
+    "rootNamespace": "",
     "references": [
         "GUID:eaaa8f1176726214f9205db5c7175a7e",
-        "GUID:b7e2dee78b24bf649ba4bf60be9a84d1"
+        "GUID:b7e2dee78b24bf649ba4bf60be9a84d1",
+        "GUID:39305a8bf30d5874d983e523f302c40c"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

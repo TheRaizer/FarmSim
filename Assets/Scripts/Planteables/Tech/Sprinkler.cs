@@ -7,7 +7,6 @@ using FarmSim.TimeBased;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -23,7 +22,7 @@ namespace FarmSim.Planteables
     public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable, ISavable, ITechData
     {
         [SerializeField] private ItemType sprinklerItem;
-        [SerializeField] private GameObject prefab;
+        [SerializeField] private string prefabName = "Sprinkler";
 
         [Header("Sprinkling distance")]
         [SerializeField] private int xWaterDim = 3;
@@ -68,16 +67,12 @@ namespace FarmSim.Planteables
 
         private void Start()
         {
-            var prefabParent = PrefabUtility.GetOutermostPrefabInstanceRoot(gameObject);
-            string path = AssetDatabase.GetAssetPath(prefabParent);
-
-            Debug.Log(path);
             InitNodeInfo();
 
             // if this sprinkler was not loaded from save
             if (Data == null)
             {
-                Data = new TechData(transform.position, prefab.name, Guid.NewGuid().ToString());
+                Data = new TechData(transform.position, prefabName, Guid.NewGuid().ToString());
                 InitSurroundings();
             }
         }

@@ -62,7 +62,7 @@ namespace FarmSim.Player
 
         private void ChangeRingPosition()
         {
-            Node node = nodeGrid.GetNodeFromMousePosition();
+            INodeData node = nodeGrid.GetNodeFromMousePosition();
             if (node != null)
             {
                 Vector2 pos = node.Data.pos;

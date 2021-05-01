@@ -1,6 +1,7 @@
 ﻿using FarmSim.Grid;
 using FarmSim.Items;
 using FarmSim.Player;
+using FarmSim.Serialization;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -19,7 +20,7 @@ namespace FarmSim.Placeables
         [SerializeField] protected bool isWalkable = true;
         [SerializeField] protected GameObject objectToPlace;
 
-        public Node DestinationNode { get; set; }
+        public INodeData DestinationNodeData { get; set; }
 
         /// <summary>
         ///     This guid is given when the placeable is spawned.
@@ -36,7 +37,7 @@ namespace FarmSim.Placeables
         private Color invalidColor;
         private Color validColor;
 
-        public bool CanBePlaced(Node node) => node != null && nodeGrid.IsValidPlacement(node, xDim, yDim);
+        public bool CanBePlaced(INodeData nodeData) => nodeData != null && nodeGrid.IsValidPlacement(nodeData, xDim, yDim);
 
         protected virtual void Awake()
         {
@@ -58,9 +59,9 @@ namespace FarmSim.Placeables
         {
             if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
             {
-                if (CanBePlaced(DestinationNode))
+                if (CanBePlaced(DestinationNodeData))
                 {
-                    nodeGrid.MakeDimensionsOccupied(DestinationNode, xDim, yDim, isWalkable);
+                    nodeGrid.MakeDimensionsOccupied(DestinationNodeData, xDim, yDim, isWalkable);
                     OnPlace();
                 }
             }
@@ -83,7 +84,7 @@ namespace FarmSim.Placeables
         {
             transform.position = newPos;
 
-            if (!CanBePlaced(DestinationNode))
+            if (!CanBePlaced(DestinationNodeData))
             {
                 sprite.color = invalidColor;
             }
@@ -101,7 +102,7 @@ namespace FarmSim.Placeables
         {
             ReduceAmtPlaceable();
             var obj = Instantiate(objectToPlace);
-            obj.transform.position = DestinationNode.Data.pos;
+            obj.transform.position = DestinationNodeData.Data.pos;
         }
 
         protected void ReduceAmtPlaceable()

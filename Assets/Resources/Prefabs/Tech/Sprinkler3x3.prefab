@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprinklerItem: {fileID: 11400000, guid: a3c48554b2e63fd4e86d14361f0e149c, type: 2}
-  prefab: {fileID: 6984330460740525283}
+  prefabName: Sprinkler3x3
   xWaterDim: 3
   yWaterDim: 3
   animInterval: 15

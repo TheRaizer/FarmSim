@@ -11,9 +11,6 @@ namespace FarmSim.Grid
     /// </class>
     public class Node : IHeapItem<Node>, INodeData
     {
-        public const float NODE_RADIUS = 0.7f;
-        public const float NODE_DIAMETER = NODE_RADIUS * 2;
-
         public NodeData Data { get; private set; }
         public IInteractable Interactable { get; set; }
         public int HeapIndex { get; set; }

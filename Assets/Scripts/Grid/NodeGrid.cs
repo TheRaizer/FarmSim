@@ -103,8 +103,8 @@ namespace FarmSim.Grid
         public Node GetNodeFromVector2(Vector2 vector)
         {
             // round the actual value to 4 decimal places to avoid incorrect indexes
-            float xVal = (float)Math.Round((float)((vector.x - transform.position.x) / Node.NODE_DIAMETER), 4);
-            float yVal = (float)Math.Round((float)((vector.y - transform.position.y) / Node.NODE_DIAMETER), 4);
+            float xVal = (float)Math.Round((float)((vector.x - transform.position.x) / NodeMeasures.NODE_DIAMETER), 4);
+            float yVal = (float)Math.Round((float)((vector.y - transform.position.y) / NodeMeasures.NODE_DIAMETER), 4);
 
             // floor the values to get the correct node in the case that the vector is not exactly at the nodes position
             int x = Mathf.FloorToInt(xVal);
@@ -152,13 +152,13 @@ namespace FarmSim.Grid
         /// <summary>
         ///     Occupies every node within certain dimensions around a given node.
         /// </summary>
-        /// <param name="node">The node the dimensions surround.</param>
+        /// <param name="nodeData">The node the dimensions surround.</param>
         /// <param name="xDim">The x-dimension.</param>
         /// <param name="yDim">The y-dimension.</param>
-        public void MakeDimensionsOccupied(Node node, int xDim, int yDim, bool isWalkable = true)
+        public void MakeDimensionsOccupied(INodeData nodeData, int xDim, int yDim, bool isWalkable = true)
         {
-            int yStart = node.Data.y - (yDim / 2);
-            int xStart = node.Data.x - (xDim / 2);
+            int yStart = nodeData.Data.y - (yDim / 2);
+            int xStart = nodeData.Data.x - (xDim / 2);
 
             for (int y = 0; y < yDim; y++)
             {
@@ -208,7 +208,7 @@ namespace FarmSim.Grid
                 return null;
         }
 
-        public List<Node> GetNodesFromDimensions(Node middleNode, int xDim, int yDim)
+        public List<Node> GetNodesFromDimensions(INodeData middleNode, int xDim, int yDim)
         {
             List<Node> nodes = new List<Node>();
             int yStart = middleNode.Data.y - (yDim / 2);
@@ -230,7 +230,7 @@ namespace FarmSim.Grid
             return nodes;
         }
 
-        public List<Node> GetMooreNeighbours(Node middleNode)
+        public List<Node> GetMooreNeighbours(INodeData middleNode)
         {
             List<Node> neighbours = new List<Node>();
 
@@ -256,7 +256,7 @@ namespace FarmSim.Grid
             return neighbours;
         }
 
-        public List<Node> GetCardinalNeighbours(Node middleNode)
+        public List<Node> GetCardinalNeighbours(INodeData middleNode)
         {
             List<Node> neighbours = new List<Node>();
 
@@ -280,7 +280,7 @@ namespace FarmSim.Grid
             return neighbours;
         }
 
-        public int GetManhattanDistance(Node node_1, Node node_2)
+        public int GetManhattanDistance(INodeData node_1, INodeData node_2)
         {
             return Mathf.Abs(node_1.Data.x - node_2.Data.x) + Mathf.Abs(node_1.Data.y - node_2.Data.y);
         }
