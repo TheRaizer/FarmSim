@@ -25,4 +25,9 @@ namespace FarmSim.Serialization
             y = _y;
         }
     }
+
+    public interface INodeData
+    {
+        public NodeData Data { get; }
+    }
 }

@@ -9,7 +9,7 @@ namespace FarmSim.Grid
     ///         Node is occupied or not.
     ///     </summary>
     /// </class>
-    public class Node : IHeapItem<Node>
+    public class Node : IHeapItem<Node>, INodeData
     {
         public const float NODE_RADIUS = 0.7f;
         public const float NODE_DIAMETER = NODE_RADIUS * 2;

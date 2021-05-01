@@ -7,6 +7,7 @@ using FarmSim.TimeBased;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 namespace FarmSim.Planteables
@@ -19,9 +20,10 @@ namespace FarmSim.Planteables
     ///     </summary>
     /// </class>
     [Savable(false)]
-    public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable, ISavable, ITech
+    public class Sprinkler : MonoBehaviour, ITimeBased, IInteractable, ISavable, ITechData
     {
         [SerializeField] private ItemType sprinklerItem;
+        [SerializeField] private GameObject prefab;
 
         [Header("Sprinkling distance")]
         [SerializeField] private int xWaterDim = 3;
@@ -38,7 +40,6 @@ namespace FarmSim.Planteables
         private WaitForSeconds animWait;
         private WaitForSeconds animPlay;
 
-        private const string SPRINKLER_PREFAB_PATH = "Sprinkler";
 
         public TechData Data { private get; set; }
 
@@ -67,12 +68,16 @@ namespace FarmSim.Planteables
 
         private void Start()
         {
+            var prefabParent = PrefabUtility.GetOutermostPrefabInstanceRoot(gameObject);
+            string path = AssetDatabase.GetAssetPath(prefabParent);
+
+            Debug.Log(path);
             InitNodeInfo();
 
             // if this sprinkler was not loaded from save
             if (Data == null)
             {
-                Data = new TechData(transform.position, SPRINKLER_PREFAB_PATH, Guid.NewGuid().ToString());
+                Data = new TechData(transform.position, prefab.name, Guid.NewGuid().ToString());
                 InitSurroundings();
             }
         }
@@ -162,7 +167,7 @@ namespace FarmSim.Planteables
 
             // remove as a water source from neighbours
             ModifyAsWaterSource(false);
-            SectionData.Current.techDatas.Remove(Data);
+            SectionData.Current.TechDatas.Remove(Data);
 
             Destroy(gameObject);
         }
@@ -191,9 +196,9 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!SectionData.Current.techDatas.Contains(Data))
+            if (!SectionData.Current.TechDatas.Contains(Data))
             {
-                SectionData.Current.techDatas.Add(Data);
+                SectionData.Current.TechDatas.Add(Data);
             }
 
             StopCoroutine(AnimationCo());

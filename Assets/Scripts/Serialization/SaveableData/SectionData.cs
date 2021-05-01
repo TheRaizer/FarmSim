@@ -20,12 +20,13 @@ namespace FarmSim.Serialization
         public int SectionNum = -1;
 
         // collections are within lists to represent the possible sections that each collection can be part of.
-        public List<DirtData> dirtDatas = new List<DirtData>();
-        public List<PlanteableData> plantDatas = new List<PlanteableData>();
-        public List<TechData> techDatas = new List<TechData>();
-        public NodeData[,] nodeDatas;
+        public List<DirtData> DirtDatas { get; set; } = new List<DirtData>();
+        public List<PlanteableData> PlantDatas { get; set; } = new List<PlanteableData>();
+        public List<TechData> TechDatas { get; set; } = new List<TechData>();
+        public List<WorldItemData> WorldItemDatas { get; set; } = new List<WorldItemData>();
+        public NodeData[,] NodeDatas { get; set; }
 
-        public int internalDay { get; set; }
+        public int InternalDay { get; set; }
 
         public static SectionData Current
         {

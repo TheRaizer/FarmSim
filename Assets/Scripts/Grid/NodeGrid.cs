@@ -123,14 +123,14 @@ namespace FarmSim.Grid
         /// <summary>
         ///     Checks every node in a certain space around a given node and returns if something can be placed.
         /// </summary>
-        /// <param name="node">The node whose at the center of the dimensions.</param>
+        /// <param name="nodeData">The node whose at the center of the dimensions.</param>
         /// <param name="xDim">The x-dimension to check.</param>
         /// <param name="yDim">The y-dimension to check.</param>
         /// <returns>true if there are no occupied Nodes in the space, otherwise false.</returns>
-        public bool IsValidPlacement(Node node, int xDim, int yDim)
+        public bool IsValidPlacement(INodeData nodeData, int xDim, int yDim)
         {
-            int yStart = node.Data.y - (yDim / 2);
-            int xStart = node.Data.x - (xDim / 2);
+            int yStart = nodeData.Data.y - (yDim / 2);
+            int xStart = nodeData.Data.x - (xDim / 2);
 
             for (int y = 0; y < yDim; y++)
             {
@@ -290,13 +290,13 @@ namespace FarmSim.Grid
             PlayerData.Current.SectionNum = SectionNum;
 
             SectionData.Current.SectionNum = SectionNum;
-            SectionData.Current.nodeDatas = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
+            SectionData.Current.NodeDatas = new NodeData[sectionGrid.GetLength(0), sectionGrid.GetLength(1)];
 
             for (int x = 0; x < sectionGrid.GetLength(0); x++)
             {
                 for (int y = 0; y < sectionGrid.GetLength(1); y++)
                 {
-                    SectionData.Current.nodeDatas[x, y] = sectionGrid[x, y].Data;
+                    SectionData.Current.NodeDatas[x, y] = sectionGrid[x, y].Data;
                 }
             }
         }

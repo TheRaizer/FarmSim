@@ -16,10 +16,10 @@ namespace FarmSim.TimeBased
         /// </summary>
         public void CatchupOnTime()
         {
-            if (SectionData.Current.internalDay < TimeData.Current.day)
+            if (SectionData.Current.InternalDay < TimeData.Current.day)
             {
                 // catchup on the time difference between global and section internal days
-                int timeDiff = TimeData.Current.day - SectionData.Current.internalDay;
+                int timeDiff = TimeData.Current.day - SectionData.Current.InternalDay;
                 OnTimePass(timeDiff);
             }
         }

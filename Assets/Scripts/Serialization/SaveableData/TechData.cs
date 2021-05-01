@@ -15,7 +15,7 @@ public class TechData
     }
 }
 
-public interface ITech
+public interface ITechData
 {
     /// <summary>
     ///     Allows the data to be assigned from the techs creator.

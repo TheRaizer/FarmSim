@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using FarmSim.Serialization;
+using System.Collections;
 using UnityEngine;
 
 namespace FarmSim.Items
@@ -8,11 +9,11 @@ namespace FarmSim.Items
     ///         Manages a spawned world item. 
     ///     </summary>
     /// </class>
-    public class WorldItem : MonoBehaviour
+    public class WorldItem : MonoBehaviour, ISavable
     {
         [SerializeField] private ItemType itemType;
 
-        public int Amt { private get; set; } = 4;
+        public WorldItemData Data { private get; set; }
 
         private Inventory inventory;
         private Transform player;
@@ -52,7 +53,8 @@ namespace FarmSim.Items
         {
             if (Mathf.Abs(distance.x) < 0.001 || Mathf.Abs(distance.y) < 0.001)
             {
-                inventory.AddToInventory(itemType, Amt, () => Destroy(gameObject), () => moveToPlayer = false);
+                // try to add to inventory, if succesful destroy this gameobject
+                inventory.AddToInventory(itemType, Data.amt, () => Destroy(gameObject), () => moveToPlayer = false);
                 return true;
             }
             return false;
@@ -70,7 +72,7 @@ namespace FarmSim.Items
 
             yield return followTime;
 
-            inventory.AddToInventory(itemType, Amt, () => Destroy(gameObject));
+            inventory.AddToInventory(itemType, Data.amt, () => Destroy(gameObject));
             moveToPlayer = false;
         }
 
@@ -82,6 +84,16 @@ namespace FarmSim.Items
                 {
                     StartCoroutine(WaitCo());
                 }
+            }
+        }
+
+        public void Save()
+        {
+            Data.Pos = transform.position;
+
+            if (!SectionData.Current.WorldItemDatas.Contains(Data))
+            {
+                SectionData.Current.WorldItemDatas.Add(Data);
             }
         }
     }

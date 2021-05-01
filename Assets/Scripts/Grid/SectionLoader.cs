@@ -59,7 +59,7 @@ namespace FarmSim.Grid
             if (sectionNum < 0 || sectionNum * SECTION_SIZE_X >= WorldMaxX || sectionNum * SECTION_SIZE_Y >= WorldMaxY)
                 Debug.LogError($"Section number {sectionNum} is not valid");
 
-            bool sectionIsEmpty = SectionData.Current.nodeDatas == null || SectionData.Current.nodeDatas.Length <= 0;
+            bool sectionIsEmpty = SectionData.Current.NodeDatas == null || SectionData.Current.NodeDatas.Length <= 0;
 
             for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
@@ -75,7 +75,7 @@ namespace FarmSim.Grid
                     else
                     {
                         // load saved ones
-                        sectionGrid[x, y] = new Node(SectionData.Current.nodeDatas[x, y]);
+                        sectionGrid[x, y] = new Node(SectionData.Current.NodeDatas[x, y]);
                     }
                 }
             }

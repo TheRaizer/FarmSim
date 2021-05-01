@@ -8,16 +8,15 @@ namespace FarmSim.Planteables
     ///         Creates all the tech objects that were saved in the given section before the data is injected in the Update function.
     ///     </summary>
     /// </class>
-    public class TechCreator : MonoBehaviour, IOccurPostLoad
+    public class TechLoader : MonoBehaviour, IOccurPostLoad
     {
         private const string TECH_PREFAB_FOLDER = "Prefabs/Tech/";
 
         public void PostLoad()
         {
-            Debug.Log("post load");
-            if (SectionData.Current.techDatas != null)
+            if (SectionData.Current.TechDatas != null)
             {
-                foreach (TechData data in SectionData.Current.techDatas)
+                foreach (TechData data in SectionData.Current.TechDatas)
                 {
                     // get the tech prefab
                     var prefab = Resources.Load(TECH_PREFAB_FOLDER + data.prefabName) as GameObject;
@@ -30,7 +29,7 @@ namespace FarmSim.Planteables
                     var gameObject = Instantiate(prefab);
                     gameObject.transform.position = data.pos;
 
-                    gameObject.GetComponent<ITech>().Data = data;
+                    gameObject.GetComponent<ITechData>().Data = data;
                 }
             }
         }

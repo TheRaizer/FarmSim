@@ -155,14 +155,14 @@ namespace Tests
             Assert.AreEqual(1, PlayerData.Current.SectionNum);
             Assert.AreEqual(1, SectionData.Current.SectionNum);
 
-            Assert.AreEqual(30, SectionData.Current.nodeDatas.GetLength(0));
-            Assert.AreEqual(30, SectionData.Current.nodeDatas.GetLength(1));
+            Assert.AreEqual(30, SectionData.Current.NodeDatas.GetLength(0));
+            Assert.AreEqual(30, SectionData.Current.NodeDatas.GetLength(1));
 
-            for (int x = 0; x < SectionData.Current.nodeDatas.GetLength(0); x++)
+            for (int x = 0; x < SectionData.Current.NodeDatas.GetLength(0); x++)
             {
-                for (int y = 0; y < SectionData.Current.nodeDatas.GetLength(1); y++)
+                for (int y = 0; y < SectionData.Current.NodeDatas.GetLength(1); y++)
                 {
-                    Assert.NotNull(SectionData.Current.nodeDatas[x, y]);
+                    Assert.NotNull(SectionData.Current.NodeDatas[x, y]);
                 }
             }
         }

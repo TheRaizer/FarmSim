@@ -26,7 +26,8 @@ namespace FarmSim.Items
             var rb = gameObject.GetComponent<Rigidbody2D>();
 
             WorldItem item = gameObject.GetComponent<WorldItem>();
-            item.Amt = amt;
+
+            item.Data = new WorldItemData(amt, spawnPos, worldItemPrefab.name);
 
             Vector2 direction = Random.insideUnitCircle.normalized;
             rb.AddForce(direction * 5, ForceMode2D.Impulse);

@@ -186,15 +186,15 @@ namespace FarmSim.Planteables
 
         public void Save()
         {
-            if (!SectionData.Current.dirtDatas.Contains(data))
+            if (!SectionData.Current.DirtDatas.Contains(data))
             {
-                SectionData.Current.dirtDatas.Add(data);
+                SectionData.Current.DirtDatas.Add(data);
             }
         }
 
         public void Load()
         {
-            bool noDirt = SectionData.Current.dirtDatas == null || SectionData.Current.dirtDatas.Count <= 0;
+            bool noDirt = SectionData.Current.DirtDatas == null || SectionData.Current.DirtDatas.Count <= 0;
             if (noDirt)
             {
                 // if there is no dirt data that was loaded then create a new one.
@@ -209,9 +209,9 @@ namespace FarmSim.Planteables
         private void LoadExistingDirt()
         {
             // find the dirts data that matches its x and y.
-            data = SectionData.Current.dirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
+            data = SectionData.Current.DirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
 
-            PlanteableData plantData = SectionData.Current.plantDatas.Find(plant => plant.Id == data.Id);
+            PlanteableData plantData = SectionData.Current.PlantDatas.Find(plant => plant.Id == data.Id);
 
             // if there is a matching plant data
             if (plantData != null)
@@ -242,13 +242,11 @@ namespace FarmSim.Planteables
         public void AddToWaterSources(string guid)
         {
             data.WaterSrcGuids.Add(guid);
-            Debug.Log(data.WaterSrcGuids.Count);
         }
 
         public void RemoveFromWaterSources(string guid)
         {
             data.WaterSrcGuids.Remove(guid);
-            Debug.Log(data.WaterSrcGuids.Count);
         }
     }
 }
