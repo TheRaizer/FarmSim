@@ -17,6 +17,7 @@ namespace FarmSim.Shops
         private const float SELL_DECR = 0.65f;
 
         [Header("Main UI")]
+        [SerializeField] private GameObject shopParent;
         [SerializeField] private GameObject shopUI;
 
         [Header("Exchange Panel")]
@@ -45,30 +46,54 @@ namespace FarmSim.Shops
         private Item itemToSell;
 
         /// <summary>
+        ///     Holds any components who are dependent on knowing what shop is currently opened.
+        /// </summary>
+        private readonly List<ShopReference> references = new List<ShopReference>();
+
+        /// <summary>
         ///     A <see cref="Shop"/> is connected to a <see cref="ShopSlotsHandler"/>/UI when it is on the same GameObject.
         ///     
         ///     <para>
         ///         Multiple <see cref="Shop"/>'s can use the same <see cref="ShopSlotsHandler"/>.
         ///     </para>
         ///     <para>
-        ///         You may use a different style UI for a different shop by pairing a <see cref="Shop"/> and <see cref="ShopSlotsHandler"/>
-        ///         together on a new GameObject in the canvas.
+        ///         You may use a different style UI for a different shop by pairing a <see cref="Shop"/> and different <see cref="ShopSlotsHandler"/>'s
+        ///         together.
         ///     </para>
         /// </summary>
-        private ShopSlotsHandler shopSlots;
+        [SerializeField] private ShopSlotsHandler shopSlots;
         private Inventory inventory;
 
         private void Awake()
         {
             inventory = FindObjectOfType<Inventory>();
+            AssignShopReferences(shopParent.transform);
+        }
+
+        private void AssignShopReferences(Transform parent)
+        {
+            // iterate through each child
+            foreach (Transform child in parent)
+            {
+                // if there is a shop reference in any GameObjects
+                if(child.TryGetComponent(out ShopReference reference))
+                {
+                    // add that to the list of references
+                    references.Add(reference);
+                }
+
+                if(child.childCount > 0)
+                {
+                    // if the child has children recurse
+                    AssignShopReferences(child);
+                }
+            }
         }
 
         private void Start()
         {
-            var shopSlots = GetComponent<ShopSlotsHandler>();
             shopSlots.OnIconCreation = AssignShopIconOpenPanel;
             shopSlots.AddShopSpritesToSlot(buyables, shopId);
-            this.shopSlots = shopSlots;
         }
 
 
@@ -214,12 +239,11 @@ namespace FarmSim.Shops
             }
 
             Time.timeScale = 0;
+            references.ForEach(x => x.Shop = this);
             shopUI.SetActive(true);
             shopSlots.ActivateShopSprites(shopId);
         }
-        /// <summary>
-        /// Unity btn event
-        /// </summary>
+
         public void MakeDecision()
         {
             if (isBuying)
@@ -233,19 +257,13 @@ namespace FarmSim.Shops
 
             CloseExchangePanel();
         }
-        /// <summary>
-        /// Unity btn event
-        /// </summary>
-        public void SellMax()
+
+        public void BuySellMax()
         {
-            amtToExchange = itemToSell.Amt;
-        }
-        /// <summary>
-        /// Unity btn event
-        /// </summary>
-        public void BuyMax()
-        {
-            amtToExchange = Mathf.FloorToInt((float)playerCurrencyManager.CurrentAmt / itemToBuy.Price);
+            if (isBuying)
+                amtToExchange = Mathf.FloorToInt((float)playerCurrencyManager.CurrentAmt / itemToBuy.Price);
+            else
+                amtToExchange = itemToSell.Amt;
         }
     }
 }

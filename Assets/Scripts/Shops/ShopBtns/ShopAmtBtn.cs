@@ -9,10 +9,8 @@ namespace FarmSim.Shops
     ///         Manages the amount of an <see cref="Item"/> the player wishes to sell or buy from a given <see cref="Shop"/>.
     ///     </summary>
     /// </class>
-    public class ShopAmtButtonHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class ShopAmtBtn : ShopReference, IPointerDownHandler, IPointerUpHandler
     {
-        [SerializeField] private Shop shopToHandle;
-
         /// <summary>
         ///     Whether this UI object is to increment or decrement the amount when clicked.
         /// </summary>
@@ -70,11 +68,11 @@ namespace FarmSim.Shops
         {
             if (increment)
             {
-                shopToHandle.IncrementAmt();
+                Shop.IncrementAmt();
             }
             else
             {
-                shopToHandle.DecrementAmt();
+                Shop.DecrementAmt();
             }
         }
 

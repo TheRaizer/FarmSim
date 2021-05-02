@@ -1,6 +1,5 @@
 using FarmSim.Items;
 using FarmSim.Slots;
-using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace FarmSim.Shops
@@ -10,9 +9,8 @@ namespace FarmSim.Shops
     ///         When clicked opens the sell panel of given <see cref="Shop"/> with the <see cref="Item"/> held in the <see cref="SwapManager"/>.
     ///     </summary>
     /// </class>
-    public class ItemSell : MonoBehaviour, IPointerClickHandler
+    public class ItemSell : ShopReference, IPointerClickHandler
     {
-        [SerializeField] private Shop shop;
         private SwapManager swapManager;
 
         private void Awake()
@@ -38,7 +36,7 @@ namespace FarmSim.Shops
             {
                 // open the sell panel with that item.
                 Item item = (Item)swappable;
-                shop.OpenSellPanel(item);
+                Shop.OpenSellPanel(item);
 
                 // return the attached item back to its slot
                 swapManager.StopSwap();
