@@ -1,9 +1,7 @@
 using FarmSim.Entity;
 using FarmSim.Items;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace FarmSim.Shops
 {
@@ -15,40 +13,6 @@ namespace FarmSim.Shops
     public class Shop : MonoBehaviour
     {
         private const float SELL_DECR = 0.65f;
-
-        [Header("Main UI")]
-        [SerializeField] private GameObject shopParent;
-        [SerializeField] private GameObject shopUI;
-
-        [Header("Exchange Panel")]
-        [SerializeField] private GameObject exchangePanel;
-        [SerializeField] private TextMeshProUGUI itemNameTxt;
-        [SerializeField] private TextMeshProUGUI moneyTxt;
-        [SerializeField] private TextMeshProUGUI amtTxt;
-        [SerializeField] private TextMeshProUGUI decisionBtnTxt;
-        [SerializeField] private Button decisionBtn;
-
-        [Header("Player Currency")]
-        [SerializeField] private CurrencyManager playerCurrencyManager;
-
-        [Header("Shop Config")]
-        [SerializeField] private List<ItemType> buyables;
-        [SerializeField] private string shopId;
-
-        private bool CanBuy => (TotalCost <= playerCurrencyManager.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
-        private int TotalCost => itemToBuy.Price * amtToExchange;
-        private int SellValue => Mathf.FloorToInt(itemToSell.itemType.Price * amtToExchange * SELL_DECR);
-
-        private int amtToExchange = 0;
-        private bool isBuying = false;
-
-        private ItemType itemToBuy;
-        private Item itemToSell;
-
-        /// <summary>
-        ///     Holds any components who are dependent on knowing what shop is currently opened.
-        /// </summary>
-        private readonly List<ShopReference> references = new List<ShopReference>();
 
         /// <summary>
         ///     A <see cref="Shop"/> is connected to a <see cref="ShopSlotsHandler"/>/UI when it is on the same GameObject.
@@ -62,6 +26,30 @@ namespace FarmSim.Shops
         ///     </para>
         /// </summary>
         [SerializeField] private ShopSlotsHandler shopSlots;
+        [SerializeField] private ShopUIHandler shopUIHandler;
+        [SerializeField] private GameObject shopParent;
+
+        [Header("Player Currency")]
+        [SerializeField] private CurrencyManager playerCurrencyManager;
+
+        [Header("Shop Config")]
+        [SerializeField] private List<ItemType> buyables;
+        [SerializeField] private string shopId;
+
+        private bool CanBuy => (itemToBuy != null) && (TotalCost <= playerCurrencyManager.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
+        private int TotalCost => itemToBuy == null ? 0 : itemToBuy.Price * amtToExchange;
+        private int SellValue => itemToSell == null ? 0 : Mathf.FloorToInt(itemToSell.itemType.Price * SELL_DECR) * amtToExchange;
+
+        private int amtToExchange = 0;
+        private bool isBuying = false;
+
+        private ItemType itemToBuy;
+        private Item itemToSell;
+
+        /// <summary>
+        ///     Holds any components who are dependent on knowing what shop is currently opened.
+        /// </summary>
+        private readonly List<ShopReference> references = new List<ShopReference>();
         private Inventory inventory;
 
         private void Awake()
@@ -70,6 +58,16 @@ namespace FarmSim.Shops
             AssignShopReferences(shopParent.transform);
         }
 
+        private void Start()
+        {
+            shopSlots.OnIconCreation = AssignShopIconOpenPanel;
+            shopSlots.AddShopSpritesToSlot(buyables, shopId);
+        }
+
+        /// <summary>
+        ///     Adds to the list of components that will need to reference this shop once it is opened.
+        /// </summary>
+        /// <param name="parent">The parent of any child <see cref="GameObject"/>'s</param>
         private void AssignShopReferences(Transform parent)
         {
             // iterate through each child
@@ -90,13 +88,6 @@ namespace FarmSim.Shops
             }
         }
 
-        private void Start()
-        {
-            shopSlots.OnIconCreation = AssignShopIconOpenPanel;
-            shopSlots.AddShopSpritesToSlot(buyables, shopId);
-        }
-
-
         public void IncrementAmt()
         {
             // if they try to sell more then they have.
@@ -105,9 +96,8 @@ namespace FarmSim.Shops
 
             amtToExchange++;
 
-            DetermineInteractabilityOnBuy();
-
-            SetTexts();
+            shopUIHandler.DetermineInteractabilityOnBuy(isBuying, CanBuy);
+            shopUIHandler.SetTexts(isBuying, TotalCost, SellValue, amtToExchange);
         }
 
         public void DecrementAmt()
@@ -115,19 +105,15 @@ namespace FarmSim.Shops
             if (amtToExchange <= 1)
                 return;
 
-
             amtToExchange--;
 
-            DetermineInteractabilityOnBuy();
-
-            SetTexts();
+            shopUIHandler.DetermineInteractabilityOnBuy(isBuying, CanBuy);
+            shopUIHandler.SetTexts(isBuying, TotalCost, SellValue, amtToExchange);
         }
 
         public void OpenSellPanel(Item item)
         {
-            // reset UI
-            ResetExchangeUI();
-            shopUI.SetActive(false);
+            shopUIHandler.ResetExchangeUI();
 
             // assign variables
             isBuying = false;
@@ -136,19 +122,12 @@ namespace FarmSim.Shops
 
             IncrementAmt();
 
-            // set texts for the exchange panel
-            decisionBtnTxt.SetText("Sell");
-            itemNameTxt.SetText(item.itemType.ItemName);
-            SetTexts();
-
-            // show the exchange panel
-            exchangePanel.SetActive(true);
+            shopUIHandler.OpenExchangePanel(item.itemType.ItemName, isBuying, TotalCost, SellValue, amtToExchange, "Sell");
         }
 
         public void OpenBuyPanel(ItemType itemType)
         {
-            ResetExchangeUI();
-            shopUI.SetActive(false);
+            shopUIHandler.ResetExchangeUI();
 
             // assign variables
             isBuying = true;
@@ -157,53 +136,13 @@ namespace FarmSim.Shops
 
             IncrementAmt();
 
-            // set texts for the exchange panel
-            decisionBtnTxt.SetText("Buy");
-            itemNameTxt.SetText(itemType.ItemName);
-            SetTexts();
-
-            // show the exchange panel
-            exchangePanel.SetActive(true);
-        }
-
-        private void DetermineInteractabilityOnBuy()
-        {
-            if (isBuying)
-            {
-                if (!CanBuy)
-                {
-
-                    moneyTxt.color = Color.red;
-                    amtTxt.color = Color.red;
-
-                    decisionBtn.interactable = false;
-                }
-                else if (!decisionBtn.interactable && CanBuy)
-                {
-
-                    ResetExchangeUI();
-                }
-            }
-        }
-
-        private void ResetExchangeUI()
-        {
-            moneyTxt.color = Color.black;
-            amtTxt.color = Color.black;
-
-            decisionBtn.interactable = true;
+            shopUIHandler.OpenExchangePanel(itemType.ItemName, isBuying, TotalCost, SellValue, amtToExchange, "Buy");
         }
 
         private void AssignShopIconOpenPanel(GameObject icon)
         {
             var shopIcon = icon.GetComponent<ShopIcon>();
             shopIcon.OpenBuyPanel = OpenBuyPanel;
-        }
-
-        private void SetTexts()
-        {
-            moneyTxt.SetText(isBuying ? "Price: " + TotalCost : "Value: " + SellValue);
-            amtTxt.SetText("Amount: " + amtToExchange);
         }
 
         private void Buy()
@@ -221,27 +160,15 @@ namespace FarmSim.Shops
         /// <summary>
         /// Unity btn event
         /// </summary>
-        public void CloseExchangePanel()
-        {
-            exchangePanel.SetActive(false);
-            shopUI.SetActive(true);
-        }
-        /// <summary>
-        /// Unity btn event
-        /// </summary>
         public void InvertShopActiveness()
         {
-            if (shopUI.activeInHierarchy)
+            bool opened = shopUIHandler.InvertShopActiveness();
+            if (opened)
             {
-                shopUI.SetActive(false);
-                Time.timeScale = 1;
-                return;
+                // if the shop was opened assign this shop to any references and activate the sprites.
+                references.ForEach(x => x.Shop = this);
+                shopSlots.ActivateShopSprites(shopId);
             }
-
-            Time.timeScale = 0;
-            references.ForEach(x => x.Shop = this);
-            shopUI.SetActive(true);
-            shopSlots.ActivateShopSprites(shopId);
         }
 
         public void MakeDecision()
@@ -255,7 +182,7 @@ namespace FarmSim.Shops
                 Sell();
             }
 
-            CloseExchangePanel();
+            shopUIHandler.CloseExchangePanel();
         }
 
         public void BuySellMax()
@@ -264,6 +191,8 @@ namespace FarmSim.Shops
                 amtToExchange = Mathf.FloorToInt((float)playerCurrencyManager.CurrentAmt / itemToBuy.Price);
             else
                 amtToExchange = itemToSell.Amt;
+
+            shopUIHandler.SetTexts(isBuying, TotalCost, SellValue, amtToExchange);
         }
     }
 }

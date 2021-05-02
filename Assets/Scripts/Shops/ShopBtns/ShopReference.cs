@@ -4,7 +4,7 @@ namespace FarmSim.Shops
 {
     /// <class name="ShopReference">
     ///     <summary>
-    ///         Abstract class for any component whose actions are shop specific.
+    ///         Abstract class for any component whose actions are specific to the shop that is currently opened.
     ///     </summary>
     /// </class>
     public abstract class ShopReference : MonoBehaviour

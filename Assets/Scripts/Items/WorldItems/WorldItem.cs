@@ -6,7 +6,7 @@ using FarmSim.Attributes;
 
 namespace FarmSim.Items
 {
-    /// <class name="SlotsHandler">
+    /// <class name="WorldItem">
     ///     <summary>
     ///         Manages a spawned world item. 
     ///     </summary>

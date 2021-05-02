@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace FarmSim.Shops
 {
-    /// <class name="ShopAmtButtonHandler">
+    /// <class name="ShopAmtBtn">
     ///     <summary>
     ///         Manages the amount of an <see cref="Item"/> the player wishes to sell or buy from a given <see cref="Shop"/>.
     ///     </summary>
