@@ -40,6 +40,7 @@ namespace FarmSim.Shops
 
         private int amtToExchange = 0;
         private bool isBuying = false;
+
         private ItemType itemToBuy;
         private Item itemToSell;
 
@@ -70,35 +71,6 @@ namespace FarmSim.Shops
             this.shopSlots = shopSlots;
         }
 
-        // Unity btn event
-        public void InvertShopActiveness()
-        {
-            if (shopUI.activeInHierarchy)
-            {
-                shopUI.SetActive(false);
-                Time.timeScale = 1;
-                return;
-            }
-
-            Time.timeScale = 0;
-            shopUI.SetActive(true);
-            shopSlots.ActivateShopSprites(shopId);
-        }
-
-        // Unity btn event
-        public void MakeDecision()
-        {
-            if (isBuying)
-            {
-                Buy();
-            }
-            else
-            {
-                Sell();
-            }
-
-            CloseExchangePanel();
-        }
 
         public void IncrementAmt()
         {
@@ -124,13 +96,6 @@ namespace FarmSim.Shops
             DetermineInteractabilityOnBuy();
 
             SetTexts();
-        }
-
-        // Unity btn event
-        public void CloseExchangePanel()
-        {
-            exchangePanel.SetActive(false);
-            shopUI.SetActive(true);
         }
 
         public void OpenSellPanel(Item item)
@@ -226,6 +191,61 @@ namespace FarmSim.Shops
         {
             playerCurrencyManager.IncreaseAmt(SellValue);
             inventory.TakeFromInventory(itemToSell.guid, amtToExchange);
+        }
+
+        /// <summary>
+        /// Unity btn event
+        /// </summary>
+        public void CloseExchangePanel()
+        {
+            exchangePanel.SetActive(false);
+            shopUI.SetActive(true);
+        }
+        /// <summary>
+        /// Unity btn event
+        /// </summary>
+        public void InvertShopActiveness()
+        {
+            if (shopUI.activeInHierarchy)
+            {
+                shopUI.SetActive(false);
+                Time.timeScale = 1;
+                return;
+            }
+
+            Time.timeScale = 0;
+            shopUI.SetActive(true);
+            shopSlots.ActivateShopSprites(shopId);
+        }
+        /// <summary>
+        /// Unity btn event
+        /// </summary>
+        public void MakeDecision()
+        {
+            if (isBuying)
+            {
+                Buy();
+            }
+            else
+            {
+                Sell();
+            }
+
+            CloseExchangePanel();
+        }
+        /// <summary>
+        /// Unity btn event
+        /// </summary>
+        public void SellMax()
+        {
+            amtToExchange = itemToSell.Amt;
+        }
+        /// <summary>
+        /// Unity btn event
+        /// </summary>
+        public void BuyMax()
+        {
+            amtToExchange = Mathf.FloorToInt((float)playerCurrencyManager.CurrentAmt / itemToBuy.Price);
         }
     }
 }
