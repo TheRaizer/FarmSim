@@ -20,7 +20,6 @@ namespace FarmSim.Loading
         public bool LoadedAll { get; private set; } = false;
         private bool startedLoading = false;
 
-
         private void Awake()
         {
             dataInjector = GetComponent<DataInjector>();

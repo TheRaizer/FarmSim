@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 public interface IWaterSourceRefsGUIDs
 {
     void AddToWaterSources(string guid);

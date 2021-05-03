@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-namespace FarmSim.Shops 
+namespace FarmSim.Shops
 {
     /// /// <class name="ShopDecisionBtn">
     ///     <summary>

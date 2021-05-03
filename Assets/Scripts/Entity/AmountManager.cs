@@ -16,23 +16,23 @@ namespace FarmSim.Entity
         protected Action onAmtChange;
 
         public void IncreaseMax(int newMax) => maxAmt = newMax;
-        public void IncreaseAmt(int amt) 
-        { 
+        public void IncreaseAmt(int amt)
+        {
             CurrentAmt = Mathf.Clamp(CurrentAmt + amt, 0, maxAmt);
             onAmtChange?.Invoke();
         }
-        public void DecreaseAmt(int amt) 
+        public void DecreaseAmt(int amt)
         {
             CurrentAmt = Mathf.Clamp(CurrentAmt - amt, 0, maxAmt);
             onAmtChange?.Invoke();
         }
-        public void ZeroOut() 
-        { 
+        public void ZeroOut()
+        {
             CurrentAmt = 0;
             onAmtChange?.Invoke();
         }
-        public void MaxOut() 
-        { 
+        public void MaxOut()
+        {
             CurrentAmt = maxAmt;
             onAmtChange?.Invoke();
         }

@@ -180,7 +180,7 @@ namespace FarmSim.Planteables
             yield return animPlay;
 
             animator.SetBool(animParamName, false);
-            
+
             // watering neighbours has to happen a bit after the initial time passes or the dirt may not be affected by it.
             WaterNeighbours();
 

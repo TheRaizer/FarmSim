@@ -24,4 +24,4 @@ public interface ITechData
     ///     </remarks>
     /// </summary>
     TechData Data { set; }
-} 
+}

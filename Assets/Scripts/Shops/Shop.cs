@@ -74,13 +74,13 @@ namespace FarmSim.Shops
             foreach (Transform child in parent)
             {
                 // if there is a shop reference in any GameObjects
-                if(child.TryGetComponent(out ShopReference reference))
+                if (child.TryGetComponent(out ShopReference reference))
                 {
                     // add that to the list of references
                     references.Add(reference);
                 }
 
-                if(child.childCount > 0)
+                if (child.childCount > 0)
                 {
                     // if the child has children recurse
                     AssignShopReferences(child);

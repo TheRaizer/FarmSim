@@ -16,7 +16,7 @@ namespace FarmSim.Items
     {
         [SerializeField] private GameObject inventoryUI;
 
-        public Action OnInventoryClosed { private get; set; } 
+        public Action OnInventoryClosed { private get; set; }
 
         protected override void Awake()
         {
