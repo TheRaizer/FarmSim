@@ -44,7 +44,7 @@ namespace FarmSim.Player
 
         private void KeyHandler()
         {
-            if (!pathFind.HasPath())
+            if (pathFind.HasPath())
             {
                 if (Input.GetKeyDown(KeyCode.S))
                 {

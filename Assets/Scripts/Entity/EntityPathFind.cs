@@ -50,19 +50,7 @@ namespace FarmSim.Entity
 
         public void RequestPath()
         {
-            Node start;
-
-            // if there is a path and the index were moving too is still valid use it as the start
-            if (path != null && path.Length > pathIdx)
-            {
-                // this smooths some transitions
-                start = nodeGrid.GetNodeFromVector2(path[pathIdx]);
-            }
-            else
-            {
-                start = nodeGrid.GetNodeFromVector2(transform.position);
-            }
-
+            Node start = nodeGrid.GetNodeFromVector2(transform.position);
             Node end = nodeGrid.GetNodeFromMousePosition();
 
             if (start == null || end == null || !end.Data.IsWalkable)
