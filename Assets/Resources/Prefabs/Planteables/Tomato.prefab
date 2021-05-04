@@ -44,9 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4701ad9329d1447a8b82e3261fefdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ToolToHarvestWith>k__BackingField: 2
   originalPrefabName: Tomato
   daysToGrow: 4
+  itemHarvested: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
   maxAmtToDrop: 5
   minAmtToDrop: 2
   spriteLifeCycle:
@@ -54,7 +54,6 @@ MonoBehaviour:
   - {fileID: -7844721157514641405, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   - {fileID: -7229993772515318892, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
   - {fileID: -585230308400216287, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
-  itemType: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
 --- !u!212 &800048636282084858
 SpriteRenderer:
   m_ObjectHideFlags: 0

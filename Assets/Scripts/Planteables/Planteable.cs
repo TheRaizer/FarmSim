@@ -17,12 +17,13 @@ namespace FarmSim.Planteables
     [Savable(false)]
     public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
-        [Header("General Planteable Info")]
+        [Header("General Planteable Settings")]
         [SerializeField] private string originalPrefabName = null;
 
         // includes the day it was planted
         [SerializeField] private int daysToGrow = 0;
 
+        [SerializeField] protected ItemType itemHarvested;
         [SerializeField] protected int maxAmtToDrop = 0;
         [SerializeField] protected int minAmtToDrop = 0;
 
@@ -30,7 +31,6 @@ namespace FarmSim.Planteables
         ///     List of sprites that show the plants growth.
         /// </summary>
         [SerializeField] private List<Sprite> spriteLifeCycle;
-        [SerializeField] protected ItemType itemHarvested;
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;

@@ -4,8 +4,9 @@ using UnityEngine;
 
 namespace FarmSim.Planteables 
 {
-    public class Tree : Planteable
+    public class TreePlant : Planteable
     {
+        [Header("Tree Settings")]
         [SerializeField] private ItemType logItem;
         [SerializeField] private int maxLogsToDrop = 0;
         [SerializeField] private int minLogsToDrop = 0;
