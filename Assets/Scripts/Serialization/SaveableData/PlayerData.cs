@@ -14,6 +14,8 @@ namespace FarmSim.Serialization
         public Vector2 position = Vector2.zero;
         public List<ItemData> itemDatas;
 
+        public int currency;
+
         // 0 is the starting section
         public int SectionNum = 0;
 

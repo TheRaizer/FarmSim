@@ -23,8 +23,8 @@ namespace FarmSim.Items
 
         private bool moveToPlayer = false;
 
-        private readonly WaitForSeconds followTime = new WaitForSeconds(2);
-        private readonly WaitForSeconds waitTime = new WaitForSeconds(0.5f);
+        private readonly WaitForSeconds followTime = new WaitForSeconds(1.2f);
+        private readonly WaitForSeconds waitTime = new WaitForSeconds(0.3f);
 
         private const float SPEED = 3;
         private const int MAX_DAYS_ACTIVE = 2;
@@ -97,7 +97,6 @@ namespace FarmSim.Items
 
             yield return followTime;
 
-            inventory.AddToInventory(itemType, Data.amt, () => Destroy(gameObject));
             moveToPlayer = false;
         }
 
