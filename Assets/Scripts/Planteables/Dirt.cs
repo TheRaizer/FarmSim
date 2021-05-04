@@ -96,11 +96,11 @@ namespace FarmSim.Planteables
             CheckSpriteType();
         }
 
-        private void Harvest()
+        private void Harvest(ToolTypes toolType)
         {
             if (plant != null && plant.CanHarvest)
             {
-                plant.OnHarvest();
+                plant.OnHarvest(toolType);
                 plant = null;
                 INodeData node = nodeGrid.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
@@ -152,15 +152,15 @@ namespace FarmSim.Planteables
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Sickle:
-                    if (plant == null || plant.ToolToHarvestWith != ToolTypes.Sickle)
+                    if (plant == null)
                         return;
-                    Harvest();
+                    Harvest(ToolTypes.Sickle);
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Axe:
-                    if (plant == null || plant.ToolToHarvestWith != ToolTypes.Axe)
+                    if (plant == null)
                         return;
-                    Harvest();
+                    Harvest(ToolTypes.Axe);
                     onSuccessful?.Invoke();
                     break;
                 case ToolTypes.Other:

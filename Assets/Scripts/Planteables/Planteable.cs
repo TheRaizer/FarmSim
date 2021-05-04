@@ -17,20 +17,20 @@ namespace FarmSim.Planteables
     [Savable(false)]
     public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
-        [field: SerializeField] public ToolTypes ToolToHarvestWith { get; private set; }
+        [Header("General Planteable Info")]
         [SerializeField] private string originalPrefabName = null;
 
         // includes the day it was planted
         [SerializeField] private int daysToGrow = 0;
 
-        [SerializeField] private int maxAmtToDrop = 0;
-        [SerializeField] private int minAmtToDrop = 0;
+        [SerializeField] protected int maxAmtToDrop = 0;
+        [SerializeField] protected int minAmtToDrop = 0;
 
         /// <summary>
         ///     List of sprites that show the plants growth.
         /// </summary>
         [SerializeField] private List<Sprite> spriteLifeCycle;
-        [SerializeField] private ItemType itemType;
+        [SerializeField] protected ItemType itemHarvested;
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
@@ -52,7 +52,7 @@ namespace FarmSim.Planteables
         /// <summary>
         ///     Function that grows the given planteable and should be called in some class that has a function <see cref="ITimeBased.OnTimePass"/>.
         /// </summary>
-        public void Grow(int daysPassed = 1)
+        public virtual void Grow(int daysPassed = 1)
         {
             Data.CurrentGrowthDay += daysPassed;
             CheckSpriteChange();
@@ -68,7 +68,32 @@ namespace FarmSim.Planteables
         ///     Adds to the players inventory an amount within a 
         ///     given range and destroys the Planteable gameObject.
         /// </summary>
-        public void OnHarvest()
+        public virtual void OnHarvest(ToolTypes toolType)
+        {
+            if (toolType == ToolTypes.Sickle)
+            {
+                DropItems(itemHarvested, minAmtToDrop, maxAmtToDrop);
+                RemovePlant();
+
+            }
+        }
+
+        /// <summary>
+        ///     Removes plant from save data and destroys this <see cref="GameObject"/>
+        /// </summary>
+        protected void RemovePlant()
+        {
+            SectionData.Current.PlantDatas.Remove(Data);
+            Destroy(gameObject);
+        }
+
+        /// <summary>
+        ///     Drops a random amount of some itemType
+        /// </summary>
+        /// <param name="itemType">The itemType to drop</param>
+        /// /// <param name="minAmtToDrop">The minimum amount to drop inclusive</param>
+        /// /// <param name="maxAmtToDrop">The maximum amount to drop inclusive</param>
+        protected void DropItems(ItemType itemType, int minAmtToDrop, int maxAmtToDrop)
         {
             int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop + 1);
 
@@ -76,10 +101,6 @@ namespace FarmSim.Planteables
             {
                 itemType.SpawnWorldItem(transform.position, 1);
             }
-
-            // we do not need to check if it contains the plant because for a plant to be harvested the game must have saved/passed a day at least once.
-            SectionData.Current.PlantDatas.Remove(Data);
-            Destroy(gameObject);
         }
 
         /// <summary>
