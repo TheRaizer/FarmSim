@@ -3,6 +3,7 @@ using FarmSim.Enums;
 using FarmSim.Items;
 using FarmSim.Serialization;
 using FarmSim.TimeBased;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace FarmSim.Planteables
         [SerializeField] private string originalPrefabName = null;
 
         // includes the day it was planted
-        [SerializeField] private int daysToGrow = 0;
+        [SerializeField] protected int daysToGrow = 0;
 
         [SerializeField] protected ItemType itemHarvested;
         [SerializeField] protected int maxAmtToDrop = 0;
@@ -34,10 +35,10 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        public PlanteableData Data { private get; set; } = new PlanteableData("", 1, 0, false);
+        public PlanteableData Data { protected get; set; } = new PlanteableData("", 1, 0, false);
         private SpriteRenderer spriteRenderer;
 
-        private int spriteChangeInterval = 0;
+        protected int spriteChangeInterval = 0;
 
         private void Awake()
         {
@@ -68,13 +69,13 @@ namespace FarmSim.Planteables
         ///     Adds to the players inventory an amount within a 
         ///     given range and destroys the Planteable gameObject.
         /// </summary>
-        public virtual void OnHarvest(ToolTypes toolType)
+        public virtual void OnHarvest(ToolTypes toolType, Action removePlantRef)
         {
             if (toolType == ToolTypes.Sickle)
             {
                 DropItems(itemHarvested, minAmtToDrop, maxAmtToDrop);
                 RemovePlant();
-
+                removePlantRef?.Invoke();
             }
         }
 
@@ -95,7 +96,7 @@ namespace FarmSim.Planteables
         /// /// <param name="maxAmtToDrop">The maximum amount to drop inclusive</param>
         protected void DropItems(ItemType itemType, int minAmtToDrop, int maxAmtToDrop)
         {
-            int amtToDrop = Random.Range(minAmtToDrop, maxAmtToDrop + 1);
+            int amtToDrop = UnityEngine.Random.Range(minAmtToDrop, maxAmtToDrop + 1);
 
             for (int i = 0; i < amtToDrop; i++)
             {
@@ -106,7 +107,7 @@ namespace FarmSim.Planteables
         /// <summary>
         ///     Check to see if the sprite must change on the passage of a day.
         /// </summary>
-        private void CheckSpriteChange()
+        protected void CheckSpriteChange()
         {
             // if the plant is still growing
             if (Data.CurrentGrowthDay <= daysToGrow)

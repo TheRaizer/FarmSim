@@ -82,6 +82,10 @@ MonoBehaviour:
     numOfGameObjects: 50
     prefab: {fileID: 3277684549557045750, guid: d0b6bdeb3019d4f4d8c906b6bdab4480,
       type: 3}
+  - id: Tree Seed
+    numOfGameObjects: 1
+    prefab: {fileID: 7301315993295839137, guid: 8bb6535c857533d4ca2ce360c5ed58cc,
+      type: 3}
 --- !u!114 &1090752706648671777
 MonoBehaviour:
   m_ObjectHideFlags: 0

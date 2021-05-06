@@ -100,8 +100,7 @@ namespace FarmSim.Planteables
         {
             if (plant != null && plant.CanHarvest)
             {
-                plant.OnHarvest(toolType);
-                plant = null;
+                plant.OnHarvest(toolType, () => plant = null);
                 INodeData node = nodeGrid.GetNodeFromXY(X, Y);
                 node.Data.IsOccupied = false;
             }

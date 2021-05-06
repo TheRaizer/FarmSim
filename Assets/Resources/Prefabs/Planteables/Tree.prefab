@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 800048636282084856}
-  - component: {fileID: 800048636282084857}
   - component: {fileID: 800048636282084858}
+  - component: {fileID: -7742248790709591200}
   m_Layer: 0
-  m_Name: PotatoUnitTest
+  m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,34 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800048636282084859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 4.02, y: 0.64, z: 0}
   m_LocalScale: {x: 4.388364, y: 4.388364, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &800048636282084857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 800048636282084859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4701ad9329d1447a8b82e3261fefdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalPrefabName: Potato
-  daysToGrow: 7
-  itemHarvested: {fileID: 11400000, guid: d7287702c4e8b6d42a75f04891fa04c6, type: 2}
-  maxAmtToDrop: 5
-  minAmtToDrop: 2
-  spriteLifeCycle:
-  - {fileID: -840914439956534067, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
-  - {fileID: -7844721157514641405, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
-  - {fileID: -7229993772515318892, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
-  - {fileID: -585230308400216287, guid: bd45801b839a68d46abe8469550f8c71, type: 3}
 --- !u!212 &800048636282084858
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -94,9 +72,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -840914439956534067, guid: bd45801b839a68d46abe8469550f8c71,
+  m_Sprite: {fileID: -8664770731761805928, guid: 19b9dca472e264c46adc7298478580d1,
     type: 3}
-  m_Color: {r: 0.504717, g: 0.5543077, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -106,3 +84,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-7742248790709591200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800048636282084859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3acc3351c62ee244b48c6e73623be59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalPrefabName: Tree
+  daysToGrow: 7
+  itemHarvested: {fileID: 11400000, guid: d7287702c4e8b6d42a75f04891fa04c6, type: 2}
+  maxAmtToDrop: 5
+  minAmtToDrop: 2
+  spriteLifeCycle:
+  - {fileID: -8664770731761805928, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
+  - {fileID: -6835053848578630215, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
+  - {fileID: 7249948386884288205, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
+  - {fileID: 6459203684388587281, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
+  logItem: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
+  maxLogsToDrop: 4
+  minLogsToDrop: 3

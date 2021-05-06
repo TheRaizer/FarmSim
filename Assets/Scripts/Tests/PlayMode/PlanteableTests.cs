@@ -86,12 +86,12 @@ namespace Tests
 
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 2);
 
-            plant.OnHarvest(ToolTypes.Sickle);
+            plant.OnHarvest(ToolTypes.Sickle, null);
 
             // after harvesting the plant should no longer be saved.
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 1);
 
-            plant_2.OnHarvest(ToolTypes.Sickle);
+            plant_2.OnHarvest(ToolTypes.Sickle, null);
 
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 0);
         }
@@ -139,7 +139,7 @@ namespace Tests
             Planteable plant = Object.FindObjectOfType<Planteable>();
 
             // Harvest the plant
-            plant.OnHarvest(ToolTypes.Sickle);
+            plant.OnHarvest(ToolTypes.Sickle, null);
 
             // check if the items dropped
             WorldItem[] worldItem = Object.FindObjectsOfType<WorldItem>();
