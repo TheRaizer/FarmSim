@@ -45,9 +45,9 @@ namespace FarmSim.Serialization
             }
 
             // translate it through binary formatter
-            if (SerializationManager.Save(SectionData.Current, SavePaths.SECTION_PREFIX + sectionNum, SavePaths.SECTIONS_DIRECTORY))
+            if (!SerializationManager.Save(SectionData.Current, SavePaths.SECTION_PREFIX + sectionNum, SavePaths.SECTIONS_DIRECTORY))
             {
-                //Debug.Log("Section Save was Succesful");
+                Debug.Log("Section Save was unsuccesful");
             }
 
             Saving = false;
@@ -56,9 +56,9 @@ namespace FarmSim.Serialization
         public void SavePlayer(int sectionNum)
         {
             PlayerData.Current.SectionNum = sectionNum;
-            if (SerializationManager.Save(PlayerData.Current, SavePaths.PLAYER_FILE))
+            if (!SerializationManager.Save(PlayerData.Current, SavePaths.PLAYER_FILE))
             {
-                //Debug.Log("Player Save was Succesful");
+                Debug.Log("Player Save was unsuccesful");
             }
         }
 
@@ -79,17 +79,17 @@ namespace FarmSim.Serialization
 
                 mainSave.sections.Add(section);
             }
-            if (SerializationManager.Save(mainSave))
+            if (!SerializationManager.Save(mainSave))
             {
-                //Debug.Log("Main Save was succesful");
+                Debug.Log("Main Save was unsuccesful");
             }
         }
 
         public void SaveTime()
         {
-            if (SerializationManager.Save(TimeData.Current, SavePaths.TIME_FILE))
+            if (!SerializationManager.Save(TimeData.Current, SavePaths.TIME_FILE))
             {
-                //Debug.Log("Time Save was succesful");
+                Debug.Log("Time Save was unsuccesful");
             }
         }
     }

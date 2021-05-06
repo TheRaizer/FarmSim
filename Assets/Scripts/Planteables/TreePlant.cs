@@ -20,7 +20,6 @@ namespace FarmSim.Planteables
 
         public override void Grow(int daysPassed = 1)
         {
-            Debug.Log("grow tree");
             Data.CurrentGrowthDay += daysPassed;
             CheckSpriteChange();
 
