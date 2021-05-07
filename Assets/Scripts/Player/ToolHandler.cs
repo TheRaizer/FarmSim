@@ -98,6 +98,10 @@ namespace FarmSim.Player
             {
                 EquippedTool = tools[ToolTypes.Hand];
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha5))
+            {
+                EquippedTool = tools[ToolTypes.Axe];
+            }
             toolPointer.sprite = EquippedTool.Sprite;
         }
 

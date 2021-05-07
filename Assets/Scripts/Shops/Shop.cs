@@ -1,5 +1,6 @@
 using FarmSim.Entity;
 using FarmSim.Items;
+using FarmSim.Player;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,14 +30,11 @@ namespace FarmSim.Shops
         [SerializeField] private ShopUIHandler shopUIHandler;
         [SerializeField] private GameObject shopParent;
 
-        [Header("Player Currency")]
-        [SerializeField] private CurrencyManager playerCurrencyManager;
-
         [Header("Shop Config")]
         [SerializeField] private List<ItemType> buyables;
         [SerializeField] private string shopId;
 
-        private bool CanBuy => (itemToBuy != null) && (TotalCost <= playerCurrencyManager.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
+        private bool CanBuy => (itemToBuy != null) && (TotalCost <= playerCurrency.CurrentAmt) && (!inventory.WillOverFlowOnAdd(itemToBuy, amtToExchange));
         private int TotalCost => itemToBuy == null ? 0 : itemToBuy.Price * amtToExchange;
         private int SellValue => itemToSell == null ? 0 : Mathf.FloorToInt(itemToSell.itemType.Price * SELL_DECR) * amtToExchange;
 
@@ -45,6 +43,7 @@ namespace FarmSim.Shops
 
         private ItemType itemToBuy;
         private Item itemToSell;
+        private PlayerCurrency playerCurrency;
 
         /// <summary>
         ///     Holds any components who are dependent on knowing what shop is currently opened.
@@ -55,6 +54,7 @@ namespace FarmSim.Shops
         private void Awake()
         {
             inventory = FindObjectOfType<Inventory>();
+            playerCurrency = FindObjectOfType<PlayerCurrency>();
             AssignShopReferences(shopParent.transform);
         }
 
@@ -147,13 +147,13 @@ namespace FarmSim.Shops
 
         private void Buy()
         {
-            playerCurrencyManager.DecreaseAmt(TotalCost);
+            playerCurrency.DecreaseAmt(TotalCost);
             inventory.AddToInventory(itemToBuy, amtToExchange);
         }
 
         private void Sell()
         {
-            playerCurrencyManager.IncreaseAmt(SellValue);
+            playerCurrency.IncreaseAmt(SellValue);
             inventory.TakeFromInventory(itemToSell.guid, amtToExchange);
         }
 
@@ -188,7 +188,7 @@ namespace FarmSim.Shops
         public void BuySellMax()
         {
             if (isBuying)
-                amtToExchange = Mathf.FloorToInt((float)playerCurrencyManager.CurrentAmt / itemToBuy.Price);
+                amtToExchange = Mathf.FloorToInt((float)playerCurrency.CurrentAmt / itemToBuy.Price);
             else
                 amtToExchange = itemToSell.Amt;
 
