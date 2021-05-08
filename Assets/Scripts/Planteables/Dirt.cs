@@ -98,7 +98,7 @@ namespace FarmSim.Planteables
 
         private void Harvest(ToolTypes toolType)
         {
-            if (plant != null && plant.CanHarvest)
+            if (plant != null)
             {
                 plant.OnHarvest(toolType, () => plant = null);
                 INodeData node = nodeGrid.GetNodeFromXY(X, Y);

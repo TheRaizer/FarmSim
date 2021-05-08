@@ -1,0 +1,612 @@
+fileFormatVersion: 2
+guid: 1b4d29e9ad516144caa3dc4a4c05328a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9020763241403968197
+    second: FarmSimCharacter-axe-Sheet_0
+  - first:
+      213: 4317050472456327580
+    second: FarmSimCharacter-axe-Sheet_1
+  - first:
+      213: 255486611737690057
+    second: FarmSimCharacter-axe-Sheet_2
+  - first:
+      213: -5889728520417114536
+    second: FarmSimCharacter-axe-Sheet_3
+  - first:
+      213: 6845232787842099297
+    second: FarmSimCharacter-axe-Sheet_4
+  - first:
+      213: 1088373498851611085
+    second: FarmSimCharacter-axe-Sheet_5
+  - first:
+      213: 7662022022188005448
+    second: FarmSimCharacter-axe-Sheet_6
+  - first:
+      213: 1270034455864569076
+    second: FarmSimCharacter-axe-Sheet_7
+  - first:
+      213: 3745336093089301567
+    second: FarmSimCharacter-axe-Sheet_8
+  - first:
+      213: 8651808005161856912
+    second: FarmSimCharacter-axe-Sheet_9
+  - first:
+      213: 224677620064601282
+    second: FarmSimCharacter-axe-Sheet_10
+  - first:
+      213: 6843320034501061148
+    second: FarmSimCharacter-axe-Sheet_11
+  - first:
+      213: -2903623157846366046
+    second: FarmSimCharacter-axe-Sheet_12
+  - first:
+      213: 2768950440422616650
+    second: FarmSimCharacter-axe-Sheet_13
+  - first:
+      213: -259812856561327211
+    second: FarmSimCharacter-axe-Sheet_14
+  - first:
+      213: -8508024715626162588
+    second: FarmSimCharacter-axe-Sheet_15
+  - first:
+      213: 2910398354473368313
+    second: FarmSimCharacter-axe-Sheet_16
+  - first:
+      213: 3864170631497593847
+    second: FarmSimCharacter-axe-Sheet_17
+  - first:
+      213: 3369199725524137386
+    second: FarmSimCharacter-axe-Sheet_18
+  - first:
+      213: 5187999303319543791
+    second: FarmSimCharacter-axe-Sheet_19
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 183
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b35173140afcfc280800000000000000
+      internalID: -9020763241403968197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 183
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c911130388e39eb30800000000000000
+      internalID: 4317050472456327580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 183
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cf3e7148bbab8300800000000000000
+      internalID: 255486611737690057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 183
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8560d05ad1b734ea0800000000000000
+      internalID: -5889728520417114536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 183
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1686f24f3f62ffe50800000000000000
+      internalID: 6845232787842099297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 122
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc1dff54eedaa1f00800000000000000
+      internalID: 1088373498851611085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 122
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8487cbd1f68f45a60800000000000000
+      internalID: 7662022022188005448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 122
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fc6052db9110a110800000000000000
+      internalID: 1270034455864569076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 122
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f348901455b1af330800000000000000
+      internalID: 3745336093089301567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 122
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09fad8c9a85611870800000000000000
+      internalID: 8651808005161856912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 61
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c44ee4ea173e1300800000000000000
+      internalID: 224677620064601282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 61
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1aefbc505b58fe50800000000000000
+      internalID: 6843320034501061148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 61
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a828fa3f1244b7d0800000000000000
+      internalID: -2903623157846366046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 61
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4e2d0a41c94d6620800000000000000
+      internalID: 2768950440422616650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 61
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59325906595f46cf0800000000000000
+      internalID: -259812856561327211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 466dbdc399c6de980800000000000000
+      internalID: -8508024715626162588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fa344922efc36820800000000000000
+      internalID: 2910398354473368313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 0
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f339e157ba40a530800000000000000
+      internalID: 3864170631497593847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa5b531bc4dc1ce20800000000000000
+      internalID: 3369199725524137386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FarmSimCharacter-axe-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 0
+        width: 74
+        height: 61
+      alignment: 9
+      pivot: {x: 0.5135135, y: 0.04918033}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fefd55111e97ff740800000000000000
+      internalID: 5187999303319543791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

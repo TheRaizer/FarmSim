@@ -106,6 +106,9 @@ namespace FarmSim.Player
                 case ToolTypes.Sickle:
                     animator.SetTrigger("Sickle");
                     break;
+                case ToolTypes.Axe:
+                    animator.SetTrigger("Axe");
+                    break;
                 default:
                     break;
             }

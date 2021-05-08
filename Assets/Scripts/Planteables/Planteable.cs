@@ -71,6 +71,8 @@ namespace FarmSim.Planteables
         /// </summary>
         public virtual void OnHarvest(ToolTypes toolType, Action removePlantRef)
         {
+            if (!CanHarvest)
+                return;
             if (toolType == ToolTypes.Sickle)
             {
                 DropItems(itemHarvested, minAmtToDrop, maxAmtToDrop);

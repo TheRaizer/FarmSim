@@ -15,6 +15,7 @@ namespace FarmSim.Planteables
     {
         [Header("Tree Settings")]
         [SerializeField] private ItemType logItem;
+        [SerializeField] private int occupyNodeIdx = 1;
         [SerializeField] private int maxLogsToDrop = 0;
         [SerializeField] private int minLogsToDrop = 0;
 
@@ -35,6 +36,8 @@ namespace FarmSim.Planteables
             switch (toolType)
             {
                 case ToolTypes.Sickle:
+                    if (!CanHarvest)
+                        return;
                     DropItems(itemHarvested, minAmtToDrop, maxAmtToDrop);
                     BackTrackGrowth();
                     break;
