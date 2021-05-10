@@ -20,6 +20,8 @@ namespace FarmSim.Player
         [SerializeField] private float speed;
         [SerializeField] private GameObject tileRing;
 
+        private const string WALKING_ANIM = "Walking";
+
         public Action OnPlant { private get; set; }
         public ToolTypes ToolToUse { get; set; }
 
@@ -88,11 +90,29 @@ namespace FarmSim.Player
             return false;
         }
 
-        public void TriggerAnimation()
+        public void TriggerAnimation(INodeData curr, INodeData target, bool succesful)
         {
-            // if we have planted return
-            if (CheckForPlanting())
-                return;
+            if (succesful)
+            {
+                // if we have planted return
+                if (CheckForPlanting())
+                    return;
+            }
+            else
+            {
+                // if not moving on a path and the target node is in one of the 8 neighbours of the node the entity is on
+                if (!pathFind.HasPath() && nodeGrid.GetCardinalNeighbours(curr).Contains((Node)target))
+                {
+                    animator.SetBool(WALKING_ANIM, false);
+                    // if target node didnt change thats fine because the player will continue to look in the same direction.
+                    pathFind.ChangeDir(target.Data.pos);
+                }
+                else
+                {
+                    // if the node isnt a neighbour then ignore using a tool
+                    return;
+                }
+            }
 
 
             // otherwise check if a tool was used

@@ -1,5 +1,6 @@
 using FarmSim.Enums;
 using FarmSim.Grid;
+using FarmSim.Serialization;
 using System;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace FarmSim.Entity
     {
         public bool ProcessingPath { get; private set; }
         public float Speed { private get; set; }
+        public bool FinishedMoving { get; private set; }
 
         public CardinalDirections Dir { get; private set; } = CardinalDirections.South;
         private Vector2[] path;
@@ -23,8 +25,8 @@ namespace FarmSim.Entity
 
         private int pathIdx = 0;
 
-        private readonly Action onArrival;
-        private readonly Action onFail;
+        private readonly Action<INodeData, INodeData, bool> onArrival;
+        private readonly Action<INodeData, INodeData, bool> onFail;
 
         private readonly Transform transform;
         private readonly GameObject gameObject;
@@ -37,7 +39,16 @@ namespace FarmSim.Entity
 
         private Vector2 targetNodePos = Vector2.zero;
 
-        public EntityPathFind(Action _onFail, Action _onArrival, GameObject _gameObject, NodeGrid _nodeGrid, PathRequestManager _requestManager, float speed = 10, string _walkingBoolAnimTag = "Walking", string _directionIntTag = "Direction")
+        public EntityPathFind
+            (
+                Action<INodeData, INodeData, bool> _onFail, 
+                Action<INodeData, INodeData, bool> _onArrival, 
+                GameObject _gameObject, NodeGrid _nodeGrid, 
+                PathRequestManager _requestManager, 
+                float speed = 10, 
+                string _walkingBoolAnimTag = "Walking", 
+                string _directionIntTag = "Direction"
+            )
         {
             onArrival = _onArrival;
             onFail = _onFail;
@@ -105,12 +116,13 @@ namespace FarmSim.Entity
                 {
                     // it has completed the path
                     animator.SetBool(walkingBoolAnimTag, false);
-                    onArrival?.Invoke();
+                    onArrival?.Invoke(null, null, true);
                     path = null;
                 }
             }
         }
-        private void ChangeDir(Vector2 next)
+
+        public void ChangeDir(Vector2 next)
         {
             Vector2 travelDir = next - (Vector2)transform.position;
 
@@ -136,20 +148,19 @@ namespace FarmSim.Entity
 
         private void PathFindCallBack(Vector2[] path, bool foundPath)
         {
-            pathIdx = 0;
             if (foundPath)
             {
+                pathIdx = 0;
                 this.path = path;
             }
             else
             {
-                animator.SetBool(walkingBoolAnimTag, false);
-                // if target node didnt change thats fine because the player will continue to look in the same direction.
-                ChangeDir(targetNodePos);
+                // if there is no path then ignore it and finish the previous one.
 
-                // call on arrival for tools that interact one node ahead
-                onFail?.Invoke();
-                this.path = null;
+                INodeData curr = nodeGrid.GetNodeFromVector2(transform.position);
+                INodeData target = nodeGrid.GetNodeFromVector2(targetNodePos);
+
+                onFail?.Invoke(curr, target, false);
             }
 
             ProcessingPath = false;
