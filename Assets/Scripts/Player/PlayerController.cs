@@ -30,7 +30,8 @@ namespace FarmSim.Player
         private void Awake()
         {
             nodeGrid = FindObjectOfType<NodeGrid>();
-            pathFind = new EntityPathFind(TriggerAnimation, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
+            // on pathfind fail and success trigger the animation due to tools that interact one node ahead
+            pathFind = new EntityPathFind(TriggerAnimation, TriggerAnimation, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
             //to hide the curser
             Cursor.visible = false;
             animator = GetComponent<Animator>();
@@ -125,6 +126,11 @@ namespace FarmSim.Player
                 return;
 
             transform.position = PlayerData.Current.position;
+        }
+
+        public CardinalDirections GetPlayerDir()
+        {
+            return pathFind.Dir;
         }
     }
 }

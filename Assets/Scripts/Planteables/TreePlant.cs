@@ -1,5 +1,7 @@
 using FarmSim.Enums;
+using FarmSim.Grid;
 using FarmSim.Items;
+using FarmSim.Serialization;
 using System;
 using UnityEngine;
 
@@ -18,11 +20,23 @@ namespace FarmSim.Planteables
         [SerializeField] private int occupyNodeIdx = 1;
         [SerializeField] private int maxLogsToDrop = 0;
         [SerializeField] private int minLogsToDrop = 0;
+        [SerializeField] private int spriteIdxToMakeUnwalkable = 0;
+
+        private NodeGrid grid;
+        private INodeData nodeData;
+
+        private void Start()
+        {
+            grid = FindObjectOfType<NodeGrid>();
+            nodeData = grid.GetNodeFromVector2(transform.position);
+            CheckUnwalkable();
+        }
 
         public override void Grow(int daysPassed = 1)
         {
             Data.CurrentGrowthDay += daysPassed;
             CheckSpriteChange();
+            CheckUnwalkable();
 
             // if the current growth day is the last day thats when we can assign the last sprite
             if (Data.CurrentGrowthDay >= daysToGrow)
@@ -38,6 +52,7 @@ namespace FarmSim.Planteables
                 case ToolTypes.Sickle:
                     if (!CanHarvest)
                         return;
+
                     DropItems(itemHarvested, minAmtToDrop, maxAmtToDrop);
                     BackTrackGrowth();
                     break;
@@ -45,7 +60,20 @@ namespace FarmSim.Planteables
                     DropItems(logItem, minLogsToDrop, maxLogsToDrop);
                     RemovePlant();
                     removePlantRef?.Invoke();
+                    nodeData.Data.IsWalkable = true;
                     break;
+            }
+        }
+
+
+        /// <summary>
+        ///     Once the sprite idx of the tree is >= then the given idx make the node unwalkable.
+        /// </summary>
+        private void CheckUnwalkable()
+        {
+            if(Data.SpriteIdx >= spriteIdxToMakeUnwalkable)
+            {
+                nodeData.Data.IsWalkable = false;
             }
         }
 

@@ -107,5 +107,7 @@ MonoBehaviour:
   - {fileID: 7249948386884288205, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
   - {fileID: 6459203684388587281, guid: 19b9dca472e264c46adc7298478580d1, type: 3}
   logItem: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
+  occupyNodeIdx: 1
   maxLogsToDrop: 4
   minLogsToDrop: 3
+  spriteIdxToMakeUnwalkable: 2

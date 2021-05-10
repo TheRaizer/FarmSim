@@ -164,7 +164,7 @@ namespace FarmSim.Grid
                 loading = false;
                 onLoaded?.Invoke();
             }
-            Debug.Log("Loaded section");
+            Debug.Log("rendered section");
         }
 
         private void DetermineTileType(string val, int x, int y, Node[,] sectionGrid)

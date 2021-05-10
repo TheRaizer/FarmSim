@@ -40,7 +40,7 @@ namespace FarmSim.Serialization
 
                 injecting = false;
             }
-            Debug.Log("Succesfully loaded");
+            Debug.Log("Succesfully injected data");
         }
 
         public IEnumerator PostInjectionAll()

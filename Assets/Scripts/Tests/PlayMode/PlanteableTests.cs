@@ -17,6 +17,7 @@ namespace Tests
     {
         private GameObject planteableObj;
         private Planteable plant;
+        private int completeGrowth = 100;
 
         private readonly GameObject prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
 
@@ -85,12 +86,13 @@ namespace Tests
             plant_2.Save();
 
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 2);
-
+            plant.Grow(completeGrowth);
             plant.OnHarvest(ToolTypes.Sickle, null);
 
             // after harvesting the plant should no longer be saved.
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 1);
 
+            plant_2.Grow(completeGrowth);
             plant_2.OnHarvest(ToolTypes.Sickle, null);
 
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 0);
@@ -139,11 +141,12 @@ namespace Tests
             Planteable plant = Object.FindObjectOfType<Planteable>();
 
             // Harvest the plant
+            plant.Grow(completeGrowth);
             plant.OnHarvest(ToolTypes.Sickle, null);
 
             // check if the items dropped
-            WorldItem[] worldItem = Object.FindObjectsOfType<WorldItem>();
-            Assert.IsTrue(worldItem.Length >= 2 && worldItem.Length <= 5);
+            WorldItem[] worldItems = Object.FindObjectsOfType<WorldItem>();
+            Assert.IsTrue(worldItems.Length >= 2 && worldItems.Length <= 5);
 
             yield return null;
 

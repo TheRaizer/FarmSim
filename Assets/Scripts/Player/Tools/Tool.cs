@@ -1,5 +1,6 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
+using FarmSim.Serialization;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace FarmSim.Tools
             return AudioIdPrefix + num;
         }
 
-        public void OnUse(Node middleNode, NodeGrid nodeGrid)
+        public void OnUse(INodeData middleNode, NodeGrid nodeGrid)
         {
             List<Node> nodes = nodeGrid.GetNodesFromDimensions(middleNode, DimsToAffect, DimsToAffect);
             InteractWithNodes(nodes);

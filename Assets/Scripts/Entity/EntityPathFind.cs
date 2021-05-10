@@ -15,7 +15,7 @@ namespace FarmSim.Entity
         public bool ProcessingPath { get; private set; }
         public float Speed { private get; set; }
 
-        private CardinalDirections dir = CardinalDirections.South;
+        public CardinalDirections Dir { get; private set; } = CardinalDirections.South;
         private Vector2[] path;
         private PathRequest currentRequest;
 
@@ -24,6 +24,8 @@ namespace FarmSim.Entity
         private int pathIdx = 0;
 
         private readonly Action onArrival;
+        private readonly Action onFail;
+
         private readonly Transform transform;
         private readonly GameObject gameObject;
         private readonly Animator animator;
@@ -33,10 +35,13 @@ namespace FarmSim.Entity
         private readonly string walkingBoolAnimTag;
         private readonly string directionIntTag;
 
+        private Vector2 targetNodePos = Vector2.zero;
 
-        public EntityPathFind(Action _onArrival, GameObject _gameObject, NodeGrid _nodeGrid, PathRequestManager _requestManager, float speed = 10, string _walkingBoolAnimTag = "Walking", string _directionIntTag = "Direction")
+        public EntityPathFind(Action _onFail, Action _onArrival, GameObject _gameObject, NodeGrid _nodeGrid, PathRequestManager _requestManager, float speed = 10, string _walkingBoolAnimTag = "Walking", string _directionIntTag = "Direction")
         {
             onArrival = _onArrival;
+            onFail = _onFail;
+
             gameObject = _gameObject;
             Speed = speed;
             walkingBoolAnimTag = _walkingBoolAnimTag;
@@ -53,7 +58,13 @@ namespace FarmSim.Entity
             Node start = nodeGrid.GetNodeFromVector2(transform.position);
             Node end = nodeGrid.GetNodeFromMousePosition();
 
-            if (start == null || end == null || !end.Data.IsWalkable)
+            if(end != null)
+            {
+                // store the target node's position so we can change the players direction to face it.
+                targetNodePos = end.Data.pos;
+            }
+
+            if (start == null || end == null)
                 return;
 
             currentRequest = new PathRequest(Guid.NewGuid().ToString(), start, end, PathFindCallBack);
@@ -66,7 +77,10 @@ namespace FarmSim.Entity
         {
             if (path != null)
             {
+                // set the walking animation
                 animator.SetBool(walkingBoolAnimTag, true);
+
+                // if we have not completed the path
                 if (pathIdx < path.Length)
                 {
                     Vector2 curr = gameObject.transform.position;
@@ -102,33 +116,39 @@ namespace FarmSim.Entity
 
             if (travelDir.x > 0)
             {
-                dir = CardinalDirections.East;
+                Dir = CardinalDirections.East;
             }
             else if (travelDir.x < 0)
             {
-                dir = CardinalDirections.West;
+                Dir = CardinalDirections.West;
             }
             else if (travelDir.y > 0)
             {
-                dir = CardinalDirections.North;
+                Dir = CardinalDirections.North;
             }
             else if (travelDir.y < 0)
             {
-                dir = CardinalDirections.South;
+                Dir = CardinalDirections.South;
             }
 
-            animator.SetInteger(directionIntTag, (int)dir);
+            animator.SetInteger(directionIntTag, (int)Dir);
         }
 
-        private void PathFindCallBack(Vector2[] path, bool isSuccesful)
+        private void PathFindCallBack(Vector2[] path, bool foundPath)
         {
             pathIdx = 0;
-            if (isSuccesful)
+            if (foundPath)
             {
                 this.path = path;
             }
             else
             {
+                animator.SetBool(walkingBoolAnimTag, false);
+                // if target node didnt change thats fine because the player will continue to look in the same direction.
+                ChangeDir(targetNodePos);
+
+                // call on arrival for tools that interact one node ahead
+                onFail?.Invoke();
                 this.path = null;
             }
 

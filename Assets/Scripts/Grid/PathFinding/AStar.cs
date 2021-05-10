@@ -121,10 +121,6 @@ namespace FarmSim.Grid
             {
                 path = RetracePath(start, end);
             }
-            else
-            {
-                Debug.Log("NO path found");
-            }
 
             requestManager.OnFinishProcess(path, foundPath);
         }
