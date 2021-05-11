@@ -246,31 +246,31 @@ MonoBehaviour:
   - <Sprite>k__BackingField: {fileID: -40358673524596140, guid: a37294920e43028468781b46d52b7c9e,
       type: 3}
     <ToolType>k__BackingField: 0
-    <OneNodeAhead>k__BackingField: 0
+    <CanAffectNodeAhead>k__BackingField: 0
     numOfSounds: 4
     AudioIdPrefix: HoeingDirt_
   - <Sprite>k__BackingField: {fileID: -4656839199027896080, guid: a37294920e43028468781b46d52b7c9e,
       type: 3}
     <ToolType>k__BackingField: 1
-    <OneNodeAhead>k__BackingField: 0
+    <CanAffectNodeAhead>k__BackingField: 0
     numOfSounds: 0
     AudioIdPrefix: 
   - <Sprite>k__BackingField: {fileID: -2375035684461431469, guid: a37294920e43028468781b46d52b7c9e,
       type: 3}
     <ToolType>k__BackingField: 2
-    <OneNodeAhead>k__BackingField: 0
+    <CanAffectNodeAhead>k__BackingField: 0
     numOfSounds: 0
     AudioIdPrefix: 
   - <Sprite>k__BackingField: {fileID: 7985419639835855387, guid: a37294920e43028468781b46d52b7c9e,
       type: 3}
     <ToolType>k__BackingField: 3
-    <OneNodeAhead>k__BackingField: 0
+    <CanAffectNodeAhead>k__BackingField: 1
     numOfSounds: 0
     AudioIdPrefix: 
   - <Sprite>k__BackingField: {fileID: 6963921044372166798, guid: a37294920e43028468781b46d52b7c9e,
       type: 3}
     <ToolType>k__BackingField: 5
-    <OneNodeAhead>k__BackingField: 0
+    <CanAffectNodeAhead>k__BackingField: 0
     numOfSounds: 0
     AudioIdPrefix: 
   toolPointer: {fileID: 0}

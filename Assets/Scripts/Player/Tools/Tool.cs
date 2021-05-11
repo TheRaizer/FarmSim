@@ -16,6 +16,7 @@ namespace FarmSim.Tools
     {
         [field: SerializeField] public Sprite Sprite { get; private set; }
         [field: SerializeField] public ToolTypes ToolType { get; private set; }
+        [field: SerializeField] public bool CanAffectNodeAhead { get; private set; }
         [SerializeField] private int numOfSounds;
         [SerializeField] private string AudioIdPrefix;
 

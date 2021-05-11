@@ -18,6 +18,9 @@ namespace FarmSim.Planteables
     [Savable(false)]
     public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
     {
+        [field: Header("General Properties Settings")]
+        [field: SerializeField] public bool NeedWater { get; protected set; } = true;
+
         [Header("General Planteable Settings")]
         [SerializeField] private string originalPrefabName = null;
 

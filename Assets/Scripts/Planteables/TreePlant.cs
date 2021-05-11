@@ -29,7 +29,7 @@ namespace FarmSim.Planteables
         {
             grid = FindObjectOfType<NodeGrid>();
             nodeData = grid.GetNodeFromVector2(transform.position);
-            CheckUnwalkable();
+            CheckNeedWater();
         }
 
         public override void Grow(int daysPassed = 1)
@@ -37,6 +37,7 @@ namespace FarmSim.Planteables
             Data.CurrentGrowthDay += daysPassed;
             CheckSpriteChange();
             CheckUnwalkable();
+            CheckNeedWater();
 
             // if the current growth day is the last day thats when we can assign the last sprite
             if (Data.CurrentGrowthDay >= daysToGrow)
@@ -74,6 +75,18 @@ namespace FarmSim.Planteables
             if(Data.SpriteIdx >= spriteIdxToMakeUnwalkable)
             {
                 nodeData.Data.IsWalkable = false;
+            }
+        }
+
+        /// <summary>
+        ///     Once the tree has become unwalkable it no longer needs water.
+        /// </summary>
+        private void CheckNeedWater()
+        {
+            Debug.Log(nodeData.Data.IsWalkable);
+            if (!nodeData.Data.IsWalkable)
+            {
+                NeedWater = false;
             }
         }
 

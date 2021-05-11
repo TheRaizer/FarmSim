@@ -54,19 +54,31 @@ namespace FarmSim.Planteables
             }
             else
             {
-                if (data.WaterSrcGuids.Count > 0)
-                {
-                    // if theres a water source we can make multiple days pass
-                    plant.Grow(daysPassed);
-                }
-                else if (data.Watered)
-                {
-                    // if its just watered only grow it once
-                    plant.Grow();
-                }
+                GrowPlant(daysPassed);
             }
             data.Watered = false;
             CheckSpriteType();
+        }
+
+        private void GrowPlant(int daysPassed)
+        {
+            if (!plant.NeedWater)
+            {
+                // if it doesnt need water just grow the plant
+                plant.Grow(daysPassed);
+                return;
+            }
+
+            if (data.WaterSrcGuids.Count > 0)
+            {
+                // if theres a water source we can make multiple days pass
+                plant.Grow(daysPassed);
+            }
+            else if (data.Watered)
+            {
+                // if its just watered only grow it once
+                plant.Grow();
+            }
         }
 
         private void SetDaysTillRevert() => data.DaysTillRevert = UnityEngine.Random.Range(MIN_HOED_DAYS, MAX_HOED_DAYS);

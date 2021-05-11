@@ -68,7 +68,6 @@ namespace FarmSim.Grid
             // init the section and its GameObjects.
             sectionLoader.InitSection(sectionGrid);
             StartCoroutine(sectionLoader.LoadSectionCo(sectionGrid, () => LoadedSection = true));
-            //sectionLoader.LoadSectionVoid(sectionGrid, () => LoadedSection = true);
         }
 
         /// <summary>

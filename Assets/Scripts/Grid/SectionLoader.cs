@@ -31,6 +31,8 @@ namespace FarmSim.Grid
         private readonly Vector2 gridBottomLeft;
         private readonly int sectionNum = 0;
 
+        private bool SectionNotSaved => SectionData.Current.NodeDatas == null || SectionData.Current.NodeDatas.Length <= 0;
+
         public SectionLoader(Vector2 _gridBottomLeft, int _sectionNum, ObjectPooler _pooler)
         {
             gridBottomLeft = _gridBottomLeft;
@@ -59,14 +61,14 @@ namespace FarmSim.Grid
             if (sectionNum < 0 || sectionNum * SECTION_SIZE_X >= WorldMaxX || sectionNum * SECTION_SIZE_Y >= WorldMaxY)
                 Debug.LogError($"Section number {sectionNum} is not valid");
 
-            bool sectionIsEmpty = SectionData.Current.NodeDatas == null || SectionData.Current.NodeDatas.Length <= 0;
+            
 
             for (int y = 0; y < SECTION_SIZE_Y; y++)
             {
                 for (int x = 0; x < SECTION_SIZE_X; x++)
                 {
                     // if there are no nodes that have been saved for this section
-                    if (sectionIsEmpty)
+                    if (SectionNotSaved)
                     {
                         // create new ones
                         Vector2 pos = GetNodePosition(x, y);
@@ -124,24 +126,11 @@ namespace FarmSim.Grid
             sectionYEnd = sectionYStart + SECTION_SIZE_Y;
         }
 
-        public void LoadSectionVoid(Node[,] sectionGrid, Action onLoaded = null)
-        {
-            string[] worldLines = File.ReadAllLines("C:/UnityProjects/FarmSim/Assets/Scripts/Grid/World.txt");
-
-            // the + or - 2 when using sectionY is because the txt file worldLines has its first two lines as dimensions
-
-            for (int y = sectionYStart + 2; y < sectionYEnd + 2; y++)
-            {
-                string[] line = worldLines[y].Split(' ');
-
-                for (int x = sectionXStart; x < sectionXEnd; x++)
-                {
-                    DetermineTileType(line[x], x - sectionXStart, y - sectionYStart - 2, sectionGrid);
-                }
-            }
-            onLoaded?.Invoke();
-        }
-
+        /// <summary>
+        ///     Loads the sections tiles on another thread.
+        /// </summary>
+        /// <param name="sectionGrid">The <see cref="Node"/>'s of the section</param>
+        /// <param name="onLoaded">Action to run once loading is finished</param>
         public IEnumerator LoadSectionCo(Node[,] sectionGrid, Action onLoaded = null)
         {
             if (!loading)
@@ -167,6 +156,13 @@ namespace FarmSim.Grid
             Debug.Log("rendered section");
         }
 
+        /// <summary>
+        ///     Spawns a given tile at the proper position, initializing the node data's fields when necessary.
+        /// </summary>
+        /// <param name="val">The tile type as read from the world's txt file</param>
+        /// <param name="x">x idx of the node</param>
+        /// <param name="y">y idx of the node</param>
+        /// <param name="sectionGrid"></param>
         private void DetermineTileType(string val, int x, int y, Node[,] sectionGrid)
         {
             if (pooler == null)
@@ -175,8 +171,12 @@ namespace FarmSim.Grid
             switch (val)
             {
                 case "0":
-                    sectionGrid[x, y].Data.IsWalkable = true;
-                    sectionGrid[x, y].Data.IsOccupied = false;
+                    if (SectionNotSaved)
+                    {
+                        // if the section isnt saved then initialize the nodes default fields.
+                        sectionGrid[x, y].Data.IsWalkable = true;
+                        sectionGrid[x, y].Data.IsOccupied = false;
+                    }
                     spawnedObject = pooler.SpawnGameObject("Dirt", sectionGrid[x, y].Data.pos, Quaternion.identity);
                     break;
                 case "1":
@@ -188,6 +188,7 @@ namespace FarmSim.Grid
                     throw new ArgumentException($"No such tile for given code {val}");
             }
 
+            // if the spawned object is an IInteractable, assign its x and y and reference it in the corrosponding node 
             if (spawnedObject.TryGetComponent(out IInteractable interactable))
             {
                 sectionGrid[x, y].Interactable = interactable;

@@ -21,9 +21,18 @@ namespace FarmSim.Player
         private readonly Dictionary<ToolTypes, Tool> tools = new Dictionary<ToolTypes, Tool>();
 
         private INodeData nodeToToolOn;
+
+        /// <summary>
+        ///     The tool that is currently equipped by the player.
+        /// </summary>
         public Tool EquippedTool { get; private set; }
 
-        private PlayerController player;
+        /// <summary>
+        ///     In contrast to the <see cref="ToolHandler.EquippedTool"/>, this is the 
+        ///     one that is currently in line to be used (not neccesesarily the one that is equipped).
+        /// </summary>
+        public ToolTypes ToolToUse { get; private set; }
+
         private Canvas canvas;
         private NodeGrid nodeGrid;
         private AudioManager audioManager;
@@ -33,7 +42,6 @@ namespace FarmSim.Player
         private void Awake()
         {
             nodeGrid = FindObjectOfType<NodeGrid>();
-            player = GetComponent<PlayerController>();
             canvas = FindObjectOfType<Canvas>();
             audioManager = FindObjectOfType<AudioManager>();
 
@@ -52,7 +60,7 @@ namespace FarmSim.Player
                 {
                     nodeToToolOn = node;
                 }
-                player.ToolToUse = EquippedTool.ToolType;
+                ToolToUse = EquippedTool.ToolType;
             }
         }
 
@@ -108,31 +116,19 @@ namespace FarmSim.Player
         // animation event to use during tool animations
         private void UseTool()
         {
-            Tool tool = tools[player.ToolToUse];
+            Tool tool = tools[ToolToUse];
             audioManager.Play(tool.GetAudioId());
             tool.OnUse(nodeToToolOn, nodeGrid);
-        }
-
-        private INodeData GetNodeAhead(CardinalDirections cardinalDir, INodeData origin)
-        {
-            switch (cardinalDir)
-            {
-                case CardinalDirections.North:
-                    return nodeGrid.GetNodeFromXY(origin.Data.x, origin.Data.y + 1);
-                case CardinalDirections.South:
-                    return nodeGrid.GetNodeFromXY(origin.Data.x, origin.Data.y - 1);
-                case CardinalDirections.East:
-                    return nodeGrid.GetNodeFromXY(origin.Data.x + 1, origin.Data.y);
-                case CardinalDirections.West:
-                    return nodeGrid.GetNodeFromXY(origin.Data.x - 1, origin.Data.y);
-            }
-
-            return null;
         }
 
         public void PostLoad()
         {
             detectKeys = true;
+        }
+
+        public Tool GetToolToUse()
+        {
+            return tools[ToolToUse];
         }
     }
 }

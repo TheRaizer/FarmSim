@@ -23,14 +23,15 @@ namespace FarmSim.Player
         private const string WALKING_ANIM = "Walking";
 
         public Action OnPlant { private get; set; }
-        public ToolTypes ToolToUse { get; set; }
 
+        private ToolHandler toolHandler;
         private Animator animator;
         private EntityPathFind pathFind;
         private NodeGrid nodeGrid;
 
         private void Awake()
         {
+            toolHandler = GetComponent<ToolHandler>();
             nodeGrid = FindObjectOfType<NodeGrid>();
             // on pathfind fail and success trigger the animation due to tools that interact one node ahead
             pathFind = new EntityPathFind(TriggerAnimation, TriggerAnimation, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
@@ -104,8 +105,13 @@ namespace FarmSim.Player
                 if (!pathFind.HasPath() && nodeGrid.GetCardinalNeighbours(curr).Contains((Node)target))
                 {
                     animator.SetBool(WALKING_ANIM, false);
+
                     // if target node didnt change thats fine because the player will continue to look in the same direction.
                     pathFind.ChangeDir(target.Data.pos);
+
+                    // if the tool cannot affect the node ahead dont use tool
+                    if (!toolHandler.GetToolToUse().CanAffectNodeAhead)
+                        return;
                 }
                 else
                 {
@@ -113,10 +119,12 @@ namespace FarmSim.Player
                     return;
                 }
             }
+            ChooseAnimation(toolHandler.ToolToUse);
+        }
 
-
-            // otherwise check if a tool was used
-            switch (ToolToUse)
+        private void ChooseAnimation(ToolTypes toolType)
+        {
+            switch (toolType)
             {
                 case ToolTypes.Hoe:
                     animator.SetTrigger("Hoe");
