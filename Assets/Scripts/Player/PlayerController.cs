@@ -91,7 +91,7 @@ namespace FarmSim.Player
             return false;
         }
 
-        public void TriggerAnimation(INodeData curr, INodeData target, bool succesful)
+        public void TriggerAnimation(INodeData curr, INodeData end, bool succesful)
         {
             if (succesful)
             {
@@ -101,23 +101,29 @@ namespace FarmSim.Player
             }
             else
             {
-                // if not moving on a path and the target node is in one of the 8 neighbours of the node the entity is on
-                if (!pathFind.HasPath() && nodeGrid.GetCardinalNeighbours(curr).Contains((Node)target))
+
+                // if the pathfinding failed because the end node wasnt walkable
+                if (end != null && !end.Data.IsWalkable)
                 {
-                    animator.SetBool(WALKING_ANIM, false);
+                    bool isNeighbour = nodeGrid.GetCardinalNeighbours(curr).Contains((Node)end);
 
-                    // if target node didnt change thats fine because the player will continue to look in the same direction.
-                    pathFind.ChangeDir(target.Data.pos);
+                    // if the node is in the vicinity of the player and the player is not moving on a path
+                    if (!pathFind.HasPath() && isNeighbour)
+                    {
+                        animator.SetBool(WALKING_ANIM, false);
 
-                    // if the tool cannot affect the node ahead dont use tool
-                    if (!toolHandler.GetToolToUse().CanAffectNodeAhead)
+                        // if target node didnt change thats fine because the player will continue to look in the same direction.
+                        pathFind.ChangeDir(end.Data.pos);
+
+                        // if the tool cannot affect the node ahead dont use tool
+                        if (!toolHandler.GetToolToUse().CanAffectNodeAhead)
+                            return;
+                    }
+                    else
                         return;
                 }
                 else
-                {
-                    // if the node isnt a neighbour then ignore using a tool
                     return;
-                }
             }
             ChooseAnimation(toolHandler.ToolToUse);
         }

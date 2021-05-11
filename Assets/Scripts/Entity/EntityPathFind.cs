@@ -37,7 +37,7 @@ namespace FarmSim.Entity
         private readonly string walkingBoolAnimTag;
         private readonly string directionIntTag;
 
-        private Vector2 targetNodePos = Vector2.zero;
+        private INodeData endNodeData = null;
 
         public EntityPathFind
             (
@@ -69,11 +69,8 @@ namespace FarmSim.Entity
             Node start = nodeGrid.GetNodeFromVector2(transform.position);
             Node end = nodeGrid.GetNodeFromMousePosition();
 
-            if(end != null)
-            {
-                // store the target node's position so we can change the players direction to face it.
-                targetNodePos = end.Data.pos;
-            }
+            // store end node to pass onfailure and onArrival
+            endNodeData = end;
 
             if (start == null || end == null)
                 return;
@@ -115,8 +112,9 @@ namespace FarmSim.Entity
                 else
                 {
                     // it has completed the path
+                    INodeData curr = nodeGrid.GetNodeFromVector2(transform.position);
                     animator.SetBool(walkingBoolAnimTag, false);
-                    onArrival?.Invoke(null, null, true);
+                    onArrival?.Invoke(curr, endNodeData, true);
                     path = null;
                 }
             }
@@ -155,12 +153,9 @@ namespace FarmSim.Entity
             }
             else
             {
-                // if there is no path then ignore it and finish the previous one.
-
+                // dont make path null so if there is no path finish the previous one.
                 INodeData curr = nodeGrid.GetNodeFromVector2(transform.position);
-                INodeData target = nodeGrid.GetNodeFromVector2(targetNodePos);
-
-                onFail?.Invoke(curr, target, false);
+                onFail?.Invoke(curr, endNodeData, false);
             }
 
             ProcessingPath = false;
