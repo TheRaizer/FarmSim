@@ -185,8 +185,8 @@ namespace FarmSim.Planteables
                         // initialize the Dirts Plant field and give it the same Id as this Dirt instance.
                         plant = obj.GetComponent<Planteable>();
                         plant.SetDataId(data.Id);
+                        onSuccessful?.Invoke();
                     }
-                    onSuccessful?.Invoke();
                     break;
                 default:
                     /*Debug.Log($"Do nothing with tooltype {toolType}");*/

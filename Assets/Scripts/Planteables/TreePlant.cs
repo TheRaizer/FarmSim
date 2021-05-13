@@ -17,7 +17,6 @@ namespace FarmSim.Planteables
     {
         [Header("Tree Settings")]
         [SerializeField] private ItemType logItem;
-        [SerializeField] private int occupyNodeIdx = 1;
         [SerializeField] private int maxLogsToDrop = 0;
         [SerializeField] private int minLogsToDrop = 0;
         [SerializeField] private int spriteIdxToMakeUnwalkable = 0;
@@ -83,7 +82,6 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckNeedWater()
         {
-            Debug.Log(nodeData.Data.IsWalkable);
             if (!nodeData.Data.IsWalkable)
             {
                 NeedWater = false;

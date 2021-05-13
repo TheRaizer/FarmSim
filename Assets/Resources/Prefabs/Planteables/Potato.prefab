@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb4701ad9329d1447a8b82e3261fefdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <NeedWater>k__BackingField: 1
   originalPrefabName: Potato
   daysToGrow: 7
   itemHarvested: {fileID: 11400000, guid: d7287702c4e8b6d42a75f04891fa04c6, type: 2}
@@ -93,7 +94,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -8664770731761805928, guid: 19b9dca472e264c46adc7298478580d1,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -105,4 +106,4 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1

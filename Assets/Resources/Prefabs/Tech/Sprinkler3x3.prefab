@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6984330460740525280}
   - component: {fileID: 5623477796438417051}
   m_Layer: 0
-  m_Name: Sprinkler
+  m_Name: Sprinkler3x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -5632488211350444421, guid: 31f991bd6d9e7444ba5ab365d0e14af0,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
