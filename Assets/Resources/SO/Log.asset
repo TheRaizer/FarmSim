@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d309e1815a307d5419bbdae02aa5d624, type: 3}
-  m_Name: TomatoSeed
+  m_Name: Log
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Tomato Seed
+  <ItemName>k__BackingField: Log
   <Price>k__BackingField: 5
   <MaxCarryAmt>k__BackingField: 99
-  <IconPrefab>k__BackingField: {fileID: 1475856525572920501, guid: cb5f528907121654ebb1812cea07aa20,
+  <IconPrefab>k__BackingField: {fileID: 8565358942090029306, guid: 90103ebf8fad0d242b80029b1c622bb5,
     type: 3}
-  <ShopIconPrefab>k__BackingField: {fileID: 1623432799832004589, guid: e5aa083641dd2604bb11d69af22a6394,
-    type: 3}
-  worldItemPrefab: {fileID: 6939850219046529753, guid: ed4f6d6b38de6d94f95ec5f9efcd156e,
+  <ShopIconPrefab>k__BackingField: {fileID: 0}
+  worldItemPrefab: {fileID: 6939850219046529753, guid: 1fd9c04e37ff409468d5ef5aff8c420f,
     type: 3}

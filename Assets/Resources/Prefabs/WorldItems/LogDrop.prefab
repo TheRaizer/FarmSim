@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6939850219046529758}
   - component: {fileID: 6939850219046529756}
   m_Layer: 6
-  m_Name: TreeSeedDrop
+  m_Name: LogDrop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6939850219046529753}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.5, y: -0.52, z: 0}
-  m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,9 +74,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -283987104976234103, guid: 6a58db4060d14f74b87d82569c356ddf,
+  m_Sprite: {fileID: 7507840344314192246, guid: eb37f3d0f3b70184b8ca4828b8f4d2b3,
     type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -120,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0052122474, y: -0.0051226914}
+  m_Offset: {x: -0.0019483566, y: 0.0013257265}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.10082404, y: 0.13955486}
+  m_Size: {x: 0.17427921, y: 0.17421246}
   m_EdgeRadius: 0
 --- !u!114 &6939850219046529756
 MonoBehaviour:
@@ -145,4 +145,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea3366d15ba5bdc48a0cba4732605061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: 450521347f902304b8f399864fe068a0, type: 2}
+  itemType: {fileID: 11400000, guid: a86da27e3a028b7489fd5fd787adede5, type: 2}

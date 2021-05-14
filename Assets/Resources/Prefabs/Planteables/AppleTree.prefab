@@ -99,7 +99,7 @@ MonoBehaviour:
   <NeedWater>k__BackingField: 1
   originalPrefabName: AppleTree
   daysToGrow: 15
-  itemHarvested: {fileID: 11400000, guid: d7287702c4e8b6d42a75f04891fa04c6, type: 2}
+  itemHarvested: {fileID: 11400000, guid: 11d953fe8c9e8454387d9039d76f04cf, type: 2}
   maxAmtToDrop: 5
   minAmtToDrop: 2
   spriteLifeCycle:
@@ -108,7 +108,7 @@ MonoBehaviour:
   - {fileID: -5384487659566191431, guid: 77eb21e4b2d13b8409595482410a4560, type: 3}
   - {fileID: 8037801508927015034, guid: 77eb21e4b2d13b8409595482410a4560, type: 3}
   - {fileID: -8127611959853233476, guid: 77eb21e4b2d13b8409595482410a4560, type: 3}
-  logItem: {fileID: 11400000, guid: 67abb53c4bb6a9f4699086a4477e3943, type: 2}
-  maxLogsToDrop: 4
-  minLogsToDrop: 3
+  logItem: {fileID: 11400000, guid: a86da27e3a028b7489fd5fd787adede5, type: 2}
+  maxLogsToDrop: 10
+  minLogsToDrop: 7
   spriteIdxToMakeUnwalkable: 2

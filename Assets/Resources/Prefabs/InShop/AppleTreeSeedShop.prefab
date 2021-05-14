@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1063746518406873017}
   - component: {fileID: 1063746518406873018}
   m_Layer: 5
-  m_Name: SprinklerImg
+  m_Name: ApppleTreeSeedImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 288809257972789615, guid: 4be7ff7850b694740ad6fa88f1a2daa9, type: 3}
+  m_Sprite: {fileID: 180331210299106624, guid: aa7fa77f4cd67b34f9defea23d3b2adb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1623432799832004591}
   - component: {fileID: 456601502239754104}
   m_Layer: 5
-  m_Name: SprinklerShop
+  m_Name: AppleTreeSeedShop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,4 +164,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4345eb3110f1f354fb7c361a6b539ab5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemType: {fileID: 11400000, guid: a3c48554b2e63fd4e86d14361f0e149c, type: 2}
+  itemType: {fileID: 11400000, guid: 450521347f902304b8f399864fe068a0, type: 2}

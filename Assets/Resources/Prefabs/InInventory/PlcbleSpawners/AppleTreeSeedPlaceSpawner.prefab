@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 882692220823551201}
   - component: {fileID: 882692220823551202}
   m_Layer: 5
-  m_Name: TomatoSeedImg
+  m_Name: AppleTreeSeedImg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,15 +192,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3617833425785741889, guid: 6a58db4060d14f74b87d82569c356ddf,
-    type: 3}
+  m_Sprite: {fileID: 180331210299106624, guid: aa7fa77f4cd67b34f9defea23d3b2adb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -224,7 +223,7 @@ GameObject:
   - component: {fileID: 1475856525572920504}
   - component: {fileID: 1475856525572920505}
   m_Layer: 5
-  m_Name: TreeSeedPlaceSpawner
+  m_Name: AppleTreeSeedPlaceSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d309e1815a307d5419bbdae02aa5d624, type: 3}
-  m_Name: TreeSeed
+  m_Name: AppleTreeSeed
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Tree Seed
-  <Price>k__BackingField: 10
+  <ItemName>k__BackingField: Apple Tree Seed
+  <Price>k__BackingField: 7
   <MaxCarryAmt>k__BackingField: 99
   <IconPrefab>k__BackingField: {fileID: 1475856525572920501, guid: 56f0805e27075cf47aa3e029d32d53f6,
     type: 3}
-  <ShopIconPrefab>k__BackingField: {fileID: 0}
+  <ShopIconPrefab>k__BackingField: {fileID: 1623432799832004589, guid: fcee9b97bd9476c4f9aae1de09b09220,
+    type: 3}
   worldItemPrefab: {fileID: 6939850219046529753, guid: d3e757fe75e6a064ba4ae662c449be39,
     type: 3}
