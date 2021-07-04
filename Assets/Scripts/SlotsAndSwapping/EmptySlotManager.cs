@@ -5,7 +5,7 @@ namespace FarmSim.Slots
 {
     /// <class name="EmptySlotManager">
     ///     <summary>
-    ///         Manages the actions of an empty slot.
+    ///         Manages the actions when a slot is empty.
     ///     </summary>
     /// </class>
     public class EmptySlotManager : MonoBehaviour, IPointerClickHandler
@@ -15,21 +15,21 @@ namespace FarmSim.Slots
         ///     The slots handler that contains this slot. Assigned when the slot <see cref="GameObject"/> is instantiated.
         /// </summary>
         public SlotsHandler SlotsHandler { private get; set; }
-        private SwapManager movementManager;
+        private SwapManager swapManager;
 
         private void Awake()
         {
-            movementManager = FindObjectOfType<SwapManager>();
+            swapManager = FindObjectOfType<SwapManager>();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                if (movementManager.HasAttachedSwappable())
+                if (swapManager.HasAttachedSwappable())
                 {
                     // move attached item to this empty slot
-                    movementManager.SwapPositions(SlotIndex, null, SlotsHandler);
+                    swapManager.SwapPositions(SlotIndex, null, SlotsHandler);
                 }
             }
         }

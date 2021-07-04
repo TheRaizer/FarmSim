@@ -136,7 +136,7 @@ namespace FarmSim.Items
         /// <returns>True if attached item was stacked onto other item, otherwise false.</returns>
         public bool AvoidSwap(ISwappable other)
         {
-            // if the other position manager is holding an item
+            // if the other swappable is an item
             if (other.GetType() == typeof(Item))
             {
                 // cast the swappable to an item

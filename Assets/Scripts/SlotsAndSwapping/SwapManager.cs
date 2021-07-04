@@ -70,7 +70,6 @@ namespace FarmSim.Slots
                 attachedSwappable.SlotsHandler = slotHandler;
             }
 
-
             ResetAttachedSwappable();
         }
 
