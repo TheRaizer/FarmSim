@@ -1,5 +1,6 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Entity;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using TMPro;
 using UnityEngine;

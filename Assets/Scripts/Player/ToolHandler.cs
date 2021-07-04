@@ -1,5 +1,6 @@
 ﻿using FarmSim.Enums;
 using FarmSim.Grid;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using FarmSim.Tools;
 using FarmSim.Utility;

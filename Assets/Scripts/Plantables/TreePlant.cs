@@ -1,11 +1,11 @@
 using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
-using FarmSim.Serialization;
+using FarmSim.SavableData;
 using System;
 using UnityEngine;
 
-namespace FarmSim.Planteables 
+namespace FarmSim.Plantables
 {
     /// <class name="TreePlant">
     ///     <summary>
@@ -13,7 +13,7 @@ namespace FarmSim.Planteables
     ///         is equivalent to its sprite interval change.
     ///     </summary>
     /// </class>
-    public class TreePlant : Planteable
+    public class TreePlant : Plantable
     {
         [Header("Tree Settings")]
         [SerializeField] private ItemType logItem;
@@ -71,7 +71,7 @@ namespace FarmSim.Planteables
         /// </summary>
         private void CheckUnwalkable()
         {
-            if(Data.SpriteIdx >= spriteIdxToMakeUnwalkable)
+            if (Data.SpriteIdx >= spriteIdxToMakeUnwalkable)
             {
                 nodeData.Data.IsWalkable = false;
             }

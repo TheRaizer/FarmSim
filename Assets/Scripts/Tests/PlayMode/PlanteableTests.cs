@@ -2,8 +2,8 @@
 using FarmSim.Grid;
 using FarmSim.Items;
 using FarmSim.Loading;
-using FarmSim.Planteables;
-using FarmSim.Serialization;
+using FarmSim.Plantables;
+using FarmSim.SavableData;
 using NUnit.Framework;
 using System.Collections;
 using UnityEditor.SceneManagement;
@@ -16,7 +16,7 @@ namespace Tests
     public class PlanteableTest
     {
         private GameObject planteableObj;
-        private Planteable plant;
+        private Plantable plant;
         private int completeGrowth = 100;
 
         private readonly GameObject prefab = Resources.Load("Prefabs/UnitTests/PotatoUnitTest") as GameObject;
@@ -31,7 +31,7 @@ namespace Tests
             prefab.transform.position = Vector3.zero;
             planteableObj = Object.Instantiate(prefab);
 
-            plant = planteableObj.GetComponent<Planteable>();
+            plant = planteableObj.GetComponent<Plantable>();
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Tests
         public void PlantSaveTest()
         {
             var planteableObj_2 = Object.Instantiate(planteableObj);
-            Planteable plant_2 = planteableObj_2.GetComponent<Planteable>();
+            Plantable plant_2 = planteableObj_2.GetComponent<Plantable>();
 
             Assert.AreEqual(SectionData.Current.PlantDatas.Count, 0);
 
@@ -138,7 +138,7 @@ namespace Tests
             Assert.IsTrue(succesfulPlanting);
 
             // get the single plant we made in this scene
-            Planteable plant = Object.FindObjectOfType<Planteable>();
+            Plantable plant = Object.FindObjectOfType<Plantable>();
 
             // Harvest the plant
             plant.Grow(completeGrowth);

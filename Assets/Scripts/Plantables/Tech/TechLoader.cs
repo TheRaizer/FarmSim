@@ -1,7 +1,8 @@
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using UnityEngine;
 
-namespace FarmSim.Planteables
+namespace FarmSim.Plantables
 {
     /// <class name="TechLoader">
     ///     <summary>

@@ -2,6 +2,7 @@
 using FarmSim.Entity;
 using FarmSim.Enums;
 using FarmSim.Grid;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using System;
 using UnityEngine;

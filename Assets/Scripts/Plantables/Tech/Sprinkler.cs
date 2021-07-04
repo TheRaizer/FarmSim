@@ -2,6 +2,7 @@ using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Grid;
 using FarmSim.Items;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using System;
@@ -9,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Planteables
+namespace FarmSim.Plantables
 {
     /// <class name="Sprinkler">
     ///     <summary>

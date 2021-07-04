@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FarmSim.SavableData;
+using UnityEngine;
 
 namespace FarmSim.Items
 {

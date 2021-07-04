@@ -1,5 +1,5 @@
 ﻿
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="ItemData">
     ///     <summary>

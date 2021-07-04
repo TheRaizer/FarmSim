@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="PlayerData">
     ///     <summary>

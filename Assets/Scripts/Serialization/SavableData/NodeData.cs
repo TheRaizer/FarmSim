@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="NodeData">
     ///     <summary>

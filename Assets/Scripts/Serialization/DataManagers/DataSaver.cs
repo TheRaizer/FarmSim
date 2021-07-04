@@ -1,4 +1,5 @@
 ﻿using FarmSim.Attributes;
+using FarmSim.SavableData;
 using System;
 using System.Collections;
 using System.IO;

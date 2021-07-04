@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="MainSaveData">
     ///     <summary>

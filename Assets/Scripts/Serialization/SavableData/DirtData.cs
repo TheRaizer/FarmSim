@@ -1,7 +1,7 @@
 ﻿
 using System.Collections.Generic;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="DirtData">
     ///     <summary>
@@ -13,7 +13,7 @@ namespace FarmSim.Serialization
     {
         /// <summary>
         ///     (If dirt references a Planteable class)
-        ///     Unique id that should be assigned to a <see cref="PlanteableData"/> object as well as this object as to act as a reference.
+        ///     Unique id that should be assigned to a <see cref="PlantableData"/> object as well as this object as to act as a reference.
         /// </summary>
         public string Id { get; set; }
 

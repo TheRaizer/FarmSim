@@ -1,13 +1,14 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Grid;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using FarmSim.Utility;
 using System;
 using UnityEngine;
 
-namespace FarmSim.Planteables
+namespace FarmSim.Plantables
 {
     /// <class name="Dirt">
     ///     <summary>
@@ -21,9 +22,9 @@ namespace FarmSim.Planteables
         [SerializeField] private Sprite hoedDirt = null;
         [SerializeField] private Sprite wetHoedDirt = null;
 
-        private const string PLANTEABLE_PREFAB_FOLDER = "Prefabs/Planteables/";
+        private const string PLANTABLE_PREFAB_FOLDER = "Prefabs/Plantables/";
 
-        private Planteable plant = null;
+        private Plantable plant = null;
         private NodeGrid nodeGrid;
 
         private DirtData data;
@@ -176,14 +177,14 @@ namespace FarmSim.Planteables
                     break;
                 case ToolTypes.Other:
                     // check if the given gameObject contains a Planteable component
-                    if (data.Hoed && gameObject != null && gameObject.TryGetComponent<Planteable>(out _))
+                    if (data.Hoed && gameObject != null && gameObject.TryGetComponent<Plantable>(out _))
                     {
                         // generate the Planteable GameObject
                         var obj = Instantiate(gameObject);
                         obj.transform.position = transform.position;
 
                         // initialize the Dirts Plant field and give it the same Id as this Dirt instance.
-                        plant = obj.GetComponent<Planteable>();
+                        plant = obj.GetComponent<Plantable>();
                         plant.SetDataId(data.Id);
                         onSuccessful?.Invoke();
                     }
@@ -221,24 +222,24 @@ namespace FarmSim.Planteables
             // find the dirts data that matches its x and y.
             data = SectionData.Current.DirtDatas.Find(dirt => X == dirt.x && Y == dirt.y);
 
-            PlanteableData plantData = SectionData.Current.PlantDatas.Find(plant => plant.Id == data.Id);
+            PlantableData plantData = SectionData.Current.PlantDatas.Find(plant => plant.Id == data.Id);
 
             // if there is a matching plant data
             if (plantData != null)
             {
                 // we must create a plant game object
-                var prefab = Resources.Load(PLANTEABLE_PREFAB_FOLDER + plantData.PrefabName) as GameObject;
+                var prefab = Resources.Load(PLANTABLE_PREFAB_FOLDER + plantData.PrefabName) as GameObject;
 
                 if (prefab == null)
                 {
-                    Debug.LogError("There is no planteable prefab at path: " + PLANTEABLE_PREFAB_FOLDER + plantData.PrefabName);
+                    Debug.LogError("There is no planteable prefab at path: " + PLANTABLE_PREFAB_FOLDER + plantData.PrefabName);
                 }
 
                 var gameObject = Instantiate(prefab);
                 gameObject.transform.position = transform.position;
 
                 // assign the plant data
-                plant = gameObject.GetComponent<Planteable>();
+                plant = gameObject.GetComponent<Plantable>();
                 plant.Data = plantData;
             }
         }

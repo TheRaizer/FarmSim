@@ -1,22 +1,23 @@
 ﻿using FarmSim.Attributes;
 using FarmSim.Enums;
 using FarmSim.Items;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using FarmSim.TimeBased;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace FarmSim.Planteables
+namespace FarmSim.Plantables
 {
 
-    /// <class name="Planteable">
+    /// <class name="Plantable">
     ///     <summary>
     ///         Base class for any planteable gameObject.
     ///     </summary>
     /// </class>
     [Savable(false)]
-    public class Planteable : MonoBehaviour, IOccurPostLoad, ISavable
+    public class Plantable : MonoBehaviour, IOccurPostLoad, ISavable
     {
         [field: Header("General Properties Settings")]
         [field: SerializeField] public bool NeedWater { get; protected set; } = true;
@@ -38,7 +39,7 @@ namespace FarmSim.Planteables
 
         public bool CanHarvest => Data.CanHarvest;
         public void SetDataId(string id) => Data.Id = id;
-        public PlanteableData Data { protected get; set; } = new PlanteableData("", 1, 0, false);
+        public PlantableData Data { protected get; set; } = new PlantableData("", 1, 0, false);
         private SpriteRenderer spriteRenderer;
 
         protected int spriteChangeInterval = 0;

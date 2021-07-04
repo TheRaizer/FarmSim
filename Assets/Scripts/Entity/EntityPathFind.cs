@@ -1,6 +1,6 @@
 using FarmSim.Enums;
 using FarmSim.Grid;
-using FarmSim.Serialization;
+using FarmSim.SavableData;
 using System;
 using UnityEngine;
 
@@ -41,12 +41,12 @@ namespace FarmSim.Entity
 
         public EntityPathFind
             (
-                Action<INodeData, INodeData, bool> _onFail, 
-                Action<INodeData, INodeData, bool> _onArrival, 
-                GameObject _gameObject, NodeGrid _nodeGrid, 
-                PathRequestManager _requestManager, 
-                float speed = 10, 
-                string _walkingBoolAnimTag = "Walking", 
+                Action<INodeData, INodeData, bool> _onFail,
+                Action<INodeData, INodeData, bool> _onArrival,
+                GameObject _gameObject, NodeGrid _nodeGrid,
+                PathRequestManager _requestManager,
+                float speed = 10,
+                string _walkingBoolAnimTag = "Walking",
                 string _directionIntTag = "Direction"
             )
         {

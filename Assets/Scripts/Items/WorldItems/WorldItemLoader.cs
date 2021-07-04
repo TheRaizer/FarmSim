@@ -1,3 +1,4 @@
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using UnityEngine;
 

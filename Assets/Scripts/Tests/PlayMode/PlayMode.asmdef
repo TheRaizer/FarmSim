@@ -7,15 +7,15 @@
         "Grid",
         "Placeables",
         "Serialization",
-        "Planteables",
         "Loading",
         "Player",
         "Enums",
         "Items",
         "Utility",
         "Slots",
-        "SaveableData",
-        "TimeBased"
+        "TimeBased",
+        "Plantables",
+        "SavableData"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

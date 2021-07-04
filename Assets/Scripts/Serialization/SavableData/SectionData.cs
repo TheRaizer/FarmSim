@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="SaveData">
     ///     <summary>
@@ -21,7 +21,7 @@ namespace FarmSim.Serialization
 
         // collections are within lists to represent the possible sections that each collection can be part of.
         public List<DirtData> DirtDatas { get; set; } = new List<DirtData>();
-        public List<PlanteableData> PlantDatas { get; set; } = new List<PlanteableData>();
+        public List<PlantableData> PlantDatas { get; set; } = new List<PlantableData>();
         public List<TechData> TechDatas { get; set; } = new List<TechData>();
         public List<WorldItemData> WorldItemDatas { get; set; } = new List<WorldItemData>();
         public NodeData[,] NodeDatas { get; set; }

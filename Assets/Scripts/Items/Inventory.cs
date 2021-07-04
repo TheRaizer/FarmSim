@@ -1,4 +1,5 @@
 ﻿using FarmSim.Attributes;
+using FarmSim.SavableData;
 using FarmSim.Serialization;
 using FarmSim.Slots;
 using System;

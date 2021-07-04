@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using UnityEngine;
 
-namespace FarmSim.Serialization
+namespace FarmSim.SavableData
 {
     /// <class name="Vector2SerializationSurrogate">
     ///     <summary>
