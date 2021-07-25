@@ -45,7 +45,7 @@ namespace FarmSim.TimeBased
             }
         }
 
-        private void MoveToNextDay()
+        public void MoveToNextDay()
         {
             dayPassBackground.SetActive(true);
 

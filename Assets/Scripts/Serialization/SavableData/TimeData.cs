@@ -10,6 +10,8 @@ namespace FarmSim.SavableData
     public class TimeData
     {
         public int day = 0;
+        public int minsPassed = 0;
+
 
         // Singleton
         private static TimeData _current;

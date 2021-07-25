@@ -17,13 +17,17 @@ namespace FarmSim.Serialization
     {
         private void Awake()
         {
+            LoadPrimaryData();
+            RemoveTemporarySectionData();
+            InitializeSectionsData();
+        }
+
+        private void LoadPrimaryData()
+        {
             // load player data
             PlayerData.Current = (PlayerData)SerializationManager.LoadSave(SavePaths.PLAYER_FILE);
+            // load time data
             TimeData.Current = (TimeData)SerializationManager.LoadSave(SavePaths.TIME_FILE);
-
-            RemoveTemporarySectionData();
-
-            InitializeSectionsData();
         }
 
         private void RemoveTemporarySectionData()
