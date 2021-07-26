@@ -1,12 +1,13 @@
 using FarmSim.SavableData;
-using FarmSim.Serialization;
+using TMPro;
 using UnityEngine;
 
 namespace FarmSim.TimeBased
 {
-    public class DayClock : MonoBehaviour, ILoadable
+    public class DayClock : MonoBehaviour
     {
         [SerializeField] private float realSecondsForTenGameMin = 5;
+        [SerializeField] private TextMeshProUGUI timeText; 
 
         // start day at 7am
         private const int INIT_MINS = 420;
@@ -25,10 +26,21 @@ namespace FarmSim.TimeBased
             timeManager = GetComponent<TimeManager>();
         }
 
+        private void Start()
+        {
+            // if the Time Data has been loaded from a save meaning it has a non-zero value
+            // then assign its value to be the current mins passed
+            if (TimeData.Current.minsPassed != 0)
+            {
+                minsPassed = TimeData.Current.minsPassed;
+            }
+        }
+
         private void Update()
         {
             if (Time.time - lastTime >= realSecondsForTenGameMin)
             {
+                minsPassed += 10;
                 UpdateClock();
                 lastTime = Time.time;
             }
@@ -36,17 +48,14 @@ namespace FarmSim.TimeBased
 
         private void UpdateClock()
         {
-            minsPassed += 10;
-
             // automatically end the day when the time passes 3am
             if (minsPassed > END_DAY_MINS)
             {
                 minsPassed = INIT_MINS;
                 timeManager.MoveToNextDay();
             }
-
             TimeData.Current.minsPassed = minsPassed;
-            Debug.Log(Get12HourTime());
+            timeText.SetText(Get12HourTime());
         }
 
         private string Get12HourTime()
@@ -67,15 +76,6 @@ namespace FarmSim.TimeBased
             string min = (minsPassed % 60) == 0 ? "00" : (minsPassed % 60).ToString();
 
             return hour + ":" + min + suffix;
-        }
-
-        public void Load()
-        {
-            minsPassed = TimeData.Current.minsPassed;
-            if(minsPassed == 0)
-            {
-                minsPassed = INIT_MINS;
-            }
         }
     }
 }
