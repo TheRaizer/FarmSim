@@ -593,8 +593,9 @@ MonoBehaviour:
   m_text: Right click on spawner to get placeable. Right click again to place object.
     Left click to move player.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bb3c5f72ebc1ea34f9cc636ff1f2ce37, type: 2}
+  m_sharedMaterial: {fileID: 3365632769382688380, guid: bb3c5f72ebc1ea34f9cc636ff1f2ce37,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -727,8 +728,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: DATA HAS LOADED, PRESS [SPACE] TO MOVE TO NEXT SCENE.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bb3c5f72ebc1ea34f9cc636ff1f2ce37, type: 2}
+  m_sharedMaterial: {fileID: 3365632769382688380, guid: bb3c5f72ebc1ea34f9cc636ff1f2ce37,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

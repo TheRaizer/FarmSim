@@ -19,7 +19,8 @@ namespace FarmSim.Player
     public class PlayerController : MonoBehaviour, ISavable, ILoadable
     {
         [SerializeField] private float speed;
-        [SerializeField] private GameObject tileRing;
+        [SerializeField] private GameObject tilePointer;
+        private Bobbing tilePointerBobbing;
 
         private const string WALKING_ANIM = "Walking";
 
@@ -33,9 +34,10 @@ namespace FarmSim.Player
         private void Awake()
         {
             toolHandler = GetComponent<ToolHandler>();
+            tilePointerBobbing = tilePointer.GetComponent<Bobbing>();
             nodeGrid = FindObjectOfType<NodeGrid>();
             // on pathfind fail and success trigger the animation due to tools that interact one node ahead
-            pathFind = new EntityPathFind(TriggerAnimation, TriggerAnimation, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
+            pathFind = new EntityPathFind(PathFindCallBack, gameObject, nodeGrid, FindObjectOfType<PathRequestManager>(), speed);
             //to hide the curser
             Cursor.visible = false;
             animator = GetComponent<Animator>();
@@ -44,7 +46,6 @@ namespace FarmSim.Player
         private void LateUpdate()
         {
             KeyHandler();
-            ChangeRingPosition();
         }
 
         private void KeyHandler()
@@ -61,17 +62,21 @@ namespace FarmSim.Player
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 pathFind.RequestPath();
+                ChangePointerPosition();
             }
             pathFind.MoveOnPath();
         }
 
-        private void ChangeRingPosition()
+        private void ChangePointerPosition()
         {
             INodeData node = nodeGrid.GetNodeFromMousePosition();
             if (node != null)
             {
                 Vector2 pos = node.Data.pos;
-                tileRing.transform.position = pos;
+                tilePointer.transform.position = pos;
+                tilePointer.SetActive(true);
+
+                tilePointerBobbing.StartBob();
             }
         }
 
@@ -91,8 +96,15 @@ namespace FarmSim.Player
 
             return false;
         }
+        
+        private void PathFindCallBack(INodeData curr, INodeData end, bool succesful)
+        {
+            TriggerAnimation(curr, end, succesful);
+            tilePointerBobbing.StopBob();
+            tilePointer.SetActive(false);
+        }
 
-        public void TriggerAnimation(INodeData curr, INodeData end, bool succesful)
+        private void TriggerAnimation(INodeData curr, INodeData end, bool succesful)
         {
             if (succesful)
             {

@@ -25,8 +25,7 @@ namespace FarmSim.Entity
 
         private int pathIdx = 0;
 
-        private readonly Action<INodeData, INodeData, bool> onArrival;
-        private readonly Action<INodeData, INodeData, bool> onFail;
+        private readonly Action<INodeData, INodeData, bool> callBack;
 
         private readonly Transform transform;
         private readonly GameObject gameObject;
@@ -41,8 +40,7 @@ namespace FarmSim.Entity
 
         public EntityPathFind
             (
-                Action<INodeData, INodeData, bool> _onFail,
-                Action<INodeData, INodeData, bool> _onArrival,
+                Action<INodeData, INodeData, bool> _callBack,
                 GameObject _gameObject, NodeGrid _nodeGrid,
                 PathRequestManager _requestManager,
                 float speed = 10,
@@ -50,9 +48,7 @@ namespace FarmSim.Entity
                 string _directionIntTag = "Direction"
             )
         {
-            onArrival = _onArrival;
-            onFail = _onFail;
-
+            callBack = _callBack;
             gameObject = _gameObject;
             Speed = speed;
             walkingBoolAnimTag = _walkingBoolAnimTag;
@@ -114,7 +110,7 @@ namespace FarmSim.Entity
                     // it has completed the path
                     INodeData curr = nodeGrid.GetNodeFromVector2(transform.position);
                     animator.SetBool(walkingBoolAnimTag, false);
-                    onArrival?.Invoke(curr, endNodeData, true);
+                    callBack?.Invoke(curr, endNodeData, true);
                     path = null;
                 }
             }
@@ -155,7 +151,7 @@ namespace FarmSim.Entity
             {
                 // dont make path null so if there is no path finish the previous one.
                 INodeData curr = nodeGrid.GetNodeFromVector2(transform.position);
-                onFail?.Invoke(curr, endNodeData, false);
+                callBack?.Invoke(curr, endNodeData, false);
             }
 
             ProcessingPath = false;

@@ -4274,7 +4274,7 @@ PrefabInstance:
     - target: {fileID: -4926753720439319331, guid: b03efc30d11194340bdfeb1425a4ec06,
         type: 3}
       propertyPath: realSecondsForTenGameMin
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 357524579, guid: b03efc30d11194340bdfeb1425a4ec06, type: 3}
       propertyPath: movementParent
@@ -4457,7 +4457,7 @@ PrefabInstance:
     - target: {fileID: 2777183793427770251, guid: b5fa84fe9633ce946956d35dc72ec1dd,
         type: 3}
       propertyPath: m_Name
-      value: TileRing
+      value: TilePointer
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5fa84fe9633ce946956d35dc72ec1dd, type: 3}
@@ -4498,6 +4498,11 @@ PrefabInstance:
       propertyPath: inventoryUI
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3742074760932526146, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
+        type: 3}
+      propertyPath: tilePointer
+      value: 
+      objectReference: {fileID: 1752067401}
     - target: {fileID: 3742074760932526147, guid: 23f29d94d03eeb34aac85e6cb5f177cd,
         type: 3}
       propertyPath: m_RootOrder

@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06f3e611023f5f8469e6b4ac1d725042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realSecondsForTenGameMin: 5
+  realSecondsForTenGameMin: 10
   timeText: {fileID: 0}
 --- !u!1 &3613891886827486225
 GameObject:

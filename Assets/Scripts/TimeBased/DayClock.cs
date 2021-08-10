@@ -6,7 +6,7 @@ namespace FarmSim.TimeBased
 {
     public class DayClock : MonoBehaviour
     {
-        [SerializeField] private float realSecondsForTenGameMin = 5;
+        [SerializeField] private float realSecondsForTenGameMin = 10;
         [SerializeField] private TextMeshProUGUI timeText; 
 
         // start day at 7am
@@ -19,7 +19,6 @@ namespace FarmSim.TimeBased
         private int HoursPassed => Mathf.FloorToInt(minsPassed / 60);
         private TimeManager timeManager;
         private float lastTime = 0;
-
 
         private void Awake()
         {
